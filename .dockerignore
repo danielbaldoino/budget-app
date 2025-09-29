@@ -1,0 +1,21 @@
+# Dependencies
+node_modules
+**/node_modules
+
+# Turbo
+.turbo
+**/.turbo
+
+# Build Outputs
+**/.next
+**/dist
+**/.trigger
+
+# Git
+.git
+.gitignore
+
+# Misc
+.DS_Store
+.idea
+.vscode

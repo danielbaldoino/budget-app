@@ -1,0 +1,33 @@
+{
+  "name": "@workspace/sdk",
+  "version": "0.0.0",
+  "private": true,
+  "scripts": {
+    "sdk:generate": "pnpm with-env kubb generate",
+    "sdk:generate:format": "biome format --write ./src/api/generated",
+    "clean": "rm -rf .turbo node_modules",
+    "lint": "biome check .",
+    "format": "biome format --write .",
+    "with-env": "dotenv -e ../../.env --"
+  },
+  "dependencies": {
+    "@tanstack/react-query": "^5.75.2",
+    "@workspace/env": "workspace:*",
+    "zod": "^3.22.4"
+  },
+  "devDependencies": {
+    "@kubb/cli": "^3.10.5",
+    "@kubb/core": "^3.10.5",
+    "@kubb/plugin-client": "^3.10.5",
+    "@kubb/plugin-oas": "^3.10.5",
+    "@kubb/plugin-react-query": "^3.10.5",
+    "@kubb/plugin-ts": "^3.10.5",
+    "@kubb/plugin-zod": "^3.10.6",
+    "@workspace/tsconfig": "workspace:*",
+    "@types/node": "^20.12.6",
+    "dotenv-cli": "^7.4.1"
+  },
+  "exports": {
+    ".": "./src/index.ts"
+  }
+}

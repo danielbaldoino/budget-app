@@ -1,0 +1,77 @@
+{
+  "$schema": "https://turbo.build/schema.json",
+  "ui": "tui",
+  "tasks": {
+    "build": {
+      "inputs": [
+        "$TURBO_DEFAULT$",
+        ".env"
+      ],
+      "dependsOn": [
+        "^build"
+      ],
+      "outputs": [
+        ".next/**",
+        "!.next/cache/**",
+        "dist/**"
+      ]
+    },
+    "start": {
+      "cache": false,
+      "dependsOn": [
+        "build"
+      ]
+    },
+    "dev": {
+      "inputs": [
+        "$TURBO_DEFAULT$",
+        ".env"
+      ],
+      "persistent": true,
+      "cache": false
+    },
+    "clean": {
+      "cache": false
+    },
+    "lint": {
+      "dependsOn": [
+        "^lint"
+      ]
+    },
+    "format": {}
+  },
+  "globalEnv": [
+    "APP_ENV",
+    "API_URL",
+    "API_KEY",
+    "WEB_URL",
+    "STORAGE_URL",
+    "ENCRYPTION_KEY",
+    "DATABASE_URL",
+    "REDIS_URL",
+    "UPLOAD_SECRET",
+    "S3_BUCKET",
+    "S3_REGION",
+    "S3_ENDPOINT",
+    "S3_ACCOUNT_ID",
+    "S3_ACCESS_KEY",
+    "S3_SECRET_KEY",
+    "BETTER_AUTH_SECRET",
+    "GITHUB_CLIENT_ID",
+    "GITHUB_CLIENT_SECRET",
+    "RESEND_API_KEY",
+    "NEXT_PUBLIC_API_URL",
+    "NEXT_PUBLIC_WEB_URL",
+    "NEXT_PUBLIC_STORAGE_URL",
+    "NEXT_CONFIG_OUTPUT"
+  ],
+  "globalPassThroughEnv": [
+    "NODE_ENV",
+    "PORT",
+    "CI",
+    "VERCEL",
+    "VERCEL_ENV",
+    "VERCEL_URL",
+    "npm_lifecycle_event"
+  ]
+}
