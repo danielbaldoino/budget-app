@@ -6,6 +6,8 @@
     "db:generate": "pnpm with-env drizzle-kit generate",
     "db:push": "pnpm with-env drizzle-kit push",
     "db:studio": "pnpm with-env drizzle-kit studio",
+    "db:tenant:generate": "pnpm with-env drizzle-kit generate --config ./src/tenant/drizzle.config.ts",
+    "db:tenant:migrate": "pnpm with-env tsx src/tenant/migrate.ts",
     "clean": "rm -rf .turbo node_modules",
     "lint": "biome check .",
     "format": "biome format --write .",
@@ -22,13 +24,16 @@
     "@types/pg": "^8.15.4",
     "@workspace/tsconfig": "workspace:*",
     "drizzle-kit": "^0.31.1",
+    "tsx": "4.19.4",
     "typescript": "^5.7.3"
   },
   "exports": {
     ".": "./src/index.ts",
+    "./tenant": "./src/tenant/index.ts",
     "./schema": "./src/schema/index.ts",
-    "./orm": "./src/lib/orm.ts",
+    "./tenant/schema": "./src/tenant/schema/index.ts",
     "./types": "./src/lib/types.ts",
+    "./orm": "./src/lib/orm.ts",
     "./env": "./src/lib/env.ts"
   }
 }
