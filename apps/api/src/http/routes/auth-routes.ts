@@ -10,7 +10,7 @@ export async function authRoutes(app: FastifyTypedInstance) {
 
   app.route({
     method: ['GET', 'POST'],
-    url: '/auth/*',
+    url: '/*',
     schema: { hide: true },
     handler: async (request, reply) => {
       return await authHandler(request.raw, reply.raw)

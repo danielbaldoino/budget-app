@@ -25,6 +25,7 @@
     "@workspace/env": "workspace:*",
     "@workspace/storage": "workspace:*",
     "@workspace/utils": "workspace:*",
+    "bcryptjs": "^3.0.2",
     "fastify": "5.3.3",
     "fastify-plugin": "5.0.1",
     "fastify-type-provider-zod": "4.0.2",

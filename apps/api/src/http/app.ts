@@ -1,5 +1,6 @@
 import { env } from '@/lib/env'
 import { fastifyCors } from '@fastify/cors'
+import { fastifyJwt } from '@fastify/jwt'
 import { fastifyMultipart } from '@fastify/multipart'
 import { fastifyRedis } from '@fastify/redis'
 import { fastifySwagger } from '@fastify/swagger'
@@ -34,6 +35,10 @@ app.setValidatorCompiler(validatorCompiler)
 app.setErrorHandler(errorHandler)
 
 app.register(fastifyCors)
+
+app.register(fastifyJwt, {
+  secret: env.JWT_SECRET,
+})
 
 app.register(fastifyRedis, {
   client: cache,

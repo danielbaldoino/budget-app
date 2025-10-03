@@ -1,4 +1,27 @@
 export type {
+  CreateOwnedWorkspace201,
+  CreateOwnedWorkspace400,
+  CreateOwnedWorkspace401,
+  CreateOwnedWorkspace403,
+  CreateOwnedWorkspace404,
+  CreateOwnedWorkspace429,
+  CreateOwnedWorkspace500,
+  CreateOwnedWorkspaceMutationRequest,
+  CreateOwnedWorkspaceMutationResponse,
+  CreateOwnedWorkspaceMutation,
+} from './CreateOwnedWorkspace'
+export type {
+  GetOwnedWorkspace200,
+  GetOwnedWorkspace400,
+  GetOwnedWorkspace401,
+  GetOwnedWorkspace403,
+  GetOwnedWorkspace404,
+  GetOwnedWorkspace429,
+  GetOwnedWorkspace500,
+  GetOwnedWorkspaceQueryResponse,
+  GetOwnedWorkspaceQuery,
+} from './GetOwnedWorkspace'
+export type {
   GetProfile200,
   GetProfile400,
   GetProfile401,
@@ -20,3 +43,17 @@ export type {
   HealthQueryResponse,
   HealthQuery,
 } from './Health'
+export type {
+  UpdateOwnedWorkspace204Enum,
+  UpdateOwnedWorkspace204,
+  UpdateOwnedWorkspace400,
+  UpdateOwnedWorkspace401,
+  UpdateOwnedWorkspace403,
+  UpdateOwnedWorkspace404,
+  UpdateOwnedWorkspace429,
+  UpdateOwnedWorkspace500,
+  UpdateOwnedWorkspaceMutationRequest,
+  UpdateOwnedWorkspaceMutationResponse,
+  UpdateOwnedWorkspaceMutation,
+} from './UpdateOwnedWorkspace'
+export { updateOwnedWorkspace204Enum } from './UpdateOwnedWorkspace'

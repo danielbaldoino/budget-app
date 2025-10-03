@@ -3,8 +3,12 @@ import fs from 'node:fs'
 import path from 'node:path'
 import { sql } from 'drizzle-orm'
 import type { MigrationMeta } from 'drizzle-orm/migrator'
+import { drizzle } from 'drizzle-orm/node-postgres'
 import type { PgSession } from 'drizzle-orm/pg-core'
+import { Pool } from 'pg'
+import { env } from '../lib/env'
 import { TENANT_MIGRATIONS_SCHEMA, TENANT_MIGRATIONS_TABLE } from './constants'
+import * as schema from './schema'
 
 const DRIZZLE_STATEMENT_BREAKPOINT = '--> statement-breakpoint'
 
@@ -104,4 +108,23 @@ export async function migrate(
       }
     }
   })
+}
+
+export async function migrateTenantSchema(tenantSchema: string) {
+  const pool = new Pool({ connectionString: env.DATABASE_URL, max: 1 })
+
+  try {
+    const tenantDb = drizzle(pool, { schema }) as any
+
+    const migrations = readMigrationFiles(tenantSchema)
+
+    await migrate(tenantSchema, migrations, tenantDb.session)
+
+    console.log('Tenant migration complete: ', tenantSchema)
+  } catch (error) {
+    console.error('Tenant migration failed:', error)
+    process.exitCode = 1
+  } finally {
+    await pool.end()
+  }
 }

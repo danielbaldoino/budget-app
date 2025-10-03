@@ -1,2 +1,5 @@
+export { createOwnedWorkspace } from './createOwnedWorkspace'
+export { getOwnedWorkspace } from './getOwnedWorkspace'
 export { getProfile } from './getProfile'
 export { health } from './health'
+export { updateOwnedWorkspace } from './updateOwnedWorkspace'

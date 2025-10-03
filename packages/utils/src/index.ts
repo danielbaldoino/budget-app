@@ -1,4 +1,4 @@
-export function stripSpecialCharacters(inputString: string) {
+export function createSlug(inputString: string) {
   // Remove special characters and spaces, keep alphanumeric, hyphens/underscores, and dots
   return inputString
     .replace(/[^a-zA-Z0-9-_\s.]/g, '') // Remove special chars except hyphen/underscore/dot

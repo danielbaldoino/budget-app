@@ -1,10 +1,17 @@
 import { type UserConfig, defineConfig } from '@kubb/core'
 import { pluginClient } from '@kubb/plugin-client'
-import { pluginOas } from '@kubb/plugin-oas'
+import { type Exclude, pluginOas } from '@kubb/plugin-oas'
 import { pluginReactQuery } from '@kubb/plugin-react-query'
 import { pluginTs } from '@kubb/plugin-ts'
 import { pluginZod } from '@kubb/plugin-zod'
 import { env } from './src/lib/env'
+
+const exclude: Exclude[] = [
+  {
+    type: 'path',
+    pattern: '/internal/',
+  },
+] as const
 
 export const config: UserConfig = {
   name: 'Budget App API',
@@ -31,6 +38,7 @@ export const config: UserConfig = {
       output: {
         path: './types',
       },
+      exclude,
     }),
     pluginZod({
       output: {
@@ -38,6 +46,7 @@ export const config: UserConfig = {
       },
       typed: true,
       inferred: true,
+      exclude,
     }),
     pluginClient({
       importPath: '../../../../client/fetch-react-query',
@@ -49,6 +58,7 @@ export const config: UserConfig = {
         path: './react-query/operations',
         barrelType: false,
       },
+      exclude,
     }),
     pluginReactQuery({
       client: {
@@ -62,6 +72,7 @@ export const config: UserConfig = {
       output: {
         path: './react-query/hooks',
       },
+      exclude,
     }),
     pluginClient({
       importPath: '../../../client/fetch',
@@ -72,6 +83,7 @@ export const config: UserConfig = {
       output: {
         path: './operations',
       },
+      exclude,
     }),
   ],
 }
