@@ -9,12 +9,13 @@ import { getProfile } from './profile/get-profile'
 
 export async function routes(app: FastifyTypedInstance) {
   app.register(health)
-  app.register(authRoutes, { prefix: '/auth' })
-  app.register(internalRoutes, { prefix: '/internal' })
 
   app.register(getProfile)
 
   app.register(getOwnedWorkspace)
   app.register(createOwnedWorkspace)
   app.register(updateOwnedWorkspace)
+
+  app.register(authRoutes, { prefix: '/auth' })
+  app.register(internalRoutes, { prefix: '/internal' })
 }
