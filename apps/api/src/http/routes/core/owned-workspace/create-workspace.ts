@@ -5,9 +5,8 @@ import type { FastifyTypedInstance } from '@/types/fastify'
 import { db } from '@workspace/db'
 import { eq } from '@workspace/db/orm'
 import { tenantSchemas, workspaces } from '@workspace/db/schema'
-import { migrateTenantSchema, tenantSchemaTables } from '@workspace/db/tenant'
+import { migrateTenantSchema } from '@workspace/db/tenant'
 import { createSlug } from '@workspace/utils'
-import { hash } from 'bcryptjs'
 import { z } from 'zod'
 
 export async function createOwnedWorkspace(app: FastifyTypedInstance) {
@@ -64,7 +63,7 @@ export async function createOwnedWorkspace(app: FastifyTypedInstance) {
         })
       }
 
-      const { workspace, tenantSchema } = await db.transaction(async (tx) => {
+      const { workspace } = await db.transaction(async (tx) => {
         const [workspace] = await tx
           .insert(workspaces)
           .values({
@@ -104,36 +103,7 @@ export async function createOwnedWorkspace(app: FastifyTypedInstance) {
           })
           .where(eq(workspaces.id, workspace.id))
 
-        return { workspace, tenantSchema }
-      })
-
-      // TODO: Improve password generation
-      const randomPassword = Math.random().toString(36).substring(2, 15)
-      const passwordHash = await hash(randomPassword, 6)
-
-      const [userCreated] = await tenantSchemaTables(
-        tenantSchema.schemaName,
-        async ({ users }) =>
-          await db
-            .insert(users)
-            .values({
-              name: 'Admin',
-              username: 'admin',
-              password: passwordHash,
-            })
-            .returning(),
-      )
-
-      // TODO: Send email to user with login credentials
-
-      console.log('Send credentials to user:', {
-        email: user.email,
-        userCreated: userCreated
-          ? {
-              username: userCreated.username,
-              password: userCreated.password,
-            }
-          : null,
+        return { workspace }
       })
 
       return reply.status(201).send({

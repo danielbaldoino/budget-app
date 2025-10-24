@@ -12,7 +12,7 @@ export async function getProfile(app: FastifyTypedInstance) {
       '/profile',
       {
         schema: {
-          tags: ['[Internal] Profile'],
+          tags: ['Profile'],
           description: 'Get authenticated user profile',
           response: withDefaultErrorResponses({
             200: z

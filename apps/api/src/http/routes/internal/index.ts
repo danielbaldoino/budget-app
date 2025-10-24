@@ -1,6 +1,6 @@
 import type { FastifyTypedInstance } from '@/types/fastify'
-import { getProfile } from './profile/get-profile'
+import { internalv1Routes } from './v1'
 
 export async function internalRoutes(app: FastifyTypedInstance) {
-  app.register(getProfile)
+  app.register(internalv1Routes, { prefix: '/v1' })
 }

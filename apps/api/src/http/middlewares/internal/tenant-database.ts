@@ -32,6 +32,10 @@ export const tenantDatabase = fastifyPlugin(
         })
       }
 
+      if (!request.internal) {
+        request.internal = {} as any
+      }
+
       request.internal.tenantDb = <T extends SQL>(qb: T) =>
         experimental_tenantSchemaDb<T>(tSchmea.schemaName, qb)
     })
