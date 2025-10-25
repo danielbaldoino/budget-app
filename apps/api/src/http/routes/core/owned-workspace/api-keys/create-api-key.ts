@@ -70,7 +70,7 @@ export async function createApiKey(app: FastifyTypedInstance) {
 
       const { name } = request.body
 
-      const token = Math.random().toString(36).substring(2, 15)
+      const token = generateRandomToken()
 
       const [apiKeyCreated] = await tenantSchemaTables(
         tenant.schemaName,
@@ -92,8 +92,19 @@ export async function createApiKey(app: FastifyTypedInstance) {
       }
 
       return reply.status(201).send({
-        token: apiKeyCreated.token,
+        token,
       })
     },
   )
+}
+
+function generateRandomToken() {
+  const repeatCount = 3
+  let str = 'key_'
+
+  for (let i = 0; i < repeatCount; i++) {
+    str += Math.random().toString(36).substring(2, 15)
+  }
+
+  return str
 }

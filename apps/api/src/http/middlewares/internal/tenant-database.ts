@@ -9,23 +9,24 @@ import { fastifyPlugin } from 'fastify-plugin'
 export const tenantDatabase = fastifyPlugin(
   async (app: FastifyTypedInstance) => {
     app.addHook('preHandler', async (request) => {
-      const tenant = request.headers['x-tenant']
+      const tenantId = request.headers['x-tenant']
 
-      if (!tenant || typeof tenant !== 'string') {
+      if (!tenantId || typeof tenantId !== 'string') {
         throw new UnauthorizedError({
           code: 'TENANT_NOT_FOUND',
           message: 'Tenant not found',
         })
       }
 
-      const [tSchema] = await db
+      const [tenant] = await db
         .select({
           schemaName: tenantSchemas.schemaName,
         })
         .from(tenantSchemas)
-        .where(eq(tenantSchemas.id, tenant))
+        .where(eq(tenantSchemas.id, tenantId))
+        .limit(1)
 
-      if (!tSchema) {
+      if (!tenant) {
         throw new UnauthorizedError({
           code: 'TENANT_NOT_FOUND',
           message: 'Tenant not found',
@@ -34,7 +35,7 @@ export const tenantDatabase = fastifyPlugin(
 
       request.internal = {
         tenantSchema: <T>(callback: (tables: TenantTables) => T | Promise<T>) =>
-          tSchemaTables<T>(tSchema.schemaName, callback),
+          tSchemaTables<T>(tenant.schemaName, callback),
       } as any
     })
   },
