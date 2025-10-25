@@ -2,10 +2,9 @@ import { UnauthorizedError } from '@/http/errors/unauthorized-error'
 import type { FastifyTypedInstance } from '@/types/fastify'
 import { db } from '@workspace/db'
 import { eq } from '@workspace/db/orm'
-import { users } from '@workspace/db/tenant/schema'
 import { fastifyPlugin } from 'fastify-plugin'
 
-export const tenantAuthenticate = fastifyPlugin(
+export const jwtAuthenticator = fastifyPlugin(
   async (app: FastifyTypedInstance) => {
     app.addHook('preHandler', async (request) => {
       if (!request.headers.authorization) {
@@ -15,18 +14,18 @@ export const tenantAuthenticate = fastifyPlugin(
       try {
         const userId = (await request.jwtVerify<{ sub: string }>()).sub
 
-        const [user] = await request.internal.tenantDb(
+        const [user] = await request.internal.tenantSchema(({ users }) =>
           db
             .select({
               id: users.id,
               name: users.name,
               username: users.username,
-              password: users.password,
               createdAt: users.createdAt,
               updatedAt: users.updatedAt,
             })
             .from(users)
-            .where(eq(users.id, userId)),
+            .where(eq(users.id, userId))
+            .limit(1),
         )
 
         if (!user) {

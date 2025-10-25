@@ -25,18 +25,21 @@ export async function createOwnedWorkspace(app: FastifyTypedInstance) {
           201: z
             .object({
               workspaceId: z.string().uuid(),
+              tenantSchemaId: z.string().uuid(),
             })
             .describe('Success'),
         }),
       },
     },
     async (request, reply) => {
-      const { user } = request.authSession
+      const {
+        user: { id: userId },
+      } = request.authSession
 
       const [ownedWorkspace] = await db
         .select()
         .from(workspaces)
-        .where(eq(workspaces.ownerId, user.id))
+        .where(eq(workspaces.ownerId, userId))
         .limit(1)
 
       if (ownedWorkspace) {
@@ -63,13 +66,13 @@ export async function createOwnedWorkspace(app: FastifyTypedInstance) {
         })
       }
 
-      const { workspace } = await db.transaction(async (tx) => {
+      const { workspace, tenant } = await db.transaction(async (tx) => {
         const [workspace] = await tx
           .insert(workspaces)
           .values({
             name,
             slug: slugWorkspace,
-            ownerId: user.id,
+            ownerId: userId,
           })
           .returning()
 
@@ -80,34 +83,36 @@ export async function createOwnedWorkspace(app: FastifyTypedInstance) {
           })
         }
 
-        const [tenantSchema] = await tx
+        const [tenant] = await tx
           .insert(tenantSchemas)
           .values({
             schemaName: `tenant_${workspace.id}`,
           })
           .returning()
 
-        if (!tenantSchema) {
+        if (!tenant) {
           throw new BadRequestError({
             code: 'TENANT_SCHEMA_CREATION_FAILED',
             message: 'Failed to create tenant schema',
           })
         }
 
-        await migrateTenantSchema(tenantSchema.schemaName)
+        // Run migrations for tenant schema
+        await migrateTenantSchema(tenant.schemaName)
 
         await tx
           .update(workspaces)
           .set({
-            tenantSchemaId: tenantSchema.id,
+            tenantSchemaId: tenant.id,
           })
           .where(eq(workspaces.id, workspace.id))
 
-        return { workspace }
+        return { workspace, tenant }
       })
 
       return reply.status(201).send({
         workspaceId: workspace.id,
+        tenantSchemaId: tenant.id,
       })
     },
   )

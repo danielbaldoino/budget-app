@@ -3,7 +3,7 @@ import type { FastifyTypedInstance } from '@/types/fastify'
 import { db } from '@workspace/db'
 import { eq } from '@workspace/db/orm'
 import { tenantSchemas } from '@workspace/db/schema'
-import { type SQL, experimental_tenantSchemaDb } from '@workspace/db/tenant'
+import { type TenantTables, tSchemaTables } from '@workspace/db/tenant'
 import { fastifyPlugin } from 'fastify-plugin'
 
 export const tenantDatabase = fastifyPlugin(
@@ -18,26 +18,24 @@ export const tenantDatabase = fastifyPlugin(
         })
       }
 
-      const [tSchmea] = await db
+      const [tSchema] = await db
         .select({
           schemaName: tenantSchemas.schemaName,
         })
         .from(tenantSchemas)
         .where(eq(tenantSchemas.id, tenant))
 
-      if (!tSchmea) {
+      if (!tSchema) {
         throw new UnauthorizedError({
           code: 'TENANT_NOT_FOUND',
           message: 'Tenant not found',
         })
       }
 
-      if (!request.internal) {
-        request.internal = {} as any
-      }
-
-      request.internal.tenantDb = <T extends SQL>(qb: T) =>
-        experimental_tenantSchemaDb<T>(tSchmea.schemaName, qb)
+      request.internal = {
+        tenantSchema: <T>(callback: (tables: TenantTables) => T | Promise<T>) =>
+          tSchemaTables<T>(tSchema.schemaName, callback),
+      } as any
     })
   },
 )

@@ -2,38 +2,41 @@ import { BadRequestError } from '@/http/errors/bad-request-error'
 import { withDefaultErrorResponses } from '@/http/errors/default-error-responses'
 import { authenticate } from '@/http/middlewares/authenticate'
 import type { FastifyTypedInstance } from '@/types/fastify'
-import { hashPassword } from '@workspace/auth'
 import { db } from '@workspace/db'
 import { eq } from '@workspace/db/orm'
 import { tenantSchemas, workspaces } from '@workspace/db/schema'
 import { tenantSchemaTables } from '@workspace/db/tenant'
 import { z } from 'zod'
 
-export async function createEmployee(app: FastifyTypedInstance) {
+export async function createApiKey(app: FastifyTypedInstance) {
   app.register(authenticate).post(
-    '/employee',
+    '/owned-workspace/api-keys',
     {
       schema: {
-        tags: ['Employee'],
-        description: 'Create a new employee',
-        operationId: 'createEmployee',
+        tags: ['API Keys'],
+        description: 'Create a new api key',
+        operationId: 'createApiKey',
         body: z.object({
           name: z.string(),
-          username: z.string().min(3).max(30),
-          password: z.string().min(6).max(100),
         }),
         response: withDefaultErrorResponses({
-          201: z.null().describe('Success'),
+          201: z
+            .object({
+              token: z.string(),
+            })
+            .describe('Success'),
         }),
       },
     },
     async (request, reply) => {
-      const { user } = request.authSession
+      const {
+        user: { id: userId },
+      } = request.authSession
 
       const [workspace] = await db
         .select()
         .from(workspaces)
-        .where(eq(workspaces.ownerId, user.id))
+        .where(eq(workspaces.ownerId, userId))
         .limit(1)
 
       if (!workspace) {
@@ -50,55 +53,47 @@ export async function createEmployee(app: FastifyTypedInstance) {
         })
       }
 
-      const [tSchmea] = await db
+      const [tenant] = await db
         .select({
           schemaName: tenantSchemas.schemaName,
         })
         .from(tenantSchemas)
         .where(eq(tenantSchemas.id, workspace.tenantSchemaId))
+        .limit(1)
 
-      if (!tSchmea) {
+      if (!tenant) {
         throw new BadRequestError({
           code: 'TENANT_SCHEMA_NOT_FOUND',
           message: 'Tenant schema not found for workspace',
         })
       }
 
-      const { name, username, password } = request.body
+      const { name } = request.body
 
-      const hashedPassword = await hashPassword(password)
+      const token = Math.random().toString(36).substring(2, 15)
 
-      const [userCreated] = await tenantSchemaTables(
-        tSchmea.schemaName,
-        async ({ users }) =>
+      const [apiKeyCreated] = await tenantSchemaTables(
+        tenant.schemaName,
+        async ({ apiKeys }) =>
           await db
-            .insert(users)
+            .insert(apiKeys)
             .values({
               name,
-              username,
-              password: hashedPassword,
+              token,
             })
             .returning(),
       )
 
-      if (!userCreated) {
+      if (!apiKeyCreated) {
         throw new BadRequestError({
-          code: 'USER_CREATION_FAILED',
-          message: 'Failed to create user',
+          code: 'API_KEY_CREATION_FAILED',
+          message: 'Failed to create API key',
         })
       }
 
-      // TODO: Send email to user with login credentials
-
-      console.log('Send credentials to user:', {
-        email: user.email,
-        userCreated: {
-          username: userCreated.username,
-          password: userCreated.password,
-        },
+      return reply.status(201).send({
+        token: apiKeyCreated.token,
       })
-
-      return reply.status(201).send()
     },
   )
 }

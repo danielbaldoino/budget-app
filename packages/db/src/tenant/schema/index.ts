@@ -1,5 +1,6 @@
-import { pgSchema, text } from 'drizzle-orm/pg-core'
-import { id, metadata, timestamps } from '../../utils'
+import { json, pgSchema, text } from 'drizzle-orm/pg-core'
+import type { Metadata } from '../../lib/types'
+import { id, timestamps } from '../../utils'
 import { TENANT_MIGRATIONS_SCHEMA } from '../constants'
 
 export const tenantSchema = pgSchema(TENANT_MIGRATIONS_SCHEMA)
@@ -9,17 +10,14 @@ export const users = tenantSchema.table('users', {
   name: text('name').notNull(),
   username: text('username').notNull().unique(),
   password: text('password').notNull(),
-  ...metadata,
+  metadata: json('metadata').$type<Metadata>(),
   ...timestamps,
 })
 
-export const addresses = tenantSchema.table('addresses', {
+export const apiKeys = tenantSchema.table('api_keys', {
   ...id,
-  street: text('street').notNull(),
-  city: text('city').notNull(),
-  state: text('state').notNull(),
-  zipCode: text('zip_code').notNull(),
-  country: text('country').notNull(),
+  name: text('name').notNull(),
+  token: text('token').notNull().unique(),
   ...timestamps,
 })
 
@@ -36,38 +34,16 @@ export const customers = tenantSchema.table('customers', {
     .references(() => addresses.id)
     .notNull(),
   erpId: text('erp_id').notNull().unique(),
-  ...metadata,
+  metadata: json('metadata').$type<Metadata>(),
   ...timestamps,
 })
 
-export const categories = tenantSchema.table('categories', {
+export const addresses = tenantSchema.table('addresses', {
   ...id,
-  name: text('name').notNull(),
-  description: text('description'),
-  ...metadata,
-  ...timestamps,
-})
-
-export const transporters = tenantSchema.table('transporters', {
-  ...id,
-  name: text('name').notNull(),
-  erpId: text('erp_id').notNull().unique(),
-  ...metadata,
-  ...timestamps,
-})
-
-export const paymentTerms = tenantSchema.table('payment_terms', {
-  ...id,
-  name: text('name').notNull(),
-  erpId: text('erp_id').notNull().unique(),
-  ...metadata,
-  ...timestamps,
-})
-
-export const paymentConditions = tenantSchema.table('payment_conditions', {
-  ...id,
-  name: text('name').notNull(),
-  erpId: text('erp_id').notNull().unique(),
-  ...metadata,
+  street: text('street').notNull(),
+  city: text('city').notNull(),
+  state: text('state').notNull(),
+  zipCode: text('zip_code').notNull(),
+  country: text('country').notNull(),
   ...timestamps,
 })

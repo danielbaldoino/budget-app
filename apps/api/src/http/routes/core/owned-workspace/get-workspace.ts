@@ -24,9 +24,7 @@ export async function getOwnedWorkspace(app: FastifyTypedInstance) {
                 name: z.string(),
                 slug: z.string(),
                 logoUrl: z.string().url().nullable(),
-                ownerId: z.string(),
-                createdAt: z.date(),
-                updatedAt: z.date(),
+                tenantSchemaId: z.string().nullable(),
               }),
             })
             .describe('Success'),
@@ -39,7 +37,14 @@ export async function getOwnedWorkspace(app: FastifyTypedInstance) {
       } = request.authSession
 
       const [workspace] = await db
-        .select()
+        .select({
+          id: workspaces.id,
+          active: workspaces.active,
+          name: workspaces.name,
+          slug: workspaces.slug,
+          logoUrl: workspaces.logoUrl,
+          tenantSchemaId: workspaces.tenantSchemaId,
+        })
         .from(workspaces)
         .where(eq(workspaces.ownerId, userId))
         .limit(1)
