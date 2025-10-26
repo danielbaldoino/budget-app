@@ -20,13 +20,13 @@ export default async function Page() {
           </BreadcrumbItem>
           <BreadcrumbSeparator />
           <BreadcrumbItem>
-            <BreadcrumbPage>Employees</BreadcrumbPage>
+            <BreadcrumbPage>Users</BreadcrumbPage>
           </BreadcrumbItem>
         </BreadcrumbList>
       </Breadcrumb>
 
       <div className="flex flex-1 items-center justify-center gap-4">
-        <span className="text-sm">Employees</span>
+        <span className="text-sm">Users</span>
       </div>
     </div>
   )

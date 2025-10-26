@@ -63,15 +63,15 @@ export default async function Page() {
           </div>
 
           <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
-            <Link href="/employees">
+            <Link href="/users">
               <div className="flex h-full flex-col gap-4 rounded-lg border bg-border-border p-4">
                 <div className="flex size-8 items-center justify-center rounded-lg bg-foreground">
                   <UserCog className="size-4 text-background" />
                 </div>
 
                 <div className="flex flex-1 flex-col text-sm">
-                  <div className="font-medium">Employee registration</div>
-                  <div>Manage employee access and information.</div>
+                  <div className="font-medium">User Management</div>
+                  <div>Manage user access and information.</div>
                 </div>
 
                 <ArrowRight className="size-4 text-foreground/60" />
