@@ -27,13 +27,11 @@ export async function health(app: FastifyTypedInstance) {
         }),
       },
     },
-    async () => {
-      return {
-        status: 'OK',
-        timestamp: new Date().toISOString(),
-        uptime: process.uptime(),
-        memoryUsage: process.memoryUsage(),
-      }
-    },
+    async () => ({
+      status: 'OK',
+      timestamp: new Date().toISOString(),
+      uptime: process.uptime(),
+      memoryUsage: process.memoryUsage(),
+    }),
   )
 }

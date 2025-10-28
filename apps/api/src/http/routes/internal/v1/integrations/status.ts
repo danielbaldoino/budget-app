@@ -19,11 +19,9 @@ export async function status(app: FastifyTypedInstance) {
         }),
       },
     },
-    async () => {
-      return {
-        status: 'OK',
-        timestamp: new Date().toISOString(),
-      }
-    },
+    async () => ({
+      status: 'OK',
+      timestamp: new Date().toISOString(),
+    }),
   )
 }

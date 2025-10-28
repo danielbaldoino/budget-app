@@ -33,7 +33,9 @@ export async function updateOwnedWorkspace(app: FastifyTypedInstance) {
       } = request.authSession
 
       const [workspace] = await db
-        .select()
+        .select({
+          id: workspaces.id,
+        })
         .from(workspaces)
         .where(eq(workspaces.ownerId, userId))
         .limit(1)

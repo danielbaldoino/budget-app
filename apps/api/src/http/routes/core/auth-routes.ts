@@ -4,16 +4,15 @@ import { auth, toNodeHandler } from '@workspace/auth'
 export async function authRoutes(app: FastifyTypedInstance) {
   const authHandler = toNodeHandler(auth.handler)
 
-  app.addContentTypeParser('application/json', (_request, _payload, done) => {
-    done(null, null)
-  })
+  app.addContentTypeParser('application/json', (_request, _payload, done) =>
+    done(null, null),
+  )
 
   app.route({
     method: ['GET', 'POST'],
     url: '/*',
     schema: { hide: true },
-    handler: async (request, reply) => {
-      return await authHandler(request.raw, reply.raw)
-    },
+    handler: async (request, reply) =>
+      await authHandler(request.raw, reply.raw),
   })
 }

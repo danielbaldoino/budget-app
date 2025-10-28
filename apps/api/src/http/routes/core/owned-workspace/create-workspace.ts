@@ -74,7 +74,9 @@ export async function createOwnedWorkspace(app: FastifyTypedInstance) {
             slug: slugWorkspace,
             ownerId: userId,
           })
-          .returning()
+          .returning({
+            id: workspaces.id,
+          })
 
         if (!workspace) {
           throw new BadRequestError({
@@ -88,7 +90,10 @@ export async function createOwnedWorkspace(app: FastifyTypedInstance) {
           .values({
             schemaName: `tenant_${workspace.id}`,
           })
-          .returning()
+          .returning({
+            id: tenantSchemas.id,
+            schemaName: tenantSchemas.schemaName,
+          })
 
         if (!tenant) {
           throw new BadRequestError({
