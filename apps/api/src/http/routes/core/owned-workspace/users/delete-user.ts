@@ -29,12 +29,12 @@ export async function deleteUser(app: FastifyTypedInstance) {
 
       const tSchema = await getTenantSchema({ workspaceOwnerId: user.id })
 
-      const { userId: userIdToDelete } = request.params
+      const { userId: targetUserId } = request.params
 
       await tenantSchemaTables(
         tSchema,
         async ({ users }) =>
-          await db.delete(users).where(eq(users.id, userIdToDelete)),
+          await db.delete(users).where(eq(users.id, targetUserId)),
       )
 
       reply.status(204).send()

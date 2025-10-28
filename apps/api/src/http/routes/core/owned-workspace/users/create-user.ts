@@ -28,9 +28,11 @@ export async function createUser(app: FastifyTypedInstance) {
       },
     },
     async (request, reply) => {
-      const { user } = request.authSession
+      const {
+        user: { id: userId },
+      } = request.authSession
 
-      const tSchema = await getTenantSchema({ workspaceOwnerId: user.id })
+      const tSchema = await getTenantSchema({ workspaceOwnerId: userId })
 
       const { name, username, password } = request.body
 
@@ -53,7 +55,7 @@ export async function createUser(app: FastifyTypedInstance) {
 
       const hashedPassword = await hashPassword(password)
 
-      const [userCreated] = await tenantSchemaTables(
+      const [user] = await tenantSchemaTables(
         tSchema,
         async ({ users }) =>
           await db
@@ -66,7 +68,7 @@ export async function createUser(app: FastifyTypedInstance) {
             .returning(),
       )
 
-      if (!userCreated) {
+      if (!user) {
         throw new BadRequestError({
           code: 'USER_CREATION_FAILED',
           message: 'Failed to create user',
