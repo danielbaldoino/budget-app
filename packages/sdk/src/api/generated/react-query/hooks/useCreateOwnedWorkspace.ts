@@ -18,9 +18,13 @@ import type {
   CreateOwnedWorkspace429,
   CreateOwnedWorkspace500,
 } from '../../types/CreateOwnedWorkspace'
-import type { UseMutationOptions, QueryClient } from '@tanstack/react-query'
+import type {
+  UseMutationOptions,
+  UseMutationResult,
+  QueryClient,
+} from '@tanstack/react-query'
 import { createOwnedWorkspace } from '../operations/createOwnedWorkspace'
-import { useMutation } from '@tanstack/react-query'
+import { mutationOptions, useMutation } from '@tanstack/react-query'
 
 export const createOwnedWorkspaceMutationKey = () =>
   [{ url: '/owned-workspace' }] as const
@@ -28,6 +32,32 @@ export const createOwnedWorkspaceMutationKey = () =>
 export type CreateOwnedWorkspaceMutationKey = ReturnType<
   typeof createOwnedWorkspaceMutationKey
 >
+
+export function createOwnedWorkspaceMutationOptions(
+  config: Partial<RequestConfig<CreateOwnedWorkspaceMutationRequest>> & {
+    client?: typeof fetch
+  } = {},
+) {
+  const mutationKey = createOwnedWorkspaceMutationKey()
+  return mutationOptions<
+    CreateOwnedWorkspaceMutationResponse,
+    ResponseErrorConfig<
+      | CreateOwnedWorkspace400
+      | CreateOwnedWorkspace401
+      | CreateOwnedWorkspace403
+      | CreateOwnedWorkspace404
+      | CreateOwnedWorkspace429
+      | CreateOwnedWorkspace500
+    >,
+    { data: CreateOwnedWorkspaceMutationRequest },
+    typeof mutationKey
+  >({
+    mutationKey,
+    mutationFn: async ({ data }) => {
+      return createOwnedWorkspace({ data }, config)
+    },
+  })
+}
 
 /**
  * @description Create a new owned workspace
@@ -58,6 +88,22 @@ export function useCreateOwnedWorkspace<TContext>(
   const mutationKey =
     mutationOptions.mutationKey ?? createOwnedWorkspaceMutationKey()
 
+  const baseOptions = createOwnedWorkspaceMutationOptions(
+    config,
+  ) as UseMutationOptions<
+    CreateOwnedWorkspaceMutationResponse,
+    ResponseErrorConfig<
+      | CreateOwnedWorkspace400
+      | CreateOwnedWorkspace401
+      | CreateOwnedWorkspace403
+      | CreateOwnedWorkspace404
+      | CreateOwnedWorkspace429
+      | CreateOwnedWorkspace500
+    >,
+    { data: CreateOwnedWorkspaceMutationRequest },
+    TContext
+  >
+
   return useMutation<
     CreateOwnedWorkspaceMutationResponse,
     ResponseErrorConfig<
@@ -72,12 +118,22 @@ export function useCreateOwnedWorkspace<TContext>(
     TContext
   >(
     {
-      mutationFn: async ({ data }) => {
-        return createOwnedWorkspace({ data }, config)
-      },
+      ...baseOptions,
       mutationKey,
       ...mutationOptions,
     },
     queryClient,
-  )
+  ) as UseMutationResult<
+    CreateOwnedWorkspaceMutationResponse,
+    ResponseErrorConfig<
+      | CreateOwnedWorkspace400
+      | CreateOwnedWorkspace401
+      | CreateOwnedWorkspace403
+      | CreateOwnedWorkspace404
+      | CreateOwnedWorkspace429
+      | CreateOwnedWorkspace500
+    >,
+    { data: CreateOwnedWorkspaceMutationRequest },
+    TContext
+  >
 }

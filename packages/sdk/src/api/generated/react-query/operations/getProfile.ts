@@ -19,7 +19,8 @@ import type {
 } from '../../types/GetProfile'
 
 function getGetProfileUrl() {
-  return `/profile` as const
+  const res = { method: 'GET', url: `/profile` as const }
+  return res
 }
 
 /**
@@ -42,6 +43,6 @@ export async function getProfile(
       | GetProfile500
     >,
     unknown
-  >({ method: 'GET', url: getGetProfileUrl().toString(), ...requestConfig })
+  >({ method: 'GET', url: getGetProfileUrl().url.toString(), ...requestConfig })
   return res.data
 }

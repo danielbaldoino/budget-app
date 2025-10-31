@@ -18,9 +18,13 @@ import type {
   UpdateOwnedWorkspace429,
   UpdateOwnedWorkspace500,
 } from '../../types/UpdateOwnedWorkspace'
-import type { UseMutationOptions, QueryClient } from '@tanstack/react-query'
+import type {
+  UseMutationOptions,
+  UseMutationResult,
+  QueryClient,
+} from '@tanstack/react-query'
 import { updateOwnedWorkspace } from '../operations/updateOwnedWorkspace'
-import { useMutation } from '@tanstack/react-query'
+import { mutationOptions, useMutation } from '@tanstack/react-query'
 
 export const updateOwnedWorkspaceMutationKey = () =>
   [{ url: '/owned-workspace' }] as const
@@ -28,6 +32,32 @@ export const updateOwnedWorkspaceMutationKey = () =>
 export type UpdateOwnedWorkspaceMutationKey = ReturnType<
   typeof updateOwnedWorkspaceMutationKey
 >
+
+export function updateOwnedWorkspaceMutationOptions(
+  config: Partial<RequestConfig<UpdateOwnedWorkspaceMutationRequest>> & {
+    client?: typeof fetch
+  } = {},
+) {
+  const mutationKey = updateOwnedWorkspaceMutationKey()
+  return mutationOptions<
+    UpdateOwnedWorkspaceMutationResponse,
+    ResponseErrorConfig<
+      | UpdateOwnedWorkspace400
+      | UpdateOwnedWorkspace401
+      | UpdateOwnedWorkspace403
+      | UpdateOwnedWorkspace404
+      | UpdateOwnedWorkspace429
+      | UpdateOwnedWorkspace500
+    >,
+    { data?: UpdateOwnedWorkspaceMutationRequest },
+    typeof mutationKey
+  >({
+    mutationKey,
+    mutationFn: async ({ data }) => {
+      return updateOwnedWorkspace({ data }, config)
+    },
+  })
+}
 
 /**
  * @description Update owned workspace details
@@ -58,6 +88,22 @@ export function useUpdateOwnedWorkspace<TContext>(
   const mutationKey =
     mutationOptions.mutationKey ?? updateOwnedWorkspaceMutationKey()
 
+  const baseOptions = updateOwnedWorkspaceMutationOptions(
+    config,
+  ) as UseMutationOptions<
+    UpdateOwnedWorkspaceMutationResponse,
+    ResponseErrorConfig<
+      | UpdateOwnedWorkspace400
+      | UpdateOwnedWorkspace401
+      | UpdateOwnedWorkspace403
+      | UpdateOwnedWorkspace404
+      | UpdateOwnedWorkspace429
+      | UpdateOwnedWorkspace500
+    >,
+    { data?: UpdateOwnedWorkspaceMutationRequest },
+    TContext
+  >
+
   return useMutation<
     UpdateOwnedWorkspaceMutationResponse,
     ResponseErrorConfig<
@@ -72,12 +118,22 @@ export function useUpdateOwnedWorkspace<TContext>(
     TContext
   >(
     {
-      mutationFn: async ({ data }) => {
-        return updateOwnedWorkspace({ data }, config)
-      },
+      ...baseOptions,
       mutationKey,
       ...mutationOptions,
     },
     queryClient,
-  )
+  ) as UseMutationResult<
+    UpdateOwnedWorkspaceMutationResponse,
+    ResponseErrorConfig<
+      | UpdateOwnedWorkspace400
+      | UpdateOwnedWorkspace401
+      | UpdateOwnedWorkspace403
+      | UpdateOwnedWorkspace404
+      | UpdateOwnedWorkspace429
+      | UpdateOwnedWorkspace500
+    >,
+    { data?: UpdateOwnedWorkspaceMutationRequest },
+    TContext
+  >
 }

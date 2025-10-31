@@ -11,18 +11,18 @@
     "with-env": "dotenv -e ../../.env --"
   },
   "dependencies": {
-    "@tanstack/react-query": "^5.75.2",
+    "@tanstack/react-query": "^5.90.5",
     "@workspace/env": "workspace:*",
     "zod": "^3.22.4"
   },
   "devDependencies": {
-    "@kubb/cli": "^3.10.5",
-    "@kubb/core": "^3.10.5",
-    "@kubb/plugin-client": "^3.10.5",
-    "@kubb/plugin-oas": "^3.10.5",
-    "@kubb/plugin-react-query": "^3.10.5",
-    "@kubb/plugin-ts": "^3.10.5",
-    "@kubb/plugin-zod": "^3.10.6",
+    "@kubb/cli": "^4.4.1",
+    "@kubb/core": "^4.4.1",
+    "@kubb/plugin-client": "^4.4.1",
+    "@kubb/plugin-oas": "^4.4.1",
+    "@kubb/plugin-react-query": "^4.4.1",
+    "@kubb/plugin-ts": "^4.4.1",
+    "@kubb/plugin-zod": "^4.4.1",
     "@workspace/tsconfig": "workspace:*",
     "@types/node": "^20.12.6",
     "dotenv-cli": "^7.4.1"

@@ -28,6 +28,10 @@ export type GetProfile200 = {
      */
     emailVerified: boolean
     /**
+     * @type string
+     */
+    image?: string | null
+    /**
      * @type string, date-time
      */
     createdAt: string
@@ -35,10 +39,6 @@ export type GetProfile200 = {
      * @type string, date-time
      */
     updatedAt: string
-    /**
-     * @type string
-     */
-    image?: string | null
   }
 }
 

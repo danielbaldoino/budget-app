@@ -7,10 +7,12 @@ export async function baseFetch<TVariables>(
   const globalConfig = getConfig()
   const config = { ...globalConfig, ...paramsConfig }
 
+  const method = config.method?.toUpperCase()
+
   const response = await fetch(targetUrl(config), {
     credentials: config.credentials || 'same-origin',
     method: config.method?.toUpperCase(),
-    body: JSON.stringify(config.data),
+    body: method === 'GET' ? undefined : JSON.stringify(config.data || {}),
     signal: config.signal,
     headers: {
       ...(typeof globalConfig.headers === 'function'

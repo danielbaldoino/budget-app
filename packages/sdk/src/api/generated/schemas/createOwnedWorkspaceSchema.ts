@@ -23,6 +23,7 @@ import { z } from 'zod'
 export const createOwnedWorkspace201Schema = z
   .object({
     workspaceId: z.string().uuid(),
+    tenantSchemaId: z.string().uuid(),
   })
   .describe('Success') as unknown as ToZod<CreateOwnedWorkspace201>
 
@@ -35,18 +36,19 @@ export const createOwnedWorkspace400Schema = z
   .object({
     code: z.string(),
     message: z.string(),
-    errors: z
-      .array(
-        z
-          .object({
-            code: z.string(),
-            message: z.string(),
-            path: z.array(z.union([z.string(), z.number()])),
-          })
-          .catchall(z.any()),
-      )
-      .describe('Validation errors')
-      .optional(),
+    errors: z.optional(
+      z
+        .array(
+          z
+            .object({
+              code: z.string(),
+              message: z.string(),
+              path: z.array(z.union([z.string(), z.number()])),
+            })
+            .catchall(z.any()),
+        )
+        .describe('Validation errors'),
+    ),
   })
   .describe(
     'Bad Request. Usually due to missing parameters, or invalid parameters.',
@@ -123,7 +125,7 @@ export type CreateOwnedWorkspace500Schema = CreateOwnedWorkspace500
 
 export const createOwnedWorkspaceMutationRequestSchema = z.object({
   name: z.string(),
-  slug: z.string().nullable().nullish(),
+  slug: z.string().nullish(),
 }) as unknown as ToZod<CreateOwnedWorkspaceMutationRequest>
 
 export type CreateOwnedWorkspaceMutationRequestSchema =

@@ -26,10 +26,8 @@ export const getOwnedWorkspace200Schema = z
       active: z.boolean(),
       name: z.string(),
       slug: z.string(),
-      logoUrl: z.string().url().nullable(),
-      ownerId: z.string(),
-      createdAt: z.string().datetime(),
-      updatedAt: z.string().datetime(),
+      logoUrl: z.nullable(z.string().url()),
+      tenantSchemaId: z.nullable(z.string()),
     }),
   })
   .describe('Success') as unknown as ToZod<GetOwnedWorkspace200>
@@ -43,18 +41,19 @@ export const getOwnedWorkspace400Schema = z
   .object({
     code: z.string(),
     message: z.string(),
-    errors: z
-      .array(
-        z
-          .object({
-            code: z.string(),
-            message: z.string(),
-            path: z.array(z.union([z.string(), z.number()])),
-          })
-          .catchall(z.any()),
-      )
-      .describe('Validation errors')
-      .optional(),
+    errors: z.optional(
+      z
+        .array(
+          z
+            .object({
+              code: z.string(),
+              message: z.string(),
+              path: z.array(z.union([z.string(), z.number()])),
+            })
+            .catchall(z.any()),
+        )
+        .describe('Validation errors'),
+    ),
   })
   .describe(
     'Bad Request. Usually due to missing parameters, or invalid parameters.',

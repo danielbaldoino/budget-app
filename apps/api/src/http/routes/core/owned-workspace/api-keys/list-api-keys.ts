@@ -68,7 +68,7 @@ export async function listApiKeys(app: FastifyTypedInstance) {
               .from(apiKeys)
               .orderBy(asc(apiKeys[orderBy]))
               .offset((page - 1) * 2)
-              .limit(10)
+              .limit(20)
               .where(and(...conditions)),
 
             db.$count(apiKeys, and(...conditions)),

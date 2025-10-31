@@ -19,11 +19,15 @@ export async function createUser(app: FastifyTypedInstance) {
         operationId: 'createUser',
         body: z.object({
           name: z.string(),
-          username: z.string().min(3).max(30),
+          username: z.string().trim().min(3).max(30),
           password: z.string().min(6).max(100),
         }),
         response: withDefaultErrorResponses({
-          201: z.null().describe('Success'),
+          201: z
+            .object({
+              userId: z.string(),
+            })
+            .describe('Success'),
         }),
       },
     },
@@ -75,7 +79,7 @@ export async function createUser(app: FastifyTypedInstance) {
         })
       }
 
-      return reply.status(201).send()
+      return reply.status(201).send({ userId: user.id })
     },
   )
 }

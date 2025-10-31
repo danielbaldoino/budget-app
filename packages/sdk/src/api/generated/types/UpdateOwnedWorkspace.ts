@@ -7,13 +7,13 @@ export const updateOwnedWorkspace204Enum = {
   null: 'null',
 } as const
 
-export type UpdateOwnedWorkspace204Enum =
+export type UpdateOwnedWorkspace204EnumKey =
   (typeof updateOwnedWorkspace204Enum)[keyof typeof updateOwnedWorkspace204Enum]
 
 /**
  * @description Success
  */
-export type UpdateOwnedWorkspace204 = UpdateOwnedWorkspace204Enum | null
+export type UpdateOwnedWorkspace204 = UpdateOwnedWorkspace204EnumKey | null
 
 /**
  * @description Bad Request. Usually due to missing parameters, or invalid parameters.

@@ -1,5 +1,5 @@
 import { sdk } from '@/lib/sdk'
-import { ArrowRight, Building2, UserCog, Wallet } from 'lucide-react'
+import { ArrowRight, Building2, KeyIcon, UserCog, Wallet } from 'lucide-react'
 import Link from 'next/link'
 
 export default async function Page() {
@@ -72,6 +72,21 @@ export default async function Page() {
                 <div className="flex flex-1 flex-col text-sm">
                   <div className="font-medium">User Management</div>
                   <div>Manage user access and information.</div>
+                </div>
+
+                <ArrowRight className="size-4 text-foreground/60" />
+              </div>
+            </Link>
+
+            <Link href="/api-keys">
+              <div className="flex h-full flex-col gap-4 rounded-lg border bg-border-border p-4">
+                <div className="flex size-8 items-center justify-center rounded-lg bg-foreground">
+                  <KeyIcon className="size-4 text-background" />
+                </div>
+
+                <div className="flex flex-1 flex-col text-sm">
+                  <div className="font-medium">API Keys</div>
+                  <div>Manage and create API keys for your workspace.</div>
                 </div>
 
                 <ArrowRight className="size-4 text-foreground/60" />

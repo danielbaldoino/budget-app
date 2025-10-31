@@ -23,7 +23,7 @@ export async function updateUser(app: FastifyTypedInstance) {
         body: z
           .object({
             name: z.string().optional(),
-            username: z.string().min(3).max(30).optional(),
+            username: z.string().trim().min(3).max(30).optional(),
             password: z.string().min(6).max(100).optional(),
           })
           .refine((data) => Object.keys(data).length > 0, {

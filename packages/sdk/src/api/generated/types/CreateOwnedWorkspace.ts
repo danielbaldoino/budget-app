@@ -11,6 +11,10 @@ export type CreateOwnedWorkspace201 = {
    * @type string, uuid
    */
   workspaceId: string
+  /**
+   * @type string, uuid
+   */
+  tenantSchemaId: string
 }
 
 /**

@@ -26,9 +26,9 @@ export const getProfile200Schema = z
       name: z.string(),
       email: z.string(),
       emailVerified: z.boolean(),
+      image: z.string().nullish(),
       createdAt: z.string().datetime(),
       updatedAt: z.string().datetime(),
-      image: z.string().nullable().nullish(),
     }),
   })
   .describe('Success') as unknown as ToZod<GetProfile200>
@@ -42,18 +42,19 @@ export const getProfile400Schema = z
   .object({
     code: z.string(),
     message: z.string(),
-    errors: z
-      .array(
-        z
-          .object({
-            code: z.string(),
-            message: z.string(),
-            path: z.array(z.union([z.string(), z.number()])),
-          })
-          .catchall(z.any()),
-      )
-      .describe('Validation errors')
-      .optional(),
+    errors: z.optional(
+      z
+        .array(
+          z
+            .object({
+              code: z.string(),
+              message: z.string(),
+              path: z.array(z.union([z.string(), z.number()])),
+            })
+            .catchall(z.any()),
+        )
+        .describe('Validation errors'),
+    ),
   })
   .describe(
     'Bad Request. Usually due to missing parameters, or invalid parameters.',

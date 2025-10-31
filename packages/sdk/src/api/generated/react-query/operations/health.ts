@@ -19,7 +19,8 @@ import type {
 } from '../../types/Health'
 
 function getHealthUrl() {
-  return `/health` as const
+  const res = { method: 'GET', url: `/health` as const }
+  return res
 }
 
 /**
@@ -37,10 +38,6 @@ export async function health(
       Health400 | Health401 | Health403 | Health404 | Health429 | Health500
     >,
     unknown
-  >({
-    method: 'GET',
-    url: getHealthUrl().toString(),
-    ...requestConfig,
-  })
+  >({ method: 'GET', url: getHealthUrl().url.toString(), ...requestConfig })
   return res.data
 }

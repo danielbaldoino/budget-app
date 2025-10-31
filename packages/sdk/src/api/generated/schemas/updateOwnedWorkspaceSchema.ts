@@ -34,18 +34,19 @@ export const updateOwnedWorkspace400Schema = z
   .object({
     code: z.string(),
     message: z.string(),
-    errors: z
-      .array(
-        z
-          .object({
-            code: z.string(),
-            message: z.string(),
-            path: z.array(z.union([z.string(), z.number()])),
-          })
-          .catchall(z.any()),
-      )
-      .describe('Validation errors')
-      .optional(),
+    errors: z.optional(
+      z
+        .array(
+          z
+            .object({
+              code: z.string(),
+              message: z.string(),
+              path: z.array(z.union([z.string(), z.number()])),
+            })
+            .catchall(z.any()),
+        )
+        .describe('Validation errors'),
+    ),
   })
   .describe(
     'Bad Request. Usually due to missing parameters, or invalid parameters.',
@@ -121,10 +122,10 @@ export const updateOwnedWorkspace500Schema = z
 export type UpdateOwnedWorkspace500Schema = UpdateOwnedWorkspace500
 
 export const updateOwnedWorkspaceMutationRequestSchema = z.object({
-  name: z.string().optional(),
-  slug: z.string().optional(),
-  active: z.boolean().optional(),
-  logoUrl: z.string().url().nullable().nullish(),
+  name: z.optional(z.string()),
+  slug: z.optional(z.string()),
+  active: z.optional(z.boolean()),
+  logoUrl: z.string().url().nullish(),
 }) as unknown as ToZod<UpdateOwnedWorkspaceMutationRequest>
 
 export type UpdateOwnedWorkspaceMutationRequestSchema =

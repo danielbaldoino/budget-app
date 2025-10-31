@@ -20,7 +20,8 @@ import type {
 } from '../../types/CreateOwnedWorkspace'
 
 function getCreateOwnedWorkspaceUrl() {
-  return `/owned-workspace` as const
+  const res = { method: 'POST', url: `/owned-workspace` as const }
+  return res
 }
 
 /**
@@ -36,6 +37,7 @@ export async function createOwnedWorkspace(
   const { client: request = fetch, ...requestConfig } = config
 
   const requestData = data
+
   const res = await request<
     CreateOwnedWorkspaceMutationResponse,
     ResponseErrorConfig<
@@ -49,7 +51,7 @@ export async function createOwnedWorkspace(
     CreateOwnedWorkspaceMutationRequest
   >({
     method: 'POST',
-    url: getCreateOwnedWorkspaceUrl().toString(),
+    url: getCreateOwnedWorkspaceUrl().url.toString(),
     data: requestData,
     ...requestConfig,
   })

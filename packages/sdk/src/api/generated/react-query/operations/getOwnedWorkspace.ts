@@ -19,7 +19,8 @@ import type {
 } from '../../types/GetOwnedWorkspace'
 
 function getGetOwnedWorkspaceUrl() {
-  return `/owned-workspace` as const
+  const res = { method: 'GET', url: `/owned-workspace` as const }
+  return res
 }
 
 /**
@@ -44,7 +45,7 @@ export async function getOwnedWorkspace(
     unknown
   >({
     method: 'GET',
-    url: getGetOwnedWorkspaceUrl().toString(),
+    url: getGetOwnedWorkspaceUrl().url.toString(),
     ...requestConfig,
   })
   return res.data

@@ -68,7 +68,7 @@ export async function listUsers(app: FastifyTypedInstance) {
               .from(users)
               .orderBy(asc(users[orderBy]))
               .offset((page - 1) * 2)
-              .limit(10)
+              .limit(20)
               .where(and(...conditions)),
 
             db.$count(users, and(...conditions)),

@@ -17,7 +17,8 @@ import type {
 } from '../types/UpdateOwnedWorkspace'
 
 function getUpdateOwnedWorkspaceUrl() {
-  return `/owned-workspace` as const
+  const res = { method: 'PATCH', url: `/owned-workspace` as const }
+  return res
 }
 
 /**
@@ -33,6 +34,7 @@ export async function updateOwnedWorkspace(
   const { client: request = fetch, ...requestConfig } = config
 
   const requestData = data
+
   const res = await request<
     UpdateOwnedWorkspaceMutationResponse,
     ResponseErrorConfig<
@@ -46,7 +48,7 @@ export async function updateOwnedWorkspace(
     UpdateOwnedWorkspaceMutationRequest
   >({
     method: 'PATCH',
-    url: getUpdateOwnedWorkspaceUrl().toString(),
+    url: getUpdateOwnedWorkspaceUrl().url.toString(),
     data: requestData,
     ...requestConfig,
   })

@@ -9,7 +9,8 @@ import {
 } from '@workspace/ui/components/breadcrumb'
 import Link from 'next/link'
 import { redirect } from 'next/navigation'
-import { ViewIdWorkspace } from './_components/view-id-workpsace'
+import { ViewTenantSchemaId } from './_components/view-tenant-schema-id'
+import { ViewWorkspaceSlug } from './_components/view-workpsace-slug'
 
 export default async function Page() {
   const { data } = await sdk.getOwnedWorkspace()
@@ -34,7 +35,11 @@ export default async function Page() {
         </BreadcrumbList>
       </Breadcrumb>
 
-      <ViewIdWorkspace id={data.workspace.id} />
+      <ViewWorkspaceSlug slug={data.workspace.slug} />
+
+      {data.workspace.tenantSchemaId && (
+        <ViewTenantSchemaId id={data.workspace.tenantSchemaId} />
+      )}
     </div>
   )
 }

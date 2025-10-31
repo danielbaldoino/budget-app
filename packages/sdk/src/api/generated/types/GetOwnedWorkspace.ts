@@ -34,15 +34,7 @@ export type GetOwnedWorkspace200 = {
     /**
      * @type string
      */
-    ownerId: string
-    /**
-     * @type string, date-time
-     */
-    createdAt: string
-    /**
-     * @type string, date-time
-     */
-    updatedAt: string
+    tenantSchemaId: string | null
   }
 }
 
