@@ -1,7 +1,6 @@
 import { UnauthorizedError } from '@/http/errors/unauthorized-error'
 import type { FastifyTypedInstance } from '@/types/fastify'
-import { db } from '@workspace/db'
-import { eq } from '@workspace/db/orm'
+import { orm } from '@workspace/db'
 import { fastifyPlugin } from 'fastify-plugin'
 
 export const apiKeyAuthenticator = fastifyPlugin(
@@ -13,12 +12,17 @@ export const apiKeyAuthenticator = fastifyPlugin(
         throw new UnauthorizedError()
       }
 
-      const [apiKey] = await request.internal.tenantSchema(({ apiKeys }) =>
-        db.select().from(apiKeys).where(eq(apiKeys.token, token)).limit(1),
+      const apiKey = await request.internal.tenantSchema(({ apiKeys }) =>
+        request.internal.tenantDb.query.apiKeys.findFirst({
+          where: orm.eq(apiKeys.token, token),
+        }),
       )
 
       if (!apiKey) {
-        throw new UnauthorizedError()
+        throw new UnauthorizedError({
+          code: 'INVALID_API_KEY',
+          message: 'Invalid API key',
+        })
       }
     })
   },

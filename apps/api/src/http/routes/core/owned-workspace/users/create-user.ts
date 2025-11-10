@@ -4,9 +4,8 @@ import { getTenantSchema } from '@/http/functions/core/get-tenant-schema'
 import { authenticate } from '@/http/middlewares/authenticate'
 import type { FastifyTypedInstance } from '@/types/fastify'
 import { hashPassword } from '@workspace/auth'
-import { db } from '@workspace/db'
-import { eq } from '@workspace/db/orm'
-import { tenantSchemaTables } from '@workspace/db/tenant'
+import { orm } from '@workspace/db'
+import { tenantDb, tenantSchema } from '@workspace/db/tenant'
 import { z } from 'zod'
 
 export async function createUser(app: FastifyTypedInstance) {
@@ -40,14 +39,10 @@ export async function createUser(app: FastifyTypedInstance) {
 
       const { name, username, password } = request.body
 
-      const [userByUsername] = await tenantSchemaTables(
-        tSchema,
-        async ({ users }) =>
-          await db
-            .select()
-            .from(users)
-            .where(eq(users.username, username))
-            .limit(1),
+      const userByUsername = await tenantSchema(tSchema, ({ users }) =>
+        tenantDb(tSchema).query.users.findFirst({
+          where: orm.eq(users.username, username),
+        }),
       )
 
       if (userByUsername) {
@@ -59,17 +54,15 @@ export async function createUser(app: FastifyTypedInstance) {
 
       const hashedPassword = await hashPassword(password)
 
-      const [user] = await tenantSchemaTables(
-        tSchema,
-        async ({ users }) =>
-          await db
-            .insert(users)
-            .values({
-              name,
-              username,
-              password: hashedPassword,
-            })
-            .returning(),
+      const [user] = await tenantSchema(tSchema, ({ users }) =>
+        tenantDb(tSchema)
+          .insert(users)
+          .values({
+            name,
+            username,
+            passwordHash: hashedPassword,
+          })
+          .returning(),
       )
 
       if (!user) {

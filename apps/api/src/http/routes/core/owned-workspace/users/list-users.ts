@@ -2,10 +2,13 @@ import { withDefaultErrorResponses } from '@/http/errors/default-error-responses
 import { getTenantSchema } from '@/http/functions/core/get-tenant-schema'
 import { authenticate } from '@/http/middlewares/authenticate'
 import type { FastifyTypedInstance } from '@/types/fastify'
-import { db } from '@workspace/db'
-import { type SQL, and, asc, ilike } from '@workspace/db/orm'
-import { tenantSchemaTables } from '@workspace/db/tenant'
+import { orm } from '@workspace/db'
+import { tenantDb, tenantSchema } from '@workspace/db/tenant'
 import { z } from 'zod'
+
+const FILTER_BY = ['all', 'name'] as const
+const SORT_BY = ['name', 'createdAt'] as const
+const ORDER = ['asc', 'desc'] as const
 
 export async function listUsers(app: FastifyTypedInstance) {
   app.register(authenticate).get(
@@ -17,12 +20,30 @@ export async function listUsers(app: FastifyTypedInstance) {
         operationId: 'listUsers',
         querystring: z.object({
           search: z.string().optional(),
-          orderBy: z.enum(['id', 'name']).optional().default('id'),
-          page: z.coerce.number().min(0).optional().default(1),
+          filterBy: z.enum(FILTER_BY).optional().default('name'),
+          sortBy: z.enum(SORT_BY).optional().default('createdAt'),
+          order: z.enum(ORDER).optional().default('asc'),
+          page: z.coerce.number().positive().optional().default(1),
+          pageSize: z.coerce
+            .number()
+            .positive()
+            .min(10)
+            .max(100)
+            .optional()
+            .default(50),
         }),
         response: withDefaultErrorResponses({
           200: z
             .object({
+              meta: z.object({
+                search: z.string().optional(),
+                filterBy: z.enum(FILTER_BY),
+                sortBy: z.enum(SORT_BY),
+                order: z.enum(ORDER),
+                count: z.number(),
+                page: z.number(),
+                pageSize: z.number(),
+              }),
               users: z.array(
                 z.object({
                   id: z.string(),
@@ -32,9 +53,6 @@ export async function listUsers(app: FastifyTypedInstance) {
                   updatedAt: z.date(),
                 }),
               ),
-              meta: z.object({
-                total: z.number(),
-              }),
             })
             .describe('Success'),
         }),
@@ -45,42 +63,75 @@ export async function listUsers(app: FastifyTypedInstance) {
 
       const tSchema = await getTenantSchema({ workspaceOwnerId: user.id })
 
-      const { search, orderBy, page } = request.query
+      const { search, filterBy, sortBy, order, page, pageSize } = request.query
 
-      const { users, total } = await tenantSchemaTables(
+      const { count, users } = await tenantSchema(
         tSchema,
         async ({ users }) => {
-          const conditions: SQL[] = []
+          const WHERE = () => {
+            const searchConditions: orm.SQL[] = []
 
-          if (search) {
-            conditions.push(ilike(users.name, `%${search}%`))
+            if (search) {
+              if (filterBy === 'all' || filterBy === 'name') {
+                searchConditions.push(orm.ilike(users.name, `%${search}%`))
+              }
+
+              return searchConditions.length
+                ? orm.or(...searchConditions)
+                : undefined
+            }
           }
 
-          const [result, count] = await Promise.all([
-            db
+          const ORDER_BY = () => {
+            const orderFn = order === 'asc' ? orm.asc : orm.desc
+
+            const orderConditions: orm.SQL[] = []
+
+            if (sortBy === 'name') {
+              orderConditions.push(orderFn(users.name))
+            }
+
+            if (sortBy === 'createdAt') {
+              orderConditions.push(orderFn(users.createdAt))
+            }
+
+            return orderConditions
+          }
+
+          const [[count], listUsers] = await Promise.all([
+            tenantDb(tSchema)
               .select({
-                id: users.id,
-                name: users.name,
-                username: users.username,
-                createdAt: users.createdAt,
-                updatedAt: users.updatedAt,
+                count: orm.count(users.id),
               })
               .from(users)
-              .orderBy(asc(users[orderBy]))
-              .offset((page - 1) * 2)
-              .limit(20)
-              .where(and(...conditions)),
+              .where(WHERE()),
 
-            db.$count(users, and(...conditions)),
+            tenantDb(tSchema).query.users.findMany({
+              where: WHERE(),
+              orderBy: ORDER_BY(),
+              offset: (page - 1) * pageSize,
+              limit: pageSize,
+            }),
           ])
 
-          return { users: result, total: count }
+          return {
+            count: count?.count || 0,
+            users: listUsers,
+          }
         },
       )
 
       return {
+        meta: {
+          search,
+          filterBy,
+          sortBy,
+          order,
+          count,
+          page,
+          pageSize,
+        },
         users,
-        meta: { total },
       }
     },
   )

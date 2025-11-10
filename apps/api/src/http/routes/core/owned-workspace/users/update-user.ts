@@ -4,9 +4,8 @@ import { getTenantSchema } from '@/http/functions/core/get-tenant-schema'
 import { authenticate } from '@/http/middlewares/authenticate'
 import type { FastifyTypedInstance } from '@/types/fastify'
 import { hashPassword } from '@workspace/auth'
-import { db } from '@workspace/db'
-import { and, eq, ne } from '@workspace/db/orm'
-import { tenantSchemaTables } from '@workspace/db/tenant'
+import { orm } from '@workspace/db'
+import { tenantDb, tenantSchema } from '@workspace/db/tenant'
 import { z } from 'zod'
 
 export async function updateUser(app: FastifyTypedInstance) {
@@ -43,16 +42,10 @@ export async function updateUser(app: FastifyTypedInstance) {
       const { name, username, password } = request.body
 
       if (username) {
-        const [userByUsername] = await tenantSchemaTables(
-          tSchema,
-          async ({ users }) =>
-            await db
-              .select()
-              .from(users)
-              .where(
-                and(eq(users.username, username), ne(users.id, targetUserId)),
-              )
-              .limit(1),
+        const userByUsername = await tenantSchema(tSchema, ({ users }) =>
+          tenantDb(tSchema).query.users.findFirst({
+            where: orm.eq(users.username, username),
+          }),
         )
 
         if (userByUsername) {
@@ -63,17 +56,17 @@ export async function updateUser(app: FastifyTypedInstance) {
         }
       }
 
-      await tenantSchemaTables(
-        tSchema,
-        async ({ users }) =>
-          await db
-            .update(users)
-            .set({
-              name,
-              username,
-              password: password ? await hashPassword(password) : undefined,
-            })
-            .where(eq(users.id, targetUserId)),
+      const passwordHash = password ? await hashPassword(password) : undefined
+
+      await tenantSchema(tSchema, ({ users }) =>
+        tenantDb(tSchema)
+          .update(users)
+          .set({
+            name,
+            username,
+            passwordHash,
+          })
+          .where(orm.eq(users.id, targetUserId)),
       )
 
       return reply.status(204).send()

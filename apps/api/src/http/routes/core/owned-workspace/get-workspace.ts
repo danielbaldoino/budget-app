@@ -2,8 +2,7 @@ import { BadRequestError } from '@/http/errors/bad-request-error'
 import { withDefaultErrorResponses } from '@/http/errors/default-error-responses'
 import { authenticate } from '@/http/middlewares/authenticate'
 import type { FastifyTypedInstance } from '@/types/fastify'
-import { db } from '@workspace/db'
-import { eq } from '@workspace/db/orm'
+import { db, orm } from '@workspace/db'
 import { workspaces } from '@workspace/db/schema'
 import { z } from 'zod'
 
@@ -36,18 +35,9 @@ export async function getOwnedWorkspace(app: FastifyTypedInstance) {
         user: { id: userId },
       } = request.authSession
 
-      const [workspace] = await db
-        .select({
-          id: workspaces.id,
-          active: workspaces.active,
-          name: workspaces.name,
-          slug: workspaces.slug,
-          logoUrl: workspaces.logoUrl,
-          tenantSchemaId: workspaces.tenantSchemaId,
-        })
-        .from(workspaces)
-        .where(eq(workspaces.ownerId, userId))
-        .limit(1)
+      const workspace = await db.query.workspaces.findFirst({
+        where: orm.eq(workspaces.ownerId, userId),
+      })
 
       if (!workspace) {
         throw new BadRequestError({

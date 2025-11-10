@@ -2,10 +2,8 @@ import { withDefaultErrorResponses } from '@/http/errors/default-error-responses
 import { getTenantSchema } from '@/http/functions/core/get-tenant-schema'
 import { authenticate } from '@/http/middlewares/authenticate'
 import type { FastifyTypedInstance } from '@/types/fastify'
-import { db } from '@workspace/db'
-import { eq } from '@workspace/db/orm'
-import {} from '@workspace/db/schema'
-import { tenantSchemaTables } from '@workspace/db/tenant'
+import { orm } from '@workspace/db'
+import { tenantDb, tenantSchema } from '@workspace/db/tenant'
 import { z } from 'zod'
 
 export async function updateApiKey(app: FastifyTypedInstance) {
@@ -37,15 +35,13 @@ export async function updateApiKey(app: FastifyTypedInstance) {
       const { apiKeyId } = request.params
       const { name } = request.body
 
-      await tenantSchemaTables(
-        tSchema,
-        async ({ apiKeys }) =>
-          await db
-            .update(apiKeys)
-            .set({
-              name,
-            })
-            .where(eq(apiKeys.id, apiKeyId)),
+      await tenantSchema(tSchema, ({ apiKeys }) =>
+        tenantDb(tSchema)
+          .update(apiKeys)
+          .set({
+            name,
+          })
+          .where(orm.eq(apiKeys.id, apiKeyId)),
       )
 
       return reply.status(204).send()

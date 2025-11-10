@@ -19,8 +19,11 @@ import { z } from 'zod'
 
 export const listUsersQueryParamsSchema = z.object({
   search: z.optional(z.string()),
-  orderBy: z.optional(z.enum(['id', 'name']).default('id')),
-  page: z.optional(z.coerce.number().min(0).default(1)),
+  filterBy: z.optional(z.enum(['all', 'name']).default('name')),
+  sortBy: z.optional(z.enum(['name', 'createdAt']).default('createdAt')),
+  order: z.optional(z.enum(['asc', 'desc']).default('asc')),
+  page: z.optional(z.coerce.number().gt(0).default(1)),
+  pageSize: z.optional(z.coerce.number().max(100).gt(10).default(50)),
 }) as unknown as ToZod<ListUsersQueryParams>
 
 export type ListUsersQueryParamsSchema = ListUsersQueryParams
@@ -30,6 +33,15 @@ export type ListUsersQueryParamsSchema = ListUsersQueryParams
  */
 export const listUsers200Schema = z
   .object({
+    meta: z.object({
+      search: z.optional(z.string()),
+      filterBy: z.enum(['all', 'name']),
+      sortBy: z.enum(['name', 'createdAt']),
+      order: z.enum(['asc', 'desc']),
+      count: z.number(),
+      page: z.number(),
+      pageSize: z.number(),
+    }),
     users: z.array(
       z.object({
         id: z.string(),
@@ -39,9 +51,6 @@ export const listUsers200Schema = z
         updatedAt: z.string().datetime(),
       }),
     ),
-    meta: z.object({
-      total: z.number(),
-    }),
   })
   .describe('Success') as unknown as ToZod<ListUsers200>
 

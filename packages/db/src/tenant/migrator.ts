@@ -8,7 +8,7 @@ import type { PgSession } from 'drizzle-orm/pg-core'
 import { Pool } from 'pg'
 import { env } from '../lib/env'
 import { TENANT_MIGRATIONS_SCHEMA, TENANT_MIGRATIONS_TABLE } from './constants'
-import * as schema from './schema'
+import { createTenantSchema } from './schema'
 
 const DRIZZLE_STATEMENT_BREAKPOINT = '--> statement-breakpoint'
 
@@ -114,11 +114,15 @@ export async function migrateTenantSchema(tenantSchema: string) {
   const pool = new Pool({ connectionString: env.DATABASE_URL, max: 1 })
 
   try {
-    const tenantDb = drizzle(pool, { schema }) as any
+    const tenantDb = drizzle(pool, { schema: createTenantSchema() })
 
     const migrations = readMigrationFiles(tenantSchema)
 
-    await migrate(tenantSchema, migrations, tenantDb.session)
+    await migrate(
+      tenantSchema,
+      migrations,
+      (tenantDb as unknown as { session: PgSession }).session,
+    )
 
     console.log('Tenant migration complete: ', tenantSchema)
   } catch (error) {

@@ -1,7 +1,6 @@
 import { UnauthorizedError } from '@/http/errors/unauthorized-error'
 import type { FastifyTypedInstance } from '@/types/fastify'
-import { db } from '@workspace/db'
-import { eq } from '@workspace/db/orm'
+import { orm } from '@workspace/db'
 import { fastifyPlugin } from 'fastify-plugin'
 
 export const jwtAuthenticator = fastifyPlugin(
@@ -14,27 +13,26 @@ export const jwtAuthenticator = fastifyPlugin(
       try {
         const userId = (await request.jwtVerify<{ sub: string }>()).sub
 
-        const [user] = await request.internal.tenantSchema(({ users }) =>
-          db
-            .select({
-              id: users.id,
-              name: users.name,
-              username: users.username,
-              createdAt: users.createdAt,
-              updatedAt: users.updatedAt,
-            })
-            .from(users)
-            .where(eq(users.id, userId))
-            .limit(1),
+        const user = await request.internal.tenantSchema(({ users }) =>
+          request.internal.tenantDb.query.users.findFirst({
+            columns: { passwordHash: false },
+            where: orm.eq(users.id, userId),
+          }),
         )
 
         if (!user) {
-          throw new UnauthorizedError()
+          throw new UnauthorizedError({
+            code: 'USER_NOT_FOUND',
+            message: 'User not found',
+          })
         }
 
         request.internal.authUser = user
       } catch {
-        throw new UnauthorizedError()
+        throw new UnauthorizedError({
+          code: 'INVALID_JWT_TOKEN',
+          message: 'Invalid JWT token',
+        })
       }
     })
   },

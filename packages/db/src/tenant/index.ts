@@ -1,2 +1,2 @@
-export * from './manager'
+export * from './tenant-db'
 export { migrateTenantSchema } from './migrator'

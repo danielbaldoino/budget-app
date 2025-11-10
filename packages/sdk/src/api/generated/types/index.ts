@@ -118,8 +118,13 @@ export type {
   HealthQuery,
 } from './Health'
 export type {
-  ListApiKeysQueryParamsOrderByEnumKey,
+  ListApiKeysQueryParamsFilterByEnumKey,
+  ListApiKeysQueryParamsSortByEnumKey,
+  ListApiKeysQueryParamsOrderEnumKey,
   ListApiKeysQueryParams,
+  MetaFilterByEnumKey,
+  MetaSortByEnumKey,
+  MetaOrderEnumKey,
   ListApiKeys200,
   ListApiKeys400,
   ListApiKeys401,
@@ -131,8 +136,13 @@ export type {
   ListApiKeysQuery,
 } from './ListApiKeys'
 export type {
-  ListUsersQueryParamsOrderByEnumKey,
+  ListUsersQueryParamsFilterByEnumKey,
+  ListUsersQueryParamsSortByEnumKey,
+  ListUsersQueryParamsOrderEnumKey,
   ListUsersQueryParams,
+  MetaFilterByEnum2Key,
+  MetaSortByEnum2Key,
+  MetaOrderEnum2Key,
   ListUsers200,
   ListUsers400,
   ListUsers401,
@@ -186,8 +196,22 @@ export type {
 } from './UpdateUser'
 export { deleteApiKey204Enum } from './DeleteApiKey'
 export { deleteUser204Enum } from './DeleteUser'
-export { listApiKeysQueryParamsOrderByEnum } from './ListApiKeys'
-export { listUsersQueryParamsOrderByEnum } from './ListUsers'
+export {
+  listApiKeysQueryParamsFilterByEnum,
+  listApiKeysQueryParamsSortByEnum,
+  listApiKeysQueryParamsOrderEnum,
+  metaFilterByEnum,
+  metaSortByEnum,
+  metaOrderEnum,
+} from './ListApiKeys'
+export {
+  listUsersQueryParamsFilterByEnum,
+  listUsersQueryParamsSortByEnum,
+  listUsersQueryParamsOrderEnum,
+  metaFilterByEnum2,
+  metaSortByEnum2,
+  metaOrderEnum2,
+} from './ListUsers'
 export { updateApiKey204Enum } from './UpdateApiKey'
 export { updateOwnedWorkspace204Enum } from './UpdateOwnedWorkspace'
 export { updateUser204Enum } from './UpdateUser'

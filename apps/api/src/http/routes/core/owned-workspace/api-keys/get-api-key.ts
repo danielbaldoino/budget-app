@@ -3,10 +3,8 @@ import { withDefaultErrorResponses } from '@/http/errors/default-error-responses
 import { getTenantSchema } from '@/http/functions/core/get-tenant-schema'
 import { authenticate } from '@/http/middlewares/authenticate'
 import type { FastifyTypedInstance } from '@/types/fastify'
-import { db } from '@workspace/db'
-import { eq } from '@workspace/db/orm'
-import {} from '@workspace/db/schema'
-import { tenantSchemaTables } from '@workspace/db/tenant'
+import { orm } from '@workspace/db'
+import { tenantDb, tenantSchema } from '@workspace/db/tenant'
 import { z } from 'zod'
 
 export async function getApiKey(app: FastifyTypedInstance) {
@@ -44,20 +42,10 @@ export async function getApiKey(app: FastifyTypedInstance) {
 
       const { apiKeyId } = request.params
 
-      const [apiKey] = await tenantSchemaTables(
-        tSchema,
-        async ({ apiKeys }) =>
-          await db
-            .select({
-              id: apiKeys.id,
-              name: apiKeys.name,
-              token: apiKeys.token,
-              createdAt: apiKeys.createdAt,
-              updatedAt: apiKeys.updatedAt,
-            })
-            .from(apiKeys)
-            .where(eq(apiKeys.id, apiKeyId))
-            .limit(1),
+      const apiKey = await tenantSchema(tSchema, ({ apiKeys }) =>
+        tenantDb(tSchema).query.apiKeys.findFirst({
+          where: orm.eq(apiKeys.id, apiKeyId),
+        }),
       )
 
       if (!apiKey) {

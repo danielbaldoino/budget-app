@@ -2,8 +2,7 @@ import { BadRequestError } from '@/http/errors/bad-request-error'
 import { withDefaultErrorResponses } from '@/http/errors/default-error-responses'
 import { authenticate } from '@/http/middlewares/authenticate'
 import type { FastifyTypedInstance } from '@/types/fastify'
-import { db } from '@workspace/db'
-import { eq } from '@workspace/db/orm'
+import { db, orm } from '@workspace/db'
 import { tenantSchemas, workspaces } from '@workspace/db/schema'
 import { migrateTenantSchema } from '@workspace/db/tenant'
 import { createSlug } from '@workspace/utils'
@@ -36,11 +35,9 @@ export async function createOwnedWorkspace(app: FastifyTypedInstance) {
         user: { id: userId },
       } = request.authSession
 
-      const [ownedWorkspace] = await db
-        .select()
-        .from(workspaces)
-        .where(eq(workspaces.ownerId, userId))
-        .limit(1)
+      const ownedWorkspace = await db.query.workspaces.findFirst({
+        where: orm.eq(workspaces.ownerId, userId),
+      })
 
       if (ownedWorkspace) {
         throw new BadRequestError({
@@ -53,11 +50,9 @@ export async function createOwnedWorkspace(app: FastifyTypedInstance) {
 
       const slugWorkspace = slug ?? createSlug(name)
 
-      const [workspaceBySlug] = await db
-        .select()
-        .from(workspaces)
-        .where(eq(workspaces.slug, slugWorkspace))
-        .limit(1)
+      const workspaceBySlug = await db.query.workspaces.findFirst({
+        where: orm.eq(workspaces.slug, slugWorkspace),
+      })
 
       if (workspaceBySlug) {
         throw new BadRequestError({
@@ -110,7 +105,7 @@ export async function createOwnedWorkspace(app: FastifyTypedInstance) {
           .set({
             tenantSchemaId: tenant.id,
           })
-          .where(eq(workspaces.id, workspace.id))
+          .where(orm.eq(workspaces.id, workspace.id))
 
         return { workspace, tenant }
       })

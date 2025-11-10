@@ -3,9 +3,8 @@ import { withDefaultErrorResponses } from '@/http/errors/default-error-responses
 import { getTenantSchema } from '@/http/functions/core/get-tenant-schema'
 import { authenticate } from '@/http/middlewares/authenticate'
 import type { FastifyTypedInstance } from '@/types/fastify'
-import { db } from '@workspace/db'
-import { eq } from '@workspace/db/orm'
-import { tenantSchemaTables } from '@workspace/db/tenant'
+import { orm } from '@workspace/db'
+import { tenantDb, tenantSchema } from '@workspace/db/tenant'
 import { z } from 'zod'
 
 export async function getUser(app: FastifyTypedInstance) {
@@ -43,20 +42,11 @@ export async function getUser(app: FastifyTypedInstance) {
 
       const { userId: targetUserId } = request.params
 
-      const [user] = await tenantSchemaTables(
-        tSchema,
-        async ({ users }) =>
-          await db
-            .select({
-              id: users.id,
-              name: users.name,
-              username: users.username,
-              createdAt: users.createdAt,
-              updatedAt: users.updatedAt,
-            })
-            .from(users)
-            .where(eq(users.id, targetUserId))
-            .limit(1),
+      const user = await tenantSchema(tSchema, ({ users }) =>
+        tenantDb(tSchema).query.users.findFirst({
+          columns: { passwordHash: false },
+          where: orm.eq(users.id, targetUserId),
+        }),
       )
 
       if (!user) {

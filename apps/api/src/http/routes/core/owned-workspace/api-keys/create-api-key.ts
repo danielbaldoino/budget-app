@@ -4,9 +4,7 @@ import { withDefaultErrorResponses } from '@/http/errors/default-error-responses
 import { getTenantSchema } from '@/http/functions/core/get-tenant-schema'
 import { authenticate } from '@/http/middlewares/authenticate'
 import type { FastifyTypedInstance } from '@/types/fastify'
-import { db } from '@workspace/db'
-import {} from '@workspace/db/schema'
-import { tenantSchemaTables } from '@workspace/db/tenant'
+import { tenantDb, tenantSchema } from '@workspace/db/tenant'
 import { z } from 'zod'
 
 export async function createApiKey(app: FastifyTypedInstance) {
@@ -41,16 +39,14 @@ export async function createApiKey(app: FastifyTypedInstance) {
       const unique = randomUUID().replace(/-/g, '')
       const token = `key_${unique}`
 
-      const [apiKey] = await tenantSchemaTables(
-        tSchema,
-        async ({ apiKeys }) =>
-          await db
-            .insert(apiKeys)
-            .values({
-              name,
-              token,
-            })
-            .returning(),
+      const [apiKey] = await tenantSchema(tSchema, ({ apiKeys }) =>
+        tenantDb(tSchema)
+          .insert(apiKeys)
+          .values({
+            name,
+            token,
+          })
+          .returning(),
       )
 
       if (!apiKey) {

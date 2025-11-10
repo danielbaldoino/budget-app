@@ -2,8 +2,7 @@ import { BadRequestError } from '@/http/errors/bad-request-error'
 import { withDefaultErrorResponses } from '@/http/errors/default-error-responses'
 import { authenticate } from '@/http/middlewares/authenticate'
 import type { FastifyTypedInstance } from '@/types/fastify'
-import { db } from '@workspace/db'
-import { and, eq, ne } from '@workspace/db/orm'
+import { db, orm } from '@workspace/db'
 import { workspaces } from '@workspace/db/schema'
 import { createSlug } from '@workspace/utils'
 import { z } from 'zod'
@@ -32,13 +31,10 @@ export async function updateOwnedWorkspace(app: FastifyTypedInstance) {
         user: { id: userId },
       } = request.authSession
 
-      const [workspace] = await db
-        .select({
-          id: workspaces.id,
-        })
-        .from(workspaces)
-        .where(eq(workspaces.ownerId, userId))
-        .limit(1)
+      const workspace = await db.query.workspaces.findFirst({
+        columns: { id: true },
+        where: orm.eq(workspaces.ownerId, userId),
+      })
 
       if (!workspace) {
         throw new BadRequestError({
@@ -50,13 +46,12 @@ export async function updateOwnedWorkspace(app: FastifyTypedInstance) {
       const { name, slug, active, logoUrl } = request.body
 
       if (slug) {
-        const [workspaceBySlug] = await db
-          .select()
-          .from(workspaces)
-          .where(
-            and(eq(workspaces.slug, slug), ne(workspaces.id, workspace.id)),
-          )
-          .limit(1)
+        const workspaceBySlug = await db.query.workspaces.findFirst({
+          where: orm.and(
+            orm.eq(workspaces.slug, slug),
+            orm.ne(workspaces.id, workspace.id),
+          ),
+        })
 
         if (workspaceBySlug) {
           throw new BadRequestError({
@@ -74,7 +69,7 @@ export async function updateOwnedWorkspace(app: FastifyTypedInstance) {
           slug,
           logoUrl,
         })
-        .where(eq(workspaces.id, workspace.id))
+        .where(orm.eq(workspaces.id, workspace.id))
 
       return reply.status(204).send()
     },

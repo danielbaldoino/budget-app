@@ -1,9 +1,12 @@
 import { UnauthorizedError } from '@/http/errors/unauthorized-error'
 import type { FastifyTypedInstance } from '@/types/fastify'
-import { db } from '@workspace/db'
-import { eq } from '@workspace/db/orm'
+import { db, orm } from '@workspace/db'
 import { tenantSchemas, workspaces } from '@workspace/db/schema'
-import { type TenantTables, tSchemaTables } from '@workspace/db/tenant'
+import {
+  type TenantSchemaCallback,
+  tenantDb,
+  tenantSchema,
+} from '@workspace/db/tenant'
 import { fastifyPlugin } from 'fastify-plugin'
 
 export const tenantDatabase = fastifyPlugin(
@@ -35,13 +38,10 @@ export const tenantDatabase = fastifyPlugin(
       }
 
       if (workspaceSlug) {
-        const [workspace] = await db
-          .select({
-            tenantSchemaId: workspaces.tenantSchemaId,
-          })
-          .from(workspaces)
-          .where(eq(workspaces.slug, workspaceSlug))
-          .limit(1)
+        const workspace = await db.query.workspaces.findFirst({
+          columns: { tenantSchemaId: true },
+          where: orm.eq(workspaces.slug, workspaceSlug),
+        })
 
         if (!workspace) {
           throw new UnauthorizedError({
@@ -60,13 +60,10 @@ export const tenantDatabase = fastifyPlugin(
         tenantId = workspace.tenantSchemaId
       }
 
-      const [tenant] = await db
-        .select({
-          schemaName: tenantSchemas.schemaName,
-        })
-        .from(tenantSchemas)
-        .where(eq(tenantSchemas.id, tenantId as string))
-        .limit(1)
+      const tenant = await db.query.tenantSchemas.findFirst({
+        columns: { schemaName: true },
+        where: orm.eq(tenantSchemas.id, tenantId as string),
+      })
 
       if (!tenant) {
         throw new UnauthorizedError({
@@ -76,8 +73,9 @@ export const tenantDatabase = fastifyPlugin(
       }
 
       request.internal = {
-        tenantSchema: <T>(callback: (tables: TenantTables) => T | Promise<T>) =>
-          tSchemaTables<T>(tenant.schemaName, callback),
+        tenantSchema: <T>(cb: TenantSchemaCallback<T>) =>
+          tenantSchema<T>(tenant.schemaName, cb),
+        tenantDb: tenantDb(tenant.schemaName),
       } as any
     })
   },

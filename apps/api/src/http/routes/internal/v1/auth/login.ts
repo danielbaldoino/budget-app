@@ -2,8 +2,7 @@ import { BadRequestError } from '@/http/errors/bad-request-error'
 import { withDefaultErrorResponses } from '@/http/errors/default-error-responses'
 import type { FastifyTypedInstance } from '@/types/fastify'
 import { verifyPassword } from '@workspace/auth'
-import { db } from '@workspace/db'
-import { eq } from '@workspace/db/orm'
+import { orm } from '@workspace/db'
 import { z } from 'zod'
 
 export async function logIn(app: FastifyTypedInstance) {
@@ -29,18 +28,16 @@ export async function logIn(app: FastifyTypedInstance) {
     async (request, reply) => {
       const { username, password } = request.body
 
-      const [user] = await request.internal.tenantSchema(({ users }) =>
-        db
-          .select({
-            id: users.id,
-            password: users.password,
-          })
-          .from(users)
-          .where(eq(users.username, username))
-          .limit(1),
+      const { tenantSchema, tenantDb } = request.internal
+
+      const user = await tenantSchema(({ users }) =>
+        tenantDb.query.users.findFirst({
+          columns: { id: true, passwordHash: true },
+          where: orm.eq(users.username, username),
+        }),
       )
 
-      if (!user) {
+      if (!user || !user.passwordHash) {
         throw new BadRequestError({
           code: 'USER_NOT_FOUND',
           message: 'User not found.',
@@ -49,7 +46,7 @@ export async function logIn(app: FastifyTypedInstance) {
 
       const isPasswordValid = await verifyPassword({
         password,
-        hash: user.password,
+        hash: user.passwordHash,
       })
 
       if (!isPasswordValid) {

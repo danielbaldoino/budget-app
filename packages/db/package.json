@@ -32,8 +32,8 @@
     "./tenant": "./src/tenant/index.ts",
     "./schema": "./src/schema/index.ts",
     "./tenant/schema": "./src/tenant/schema/index.ts",
+    "./enums": "./src/lib/enums.ts",
     "./types": "./src/lib/types.ts",
-    "./orm": "./src/lib/orm.ts",
     "./env": "./src/lib/env.ts"
   }
 }

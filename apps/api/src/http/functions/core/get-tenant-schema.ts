@@ -1,6 +1,5 @@
 import { BadRequestError } from '@/http/errors/bad-request-error'
-import { db } from '@workspace/db'
-import { eq } from '@workspace/db/orm'
+import { db, orm } from '@workspace/db'
 import { tenantSchemas, workspaces } from '@workspace/db/schema'
 
 export async function getTenantSchema({
@@ -8,13 +7,10 @@ export async function getTenantSchema({
 }: {
   workspaceOwnerId: string
 }) {
-  const [workspace] = await db
-    .select({
-      tenantSchemaId: workspaces.tenantSchemaId,
-    })
-    .from(workspaces)
-    .where(eq(workspaces.ownerId, workspaceOwnerId))
-    .limit(1)
+  const workspace = await db.query.workspaces.findFirst({
+    columns: { tenantSchemaId: true },
+    where: orm.eq(workspaces.ownerId, workspaceOwnerId),
+  })
 
   if (!workspace) {
     throw new BadRequestError({
@@ -30,13 +26,10 @@ export async function getTenantSchema({
     })
   }
 
-  const [tenant] = await db
-    .select({
-      schemaName: tenantSchemas.schemaName,
-    })
-    .from(tenantSchemas)
-    .where(eq(tenantSchemas.id, workspace.tenantSchemaId))
-    .limit(1)
+  const tenant = await db.query.tenantSchemas.findFirst({
+    columns: { schemaName: true },
+    where: orm.eq(tenantSchemas.id, workspace.tenantSchemaId),
+  })
 
   if (!tenant) {
     throw new BadRequestError({

@@ -2,10 +2,8 @@ import { withDefaultErrorResponses } from '@/http/errors/default-error-responses
 import { getTenantSchema } from '@/http/functions/core/get-tenant-schema'
 import { authenticate } from '@/http/middlewares/authenticate'
 import type { FastifyTypedInstance } from '@/types/fastify'
-import { db } from '@workspace/db'
-import { eq } from '@workspace/db/orm'
-import {} from '@workspace/db/schema'
-import { tenantSchemaTables } from '@workspace/db/tenant'
+import { orm } from '@workspace/db'
+import { tenantDb, tenantSchema } from '@workspace/db/tenant'
 import { z } from 'zod'
 
 export async function deleteUser(app: FastifyTypedInstance) {
@@ -31,10 +29,8 @@ export async function deleteUser(app: FastifyTypedInstance) {
 
       const { userId: targetUserId } = request.params
 
-      await tenantSchemaTables(
-        tSchema,
-        async ({ users }) =>
-          await db.delete(users).where(eq(users.id, targetUserId)),
+      await tenantSchema(tSchema, ({ users }) =>
+        tenantDb(tSchema).delete(users).where(orm.eq(users.id, targetUserId)),
       )
 
       reply.status(204).send()

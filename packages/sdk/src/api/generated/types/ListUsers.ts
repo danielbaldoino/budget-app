@@ -3,13 +3,29 @@
  * Do not edit manually.
  */
 
-export const listUsersQueryParamsOrderByEnum = {
-  id: 'id',
+export const listUsersQueryParamsFilterByEnum = {
+  all: 'all',
   name: 'name',
 } as const
 
-export type ListUsersQueryParamsOrderByEnumKey =
-  (typeof listUsersQueryParamsOrderByEnum)[keyof typeof listUsersQueryParamsOrderByEnum]
+export type ListUsersQueryParamsFilterByEnumKey =
+  (typeof listUsersQueryParamsFilterByEnum)[keyof typeof listUsersQueryParamsFilterByEnum]
+
+export const listUsersQueryParamsSortByEnum = {
+  name: 'name',
+  createdAt: 'createdAt',
+} as const
+
+export type ListUsersQueryParamsSortByEnumKey =
+  (typeof listUsersQueryParamsSortByEnum)[keyof typeof listUsersQueryParamsSortByEnum]
+
+export const listUsersQueryParamsOrderEnum = {
+  asc: 'asc',
+  desc: 'desc',
+} as const
+
+export type ListUsersQueryParamsOrderEnumKey =
+  (typeof listUsersQueryParamsOrderEnum)[keyof typeof listUsersQueryParamsOrderEnum]
 
 export type ListUsersQueryParams = {
   /**
@@ -17,22 +33,94 @@ export type ListUsersQueryParams = {
    */
   search?: string
   /**
-   * @default "id"
+   * @default "name"
    * @type string | undefined
    */
-  orderBy?: ListUsersQueryParamsOrderByEnumKey
+  filterBy?: ListUsersQueryParamsFilterByEnumKey
   /**
-   * @minLength 0
+   * @default "createdAt"
+   * @type string | undefined
+   */
+  sortBy?: ListUsersQueryParamsSortByEnumKey
+  /**
+   * @default "asc"
+   * @type string | undefined
+   */
+  order?: ListUsersQueryParamsOrderEnumKey
+  /**
    * @default 1
    * @type number | undefined
    */
   page?: number
+  /**
+   * @maxLength 100
+   * @default 50
+   * @type number | undefined
+   */
+  pageSize?: number
 }
+
+export const metaFilterByEnum2 = {
+  all: 'all',
+  name: 'name',
+} as const
+
+export type MetaFilterByEnum2Key =
+  (typeof metaFilterByEnum2)[keyof typeof metaFilterByEnum2]
+
+export const metaSortByEnum2 = {
+  name: 'name',
+  createdAt: 'createdAt',
+} as const
+
+export type MetaSortByEnum2Key =
+  (typeof metaSortByEnum2)[keyof typeof metaSortByEnum2]
+
+export const metaOrderEnum2 = {
+  asc: 'asc',
+  desc: 'desc',
+} as const
+
+export type MetaOrderEnum2Key =
+  (typeof metaOrderEnum2)[keyof typeof metaOrderEnum2]
 
 /**
  * @description Success
  */
 export type ListUsers200 = {
+  /**
+   * @type object
+   */
+  meta: {
+    /**
+     * @type string | undefined
+     */
+    search?: string
+    /**
+     * @type string
+     */
+    filterBy: MetaFilterByEnum2Key
+    /**
+     * @type string
+     */
+    sortBy: MetaSortByEnum2Key
+    /**
+     * @type string
+     */
+    order: MetaOrderEnum2Key
+    /**
+     * @type number
+     */
+    count: number
+    /**
+     * @type number
+     */
+    page: number
+    /**
+     * @type number
+     */
+    pageSize: number
+  }
   /**
    * @type array
    */
@@ -58,15 +146,6 @@ export type ListUsers200 = {
      */
     updatedAt: string
   }[]
-  /**
-   * @type object
-   */
-  meta: {
-    /**
-     * @type number
-     */
-    total: number
-  }
 }
 
 /**

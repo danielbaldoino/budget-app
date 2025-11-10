@@ -3,13 +3,29 @@
  * Do not edit manually.
  */
 
-export const listApiKeysQueryParamsOrderByEnum = {
-  id: 'id',
+export const listApiKeysQueryParamsFilterByEnum = {
+  all: 'all',
   name: 'name',
 } as const
 
-export type ListApiKeysQueryParamsOrderByEnumKey =
-  (typeof listApiKeysQueryParamsOrderByEnum)[keyof typeof listApiKeysQueryParamsOrderByEnum]
+export type ListApiKeysQueryParamsFilterByEnumKey =
+  (typeof listApiKeysQueryParamsFilterByEnum)[keyof typeof listApiKeysQueryParamsFilterByEnum]
+
+export const listApiKeysQueryParamsSortByEnum = {
+  name: 'name',
+  createdAt: 'createdAt',
+} as const
+
+export type ListApiKeysQueryParamsSortByEnumKey =
+  (typeof listApiKeysQueryParamsSortByEnum)[keyof typeof listApiKeysQueryParamsSortByEnum]
+
+export const listApiKeysQueryParamsOrderEnum = {
+  asc: 'asc',
+  desc: 'desc',
+} as const
+
+export type ListApiKeysQueryParamsOrderEnumKey =
+  (typeof listApiKeysQueryParamsOrderEnum)[keyof typeof listApiKeysQueryParamsOrderEnum]
 
 export type ListApiKeysQueryParams = {
   /**
@@ -17,22 +33,94 @@ export type ListApiKeysQueryParams = {
    */
   search?: string
   /**
-   * @default "id"
+   * @default "name"
    * @type string | undefined
    */
-  orderBy?: ListApiKeysQueryParamsOrderByEnumKey
+  filterBy?: ListApiKeysQueryParamsFilterByEnumKey
   /**
-   * @minLength 0
+   * @default "createdAt"
+   * @type string | undefined
+   */
+  sortBy?: ListApiKeysQueryParamsSortByEnumKey
+  /**
+   * @default "asc"
+   * @type string | undefined
+   */
+  order?: ListApiKeysQueryParamsOrderEnumKey
+  /**
    * @default 1
    * @type number | undefined
    */
   page?: number
+  /**
+   * @maxLength 100
+   * @default 50
+   * @type number | undefined
+   */
+  pageSize?: number
 }
+
+export const metaFilterByEnum = {
+  all: 'all',
+  name: 'name',
+} as const
+
+export type MetaFilterByEnumKey =
+  (typeof metaFilterByEnum)[keyof typeof metaFilterByEnum]
+
+export const metaSortByEnum = {
+  name: 'name',
+  createdAt: 'createdAt',
+} as const
+
+export type MetaSortByEnumKey =
+  (typeof metaSortByEnum)[keyof typeof metaSortByEnum]
+
+export const metaOrderEnum = {
+  asc: 'asc',
+  desc: 'desc',
+} as const
+
+export type MetaOrderEnumKey =
+  (typeof metaOrderEnum)[keyof typeof metaOrderEnum]
 
 /**
  * @description Success
  */
 export type ListApiKeys200 = {
+  /**
+   * @type object
+   */
+  meta: {
+    /**
+     * @type string | undefined
+     */
+    search?: string
+    /**
+     * @type string
+     */
+    filterBy: MetaFilterByEnumKey
+    /**
+     * @type string
+     */
+    sortBy: MetaSortByEnumKey
+    /**
+     * @type string
+     */
+    order: MetaOrderEnumKey
+    /**
+     * @type number
+     */
+    count: number
+    /**
+     * @type number
+     */
+    page: number
+    /**
+     * @type number
+     */
+    pageSize: number
+  }
   /**
    * @type array
    */
@@ -58,15 +146,6 @@ export type ListApiKeys200 = {
      */
     updatedAt: string
   }[]
-  /**
-   * @type object
-   */
-  meta: {
-    /**
-     * @type number
-     */
-    total: number
-  }
 }
 
 /**
