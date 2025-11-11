@@ -2,6 +2,7 @@ import { withDefaultErrorResponses } from '@/http/errors/default-error-responses
 import type { FastifyTypedInstance } from '@/types/fastify'
 import { orm } from '@workspace/db'
 import { AddressType, DocumentType, Gender } from '@workspace/db/enums'
+import { buildRelationManyQuery } from '@workspace/db/utils'
 import { z } from 'zod'
 
 const FILTER_BY = [
@@ -95,74 +96,84 @@ export async function listCustomers(app: FastifyTypedInstance) {
 
       const { count, customers } = await tenantSchema(
         async ({ customers, addresses }) => {
+          const customerAddressesSubQuery = buildRelationManyQuery({
+            as: 'addresses',
+            table: addresses,
+            where: orm.eq(addresses.customerId, customers.id),
+          })
+
           const WHERE = () => {
-            const searchConditions: orm.SQL[] = []
+            const searchCondition: orm.SQL[] = []
 
             if (search) {
               if (filterBy === 'all' || filterBy === 'name') {
-                searchConditions.push(orm.ilike(customers.name, `%${search}%`))
+                searchCondition.push(orm.ilike(customers.name, `%${search}%`))
               }
 
               if (filterBy === 'all' || filterBy === 'document') {
-                searchConditions.push(
+                searchCondition.push(
                   orm.ilike(customers.document, `%${search}%`),
                 )
               }
 
-              if (filterBy === 'all' || filterBy === 'addresses.street') {
-                searchConditions.push(
-                  orm.ilike(addresses.street, `%${search}%`),
+              if (filterBy === 'all' || filterBy.includes('addresses.')) {
+                const addressesSearchCondition: orm.SQL[] = []
+
+                if (filterBy === 'all' || filterBy === 'addresses.street') {
+                  addressesSearchCondition.push(
+                    orm.ilike(addresses.street, `%${search}%`),
+                  )
+                }
+
+                searchCondition.push(
+                  orm.exists(
+                    tenantDb
+                      .select({ exists: orm.sql`1` })
+                      .from(addresses)
+                      .where(
+                        orm.and(
+                          orm.eq(addresses.customerId, customers.id),
+                          ...addressesSearchCondition,
+                        ),
+                      ),
+                  ),
                 )
               }
-
-              return searchConditions.length
-                ? orm.or(...searchConditions)
-                : undefined
             }
+
+            return searchCondition.length
+              ? orm.or(...searchCondition)
+              : undefined
           }
 
           const ORDER_BY = () => {
             const orderFn = order === 'asc' ? orm.asc : orm.desc
 
-            const orderConditions: orm.SQL[] = []
-
             if (sortBy === 'name') {
-              orderConditions.push(orderFn(customers.name))
+              return orderFn(customers.name)
             }
 
-            if (sortBy === 'createdAt') {
-              orderConditions.push(orderFn(customers.createdAt))
-            }
-
-            if (sortBy === 'addresses.street') {
-              orderConditions.push(orderFn(addresses.street))
-            }
-
-            return orderConditions
+            return orderFn(customers.createdAt)
           }
 
-          const [[count], listCustomers] = await Promise.all([
+          const [count, listCustomers] = await Promise.all([
+            tenantDb.$count(customers, WHERE()),
+
             tenantDb
               .select({
-                count: orm.count(customers.id),
+                ...orm.getTableColumns(customers),
+                addresses: customerAddressesSubQuery.data,
               })
               .from(customers)
-              .leftJoin(addresses, orm.eq(addresses.customerId, customers.id))
-              .where(WHERE()),
-
-            tenantDb.query.customers.findMany({
-              with: {
-                addresses: true,
-              },
-              where: WHERE(),
-              orderBy: ORDER_BY(),
-              offset: (page - 1) * pageSize,
-              limit: pageSize,
-            }),
+              .leftJoinLateral(customerAddressesSubQuery, orm.sql`true`)
+              .where(WHERE())
+              .orderBy(ORDER_BY())
+              .offset((page - 1) * pageSize)
+              .limit(pageSize),
           ])
 
           return {
-            count: count?.count || 0,
+            count,
             customers: listCustomers,
           }
         },

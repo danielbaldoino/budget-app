@@ -62,12 +62,13 @@ export function UserForm({
 
     if (error) {
       toast.error(error.message)
-    } else {
-      form.reset()
-      ref.current?.click()
-      toast.success('User created successfully')
-      router.refresh()
+      return
     }
+
+    form.reset()
+    ref.current?.click()
+    toast.success('User created successfully')
+    router.refresh()
   }
 
   React.useEffect(() => {

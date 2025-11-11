@@ -32,6 +32,7 @@
     "./tenant": "./src/tenant/index.ts",
     "./schema": "./src/schema/index.ts",
     "./tenant/schema": "./src/tenant/schema/index.ts",
+    "./utils": "./src/lib/utils.ts",
     "./enums": "./src/lib/enums.ts",
     "./types": "./src/lib/types.ts",
     "./env": "./src/lib/env.ts"
