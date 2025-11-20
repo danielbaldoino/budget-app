@@ -56,9 +56,11 @@ export async function listApiKeys(app: FastifyTypedInstance) {
       },
     },
     async (request) => {
-      const { user } = request.authSession
+      const {
+        user: { id: userId },
+      } = request.authSession
 
-      const tSchema = await getTenantSchema({ workspaceOwnerId: user.id })
+      const tSchema = await getTenantSchema({ workspaceOwnerId: userId })
 
       const { search, filterBy, sortBy, order, page, pageSize } = request.query
 

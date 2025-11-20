@@ -1,5 +1,4 @@
-import { eq } from 'drizzle-orm'
-
+import { and, eq, ne } from 'drizzle-orm'
 import { db } from '../../../db'
 import { tenantSchema } from '../../../tenant'
 
@@ -23,6 +22,7 @@ export async function getUser(params: GetUserParams) {
 type GetUserByUsernameParams = {
   tenant: string
   username: string
+  not?: { userId: string }
 }
 
 export async function getUserByUsername(params: GetUserByUsernameParams) {
@@ -30,7 +30,12 @@ export async function getUserByUsername(params: GetUserByUsernameParams) {
     const [user] = await db
       .select()
       .from(users)
-      .where(eq(users.username, params.username))
+      .where(
+        and(
+          params.not ? ne(users.id, params.not.userId) : undefined,
+          eq(users.username, params.username),
+        ),
+      )
       .limit(1)
 
     return user || null

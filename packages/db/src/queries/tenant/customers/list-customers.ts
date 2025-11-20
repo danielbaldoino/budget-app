@@ -10,7 +10,6 @@ import {
   or,
   sql,
 } from 'drizzle-orm'
-
 import { db } from '../../../db'
 import { buildRelationManyQuery } from '../../../lib/utils'
 import { tenantSchema } from '../../../tenant'

@@ -5,6 +5,7 @@ import { authenticate } from '@/http/middlewares/authenticate'
 import type { FastifyTypedInstance } from '@/types/fastify'
 import { hashPassword } from '@workspace/auth'
 import { orm } from '@workspace/db'
+import { queries } from '@workspace/db/queries'
 import { tenantDb, tenantSchema } from '@workspace/db/tenant'
 import { z } from 'zod'
 
@@ -38,15 +39,27 @@ export async function updateUser(app: FastifyTypedInstance) {
 
       const tSchema = await getTenantSchema({ workspaceOwnerId: user.id })
 
-      const { userId: targetUserId } = request.params
+      const { userId } = request.params
       const { name, username, password } = request.body
 
+      const userFound = await queries.tenant.users.getUser({
+        tenant: tSchema,
+        userId,
+      })
+
+      if (!userFound) {
+        throw new BadRequestError({
+          code: 'USER_NOT_FOUND',
+          message: 'User not found',
+        })
+      }
+
       if (username) {
-        const userByUsername = await tenantSchema(tSchema, ({ users }) =>
-          tenantDb(tSchema).query.users.findFirst({
-            where: orm.eq(users.username, username),
-          }),
-        )
+        const userByUsername = await queries.tenant.users.getUserByUsername({
+          tenant: tSchema,
+          username,
+          not: { userId },
+        })
 
         if (userByUsername) {
           throw new BadRequestError({
@@ -66,7 +79,7 @@ export async function updateUser(app: FastifyTypedInstance) {
             username,
             passwordHash,
           })
-          .where(orm.eq(users.id, targetUserId)),
+          .where(orm.eq(users.id, userId)),
       )
 
       return reply.status(204).send()
