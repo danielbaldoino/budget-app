@@ -32,7 +32,7 @@ function buildJsonObjectWithRelations(
   if (relations && Object.keys(relations).length) {
     for (const [key, relationQuery] of Object.entries(relations)) {
       entries.push(sql.raw(`'${key.replace(/'/g, "''")}'`))
-      entries.push(relationQuery.data as unknown as SQL)
+      entries.push(relationQuery.data as SQL.Aliased)
     }
   }
 
@@ -47,9 +47,20 @@ type DataType<T> = Simplify<{
       : never
 }>
 
+type DataTypeWithRelations<T> = Simplify<{
+  [K in keyof T]: T[K] extends
+    | ReturnType<typeof buildRelationManyQuery>
+    | ReturnType<typeof buildRelationFirstQuery>
+    ? T[K]['data']['_']['type']
+    : never
+}>
+
+type MergeDataType<T, TWith> = DataType<T> & DataTypeWithRelations<TWith>
+
 type BuildRelationManyQueryParams<
   TTable extends PgTable,
   TColumns extends Record<string, PgColumn | SQL | SQL.Aliased>,
+  TWithRelations extends WithRelations,
 > = {
   as?: string
   table: TTable
@@ -58,30 +69,44 @@ type BuildRelationManyQueryParams<
   orderBy?: SQL | SQL[]
   limit?: number
   offset?: number
-  with?: WithRelations
+  with?: TWithRelations
 }
 
 export function buildRelationManyQuery<
   TTable extends PgTable,
   TColumns extends Record<string, PgColumn | SQL | SQL.Aliased>,
+  TWithRelations extends WithRelations,
 >(
-  params: Omit<BuildRelationManyQueryParams<TTable, TColumns>, 'columns'> & {
+  params: Omit<
+    BuildRelationManyQueryParams<TTable, TColumns, TWithRelations>,
+    'columns'
+  > & {
     columns: TColumns
   },
-): ReturnType<typeof buildRelationManyQueryImpl<TTable, TColumns>>
-export function buildRelationManyQuery<TTable extends PgTable>(
-  params: Omit<BuildRelationManyQueryParams<TTable, never>, 'columns'> & {
+): ReturnType<
+  typeof buildRelationManyQueryImpl<TTable, TColumns, TWithRelations>
+>
+export function buildRelationManyQuery<
+  TTable extends PgTable,
+  TWithRelations extends WithRelations,
+>(
+  params: Omit<
+    BuildRelationManyQueryParams<TTable, never, TWithRelations>,
+    'columns'
+  > & {
     columns?: never
   },
 ): ReturnType<
   typeof buildRelationManyQueryImpl<
     TTable,
-    ReturnType<typeof getTableColumns<TTable>>
+    ReturnType<typeof getTableColumns<TTable>>,
+    TWithRelations
   >
 >
 export function buildRelationManyQuery<
   TTable extends PgTable,
   TColumns extends Record<string, PgColumn | SQL | SQL.Aliased>,
+  TWithRelations extends WithRelations,
 >({
   as,
   table,
@@ -91,7 +116,7 @@ export function buildRelationManyQuery<
   limit,
   offset,
   with: relations,
-}: BuildRelationManyQueryParams<TTable, TColumns>) {
+}: BuildRelationManyQueryParams<TTable, TColumns, TWithRelations>) {
   return buildRelationManyQueryImpl({
     as,
     table,
@@ -107,6 +132,7 @@ export function buildRelationManyQuery<
 function buildRelationManyQueryImpl<
   TTable extends PgTable,
   TColumns extends Record<string, PgColumn | SQL | SQL.Aliased>,
+  TWithRelations extends WithRelations,
 >({
   as,
   table,
@@ -116,19 +142,20 @@ function buildRelationManyQueryImpl<
   limit,
   offset,
   with: relations,
-}: BuildRelationManyQueryParams<TTable, TColumns>) {
+}: BuildRelationManyQueryParams<TTable, TColumns, TWithRelations>) {
   const alias = as ?? getTableName(table)
   const cols = columns ?? getTableColumns<TTable>(table)
 
+  type DATA = MergeDataType<
+    TColumns extends never
+      ? ReturnType<typeof getTableColumns<TTable>>
+      : TColumns,
+    TWithRelations
+  >
+
   let query = db
     .select({
-      data: sql<
-        DataType<
-          TColumns extends never
-            ? ReturnType<typeof getTableColumns<TTable>>
-            : TColumns
-        >[]
-      >`COALESCE(
+      data: sql<DATA[]>`COALESCE(
         json_agg(${buildJsonObjectWithRelations(cols, relations)}),
         '[]'::json
       )`.as(alias),
@@ -167,36 +194,51 @@ function buildRelationManyQueryImpl<
 type BuildRelationFirstQueryParams<
   TTable extends PgTable,
   TColumns extends Record<string, PgColumn | SQL | SQL.Aliased>,
+  TWithRelations extends WithRelations,
 > = {
   as?: string
   table: TTable
   columns?: TColumns
   where?: SQL
   orderBy?: SQL | SQL[]
-  with?: WithRelations
+  with?: TWithRelations
 }
 
 export function buildRelationFirstQuery<
   TTable extends PgTable,
   TColumns extends Record<string, PgColumn | SQL | SQL.Aliased>,
+  TWithRelations extends WithRelations,
 >(
-  params: Omit<BuildRelationFirstQueryParams<TTable, TColumns>, 'columns'> & {
+  params: Omit<
+    BuildRelationFirstQueryParams<TTable, TColumns, TWithRelations>,
+    'columns'
+  > & {
     columns: TColumns
   },
-): ReturnType<typeof buildRelationFirstQueryImpl<TTable, TColumns>>
-export function buildRelationFirstQuery<TTable extends PgTable>(
-  params: Omit<BuildRelationFirstQueryParams<TTable, never>, 'columns'> & {
+): ReturnType<
+  typeof buildRelationFirstQueryImpl<TTable, TColumns, TWithRelations>
+>
+export function buildRelationFirstQuery<
+  TTable extends PgTable,
+  TWithRelations extends WithRelations,
+>(
+  params: Omit<
+    BuildRelationFirstQueryParams<TTable, never, TWithRelations>,
+    'columns'
+  > & {
     columns?: never
   },
 ): ReturnType<
   typeof buildRelationFirstQueryImpl<
     TTable,
-    ReturnType<typeof getTableColumns<TTable>>
+    ReturnType<typeof getTableColumns<TTable>>,
+    TWithRelations
   >
 >
 export function buildRelationFirstQuery<
   TTable extends PgTable,
   TColumns extends Record<string, PgColumn | SQL | SQL.Aliased>,
+  TWithRelations extends WithRelations,
 >({
   as,
   table,
@@ -204,7 +246,7 @@ export function buildRelationFirstQuery<
   where,
   orderBy,
   with: relations,
-}: BuildRelationFirstQueryParams<TTable, TColumns>) {
+}: BuildRelationFirstQueryParams<TTable, TColumns, TWithRelations>) {
   return buildRelationFirstQueryImpl({
     as,
     table,
@@ -218,6 +260,7 @@ export function buildRelationFirstQuery<
 function buildRelationFirstQueryImpl<
   TTable extends PgTable,
   TColumns extends Record<string, PgColumn | SQL | SQL.Aliased>,
+  TWithRelations extends WithRelations,
 >({
   as,
   table,
@@ -225,17 +268,20 @@ function buildRelationFirstQueryImpl<
   where,
   orderBy,
   with: relations,
-}: BuildRelationFirstQueryParams<TTable, TColumns>) {
+}: BuildRelationFirstQueryParams<TTable, TColumns, TWithRelations>) {
   const alias = as ?? getTableName(table)
   const cols = columns ?? getTableColumns<TTable>(table)
 
+  type DATA = MergeDataType<
+    TColumns extends never
+      ? ReturnType<typeof getTableColumns<TTable>>
+      : TColumns,
+    TWithRelations
+  >
+
   let query = db
     .select({
-      data: sql<DataType<
-        TColumns extends never
-          ? ReturnType<typeof getTableColumns<TTable>>
-          : TColumns
-      > | null>`COALESCE(
+      data: sql<DATA | null>`COALESCE(
         ${buildJsonObjectWithRelations(cols, relations)},
         NULL
       )`.as(alias),

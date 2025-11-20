@@ -73,6 +73,7 @@ export const tenantDatabase = fastifyPlugin(
       }
 
       request.internal = {
+        tenant: tenant.schemaName,
         tenantSchema: <T>(cb: TenantSchemaCallback<T>) =>
           tenantSchema<T>(tenant.schemaName, cb),
         tenantDb: tenantDb(tenant.schemaName),

@@ -2,7 +2,7 @@ import { jwtAuthenticator } from '@/http/middlewares/internal/jwt-auth'
 import { tenantDatabase } from '@/http/middlewares/internal/tenant-database'
 import type { FastifyTypedInstance } from '@/types/fastify'
 import { logIn } from './auth/login'
-import { listCustomers } from './customers/list-cutomers'
+import { listCustomers } from './customers/list-customers'
 import { integrationsRoutes } from './integrations'
 import { getProfile } from './profile/get-profile'
 

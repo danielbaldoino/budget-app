@@ -29,8 +29,9 @@
   },
   "exports": {
     ".": "./src/index.ts",
-    "./tenant": "./src/tenant/index.ts",
+    "./queries": "./src/queries/index.ts",
     "./schema": "./src/schema/index.ts",
+    "./tenant": "./src/tenant/index.ts",
     "./tenant/schema": "./src/tenant/schema/index.ts",
     "./utils": "./src/lib/utils.ts",
     "./enums": "./src/lib/enums.ts",

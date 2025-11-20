@@ -20,8 +20,8 @@ export async function getProfile(app: FastifyTypedInstance) {
                 email: z.string(),
                 emailVerified: z.boolean(),
                 image: z.string().nullish(),
-                createdAt: z.date(),
-                updatedAt: z.date(),
+                createdAt: z.coerce.date(),
+                updatedAt: z.coerce.date(),
               }),
             })
             .describe('Success'),

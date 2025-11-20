@@ -7,6 +7,7 @@ declare module 'fastify' {
     authSession: typeof auth.$Infer.Session
 
     internal: {
+      tenant: string
       tenantSchema: <T>(cb: TenantSchemaCallback<T>) => T | Promise<T>
       tenantDb: TenantDatabase
 
