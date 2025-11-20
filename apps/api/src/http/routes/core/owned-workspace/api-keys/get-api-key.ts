@@ -3,8 +3,7 @@ import { withDefaultErrorResponses } from '@/http/errors/default-error-responses
 import { getTenantSchema } from '@/http/functions/core/get-tenant-schema'
 import { authenticate } from '@/http/middlewares/authenticate'
 import type { FastifyTypedInstance } from '@/types/fastify'
-import { orm } from '@workspace/db'
-import { tenantDb, tenantSchema } from '@workspace/db/tenant'
+import { queries } from '@workspace/db/queries'
 import { z } from 'zod'
 
 export async function getApiKey(app: FastifyTypedInstance) {
@@ -42,11 +41,10 @@ export async function getApiKey(app: FastifyTypedInstance) {
 
       const { apiKeyId } = request.params
 
-      const apiKey = await tenantSchema(tSchema, ({ apiKeys }) =>
-        tenantDb(tSchema).query.apiKeys.findFirst({
-          where: orm.eq(apiKeys.id, apiKeyId),
-        }),
-      )
+      const apiKey = await queries.tenant.apiKeys.getApiKey({
+        tenant: tSchema,
+        apiKeyId,
+      })
 
       if (!apiKey) {
         throw new BadRequestError({

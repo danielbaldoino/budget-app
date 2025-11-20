@@ -2,7 +2,7 @@ import { BadRequestError } from '@/http/errors/bad-request-error'
 import { withDefaultErrorResponses } from '@/http/errors/default-error-responses'
 import type { FastifyTypedInstance } from '@/types/fastify'
 import { verifyPassword } from '@workspace/auth'
-import { orm } from '@workspace/db'
+import { queries } from '@workspace/db/queries'
 import { z } from 'zod'
 
 export async function logIn(app: FastifyTypedInstance) {
@@ -28,14 +28,12 @@ export async function logIn(app: FastifyTypedInstance) {
     async (request, reply) => {
       const { username, password } = request.body
 
-      const { tenantSchema, tenantDb } = request.internal
+      const { tenant } = request.internal
 
-      const user = await tenantSchema(({ users }) =>
-        tenantDb.query.users.findFirst({
-          columns: { id: true, passwordHash: true },
-          where: orm.eq(users.username, username),
-        }),
-      )
+      const user = await queries.tenant.users.getUserByUsername({
+        tenant,
+        username,
+      })
 
       if (!user || !user.passwordHash) {
         throw new BadRequestError({

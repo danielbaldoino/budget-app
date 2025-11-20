@@ -2,13 +2,10 @@ import { withDefaultErrorResponses } from '@/http/errors/default-error-responses
 import { getTenantSchema } from '@/http/functions/core/get-tenant-schema'
 import { authenticate } from '@/http/middlewares/authenticate'
 import type { FastifyTypedInstance } from '@/types/fastify'
-import { orm } from '@workspace/db'
-import { tenantDb, tenantSchema } from '@workspace/db/tenant'
+import { queries } from '@workspace/db/queries'
 import { z } from 'zod'
 
-const FILTER_BY = ['all', 'name'] as const
-const SORT_BY = ['name', 'createdAt'] as const
-const ORDER = ['asc', 'desc'] as const
+const { FILTER_BY, SORT_BY, ORDER } = queries.tenant.users.listUsers
 
 export async function listUsers(app: FastifyTypedInstance) {
   app.register(authenticate).get(
@@ -65,60 +62,9 @@ export async function listUsers(app: FastifyTypedInstance) {
 
       const { search, filterBy, sortBy, order, page, pageSize } = request.query
 
-      const { count, users } = await tenantSchema(
-        tSchema,
-        async ({ users }) => {
-          const WHERE = () => {
-            const searchConditions: orm.SQL[] = []
-
-            if (search) {
-              if (filterBy === 'all' || filterBy === 'name') {
-                searchConditions.push(orm.ilike(users.name, `%${search}%`))
-              }
-
-              return searchConditions.length
-                ? orm.or(...searchConditions)
-                : undefined
-            }
-          }
-
-          const ORDER_BY = () => {
-            const orderFn = order === 'asc' ? orm.asc : orm.desc
-
-            const orderConditions: orm.SQL[] = []
-
-            if (sortBy === 'name') {
-              orderConditions.push(orderFn(users.name))
-            }
-
-            if (sortBy === 'createdAt') {
-              orderConditions.push(orderFn(users.createdAt))
-            }
-
-            return orderConditions
-          }
-
-          const [[count], listUsers] = await Promise.all([
-            tenantDb(tSchema)
-              .select({
-                count: orm.count(users.id),
-              })
-              .from(users)
-              .where(WHERE()),
-
-            tenantDb(tSchema).query.users.findMany({
-              where: WHERE(),
-              orderBy: ORDER_BY(),
-              offset: (page - 1) * pageSize,
-              limit: pageSize,
-            }),
-          ])
-
-          return {
-            count: count?.count || 0,
-            users: listUsers,
-          }
-        },
+      const { count, users } = await queries.tenant.users.listUsers(
+        { tenant: tSchema },
+        { search, filterBy, sortBy, order, page, pageSize },
       )
 
       return {

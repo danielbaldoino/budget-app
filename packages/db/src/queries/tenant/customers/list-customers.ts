@@ -7,7 +7,6 @@ import {
   exists,
   getTableColumns,
   ilike,
-  inArray,
   or,
   sql,
 } from 'drizzle-orm'
@@ -38,6 +37,7 @@ type ListCustomersWithRelationsFiltersParams = {
   page: number
   pageSize: number
 }
+
 async function getListCustomersWithRelations(
   params: ListCustomersWithRelationsParams,
   filters: ListCustomersWithRelationsFiltersParams,
@@ -138,19 +138,3 @@ export const listCustomersWithRelations = Object.assign(
   getListCustomersWithRelations,
   { FILTER_BY, SORT_BY, ORDER },
 )
-
-type ListCustomersByIdsParams = {
-  tenant: string
-  customerIds: string[]
-}
-
-export async function listCustomersByIds(params: ListCustomersByIdsParams) {
-  return tenantSchema(params.tenant, async ({ customers }) => {
-    const listCustomers = await db
-      .select()
-      .from(customers)
-      .where(inArray(customers.id, params.customerIds))
-
-    return listCustomers
-  })
-}

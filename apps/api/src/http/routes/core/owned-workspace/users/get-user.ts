@@ -3,8 +3,7 @@ import { withDefaultErrorResponses } from '@/http/errors/default-error-responses
 import { getTenantSchema } from '@/http/functions/core/get-tenant-schema'
 import { authenticate } from '@/http/middlewares/authenticate'
 import type { FastifyTypedInstance } from '@/types/fastify'
-import { orm } from '@workspace/db'
-import { tenantDb, tenantSchema } from '@workspace/db/tenant'
+import { queries } from '@workspace/db/queries'
 import { z } from 'zod'
 
 export async function getUser(app: FastifyTypedInstance) {
@@ -42,12 +41,10 @@ export async function getUser(app: FastifyTypedInstance) {
 
       const { userId: targetUserId } = request.params
 
-      const user = await tenantSchema(tSchema, ({ users }) =>
-        tenantDb(tSchema).query.users.findFirst({
-          columns: { passwordHash: false },
-          where: orm.eq(users.id, targetUserId),
-        }),
-      )
+      const user = await queries.tenant.users.getUser({
+        tenant: tSchema,
+        userId: targetUserId,
+      })
 
       if (!user) {
         throw new BadRequestError({

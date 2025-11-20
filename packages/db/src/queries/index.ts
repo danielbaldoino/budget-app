@@ -1,5 +1,5 @@
-import { internalQueries } from './internal'
+import { tenantQueries } from './tenant'
 
 export const queries = {
-  internal: internalQueries,
+  tenant: tenantQueries,
 }

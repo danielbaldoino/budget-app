@@ -5,7 +5,7 @@ import { queries } from '@workspace/db/queries'
 import { z } from 'zod'
 
 const { FILTER_BY, SORT_BY, ORDER } =
-  queries.internal.customers.listCustomersWithRelations
+  queries.tenant.customers.listCustomersWithRelations
 
 export async function listCustomers(app: FastifyTypedInstance) {
   app.get(
@@ -87,7 +87,7 @@ export async function listCustomers(app: FastifyTypedInstance) {
       const { search, filterBy, sortBy, order, page, pageSize } = request.query
 
       const { count, customers } =
-        await queries.internal.customers.listCustomersWithRelations(
+        await queries.tenant.customers.listCustomersWithRelations(
           { tenant },
           { search, filterBy, sortBy, order, page, pageSize },
         )
