@@ -20,12 +20,13 @@ const FILTER_BY = ['all', 'name', 'sku'] as const
 const SORT_BY = ['name', 'sku', 'createdAt'] as const
 const ORDER = ['asc', 'desc'] as const
 
-type ListProductVariantsParams = {
+type ListProductVariantsWithRelationsParams = {
   tenant: string
   productId: string
+  priceListId?: string
 }
 
-type ListProductVariantsFiltersParams = {
+type ListProductVariantsWithRelationsFiltersParams = {
   search?: string
   filterBy: (typeof FILTER_BY)[number]
   sortBy: (typeof SORT_BY)[number]
@@ -34,9 +35,9 @@ type ListProductVariantsFiltersParams = {
   pageSize: number
 }
 
-async function getListProductVariants(
-  params: ListProductVariantsParams,
-  filters: ListProductVariantsFiltersParams,
+async function getListProductVariantsWithRelations(
+  params: ListProductVariantsWithRelationsParams,
+  filters: ListProductVariantsWithRelationsFiltersParams,
 ) {
   return tenantSchema(
     params.tenant,
@@ -83,7 +84,12 @@ async function getListProductVariants(
       const priceSetsSubQuery = buildRelationManyQuery({
         as: 'priceSets',
         table: priceSets,
-        where: eq(priceSets.productVariantId, productVariants.id),
+        where: and(
+          eq(priceSets.productVariantId, productVariants.id),
+          params.priceListId
+            ? eq(priceSets.priceListId, params.priceListId)
+            : undefined,
+        ),
         with: {
           prices: buildRelationManyQuery({
             table: prices,
@@ -160,11 +166,10 @@ async function getListProductVariants(
   )
 }
 
-export const listProductVariants = Object.assign(getListProductVariants, {
-  FILTER_BY,
-  SORT_BY,
-  ORDER,
-})
+export const listProductVariantsWithRelations = Object.assign(
+  getListProductVariantsWithRelations,
+  { FILTER_BY, SORT_BY, ORDER },
+)
 
 type ListProductVariantsWithOptionsParams = {
   tenant: string

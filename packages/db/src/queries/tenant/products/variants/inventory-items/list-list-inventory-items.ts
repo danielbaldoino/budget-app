@@ -28,11 +28,11 @@ const FILTER_BY = [
 const SORT_BY = ['createdAt'] as const
 const ORDER = ['asc', 'desc'] as const
 
-type ListInventoryItemsParams = {
+type ListInventoryItemsWithRelationsParams = {
   tenant: string
 }
 
-type ListInventoryItemsFiltersParams = {
+type ListInventoryItemsWithRelationsFiltersParams = {
   search?: string
   filterBy: (typeof FILTER_BY)[number]
   sortBy: (typeof SORT_BY)[number]
@@ -41,9 +41,9 @@ type ListInventoryItemsFiltersParams = {
   pageSize: number
 }
 
-async function getListInventoryItems(
-  params: ListInventoryItemsParams,
-  filters: ListInventoryItemsFiltersParams,
+async function getListInventoryItemsWithRelations(
+  params: ListInventoryItemsWithRelationsParams,
+  filters: ListInventoryItemsWithRelationsFiltersParams,
 ) {
   return tenantSchema(
     params.tenant,
@@ -218,8 +218,7 @@ async function getListInventoryItems(
   )
 }
 
-export const listInventoryItems = Object.assign(getListInventoryItems, {
-  FILTER_BY,
-  SORT_BY,
-  ORDER,
-})
+export const listInventoryItemsWithRelations = Object.assign(
+  getListInventoryItemsWithRelations,
+  { FILTER_BY, SORT_BY, ORDER },
+)

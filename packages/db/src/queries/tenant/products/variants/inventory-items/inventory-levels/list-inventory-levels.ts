@@ -18,12 +18,12 @@ const FILTER_BY = ['all', 'stockedQuantity', 'location.name'] as const
 const SORT_BY = ['stockedQuantity', 'createdAt'] as const
 const ORDER = ['asc', 'desc'] as const
 
-type ListInventoryLevelsParams = {
+type ListInventoryLevelsWithRelationsParams = {
   tenant: string
   inventoryItemId: string
 }
 
-type ListInventoryLevelsFiltersParams = {
+type ListInventoryLevelsWithRelationsFiltersParams = {
   search?: string
   filterBy: (typeof FILTER_BY)[number]
   sortBy: (typeof SORT_BY)[number]
@@ -32,9 +32,9 @@ type ListInventoryLevelsFiltersParams = {
   pageSize: number
 }
 
-async function getListInventoryLevels(
-  params: ListInventoryLevelsParams,
-  filters: ListInventoryLevelsFiltersParams,
+async function getListInventoryLevelsWithRelations(
+  params: ListInventoryLevelsWithRelationsParams,
+  filters: ListInventoryLevelsWithRelationsFiltersParams,
 ) {
   return tenantSchema(
     params.tenant,
@@ -129,8 +129,7 @@ async function getListInventoryLevels(
   )
 }
 
-export const listInventoryLevels = Object.assign(getListInventoryLevels, {
-  FILTER_BY,
-  SORT_BY,
-  ORDER,
-})
+export const listInventoryLevelsWithRelations = Object.assign(
+  getListInventoryLevelsWithRelations,
+  { FILTER_BY, SORT_BY, ORDER },
+)

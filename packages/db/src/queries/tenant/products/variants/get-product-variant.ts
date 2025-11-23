@@ -95,6 +95,7 @@ type GetProductVariantWithRelationsParams = {
   tenant: string
   productId: string
   productVariantId: string
+  priceListId?: string
 }
 
 export async function getProductVariantWithRelations(
@@ -145,7 +146,12 @@ export async function getProductVariantWithRelations(
       const priceSetsSubQuery = buildRelationManyQuery({
         as: 'priceSets',
         table: priceSets,
-        where: eq(priceSets.productVariantId, productVariants.id),
+        where: and(
+          eq(priceSets.productVariantId, productVariants.id),
+          params.priceListId
+            ? eq(priceSets.priceListId, params.priceListId)
+            : undefined,
+        ),
         with: {
           prices: buildRelationManyQuery({
             table: prices,

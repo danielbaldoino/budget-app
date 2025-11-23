@@ -5,6 +5,7 @@ import {
   eq,
   getTableColumns,
   ilike,
+  inArray,
   or,
   sql,
 } from 'drizzle-orm'
@@ -19,11 +20,11 @@ const FILTER_BY = ['all', 'name', 'subtitle', 'description'] as const
 const SORT_BY = ['name', 'subtitle', 'description', 'createdAt'] as const
 const ORDER = ['asc', 'desc'] as const
 
-type ListProductsParams = {
+type ListProductsWithRelationsParams = {
   tenant: string
 }
 
-type ListProductsFiltersParams = {
+type ListProductsWithRelationsFiltersParams = {
   search?: string
   filterBy: (typeof FILTER_BY)[number]
   sortBy: (typeof SORT_BY)[number]
@@ -32,9 +33,9 @@ type ListProductsFiltersParams = {
   pageSize: number
 }
 
-async function getListProducts(
-  params: ListProductsParams,
-  filters: ListProductsFiltersParams,
+async function getListProductsWithRelations(
+  params: ListProductsWithRelationsParams,
+  filters: ListProductsWithRelationsFiltersParams,
 ) {
   return tenantSchema(
     params.tenant,
@@ -142,8 +143,23 @@ async function getListProducts(
   )
 }
 
-export const listProducts = Object.assign(getListProducts, {
-  FILTER_BY,
-  SORT_BY,
-  ORDER,
-})
+export const listProductsWithRelations = Object.assign(
+  getListProductsWithRelations,
+  { FILTER_BY, SORT_BY, ORDER },
+)
+
+type ListProductsByIdsParams = {
+  tenant: string
+  productIds: string[]
+}
+
+export async function listProductsByIds(params: ListProductsByIdsParams) {
+  return tenantSchema(params.tenant, async ({ products }) => {
+    const listProducts = await db
+      .select()
+      .from(products)
+      .where(inArray(products.id, params.productIds))
+
+    return listProducts
+  })
+}

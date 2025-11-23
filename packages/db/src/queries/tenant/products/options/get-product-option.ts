@@ -1,4 +1,4 @@
-import { and, eq, getTableColumns, sql } from 'drizzle-orm'
+import { and, eq, getTableColumns, ne, sql } from 'drizzle-orm'
 import { db } from '../../../../db'
 import { buildRelationManyQuery } from '../../../../lib/utils'
 import { tenantSchema } from '../../../../tenant'
@@ -18,6 +18,37 @@ export async function getProductOption(params: GetProductOptionParams) {
         and(
           eq(productOptions.id, params.productOptionId),
           eq(productOptions.productId, params.productId),
+        ),
+      )
+      .limit(1)
+
+    return productOption || null
+  })
+}
+
+type GetProductOptionByNameParams = {
+  tenant: string
+  productId: string
+  name: string
+  not?: {
+    productOptionId: string
+  }
+}
+
+export async function getProductOptionByName(
+  params: GetProductOptionByNameParams,
+) {
+  return tenantSchema(params.tenant, async ({ productOptions }) => {
+    const [productOption] = await db
+      .select()
+      .from(productOptions)
+      .where(
+        and(
+          params.not
+            ? ne(productOptions.id, params.not.productOptionId)
+            : undefined,
+          eq(productOptions.productId, params.productId),
+          eq(productOptions.name, params.name),
         ),
       )
       .limit(1)

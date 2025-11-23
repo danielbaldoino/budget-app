@@ -17,12 +17,12 @@ const FILTER_BY = ['all', 'name'] as const
 const SORT_BY = ['name', 'createdAt'] as const
 const ORDER = ['asc', 'desc'] as const
 
-type ListProductOptionsParams = {
+type ListProductOptionsWithRelationsParams = {
   tenant: string
   productId: string
 }
 
-type ListProductOptionsFiltersParams = {
+type ListProductOptionsWithRelationsFiltersParams = {
   search?: string
   filterBy: (typeof FILTER_BY)[number]
   sortBy: (typeof SORT_BY)[number]
@@ -31,9 +31,9 @@ type ListProductOptionsFiltersParams = {
   pageSize: number
 }
 
-async function getListProductOptions(
-  params: ListProductOptionsParams,
-  filters: ListProductOptionsFiltersParams,
+async function getListProductOptionsWithRelations(
+  params: ListProductOptionsWithRelationsParams,
+  filters: ListProductOptionsWithRelationsFiltersParams,
 ) {
   return tenantSchema(
     params.tenant,
@@ -95,11 +95,10 @@ async function getListProductOptions(
   )
 }
 
-export const listProductOptions = Object.assign(getListProductOptions, {
-  FILTER_BY,
-  SORT_BY,
-  ORDER,
-})
+export const listProductOptionsWithRelations = Object.assign(
+  getListProductOptionsWithRelations,
+  { FILTER_BY, SORT_BY, ORDER },
+)
 
 type ListProductOptionsWithValuesParams = {
   tenant: string
