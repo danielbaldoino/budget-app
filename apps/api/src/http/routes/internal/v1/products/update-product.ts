@@ -32,8 +32,6 @@ export async function updateProduct(app: FastifyTypedInstance) {
           categoryId: z.string().nullish(),
           detail: z
             .object({
-              purchaseCurrencyCode: z.string().nullish(),
-              purchaseAmount: z.number().nonnegative().nullish(),
               brand: z.string().nullish(),
               material: z.string().nullish(),
             })
@@ -131,8 +129,6 @@ export async function updateProduct(app: FastifyTypedInstance) {
               await tx
                 .update(productDetails)
                 .set({
-                  purchaseCurrencyCode: detail.purchaseCurrencyCode,
-                  purchaseAmount: detail.purchaseAmount,
                   brand: detail.brand,
                   material: detail.material,
                 })
@@ -140,8 +136,6 @@ export async function updateProduct(app: FastifyTypedInstance) {
             } else {
               await tx.insert(productDetails).values({
                 productId,
-                purchaseCurrencyCode: detail.purchaseCurrencyCode,
-                purchaseAmount: detail.purchaseAmount,
                 brand: detail.brand,
                 material: detail.material,
               })

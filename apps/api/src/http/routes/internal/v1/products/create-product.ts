@@ -382,7 +382,7 @@ export async function createProduct(app: FastifyTypedInstance) {
 
                 await tx.insert(prices).values({
                   priceSetId: priceSet.id,
-                  currencyCode: 'brl',
+                  currencyCode: 'BRL',
                   amount: variant.amount,
                 })
 

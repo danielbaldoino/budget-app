@@ -48,8 +48,23 @@ export async function getProductVariant(app: FastifyTypedInstance) {
                     updatedAt: z.coerce.date(),
                   }),
                 ),
-                currencyCode: z.string().nullable(),
-                amount: z.number().nonnegative().nullable(),
+                priceSets: z.array(
+                  z.object({
+                    id: z.string(),
+                    priceListId: z.string().nullable(),
+                    prices: z.array(
+                      z.object({
+                        id: z.string(),
+                        currencyCode: z.string().nullable(),
+                        amount: z.number().nonnegative().nullable(),
+                        createdAt: z.coerce.date(),
+                        updatedAt: z.coerce.date(),
+                      }),
+                    ),
+                    createdAt: z.coerce.date(),
+                    updatedAt: z.coerce.date(),
+                  }),
+                ),
                 productId: z.string(),
                 createdAt: z.coerce.date(),
                 updatedAt: z.coerce.date(),
@@ -90,8 +105,6 @@ export async function getProductVariant(app: FastifyTypedInstance) {
         })
       }
 
-      const price = productVariant.priceSet?.prices[0]
-
       return {
         productVariant: {
           ...productVariant,
@@ -99,8 +112,6 @@ export async function getProductVariant(app: FastifyTypedInstance) {
             ...optionValue!,
             option: optionValue!.option!,
           })),
-          currencyCode: price?.currencyCode ?? null,
-          amount: price?.amount ? Number(price?.amount) : null,
         },
       }
     },

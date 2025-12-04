@@ -283,14 +283,14 @@ export async function updateProductVariant(app: FastifyTypedInstance) {
                 await tx
                   .update(prices)
                   .set({
-                    currencyCode: 'brl',
+                    currencyCode: 'BRL',
                     amount,
                   })
                   .where(orm.eq(prices.id, price.id))
               } else {
                 await tx.insert(prices).values({
                   priceSetId: priceSet.id,
-                  currencyCode: 'brl',
+                  currencyCode: 'BRL',
                   amount,
                 })
               }
@@ -311,7 +311,7 @@ export async function updateProductVariant(app: FastifyTypedInstance) {
 
               await tx.insert(prices).values({
                 priceSetId: createdPriceSet.id,
-                currencyCode: 'brl',
+                currencyCode: 'BRL',
                 amount,
               })
             }

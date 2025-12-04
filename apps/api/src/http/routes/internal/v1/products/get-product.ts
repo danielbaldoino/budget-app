@@ -97,8 +97,6 @@ export async function getProduct(app: FastifyTypedInstance) {
                 detail: z
                   .object({
                     id: z.string(),
-                    purchaseCurrencyCode: z.string().nullable(),
-                    purchaseAmount: z.number().nonnegative().nullable(),
                     brand: z.string().nullable(),
                     material: z.string().nullable(),
                     createdAt: z.coerce.date(),
@@ -140,14 +138,6 @@ export async function getProduct(app: FastifyTypedInstance) {
               option: optionValue!.option!,
             })),
           })),
-          detail: product.detail
-            ? {
-                ...product.detail,
-                purchaseAmount: product.detail.purchaseAmount
-                  ? Number(product.detail.purchaseAmount)
-                  : null,
-              }
-            : null,
         },
       }
     },

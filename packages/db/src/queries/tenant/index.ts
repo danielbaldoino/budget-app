@@ -3,6 +3,11 @@ import { listApiKeys } from './api-keys/list-api-keys'
 import { getCustomer, getCustomerWithRelations } from './customers/get-customer'
 import { listCustomersWithRelations } from './customers/list-customers'
 import {
+  getPriceSet,
+  getPriceSetByProductVariantId,
+} from './price-sets/get-price-set'
+import { listPrices } from './price-sets/prices/list-prices'
+import {
   getProductCategory,
   getProductCategoryByName,
 } from './product-categories/get-product-category'
@@ -102,6 +107,13 @@ export const tenantQueries = {
           getInventoryLevelWithRelations,
         },
       },
+    },
+  },
+  priceSets: {
+    getPriceSet,
+    getPriceSetByProductVariantId,
+    prices: {
+      listPrices,
     },
   },
   stockLocations: {
