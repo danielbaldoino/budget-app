@@ -9,6 +9,7 @@ export async function status(app: FastifyTypedInstance) {
       schema: {
         tags: ['Default'],
         description: 'Check the status of the integrations API',
+        operationId: 'getStatus',
         response: withDefaultErrorResponses({
           201: z
             .object({

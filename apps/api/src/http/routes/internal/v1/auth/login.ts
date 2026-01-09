@@ -12,6 +12,7 @@ export async function logIn(app: FastifyTypedInstance) {
       schema: {
         tags: ['Auth'],
         description: 'Authenticate account and obtain JWT token',
+        operationId: 'logIn',
         body: z.object({
           username: z.string().min(3).max(30),
           password: z.string().min(6).max(100),

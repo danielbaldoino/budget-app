@@ -9,6 +9,7 @@ export async function getProfile(app: FastifyTypedInstance) {
       schema: {
         tags: ['Profile'],
         description: 'Get authenticated user profile',
+        operationId: 'getProfile',
         response: withDefaultErrorResponses({
           200: z
             .object({

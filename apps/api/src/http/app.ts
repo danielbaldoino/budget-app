@@ -72,7 +72,7 @@ if (env.APP_ENV === 'development') {
         },
       },
       security: [{ apiKeyCookie: [], bearerAuth: [] }],
-      servers: [{ url: `${env.API_URL}/api` }],
+      servers: [{ url: env.API_URL }],
     },
     transform: jsonSchemaTransform,
   })
