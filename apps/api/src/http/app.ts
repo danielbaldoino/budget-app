@@ -18,15 +18,15 @@ import { errorHandler } from './errors/error-handler'
 import { routes } from './routes'
 
 export const app = fastify({
-  // logger: {
-  //   transport: {
-  //     target: 'pino-pretty',
-  //     options: {
-  //       translateTime: 'HH:MM:ss Z',
-  //       ignore: 'pid,hostname',
-  //     },
-  //   },
-  // },
+  logger: {
+    transport: {
+      target: 'pino-pretty',
+      options: {
+        translateTime: 'HH:MM:ss Z',
+        ignore: 'pid,hostname',
+      },
+    },
+  },
 }).withTypeProvider<ZodTypeProvider>()
 
 app.setSerializerCompiler(serializerCompiler)
@@ -44,9 +44,7 @@ app.register(fastifyRedis, {
   client: cache,
 })
 
-app.register(fastifyMultipart, {
-  // attachFieldsToBody: true,
-})
+app.register(fastifyMultipart)
 
 if (env.APP_ENV === 'development') {
   app.register(fastifySwagger, {

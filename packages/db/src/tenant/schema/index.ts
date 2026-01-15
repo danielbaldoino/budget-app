@@ -4,6 +4,7 @@ import {
   bigserial,
   boolean,
   integer,
+  json,
   jsonb,
   pgSchema,
   primaryKey,
@@ -12,10 +13,14 @@ import {
   uniqueIndex,
 } from 'drizzle-orm/pg-core'
 
-import { Gender, OrderStatus, ProductStatus } from '../../lib/enums'
-import type { AddressType, CurrencyCode, DocumentType } from '../../lib/types'
-import { id, metadata, timestamps } from '../../utils'
+import { id, timestamps } from '../../utils'
 import { TENANT_MIGRATIONS_SCHEMA } from '../constants'
+import { Gender, OrderStatus, ProductStatus } from '../utils/enums'
+import type { AddressType, CurrencyCode, DocumentType } from '../utils/types'
+
+export const metadata = {
+  metadata: json('metadata').$type<Record<string, any>>(),
+}
 
 export function createTenantSchema(schema?: string) {
   const tenantSchema = pgSchema(schema ?? TENANT_MIGRATIONS_SCHEMA)

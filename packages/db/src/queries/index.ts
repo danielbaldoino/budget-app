@@ -1,5 +1,5 @@
-import { tenantQueries } from './tenant'
+import { applicationQueries } from './application'
 
 export const queries = {
-  tenant: tenantQueries,
+  application: applicationQueries,
 }

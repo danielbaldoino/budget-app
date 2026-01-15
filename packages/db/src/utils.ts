@@ -1,16 +1,11 @@
 import { randomUUID } from 'node:crypto'
 import { decrypt, encrypt } from '@workspace/encryption'
-import { customType, json, text, timestamp } from 'drizzle-orm/pg-core'
-import type { Metadata } from './lib/types'
+import { customType, text, timestamp } from 'drizzle-orm/pg-core'
 
 export const generateId = (): string => randomUUID()
 
 export const id = {
   id: text('id').primaryKey().$defaultFn(generateId),
-}
-
-export const metadata = {
-  metadata: json('metadata').$type<Metadata>(),
 }
 
 export const timestamps = {
