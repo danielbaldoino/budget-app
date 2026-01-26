@@ -17,13 +17,13 @@ import type {
 } from '../types/ListUsers'
 
 function getListUsersUrl() {
-  const res = { method: 'GET', url: `/owned-workspace/users` as const }
+  const res = { method: 'GET', url: `/api/users` as const }
   return res
 }
 
 /**
  * @description Get all users
- * {@link /owned-workspace/users}
+ * {@link /api/users}
  */
 export async function listUsers(
   { params }: { params?: ListUsersQueryParams },

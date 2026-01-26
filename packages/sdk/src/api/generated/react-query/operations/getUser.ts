@@ -20,16 +20,13 @@ import type {
 } from '../../types/GetUser'
 
 function getGetUserUrl({ userId }: { userId: GetUserPathParams['userId'] }) {
-  const res = {
-    method: 'GET',
-    url: `/owned-workspace/users/${userId}` as const,
-  }
+  const res = { method: 'GET', url: `/api/users/${userId}` as const }
   return res
 }
 
 /**
  * @description Get a user
- * {@link /owned-workspace/users/:userId}
+ * {@link /api/users/:userId}
  */
 export async function getUser(
   { userId }: { userId: GetUserPathParams['userId'] },

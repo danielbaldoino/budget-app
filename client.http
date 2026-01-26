@@ -1,0 +1,456 @@
+@baseUrl = http://localhost:3333/api
+@apiUrl = {{baseUrl}}/application/v1
+@tenantId = 889536af-bdb8-4603-8a22-75c6714ccd25
+@workspaceSlug = acme-corp
+@apiKey = key_4ea21f9d2b134f1a90fa948eed1e37a3
+@token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJhM2M3MzJiZS00Y2U3LTQ3M2ItYTc3OS0yZGU2MmZlYTM0ZDQiLCJpYXQiOjE3Njg3NTY5ODQsImV4cCI6MTc3MTM0ODk4NH0.8VuuxVeYCEsn13O4WIvVUmZ_WgZyDm_Qzhoum8wUSWs
+
+@productId = d9b8c27a-fbdb-47c4-b976-421dd21c989d
+@categoryId = 2a3bd4fe-7c8d-48c7-979a-27677704394c
+@variantId = d91ce06a-b6c6-4bba-b89d-fdcfb46b5173
+@stockLocationId = your-stock-location-id
+@customerId = your-customer-id
+@optionId = e3311252-f9f7-415e-b350-6a95173b3398
+@inventoryItemId = your-inventory-item-id
+@inventoryLevelId = your-inventory-level-id
+
+################################################
+# HEALTH CHECK
+################################################
+
+### Health Check
+GET {{baseUrl}}/health
+Content-Type: application/json
+
+###############################################
+# AUTH
+###############################################
+
+### Login
+POST {{apiUrl}}/auth/login
+Content-Type: application/json
+# x-tenant: {{tenantId}}
+x-workspace: {{workspaceSlug}}
+
+{
+  "username": "john-doe",
+  "password": "securepassword"
+}
+
+###############################################
+# PROFILE
+###############################################
+
+### Get Profile
+GET {{apiUrl}}/profile
+Content-Type: application/json
+x-workspace: {{workspaceSlug}}
+Authorization: Bearer {{token}}
+
+###############################################
+# CUSTOMERS
+###############################################
+
+### List Customers
+GET {{apiUrl}}/customers?page=1&pageSize=50&search=&filterBy=name&sortBy=createdAt&order=asc
+Content-Type: application/json
+x-workspace: {{workspaceSlug}}
+Authorization: Bearer {{token}}
+
+###############################################
+# PRODUCT CATEGORIES
+###############################################
+
+### List Product Categories
+GET {{apiUrl}}/product-categories?page=1&pageSize=50&search=&filterBy=all&sortBy=createdAt&order=desc
+Content-Type: application/json
+x-workspace: {{workspaceSlug}}
+Authorization: Bearer {{token}}
+
+### Create Product Category
+POST {{apiUrl}}/product-categories
+Content-Type: application/json
+x-workspace: {{workspaceSlug}}
+Authorization: Bearer {{token}}
+
+{
+  "name": "Electronics",
+  "description": "Electronic products"
+}
+
+### Get Product Category
+GET {{apiUrl}}/product-categories/{{categoryId}}
+Content-Type: application/json
+x-workspace: {{workspaceSlug}}
+Authorization: Bearer {{token}}
+
+### Update Product Category
+PATCH {{apiUrl}}/product-categories/{{categoryId}}
+Content-Type: application/json
+x-workspace: {{workspaceSlug}}
+Authorization: Bearer {{token}}
+
+{
+  "name": "Updated Category Name",
+  "description": "Updated description"
+}
+
+### Delete Product Category
+DELETE {{apiUrl}}/product-categories/{{categoryId}}
+# Content-Type: application/json
+x-workspace: {{workspaceSlug}}
+Authorization: Bearer {{token}}
+
+###############################################
+# PRODUCTS
+###############################################
+
+### List Products
+GET {{apiUrl}}/products?page=1&pageSize=50&search=&filterBy=all&sortBy=createdAt&order=desc
+Content-Type: application/json
+x-workspace: {{workspaceSlug}}
+Authorization: Bearer {{token}}
+
+### Create Product
+POST {{apiUrl}}/products
+Content-Type: application/json
+x-workspace: {{workspaceSlug}}
+Authorization: Bearer {{token}}
+
+{
+  "name": "Sample Product",
+  "subtitle": "Product subtitle",
+  "description": "Product description",
+  "status": "active",
+  "thumbnailUrl": "https://example.com/thumb.jpg",
+  "categoryId": "{{categoryId}}",
+  "images": [
+    {
+      "url": "https://example.com/image1.jpg",
+      "rank": 0
+    }
+  ],
+  "options": [
+    {
+      "name": "Color",
+      "values": [
+        { "name": "Red" },
+        { "name": "Blue" }
+      ]
+    }
+  ],
+  "variants": [
+    {
+      "name": "Red Variant",
+      "sku": "SKU-001",
+      "manageInventory": true,
+      "thumbnail": "https://example.com/red-thumb.jpg",
+      "images": [
+        {
+          "url": "https://example.com/red.jpg",
+          "rank": 0
+        }
+      ],
+      "options": [
+        {
+          "name": "Color",
+          "value": "Red"
+        }
+      ],
+      "amount": 100
+    }
+  ]
+}
+
+### Get Product
+GET {{apiUrl}}/products/{{productId}}
+Content-Type: application/json
+x-workspace: {{workspaceSlug}}
+Authorization: Bearer {{token}}
+
+### Update Product
+PATCH {{apiUrl}}/products/{{productId}}
+Content-Type: application/json
+x-workspace: {{workspaceSlug}}
+Authorization: Bearer {{token}}
+
+{
+  "name": "Updated Product Name",
+  "subtitle": "Updated subtitle",
+  "description": "Updated description",
+  "status": "active",
+  "thumbnailUrl": "https://example.com/new-thumb.jpg",
+  "categoryId": "{{categoryId}}",
+  "images": [
+    {
+      "url": "https://example.com/new-image.jpg",
+      "rank": 0
+    }
+  ],
+  "detail": {
+    "brand": "Brand Name",
+    "material": "Material"
+  }
+}
+
+### Delete Product
+DELETE {{apiUrl}}/products/{{productId}}
+# Content-Type: application/json
+x-workspace: {{workspaceSlug}}
+Authorization: Bearer {{token}}
+
+###############################################
+# PRODUCT OPTIONS
+###############################################
+
+### List Product Options
+GET {{apiUrl}}/products/{{productId}}/options?page=1&pageSize=50&search=&filterBy=all&sortBy=createdAt&order=desc
+Content-Type: application/json
+x-workspace: {{workspaceSlug}}
+Authorization: Bearer {{token}}
+
+### Create Product Option
+POST {{apiUrl}}/products/{{productId}}/options
+Content-Type: application/json
+x-workspace: {{workspaceSlug}}
+Authorization: Bearer {{token}}
+
+{
+  "name": "Size",
+  "values": [
+    { "name": "S" },
+    { "name": "M" },
+    { "name": "L" }
+  ]
+}
+
+### Get Product Option
+GET {{apiUrl}}/products/{{productId}}/options/{{optionId}}
+Content-Type: application/json
+x-workspace: {{workspaceSlug}}
+Authorization: Bearer {{token}}
+
+### Update Product Option
+PATCH {{apiUrl}}/products/{{productId}}/options/{{optionId}}
+Content-Type: application/json
+x-workspace: {{workspaceSlug}}
+Authorization: Bearer {{token}}
+
+{
+  "name": "Updated Option Name",
+  "values": [
+    { "name": "XS" },
+    { "name": "S" },
+    { "name": "M" }
+  ]
+}
+
+### Delete Product Option
+DELETE {{apiUrl}}/products/{{productId}}/options/{{optionId}}
+# Content-Type: application/json
+x-workspace: {{workspaceSlug}}
+Authorization: Bearer {{token}}
+
+###############################################
+# PRODUCT VARIANTS
+###############################################
+
+### List Product Variants
+GET {{apiUrl}}/products/{{productId}}/variants?page=1&pageSize=50&search=&filterBy=all&sortBy=createdAt&order=desc
+Content-Type: application/json
+x-workspace: {{workspaceSlug}}
+Authorization: Bearer {{token}}
+
+### Create Product Variant
+POST {{apiUrl}}/products/{{productId}}/variants
+Content-Type: application/json
+x-workspace: {{workspaceSlug}}
+Authorization: Bearer {{token}}
+
+{
+  "name": "Red Variant",
+  "sku": "SKU-RED-001",
+  "manageInventory": true,
+  "thumbnail": "https://example.com/red-variant.jpg",
+  "images": [
+    {
+      "url": "https://example.com/red-var.jpg",
+      "rank": 0
+    }
+  ],
+  "options": [
+    {
+      "name": "Color",
+      "value": "Red"
+    }
+  ],
+  "amount": 50
+}
+
+### Get Product Variant
+GET {{apiUrl}}/products/{{productId}}/variants/{{variantId}}
+Content-Type: application/json
+x-workspace: {{workspaceSlug}}
+Authorization: Bearer {{token}}
+
+### Update Product Variant
+PATCH {{apiUrl}}/products/{{productId}}/variants/{{variantId}}
+Content-Type: application/json
+x-workspace: {{workspaceSlug}}
+Authorization: Bearer {{token}}
+
+{
+  "name": "Updated Variant Name",
+  "sku": "SKU-RED-002",
+  "manageInventory": true,
+  "thumbnail": "https://example.com/updated-red.jpg",
+  "images": [
+    {
+      "url": "https://example.com/updated-red-var.jpg",
+      "rank": 0
+    }
+  ],
+  "options": [
+    {
+      "name": "Color",
+      "value": "Red"
+    },
+    {
+      "name": "Size",
+      "value": "M"
+    }
+  ],
+  "amount": 75
+}
+
+### Delete Product Variant
+DELETE {{apiUrl}}/products/{{productId}}/variants/{{variantId}}
+Content-Type: application/json
+x-workspace: {{workspaceSlug}}
+Authorization: Bearer {{token}}
+
+###############################################
+# INVENTORY ITEMS
+###############################################
+
+### List Inventory Items
+GET {{apiUrl}}/inventory-items?page=1&pageSize=50&search=&filterBy=all&sortBy=createdAt&order=desc
+Content-Type: application/json
+x-workspace: {{workspaceSlug}}
+Authorization: Bearer {{token}}
+
+### Create Inventory Item
+POST {{apiUrl}}/products/{{productId}}/variants/{{variantId}}/inventory-items
+Content-Type: application/json
+x-workspace: {{workspaceSlug}}
+Authorization: Bearer {{token}}
+
+{
+  "sku": "INV-SKU-001"
+}
+
+### Get Inventory Item
+GET {{apiUrl}}/products/{{productId}}/variants/{{variantId}}/inventory-items/{{inventoryItemId}}
+Content-Type: application/json
+x-workspace: {{workspaceSlug}}
+Authorization: Bearer {{token}}
+
+### Delete Inventory Item
+DELETE {{apiUrl}}/products/{{productId}}/variants/{{variantId}}/inventory-items/{{inventoryItemId}}
+Content-Type: application/json
+x-workspace: {{workspaceSlug}}
+Authorization: Bearer {{token}}
+
+###############################################
+# INVENTORY LEVELS
+###############################################
+
+### List Inventory Levels
+GET {{apiUrl}}/products/{{productId}}/variants/{{variantId}}/inventory-items/{{inventoryItemId}}/inventory-levels?page=1&pageSize=50&search=&filterBy=all&sortBy=createdAt&order=desc
+Content-Type: application/json
+x-workspace: {{workspaceSlug}}
+Authorization: Bearer {{token}}
+
+### Create Inventory Level
+POST {{apiUrl}}/products/{{productId}}/variants/{{variantId}}/inventory-items/{{inventoryItemId}}/inventory-levels
+Content-Type: application/json
+x-workspace: {{workspaceSlug}}
+Authorization: Bearer {{token}}
+
+{
+  "stockLocationId": "{{stockLocationId}}",
+  "stocked_quantity": 100
+}
+
+### Get Inventory Level
+GET {{apiUrl}}/products/{{productId}}/variants/{{variantId}}/inventory-items/{{inventoryItemId}}/inventory-levels/{{inventoryLevelId}}
+Content-Type: application/json
+x-workspace: {{workspaceSlug}}
+Authorization: Bearer {{token}}
+
+### Update Inventory Level
+PATCH {{apiUrl}}/products/{{productId}}/variants/{{variantId}}/inventory-items/{{inventoryItemId}}/inventory-levels/{{inventoryLevelId}}
+Content-Type: application/json
+x-workspace: {{workspaceSlug}}
+Authorization: Bearer {{token}}
+
+{
+  "stocked_quantity": 150
+}
+
+### Delete Inventory Level
+DELETE {{apiUrl}}/products/{{productId}}/variants/{{variantId}}/inventory-items/{{inventoryItemId}}/inventory-levels/{{inventoryLevelId}}
+Content-Type: application/json
+x-workspace: {{workspaceSlug}}
+Authorization: Bearer {{token}}
+
+###############################################
+# STOCK LOCATIONS
+###############################################
+
+### List Stock Locations
+GET {{apiUrl}}/stock-locations?page=1&pageSize=50&search=&filterBy=all&sortBy=createdAt&order=desc
+Content-Type: application/json
+x-workspace: {{workspaceSlug}}
+Authorization: Bearer {{token}}
+
+### Create Stock Location
+POST {{apiUrl}}/stock-locations
+Content-Type: application/json
+x-workspace: {{workspaceSlug}}
+Authorization: Bearer {{token}}
+
+{
+  "name": "Main Warehouse"
+}
+
+### Get Stock Location
+GET {{apiUrl}}/stock-locations/{{stockLocationId}}
+Content-Type: application/json
+x-workspace: {{workspaceSlug}}
+Authorization: Bearer {{token}}
+
+### Update Stock Location
+PATCH {{apiUrl}}/stock-locations/{{stockLocationId}}
+Content-Type: application/json
+x-workspace: {{workspaceSlug}}
+Authorization: Bearer {{token}}
+
+{
+  "name": "Updated Warehouse Name"
+}
+
+### Delete Stock Location
+DELETE {{apiUrl}}/stock-locations/{{stockLocationId}}
+Content-Type: application/json
+x-workspace: {{workspaceSlug}}
+Authorization: Bearer {{token}}
+
+###############################################
+# INTEGRATIONS
+###############################################
+
+### Integration Status
+GET {{apiUrl}}/integrations/status
+Content-Type: application/json
+x-workspace: {{workspaceSlug}}

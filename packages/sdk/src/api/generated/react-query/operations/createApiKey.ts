@@ -20,13 +20,13 @@ import type {
 } from '../../types/CreateApiKey'
 
 function getCreateApiKeyUrl() {
-  const res = { method: 'POST', url: `/owned-workspace/api-keys` as const }
+  const res = { method: 'POST', url: `/api/api-keys` as const }
   return res
 }
 
 /**
  * @description Create a new API key
- * {@link /owned-workspace/api-keys}
+ * {@link /api/api-keys}
  */
 export async function createApiKey(
   { data }: { data: CreateApiKeyMutationRequest },

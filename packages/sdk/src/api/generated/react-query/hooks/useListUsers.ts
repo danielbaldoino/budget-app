@@ -28,7 +28,7 @@ import { listUsers } from '../operations/listUsers'
 import { queryOptions, useQuery } from '@tanstack/react-query'
 
 export const listUsersQueryKey = (params?: ListUsersQueryParams) =>
-  [{ url: '/owned-workspace/users' }, ...(params ? [params] : [])] as const
+  [{ url: '/api/users' }, ...(params ? [params] : [])] as const
 
 export type ListUsersQueryKey = ReturnType<typeof listUsersQueryKey>
 
@@ -60,7 +60,7 @@ export function listUsersQueryOptions(
 
 /**
  * @description Get all users
- * {@link /owned-workspace/users}
+ * {@link /api/users}
  */
 export function useListUsers<
   TData = ListUsersQueryResponse,

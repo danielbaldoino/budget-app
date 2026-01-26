@@ -27,7 +27,7 @@ import { updateOwnedWorkspace } from '../operations/updateOwnedWorkspace'
 import { mutationOptions, useMutation } from '@tanstack/react-query'
 
 export const updateOwnedWorkspaceMutationKey = () =>
-  [{ url: '/owned-workspace' }] as const
+  [{ url: '/api/owned-workspace' }] as const
 
 export type UpdateOwnedWorkspaceMutationKey = ReturnType<
   typeof updateOwnedWorkspaceMutationKey
@@ -61,7 +61,7 @@ export function updateOwnedWorkspaceMutationOptions(
 
 /**
  * @description Update owned workspace details
- * {@link /owned-workspace}
+ * {@link /api/owned-workspace}
  */
 export function useUpdateOwnedWorkspace<TContext>(
   options: {

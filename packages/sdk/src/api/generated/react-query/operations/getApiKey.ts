@@ -22,16 +22,13 @@ import type {
 function getGetApiKeyUrl({
   apiKeyId,
 }: { apiKeyId: GetApiKeyPathParams['apiKeyId'] }) {
-  const res = {
-    method: 'GET',
-    url: `/owned-workspace/api-keys/${apiKeyId}` as const,
-  }
+  const res = { method: 'GET', url: `/api/api-keys/${apiKeyId}` as const }
   return res
 }
 
 /**
  * @description Get an API key
- * {@link /owned-workspace/api-keys/:apiKeyId}
+ * {@link /api/api-keys/:apiKeyId}
  */
 export async function getApiKey(
   { apiKeyId }: { apiKeyId: GetApiKeyPathParams['apiKeyId'] },

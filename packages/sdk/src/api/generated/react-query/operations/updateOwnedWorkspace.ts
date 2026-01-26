@@ -20,13 +20,13 @@ import type {
 } from '../../types/UpdateOwnedWorkspace'
 
 function getUpdateOwnedWorkspaceUrl() {
-  const res = { method: 'PATCH', url: `/owned-workspace` as const }
+  const res = { method: 'PATCH', url: `/api/owned-workspace` as const }
   return res
 }
 
 /**
  * @description Update owned workspace details
- * {@link /owned-workspace}
+ * {@link /api/owned-workspace}
  */
 export async function updateOwnedWorkspace(
   { data }: { data?: UpdateOwnedWorkspaceMutationRequest },

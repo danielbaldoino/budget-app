@@ -30,9 +30,7 @@ import { queryOptions, useQuery } from '@tanstack/react-query'
 export const getUserQueryKey = ({
   userId,
 }: { userId: GetUserPathParams['userId'] }) =>
-  [
-    { url: '/owned-workspace/users/:userId', params: { userId: userId } },
-  ] as const
+  [{ url: '/api/users/:userId', params: { userId: userId } }] as const
 
 export type GetUserQueryKey = ReturnType<typeof getUserQueryKey>
 
@@ -65,7 +63,7 @@ export function getUserQueryOptions(
 
 /**
  * @description Get a user
- * {@link /owned-workspace/users/:userId}
+ * {@link /api/users/:userId}
  */
 export function useGetUser<
   TData = GetUserQueryResponse,

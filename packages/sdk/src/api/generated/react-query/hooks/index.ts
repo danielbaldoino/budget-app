@@ -1,17 +1,54 @@
 export type { CreateApiKeyMutationKey } from './useCreateApiKey'
+export type { CreateInventoryItemMutationKey } from './useCreateInventoryItem'
+export type { CreateInventoryLevelMutationKey } from './useCreateInventoryLevel'
 export type { CreateOwnedWorkspaceMutationKey } from './useCreateOwnedWorkspace'
+export type { CreateProductMutationKey } from './useCreateProduct'
+export type { CreateProductCategoryMutationKey } from './useCreateProductCategory'
+export type { CreateProductOptionMutationKey } from './useCreateProductOption'
+export type { CreateProductVariantMutationKey } from './useCreateProductVariant'
+export type { CreateStockLocationMutationKey } from './useCreateStockLocation'
 export type { CreateUserMutationKey } from './useCreateUser'
 export type { DeleteApiKeyMutationKey } from './useDeleteApiKey'
+export type { DeleteInventoryItemMutationKey } from './useDeleteInventoryItem'
+export type { DeleteInventoryLevelMutationKey } from './useDeleteInventoryLevel'
+export type { DeleteProductMutationKey } from './useDeleteProduct'
+export type { DeleteProductCategoryMutationKey } from './useDeleteProductCategory'
+export type { DeleteProductOptionMutationKey } from './useDeleteProductOption'
+export type { DeleteProductVariantMutationKey } from './useDeleteProductVariant'
+export type { DeleteStockLocationMutationKey } from './useDeleteStockLocation'
 export type { DeleteUserMutationKey } from './useDeleteUser'
 export type { GetApiKeyQueryKey } from './useGetApiKey'
+export type { GetInventoryItemQueryKey } from './useGetInventoryItem'
+export type { GetInventoryLevelQueryKey } from './useGetInventoryLevel'
 export type { GetOwnedWorkspaceQueryKey } from './useGetOwnedWorkspace'
+export type { GetProductQueryKey } from './useGetProduct'
+export type { GetProductCategoryQueryKey } from './useGetProductCategory'
+export type { GetProductOptionQueryKey } from './useGetProductOption'
+export type { GetProductVariantQueryKey } from './useGetProductVariant'
 export type { GetProfileQueryKey } from './useGetProfile'
+export type { GetStatusQueryKey } from './useGetStatus'
+export type { GetStockLocationQueryKey } from './useGetStockLocation'
 export type { GetUserQueryKey } from './useGetUser'
 export type { HealthQueryKey } from './useHealth'
 export type { ListApiKeysQueryKey } from './useListApiKeys'
+export type { ListCustomersQueryKey } from './useListCustomers'
+export type { ListInventoryItemsQueryKey } from './useListInventoryItems'
+export type { ListInventoryLevelsQueryKey } from './useListInventoryLevels'
+export type { ListProductCategoriesQueryKey } from './useListProductCategories'
+export type { ListProductOptionsQueryKey } from './useListProductOptions'
+export type { ListProductsQueryKey } from './useListProducts'
+export type { ListProductVariantsQueryKey } from './useListProductVariants'
+export type { ListStockLocationsQueryKey } from './useListStockLocations'
 export type { ListUsersQueryKey } from './useListUsers'
+export type { LogInMutationKey } from './useLogIn'
 export type { UpdateApiKeyMutationKey } from './useUpdateApiKey'
+export type { UpdateInventoryLevelMutationKey } from './useUpdateInventoryLevel'
 export type { UpdateOwnedWorkspaceMutationKey } from './useUpdateOwnedWorkspace'
+export type { UpdateProductMutationKey } from './useUpdateProduct'
+export type { UpdateProductCategoryMutationKey } from './useUpdateProductCategory'
+export type { UpdateProductOptionMutationKey } from './useUpdateProductOption'
+export type { UpdateProductVariantMutationKey } from './useUpdateProductVariant'
+export type { UpdateStockLocationMutationKey } from './useUpdateStockLocation'
 export type { UpdateUserMutationKey } from './useUpdateUser'
 export {
   createApiKeyMutationKey,
@@ -19,10 +56,45 @@ export {
   useCreateApiKey,
 } from './useCreateApiKey'
 export {
+  createInventoryItemMutationKey,
+  createInventoryItemMutationOptions,
+  useCreateInventoryItem,
+} from './useCreateInventoryItem'
+export {
+  createInventoryLevelMutationKey,
+  createInventoryLevelMutationOptions,
+  useCreateInventoryLevel,
+} from './useCreateInventoryLevel'
+export {
   createOwnedWorkspaceMutationKey,
   createOwnedWorkspaceMutationOptions,
   useCreateOwnedWorkspace,
 } from './useCreateOwnedWorkspace'
+export {
+  createProductMutationKey,
+  createProductMutationOptions,
+  useCreateProduct,
+} from './useCreateProduct'
+export {
+  createProductCategoryMutationKey,
+  createProductCategoryMutationOptions,
+  useCreateProductCategory,
+} from './useCreateProductCategory'
+export {
+  createProductOptionMutationKey,
+  createProductOptionMutationOptions,
+  useCreateProductOption,
+} from './useCreateProductOption'
+export {
+  createProductVariantMutationKey,
+  createProductVariantMutationOptions,
+  useCreateProductVariant,
+} from './useCreateProductVariant'
+export {
+  createStockLocationMutationKey,
+  createStockLocationMutationOptions,
+  useCreateStockLocation,
+} from './useCreateStockLocation'
 export {
   createUserMutationKey,
   createUserMutationOptions,
@@ -34,6 +106,41 @@ export {
   useDeleteApiKey,
 } from './useDeleteApiKey'
 export {
+  deleteInventoryItemMutationKey,
+  deleteInventoryItemMutationOptions,
+  useDeleteInventoryItem,
+} from './useDeleteInventoryItem'
+export {
+  deleteInventoryLevelMutationKey,
+  deleteInventoryLevelMutationOptions,
+  useDeleteInventoryLevel,
+} from './useDeleteInventoryLevel'
+export {
+  deleteProductMutationKey,
+  deleteProductMutationOptions,
+  useDeleteProduct,
+} from './useDeleteProduct'
+export {
+  deleteProductCategoryMutationKey,
+  deleteProductCategoryMutationOptions,
+  useDeleteProductCategory,
+} from './useDeleteProductCategory'
+export {
+  deleteProductOptionMutationKey,
+  deleteProductOptionMutationOptions,
+  useDeleteProductOption,
+} from './useDeleteProductOption'
+export {
+  deleteProductVariantMutationKey,
+  deleteProductVariantMutationOptions,
+  useDeleteProductVariant,
+} from './useDeleteProductVariant'
+export {
+  deleteStockLocationMutationKey,
+  deleteStockLocationMutationOptions,
+  useDeleteStockLocation,
+} from './useDeleteStockLocation'
+export {
   deleteUserMutationKey,
   deleteUserMutationOptions,
   useDeleteUser,
@@ -44,15 +151,55 @@ export {
   useGetApiKey,
 } from './useGetApiKey'
 export {
+  getInventoryItemQueryKey,
+  getInventoryItemQueryOptions,
+  useGetInventoryItem,
+} from './useGetInventoryItem'
+export {
+  getInventoryLevelQueryKey,
+  getInventoryLevelQueryOptions,
+  useGetInventoryLevel,
+} from './useGetInventoryLevel'
+export {
   getOwnedWorkspaceQueryKey,
   getOwnedWorkspaceQueryOptions,
   useGetOwnedWorkspace,
 } from './useGetOwnedWorkspace'
 export {
+  getProductQueryKey,
+  getProductQueryOptions,
+  useGetProduct,
+} from './useGetProduct'
+export {
+  getProductCategoryQueryKey,
+  getProductCategoryQueryOptions,
+  useGetProductCategory,
+} from './useGetProductCategory'
+export {
+  getProductOptionQueryKey,
+  getProductOptionQueryOptions,
+  useGetProductOption,
+} from './useGetProductOption'
+export {
+  getProductVariantQueryKey,
+  getProductVariantQueryOptions,
+  useGetProductVariant,
+} from './useGetProductVariant'
+export {
   getProfileQueryKey,
   getProfileQueryOptions,
   useGetProfile,
 } from './useGetProfile'
+export {
+  getStatusQueryKey,
+  getStatusQueryOptions,
+  useGetStatus,
+} from './useGetStatus'
+export {
+  getStockLocationQueryKey,
+  getStockLocationQueryOptions,
+  useGetStockLocation,
+} from './useGetStockLocation'
 export { getUserQueryKey, getUserQueryOptions, useGetUser } from './useGetUser'
 export { healthQueryKey, healthQueryOptions, useHealth } from './useHealth'
 export {
@@ -61,20 +208,91 @@ export {
   useListApiKeys,
 } from './useListApiKeys'
 export {
+  listCustomersQueryKey,
+  listCustomersQueryOptions,
+  useListCustomers,
+} from './useListCustomers'
+export {
+  listInventoryItemsQueryKey,
+  listInventoryItemsQueryOptions,
+  useListInventoryItems,
+} from './useListInventoryItems'
+export {
+  listInventoryLevelsQueryKey,
+  listInventoryLevelsQueryOptions,
+  useListInventoryLevels,
+} from './useListInventoryLevels'
+export {
+  listProductCategoriesQueryKey,
+  listProductCategoriesQueryOptions,
+  useListProductCategories,
+} from './useListProductCategories'
+export {
+  listProductOptionsQueryKey,
+  listProductOptionsQueryOptions,
+  useListProductOptions,
+} from './useListProductOptions'
+export {
+  listProductsQueryKey,
+  listProductsQueryOptions,
+  useListProducts,
+} from './useListProducts'
+export {
+  listProductVariantsQueryKey,
+  listProductVariantsQueryOptions,
+  useListProductVariants,
+} from './useListProductVariants'
+export {
+  listStockLocationsQueryKey,
+  listStockLocationsQueryOptions,
+  useListStockLocations,
+} from './useListStockLocations'
+export {
   listUsersQueryKey,
   listUsersQueryOptions,
   useListUsers,
 } from './useListUsers'
+export { logInMutationKey, logInMutationOptions, useLogIn } from './useLogIn'
 export {
   updateApiKeyMutationKey,
   updateApiKeyMutationOptions,
   useUpdateApiKey,
 } from './useUpdateApiKey'
 export {
+  updateInventoryLevelMutationKey,
+  updateInventoryLevelMutationOptions,
+  useUpdateInventoryLevel,
+} from './useUpdateInventoryLevel'
+export {
   updateOwnedWorkspaceMutationKey,
   updateOwnedWorkspaceMutationOptions,
   useUpdateOwnedWorkspace,
 } from './useUpdateOwnedWorkspace'
+export {
+  updateProductMutationKey,
+  updateProductMutationOptions,
+  useUpdateProduct,
+} from './useUpdateProduct'
+export {
+  updateProductCategoryMutationKey,
+  updateProductCategoryMutationOptions,
+  useUpdateProductCategory,
+} from './useUpdateProductCategory'
+export {
+  updateProductOptionMutationKey,
+  updateProductOptionMutationOptions,
+  useUpdateProductOption,
+} from './useUpdateProductOption'
+export {
+  updateProductVariantMutationKey,
+  updateProductVariantMutationOptions,
+  useUpdateProductVariant,
+} from './useUpdateProductVariant'
+export {
+  updateStockLocationMutationKey,
+  updateStockLocationMutationOptions,
+  useUpdateStockLocation,
+} from './useUpdateStockLocation'
 export {
   updateUserMutationKey,
   updateUserMutationOptions,

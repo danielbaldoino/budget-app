@@ -26,7 +26,7 @@ import type {
 import { health } from '../operations/health'
 import { queryOptions, useQuery } from '@tanstack/react-query'
 
-export const healthQueryKey = () => [{ url: '/health' }] as const
+export const healthQueryKey = () => [{ url: '/api/health' }] as const
 
 export type HealthQueryKey = ReturnType<typeof healthQueryKey>
 
@@ -52,7 +52,7 @@ export function healthQueryOptions(
 
 /**
  * @description Check if the API is working
- * {@link /health}
+ * {@link /api/health}
  */
 export function useHealth<
   TData = HealthQueryResponse,

@@ -145,3 +145,138 @@ export type GetProfileQuery = {
     | GetProfile429
     | GetProfile500
 }
+
+/**
+ * @description Success
+ */
+export type GetProfile200 = {
+  /**
+   * @type object
+   */
+  user: {
+    /**
+     * @type string
+     */
+    id: string
+    /**
+     * @type string
+     */
+    name: string
+    /**
+     * @type string
+     */
+    username: string
+    /**
+     * @type string, date-time
+     */
+    createdAt: string
+    /**
+     * @type string, date-time
+     */
+    updatedAt: string
+  }
+}
+
+/**
+ * @description Bad Request. Usually due to missing parameters, or invalid parameters.
+ */
+export type GetProfile400 = {
+  /**
+   * @type string
+   */
+  code: string
+  /**
+   * @type string
+   */
+  message: string
+  /**
+   * @description Validation errors
+   * @type array | undefined
+   */
+  errors?: {
+    /**
+     * @type string
+     */
+    code: string
+    /**
+     * @type string
+     */
+    message: string
+    /**
+     * @type array
+     */
+    path: (string | number)[]
+    [key: string]: any
+  }[]
+}
+
+/**
+ * @description Unauthorized. Due to missing or invalid authentication.
+ */
+export type GetProfile401 = {
+  /**
+   * @type string
+   */
+  code: string
+  /**
+   * @type string
+   */
+  message: string
+}
+
+/**
+ * @description Forbidden. You do not have permission to access this resource or to perform this action.
+ */
+export type GetProfile403 = {
+  /**
+   * @type string
+   */
+  message: string
+}
+
+/**
+ * @description Not Found. The requested resource was not found.
+ */
+export type GetProfile404 = {
+  /**
+   * @type string
+   */
+  message: string
+}
+
+/**
+ * @description Too Many Requests. You have exceeded the rate limit. Try again later.
+ */
+export type GetProfile429 = {
+  /**
+   * @type string
+   */
+  message: string
+}
+
+/**
+ * @description Internal Server Error. This is a problem with the server that you cannot fix.
+ */
+export type GetProfile500 = {
+  /**
+   * @type string
+   */
+  code: string
+  /**
+   * @type string
+   */
+  message: string
+}
+
+export type GetProfileQueryResponse = GetProfile200
+
+export type GetProfileQuery = {
+  Response: GetProfile200
+  Errors:
+    | GetProfile400
+    | GetProfile401
+    | GetProfile403
+    | GetProfile404
+    | GetProfile429
+    | GetProfile500
+}

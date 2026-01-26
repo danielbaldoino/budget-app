@@ -16,13 +16,42 @@ import type {
 } from '../types/GetProfile'
 
 function getGetProfileUrl() {
-  const res = { method: 'GET', url: `/profile` as const }
+  const res = { method: 'GET', url: `/api/profile` as const }
   return res
 }
 
 /**
  * @description Get authenticated user profile
- * {@link /profile}
+ * {@link /api/profile}
+ */
+export async function getProfile(
+  config: Partial<RequestConfig> & { client?: typeof fetch } = {},
+) {
+  const { client: request = fetch, ...requestConfig } = config
+
+  const res = await request<
+    GetProfileQueryResponse,
+    ResponseErrorConfig<
+      | GetProfile400
+      | GetProfile401
+      | GetProfile403
+      | GetProfile404
+      | GetProfile429
+      | GetProfile500
+    >,
+    unknown
+  >({ method: 'GET', url: getGetProfileUrl().url.toString(), ...requestConfig })
+  return res
+}
+
+function getGetProfileUrl() {
+  const res = { method: 'GET', url: `/api/application/v1/profile` as const }
+  return res
+}
+
+/**
+ * @description Get authenticated user profile
+ * {@link /api/application/v1/profile}
  */
 export async function getProfile(
   config: Partial<RequestConfig> & { client?: typeof fetch } = {},

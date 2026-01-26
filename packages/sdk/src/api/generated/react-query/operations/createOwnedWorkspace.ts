@@ -20,13 +20,13 @@ import type {
 } from '../../types/CreateOwnedWorkspace'
 
 function getCreateOwnedWorkspaceUrl() {
-  const res = { method: 'POST', url: `/owned-workspace` as const }
+  const res = { method: 'POST', url: `/api/owned-workspace` as const }
   return res
 }
 
 /**
  * @description Create a new owned workspace
- * {@link /owned-workspace}
+ * {@link /api/owned-workspace}
  */
 export async function createOwnedWorkspace(
   { data }: { data: CreateOwnedWorkspaceMutationRequest },

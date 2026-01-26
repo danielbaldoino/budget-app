@@ -22,16 +22,13 @@ import type {
 function getDeleteApiKeyUrl({
   apiKeyId,
 }: { apiKeyId: DeleteApiKeyPathParams['apiKeyId'] }) {
-  const res = {
-    method: 'DELETE',
-    url: `/owned-workspace/api-keys/${apiKeyId}` as const,
-  }
+  const res = { method: 'DELETE', url: `/api/api-keys/${apiKeyId}` as const }
   return res
 }
 
 /**
  * @description Delete an API key
- * {@link /owned-workspace/api-keys/:apiKeyId}
+ * {@link /api/api-keys/:apiKeyId}
  */
 export async function deleteApiKey(
   { apiKeyId }: { apiKeyId: DeleteApiKeyPathParams['apiKeyId'] },

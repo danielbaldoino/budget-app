@@ -18,15 +18,18 @@ import { errorHandler } from './errors/error-handler'
 import { routes } from './routes'
 
 export const app = fastify({
-  logger: {
-    transport: {
-      target: 'pino-pretty',
-      options: {
-        translateTime: 'HH:MM:ss Z',
-        ignore: 'pid,hostname',
-      },
-    },
-  },
+  logger:
+    env.LOGGER === 'debug'
+      ? {
+          transport: {
+            target: 'pino-pretty',
+            options: {
+              translateTime: 'HH:MM:ss Z',
+              ignore: 'pid,hostname',
+            },
+          },
+        }
+      : undefined,
 }).withTypeProvider<ZodTypeProvider>()
 
 app.setSerializerCompiler(serializerCompiler)

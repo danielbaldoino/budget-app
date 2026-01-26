@@ -26,8 +26,7 @@ import type {
 import { createUser } from '../operations/createUser'
 import { mutationOptions, useMutation } from '@tanstack/react-query'
 
-export const createUserMutationKey = () =>
-  [{ url: '/owned-workspace/users' }] as const
+export const createUserMutationKey = () => [{ url: '/api/users' }] as const
 
 export type CreateUserMutationKey = ReturnType<typeof createUserMutationKey>
 
@@ -59,7 +58,7 @@ export function createUserMutationOptions(
 
 /**
  * @description Create a new user
- * {@link /owned-workspace/users}
+ * {@link /api/users}
  */
 export function useCreateUser<TContext>(
   options: {

@@ -28,7 +28,7 @@ import { listApiKeys } from '../operations/listApiKeys'
 import { queryOptions, useQuery } from '@tanstack/react-query'
 
 export const listApiKeysQueryKey = (params?: ListApiKeysQueryParams) =>
-  [{ url: '/owned-workspace/api-keys' }, ...(params ? [params] : [])] as const
+  [{ url: '/api/api-keys' }, ...(params ? [params] : [])] as const
 
 export type ListApiKeysQueryKey = ReturnType<typeof listApiKeysQueryKey>
 
@@ -60,7 +60,7 @@ export function listApiKeysQueryOptions(
 
 /**
  * @description Get all API keys
- * {@link /owned-workspace/api-keys}
+ * {@link /api/api-keys}
  */
 export function useListApiKeys<
   TData = ListApiKeysQueryResponse,

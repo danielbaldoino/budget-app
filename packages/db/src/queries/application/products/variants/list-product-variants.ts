@@ -14,7 +14,7 @@ import {
   buildRelationFirstQuery,
   buildRelationManyQuery,
 } from '../../../../lib/utils'
-import { tenantSchema } from '../../../../tenant'
+import { tenantDb, tenantSchema } from '../../../../tenant'
 
 const FILTER_BY = ['all', 'name', 'sku'] as const
 const SORT_BY = ['name', 'sku', 'createdAt'] as const
@@ -180,55 +180,29 @@ type ListProductVariantsWithOptionsParams = {
 export async function listProductVariantsWithOptions(
   params: ListProductVariantsWithOptionsParams,
 ) {
-  return tenantSchema(
-    params.tenant,
-    async ({
-      productVariants,
-      productOptionValuesToProductVariants,
-      productOptionValues,
-      productOptions,
-    }) => {
-      const productOptionValuesToProductVariantsSubQuery =
-        buildRelationManyQuery({
-          as: 'options',
-          table: productOptionValuesToProductVariants,
-          where: eq(
-            productOptionValuesToProductVariants.variantId,
-            productVariants.id,
-          ),
+  return tenantSchema(params.tenant, async ({ productVariants }) => {
+    const listProductVariants = await tenantDb(
+      params.tenant,
+    ).query.productVariants.findMany({
+      where: and(
+        eq(productVariants.productId, params.productId),
+        params.productVariantId
+          ? eq(productVariants.id, params.productVariantId)
+          : undefined,
+      ),
+      with: {
+        options: {
           with: {
-            optionValue: buildRelationFirstQuery({
-              table: productOptionValues,
-              where: eq(
-                productOptionValues.id,
-                productOptionValuesToProductVariants.optionValueId,
-              ),
+            optionValue: {
               with: {
-                option: buildRelationFirstQuery({
-                  table: productOptions,
-                  where: eq(productOptions.id, productOptionValues.optionId),
-                }),
+                option: true,
               },
-            }),
+            },
           },
-        })
+        },
+      },
+    })
 
-      const listProductVariants = await db
-        .select({
-          ...getTableColumns(productVariants),
-          options: productOptionValuesToProductVariantsSubQuery.data,
-        })
-        .from(productVariants)
-        .where(
-          and(
-            eq(productVariants.productId, params.productId),
-            params.productVariantId
-              ? eq(productVariants.id, params.productVariantId)
-              : undefined,
-          ),
-        )
-
-      return listProductVariants
-    },
-  )
+    return listProductVariants
+  })
 }

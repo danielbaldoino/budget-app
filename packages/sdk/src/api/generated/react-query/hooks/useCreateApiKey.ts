@@ -26,8 +26,7 @@ import type {
 import { createApiKey } from '../operations/createApiKey'
 import { mutationOptions, useMutation } from '@tanstack/react-query'
 
-export const createApiKeyMutationKey = () =>
-  [{ url: '/owned-workspace/api-keys' }] as const
+export const createApiKeyMutationKey = () => [{ url: '/api/api-keys' }] as const
 
 export type CreateApiKeyMutationKey = ReturnType<typeof createApiKeyMutationKey>
 
@@ -59,7 +58,7 @@ export function createApiKeyMutationOptions(
 
 /**
  * @description Create a new API key
- * {@link /owned-workspace/api-keys}
+ * {@link /api/api-keys}
  */
 export function useCreateApiKey<TContext>(
   options: {

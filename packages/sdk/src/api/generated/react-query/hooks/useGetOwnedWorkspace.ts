@@ -27,7 +27,7 @@ import { getOwnedWorkspace } from '../operations/getOwnedWorkspace'
 import { queryOptions, useQuery } from '@tanstack/react-query'
 
 export const getOwnedWorkspaceQueryKey = () =>
-  [{ url: '/owned-workspace' }] as const
+  [{ url: '/api/owned-workspace' }] as const
 
 export type GetOwnedWorkspaceQueryKey = ReturnType<
   typeof getOwnedWorkspaceQueryKey
@@ -60,7 +60,7 @@ export function getOwnedWorkspaceQueryOptions(
 
 /**
  * @description Get details from owned workspace
- * {@link /owned-workspace}
+ * {@link /api/owned-workspace}
  */
 export function useGetOwnedWorkspace<
   TData = GetOwnedWorkspaceQueryResponse,

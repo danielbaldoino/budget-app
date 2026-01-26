@@ -27,7 +27,7 @@ import { deleteUser } from '../operations/deleteUser'
 import { mutationOptions, useMutation } from '@tanstack/react-query'
 
 export const deleteUserMutationKey = () =>
-  [{ url: '/owned-workspace/users/:userId' }] as const
+  [{ url: '/api/users/:userId' }] as const
 
 export type DeleteUserMutationKey = ReturnType<typeof deleteUserMutationKey>
 
@@ -57,7 +57,7 @@ export function deleteUserMutationOptions(
 
 /**
  * @description Delete a user
- * {@link /owned-workspace/users/:userId}
+ * {@link /api/users/:userId}
  */
 export function useDeleteUser<TContext>(
   options: {

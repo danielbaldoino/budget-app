@@ -16,13 +16,13 @@ import type {
 } from '../types/Health'
 
 function getHealthUrl() {
-  const res = { method: 'GET', url: `/health` as const }
+  const res = { method: 'GET', url: `/api/health` as const }
   return res
 }
 
 /**
  * @description Check if the API is working
- * {@link /health}
+ * {@link /api/health}
  */
 export async function health(
   config: Partial<RequestConfig> & { client?: typeof fetch } = {},

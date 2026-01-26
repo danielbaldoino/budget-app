@@ -22,16 +22,13 @@ import type {
 function getDeleteUserUrl({
   userId,
 }: { userId: DeleteUserPathParams['userId'] }) {
-  const res = {
-    method: 'DELETE',
-    url: `/owned-workspace/users/${userId}` as const,
-  }
+  const res = { method: 'DELETE', url: `/api/users/${userId}` as const }
   return res
 }
 
 /**
  * @description Delete a user
- * {@link /owned-workspace/users/:userId}
+ * {@link /api/users/:userId}
  */
 export async function deleteUser(
   { userId }: { userId: DeleteUserPathParams['userId'] },

@@ -20,13 +20,13 @@ import type {
 } from '../../types/ListApiKeys'
 
 function getListApiKeysUrl() {
-  const res = { method: 'GET', url: `/owned-workspace/api-keys` as const }
+  const res = { method: 'GET', url: `/api/api-keys` as const }
   return res
 }
 
 /**
  * @description Get all API keys
- * {@link /owned-workspace/api-keys}
+ * {@link /api/api-keys}
  */
 export async function listApiKeys(
   { params }: { params?: ListApiKeysQueryParams },

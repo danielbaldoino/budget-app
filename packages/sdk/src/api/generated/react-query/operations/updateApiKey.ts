@@ -23,16 +23,13 @@ import type {
 function getUpdateApiKeyUrl({
   apiKeyId,
 }: { apiKeyId: UpdateApiKeyPathParams['apiKeyId'] }) {
-  const res = {
-    method: 'PATCH',
-    url: `/owned-workspace/api-keys/${apiKeyId}` as const,
-  }
+  const res = { method: 'PATCH', url: `/api/api-keys/${apiKeyId}` as const }
   return res
 }
 
 /**
  * @description Update an API key
- * {@link /owned-workspace/api-keys/:apiKeyId}
+ * {@link /api/api-keys/:apiKeyId}
  */
 export async function updateApiKey(
   {

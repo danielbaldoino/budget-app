@@ -28,7 +28,7 @@ import { updateUser } from '../operations/updateUser'
 import { mutationOptions, useMutation } from '@tanstack/react-query'
 
 export const updateUserMutationKey = () =>
-  [{ url: '/owned-workspace/users/:userId' }] as const
+  [{ url: '/api/users/:userId' }] as const
 
 export type UpdateUserMutationKey = ReturnType<typeof updateUserMutationKey>
 
@@ -63,7 +63,7 @@ export function updateUserMutationOptions(
 
 /**
  * @description Update a user
- * {@link /owned-workspace/users/:userId}
+ * {@link /api/users/:userId}
  */
 export function useUpdateUser<TContext>(
   options: {

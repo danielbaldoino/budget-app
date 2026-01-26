@@ -26,7 +26,7 @@ import type {
 import { getProfile } from '../operations/getProfile'
 import { queryOptions, useQuery } from '@tanstack/react-query'
 
-export const getProfileQueryKey = () => [{ url: '/profile' }] as const
+export const getProfileQueryKey = () => [{ url: '/api/profile' }] as const
 
 export type GetProfileQueryKey = ReturnType<typeof getProfileQueryKey>
 
@@ -57,7 +57,94 @@ export function getProfileQueryOptions(
 
 /**
  * @description Get authenticated user profile
- * {@link /profile}
+ * {@link /api/profile}
+ */
+export function useGetProfile<
+  TData = GetProfileQueryResponse,
+  TQueryData = GetProfileQueryResponse,
+  TQueryKey extends QueryKey = GetProfileQueryKey,
+>(
+  options: {
+    query?: Partial<
+      QueryObserverOptions<
+        GetProfileQueryResponse,
+        ResponseErrorConfig<
+          | GetProfile400
+          | GetProfile401
+          | GetProfile403
+          | GetProfile404
+          | GetProfile429
+          | GetProfile500
+        >,
+        TData,
+        TQueryData,
+        TQueryKey
+      >
+    > & { client?: QueryClient }
+    client?: Partial<RequestConfig> & { client?: typeof fetch }
+  } = {},
+) {
+  const { query: queryConfig = {}, client: config = {} } = options ?? {}
+  const { client: queryClient, ...queryOptions } = queryConfig
+  const queryKey = queryOptions?.queryKey ?? getProfileQueryKey()
+
+  const query = useQuery(
+    {
+      ...getProfileQueryOptions(config),
+      queryKey,
+      ...queryOptions,
+    } as unknown as QueryObserverOptions,
+    queryClient,
+  ) as UseQueryResult<
+    TData,
+    ResponseErrorConfig<
+      | GetProfile400
+      | GetProfile401
+      | GetProfile403
+      | GetProfile404
+      | GetProfile429
+      | GetProfile500
+    >
+  > & { queryKey: TQueryKey }
+
+  query.queryKey = queryKey as TQueryKey
+
+  return query
+}
+
+export const getProfileQueryKey = () =>
+  [{ url: '/api/application/v1/profile' }] as const
+
+export type GetProfileQueryKey = ReturnType<typeof getProfileQueryKey>
+
+export function getProfileQueryOptions(
+  config: Partial<RequestConfig> & { client?: typeof fetch } = {},
+) {
+  const queryKey = getProfileQueryKey()
+  return queryOptions<
+    GetProfileQueryResponse,
+    ResponseErrorConfig<
+      | GetProfile400
+      | GetProfile401
+      | GetProfile403
+      | GetProfile404
+      | GetProfile429
+      | GetProfile500
+    >,
+    GetProfileQueryResponse,
+    typeof queryKey
+  >({
+    queryKey,
+    queryFn: async ({ signal }) => {
+      config.signal = signal
+      return getProfile(config)
+    },
+  })
+}
+
+/**
+ * @description Get authenticated user profile
+ * {@link /api/application/v1/profile}
  */
 export function useGetProfile<
   TData = GetProfileQueryResponse,

@@ -27,7 +27,7 @@ import { deleteApiKey } from '../operations/deleteApiKey'
 import { mutationOptions, useMutation } from '@tanstack/react-query'
 
 export const deleteApiKeyMutationKey = () =>
-  [{ url: '/owned-workspace/api-keys/:apiKeyId' }] as const
+  [{ url: '/api/api-keys/:apiKeyId' }] as const
 
 export type DeleteApiKeyMutationKey = ReturnType<typeof deleteApiKeyMutationKey>
 
@@ -57,7 +57,7 @@ export function deleteApiKeyMutationOptions(
 
 /**
  * @description Delete an API key
- * {@link /owned-workspace/api-keys/:apiKeyId}
+ * {@link /api/api-keys/:apiKeyId}
  */
 export function useDeleteApiKey<TContext>(
   options: {

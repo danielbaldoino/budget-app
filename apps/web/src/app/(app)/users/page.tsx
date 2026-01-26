@@ -11,10 +11,14 @@ import Link from 'next/link'
 import { UsersTable } from './_components/users-table'
 
 export default async function Page() {
-  const { data } = await sdk.listUsers({})
+  const { data } = await sdk.listUsers({
+    params: {
+      // No pagination for now
+    },
+  })
 
   if (!data) {
-    return
+    return null
   }
 
   return (

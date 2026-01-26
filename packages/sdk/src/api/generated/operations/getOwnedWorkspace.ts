@@ -16,13 +16,13 @@ import type {
 } from '../types/GetOwnedWorkspace'
 
 function getGetOwnedWorkspaceUrl() {
-  const res = { method: 'GET', url: `/owned-workspace` as const }
+  const res = { method: 'GET', url: `/api/owned-workspace` as const }
   return res
 }
 
 /**
  * @description Get details from owned workspace
- * {@link /owned-workspace}
+ * {@link /api/owned-workspace}
  */
 export async function getOwnedWorkspace(
   config: Partial<RequestConfig> & { client?: typeof fetch } = {},

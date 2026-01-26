@@ -11,10 +11,14 @@ import Link from 'next/link'
 import { ApiKeysTable } from './_components/api-keys-table'
 
 export default async function Page() {
-  const { data } = await sdk.listApiKeys({})
+  const { data } = await sdk.listApiKeys({
+    params: {
+      // No pagination for now
+    },
+  })
 
   if (!data) {
-    return
+    return null
   }
 
   return (

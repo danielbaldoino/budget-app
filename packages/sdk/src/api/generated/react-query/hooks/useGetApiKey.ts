@@ -30,12 +30,7 @@ import { queryOptions, useQuery } from '@tanstack/react-query'
 export const getApiKeyQueryKey = ({
   apiKeyId,
 }: { apiKeyId: GetApiKeyPathParams['apiKeyId'] }) =>
-  [
-    {
-      url: '/owned-workspace/api-keys/:apiKeyId',
-      params: { apiKeyId: apiKeyId },
-    },
-  ] as const
+  [{ url: '/api/api-keys/:apiKeyId', params: { apiKeyId: apiKeyId } }] as const
 
 export type GetApiKeyQueryKey = ReturnType<typeof getApiKeyQueryKey>
 
@@ -68,7 +63,7 @@ export function getApiKeyQueryOptions(
 
 /**
  * @description Get an API key
- * {@link /owned-workspace/api-keys/:apiKeyId}
+ * {@link /api/api-keys/:apiKeyId}
  */
 export function useGetApiKey<
   TData = GetApiKeyQueryResponse,

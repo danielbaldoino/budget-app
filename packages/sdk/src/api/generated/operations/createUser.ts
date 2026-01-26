@@ -17,13 +17,13 @@ import type {
 } from '../types/CreateUser'
 
 function getCreateUserUrl() {
-  const res = { method: 'POST', url: `/owned-workspace/users` as const }
+  const res = { method: 'POST', url: `/api/users` as const }
   return res
 }
 
 /**
  * @description Create a new user
- * {@link /owned-workspace/users}
+ * {@link /api/users}
  */
 export async function createUser(
   { data }: { data: CreateUserMutationRequest },

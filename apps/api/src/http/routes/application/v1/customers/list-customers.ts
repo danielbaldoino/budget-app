@@ -1,7 +1,7 @@
 import { withDefaultErrorResponses } from '@/http/errors/default-error-responses'
 import type { FastifyTypedInstance } from '@/types/fastify'
-import { AddressType, DocumentType, Gender } from '@workspace/db/enums'
 import { queries } from '@workspace/db/queries'
+import { AddressType, DocumentType, Gender } from '@workspace/db/tenant/enums'
 import { z } from 'zod'
 
 const { FILTER_BY, SORT_BY, ORDER } =

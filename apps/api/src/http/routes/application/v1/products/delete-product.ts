@@ -13,7 +13,6 @@ export async function deleteProduct(app: FastifyTypedInstance) {
         summary: 'Delete a product',
         operationId: 'deleteProduct',
         params: z.object({
-          slug: z.string(),
           productId: z.string(),
         }),
         response: withDefaultErrorResponses({

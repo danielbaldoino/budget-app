@@ -28,7 +28,7 @@ import { updateApiKey } from '../operations/updateApiKey'
 import { mutationOptions, useMutation } from '@tanstack/react-query'
 
 export const updateApiKeyMutationKey = () =>
-  [{ url: '/owned-workspace/api-keys/:apiKeyId' }] as const
+  [{ url: '/api/api-keys/:apiKeyId' }] as const
 
 export type UpdateApiKeyMutationKey = ReturnType<typeof updateApiKeyMutationKey>
 
@@ -63,7 +63,7 @@ export function updateApiKeyMutationOptions(
 
 /**
  * @description Update an API key
- * {@link /owned-workspace/api-keys/:apiKeyId}
+ * {@link /api/api-keys/:apiKeyId}
  */
 export function useUpdateApiKey<TContext>(
   options: {
