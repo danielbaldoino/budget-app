@@ -39,6 +39,7 @@ import {
 } from './products/variants/inventory-items/get-inventory-item'
 import {
   getInventoryLevel,
+  getInventoryLevelByLocation,
   getInventoryLevelWithRelations,
 } from './products/variants/inventory-items/inventory-levels/get-inventory-level'
 import { listInventoryLevelsWithRelations } from './products/variants/inventory-items/inventory-levels/list-inventory-levels'
@@ -105,6 +106,7 @@ export const applicationQueries = {
         inventoryLevels: {
           listInventoryLevelsWithRelations,
           getInventoryLevel,
+          getInventoryLevelByLocation,
           getInventoryLevelWithRelations,
         },
       },

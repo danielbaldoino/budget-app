@@ -26,8 +26,8 @@ export async function getInventoryLevel(app: FastifyTypedInstance) {
                 location: z.object({
                   id: z.string(),
                   name: z.string(),
-                  addresses: z.array(
-                    z.object({
+                  address: z
+                    .object({
                       id: z.string(),
                       street: z.string().nullable(),
                       number: z.string().nullable(),
@@ -40,8 +40,8 @@ export async function getInventoryLevel(app: FastifyTypedInstance) {
                       reference: z.string().nullable(),
                       createdAt: z.coerce.date(),
                       updatedAt: z.coerce.date(),
-                    }),
-                  ),
+                    })
+                    .nullable(),
                   createdAt: z.coerce.date(),
                   updatedAt: z.coerce.date(),
                 }),
@@ -115,7 +115,7 @@ export async function getInventoryLevel(app: FastifyTypedInstance) {
       return {
         inventoryLevel: {
           ...inventoryLevel,
-          location: inventoryLevel.location!,
+          location: inventoryLevel.location,
         },
       }
     },

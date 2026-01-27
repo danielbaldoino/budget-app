@@ -101,12 +101,12 @@ export async function updateInventoryLevel(app: FastifyTypedInstance) {
       }
 
       const inventoryLevelByLocation =
-        await tenant.queries.products.variants.inventoryItems.inventoryLevels.getInventoryLevel(
+        await tenant.queries.products.variants.inventoryItems.inventoryLevels.getInventoryLevelByLocation(
           {
             tenant: tenant.name,
             inventoryItemId,
-            inventoryLevelId,
             stockLocationId: locationId,
+            not: { inventoryLevelId },
           },
         )
 

@@ -1,6 +1,5 @@
 import { and, eq, ne } from 'drizzle-orm'
-import { db } from '../../../db'
-import { tenantSchema } from '../../../tenant'
+import { tenantDb, tenantSchema } from '../../../tenant'
 
 type GetProductCategoryParams = {
   tenant: string
@@ -9,11 +8,11 @@ type GetProductCategoryParams = {
 
 export async function getProductCategory(params: GetProductCategoryParams) {
   return tenantSchema(params.tenant, async ({ productCategories }) => {
-    const [productCategory] = await db
-      .select()
-      .from(productCategories)
-      .where(eq(productCategories.id, params.productCategoryId))
-      .limit(1)
+    const productCategory = await tenantDb(
+      params.tenant,
+    ).query.productCategories.findFirst({
+      where: eq(productCategories.id, params.productCategoryId),
+    })
 
     return productCategory || null
   })
@@ -31,18 +30,16 @@ export async function getProductCategoryByName(
   params: GetProductCategoryByNameParams,
 ) {
   return tenantSchema(params.tenant, async ({ productCategories }) => {
-    const [productCategory] = await db
-      .select()
-      .from(productCategories)
-      .where(
-        and(
-          params.not
-            ? ne(productCategories.id, params.not.productCategoryId)
-            : undefined,
-          eq(productCategories.name, params.name),
-        ),
-      )
-      .limit(1)
+    const productCategory = await tenantDb(
+      params.tenant,
+    ).query.productCategories.findFirst({
+      where: and(
+        params.not
+          ? ne(productCategories.id, params.not.productCategoryId)
+          : undefined,
+        eq(productCategories.name, params.name),
+      ),
+    })
 
     return productCategory || null
   })

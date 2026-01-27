@@ -1,10 +1,5 @@
-import { eq, getTableColumns, sql } from 'drizzle-orm'
-import { db } from '../../../db'
-import {
-  buildRelationFirstQuery,
-  buildRelationManyQuery,
-} from '../../../lib/utils'
-import { tenantSchema } from '../../../tenant'
+import { eq } from 'drizzle-orm'
+import { tenantDb, tenantSchema } from '../../../tenant'
 
 type GetProductParams = {
   tenant: string
@@ -13,11 +8,9 @@ type GetProductParams = {
 
 export async function getProduct(params: GetProductParams) {
   return tenantSchema(params.tenant, async ({ products }) => {
-    const [product] = await db
-      .select()
-      .from(products)
-      .where(eq(products.id, params.productId))
-      .limit(1)
+    const product = await tenantDb(params.tenant).query.products.findFirst({
+      where: eq(products.id, params.productId),
+    })
 
     return product || null
   })
@@ -31,101 +24,35 @@ type GetProductWithRelationsParams = {
 export async function getProductWithRelations(
   params: GetProductWithRelationsParams,
 ) {
-  return tenantSchema(
-    params.tenant,
-    async ({
-      products,
-      productImages,
-      productCategories,
-      productOptions,
-      productOptionValues,
-      productVariants,
-      productOptionValuesToProductVariants,
-      productDetails,
-    }) => {
-      const productImagesSubQuery = buildRelationManyQuery({
-        as: 'images',
-        table: productImages,
-        where: eq(productImages.productId, products.id),
-      })
-
-      const productCategoriesSubQuery = buildRelationFirstQuery({
-        as: 'category',
-        table: productCategories,
-        where: eq(productCategories.id, products.categoryId),
-      })
-
-      const productOptionsSubQuery = buildRelationManyQuery({
-        as: 'options',
-        table: productOptions,
-        where: eq(productOptions.productId, products.id),
-        with: {
-          values: buildRelationManyQuery({
-            table: productOptionValues,
-            where: eq(productOptionValues.optionId, productOptions.id),
-          }),
+  return tenantSchema(params.tenant, async ({ products }) => {
+    const product = await tenantDb(params.tenant).query.products.findFirst({
+      where: eq(products.id, params.productId),
+      with: {
+        images: true,
+        category: true,
+        options: {
+          with: {
+            values: true,
+          },
         },
-      })
-
-      const productVariantsSubQuery = buildRelationManyQuery({
-        as: 'variants',
-        table: productVariants,
-        where: eq(productVariants.productId, products.id),
-        with: {
-          images: buildRelationManyQuery({
-            table: productImages,
-            where: eq(productImages.variantId, productVariants.id),
-          }),
-          options: buildRelationManyQuery({
-            table: productOptionValuesToProductVariants,
-            where: eq(
-              productOptionValuesToProductVariants.variantId,
-              productVariants.id,
-            ),
-            with: {
-              optionValue: buildRelationFirstQuery({
-                table: productOptionValues,
-                where: eq(
-                  productOptionValues.id,
-                  productOptionValuesToProductVariants.optionValueId,
-                ),
-                with: {
-                  option: buildRelationFirstQuery({
-                    table: productOptions,
-                    where: eq(productOptions.id, productOptionValues.optionId),
-                  }),
+        variants: {
+          with: {
+            images: true,
+            options: {
+              with: {
+                optionValue: {
+                  with: {
+                    option: true,
+                  },
                 },
-              }),
+              },
             },
-          }),
+          },
         },
-      })
+        detail: true,
+      },
+    })
 
-      const productDetailSubQuery = buildRelationFirstQuery({
-        as: 'detail',
-        table: productDetails,
-        where: eq(productDetails.productId, products.id),
-      })
-
-      const [product] = await db
-        .select({
-          ...getTableColumns(products),
-          images: productImagesSubQuery.data,
-          category: productCategoriesSubQuery.data,
-          options: productOptionsSubQuery.data,
-          variants: productVariantsSubQuery.data,
-          detail: productDetailSubQuery.data,
-        })
-        .from(products)
-        .leftJoinLateral(productImagesSubQuery, sql`true`)
-        .leftJoinLateral(productCategoriesSubQuery, sql`true`)
-        .leftJoinLateral(productOptionsSubQuery, sql`true`)
-        .leftJoinLateral(productVariantsSubQuery, sql`true`)
-        .leftJoinLateral(productDetailSubQuery, sql`true`)
-        .where(eq(products.id, params.productId))
-        .limit(1)
-
-      return product || null
-    },
-  )
+    return product || null
+  })
 }

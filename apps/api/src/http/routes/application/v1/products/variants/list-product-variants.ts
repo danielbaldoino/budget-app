@@ -134,8 +134,8 @@ export async function listProductVariants(app: FastifyTypedInstance) {
           return {
             ...productVariant,
             options: productVariant.options.map(({ optionValue }) => ({
-              ...optionValue!,
-              option: optionValue!.option!,
+              ...optionValue,
+              option: optionValue.option,
             })),
           }
         }),

@@ -5,14 +5,12 @@ import {
   desc,
   eq,
   exists,
-  getTableColumns,
   ilike,
   or,
   sql,
 } from 'drizzle-orm'
 import { db } from '../../../db'
-import { buildRelationManyQuery } from '../../../lib/utils'
-import { tenantSchema } from '../../../tenant'
+import { tenantDb, tenantSchema } from '../../../tenant'
 
 const FILTER_BY = [
   'all',
@@ -42,12 +40,6 @@ async function getListCustomersWithRelations(
   filters: ListCustomersWithRelationsFiltersParams,
 ) {
   return tenantSchema(params.tenant, async ({ customers, addresses }) => {
-    const addressesSubQuery = buildRelationManyQuery({
-      as: 'addresses',
-      table: addresses,
-      where: eq(addresses.customerId, customers.id),
-    })
-
     const WHERE = () => {
       const searchCondition: SQL[] = []
 
@@ -113,17 +105,15 @@ async function getListCustomersWithRelations(
     const [count, listCustomers] = await Promise.all([
       db.$count(customers, WHERE()),
 
-      db
-        .select({
-          ...getTableColumns(customers),
-          addresses: addressesSubQuery.data,
-        })
-        .from(customers)
-        .leftJoinLateral(addressesSubQuery, sql`true`)
-        .where(WHERE())
-        .orderBy(ORDER_BY())
-        .offset((filters.page - 1) * filters.pageSize)
-        .limit(filters.pageSize),
+      tenantDb(params.tenant).query.customers.findMany({
+        where: WHERE(),
+        orderBy: ORDER_BY(),
+        offset: (filters.page - 1) * filters.pageSize,
+        limit: filters.pageSize,
+        with: {
+          addresses: true,
+        },
+      }),
     ])
 
     return {

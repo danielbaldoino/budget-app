@@ -1,17 +1,6 @@
-import {
-  type SQL,
-  and,
-  asc,
-  desc,
-  eq,
-  getTableColumns,
-  ilike,
-  or,
-  sql,
-} from 'drizzle-orm'
+import { type SQL, and, asc, desc, eq, ilike, or } from 'drizzle-orm'
 import { db } from '../../../../db'
-import { buildRelationManyQuery } from '../../../../lib/utils'
-import { tenantSchema } from '../../../../tenant'
+import { tenantDb, tenantSchema } from '../../../../tenant'
 
 const FILTER_BY = ['all', 'name'] as const
 const SORT_BY = ['name', 'createdAt'] as const
@@ -35,64 +24,53 @@ async function getListProductOptionsWithRelations(
   params: ListProductOptionsWithRelationsParams,
   filters: ListProductOptionsWithRelationsFiltersParams,
 ) {
-  return tenantSchema(
-    params.tenant,
-    async ({ productOptions, productOptionValues }) => {
-      const productOptionValuesSubQuery = buildRelationManyQuery({
-        as: 'values',
-        table: productOptionValues,
-        where: eq(productOptionValues.optionId, productOptions.id),
-      })
+  return tenantSchema(params.tenant, async ({ productOptions }) => {
+    const WHERE = () => {
+      const searchCondition: SQL[] = []
 
-      const WHERE = () => {
-        const searchCondition: SQL[] = []
-
-        if (filters.search) {
-          if (filters.filterBy === 'all' || filters.filterBy === 'name') {
-            searchCondition.push(
-              ilike(productOptions.name, `%${filters.search}%`),
-            )
-          }
+      if (filters.search) {
+        if (filters.filterBy === 'all' || filters.filterBy === 'name') {
+          searchCondition.push(
+            ilike(productOptions.name, `%${filters.search}%`),
+          )
         }
-
-        return and(
-          eq(productOptions.productId, params.productId),
-          or(...searchCondition),
-        )
       }
 
-      const ORDER_BY = () => {
-        const orderFn = filters.order === 'asc' ? asc : desc
+      return and(
+        eq(productOptions.productId, params.productId),
+        or(...searchCondition),
+      )
+    }
 
-        if (filters.sortBy === 'name') {
-          return orderFn(productOptions.name)
-        }
+    const ORDER_BY = () => {
+      const orderFn = filters.order === 'asc' ? asc : desc
 
-        return orderFn(productOptions.createdAt)
+      if (filters.sortBy === 'name') {
+        return orderFn(productOptions.name)
       }
 
-      const [count, listProductOptions] = await Promise.all([
-        db.$count(productOptions, WHERE()),
+      return orderFn(productOptions.createdAt)
+    }
 
-        db
-          .select({
-            ...getTableColumns(productOptions),
-            values: productOptionValuesSubQuery.data,
-          })
-          .from(productOptions)
-          .leftJoinLateral(productOptionValuesSubQuery, sql`true`)
-          .where(WHERE())
-          .orderBy(ORDER_BY())
-          .offset((filters.page - 1) * filters.pageSize)
-          .limit(filters.pageSize),
-      ])
+    const [count, listProductOptions] = await Promise.all([
+      db.$count(productOptions, WHERE()),
 
-      return {
-        count,
-        productOptions: listProductOptions,
-      }
-    },
-  )
+      tenantDb(params.tenant).query.productOptions.findMany({
+        where: WHERE(),
+        orderBy: ORDER_BY(),
+        offset: (filters.page - 1) * filters.pageSize,
+        limit: filters.pageSize,
+        with: {
+          values: true,
+        },
+      }),
+    ])
+
+    return {
+      count,
+      productOptions: listProductOptions,
+    }
+  })
 }
 
 export const listProductOptionsWithRelations = Object.assign(
@@ -108,25 +86,16 @@ type ListProductOptionsWithValuesParams = {
 export async function listProductOptionsWithValues(
   params: ListProductOptionsWithValuesParams,
 ) {
-  return tenantSchema(
-    params.tenant,
-    async ({ productOptions, productOptionValues }) => {
-      const productOptionsValuesSubQuery = buildRelationManyQuery({
-        as: 'values',
-        table: productOptionValues,
-        where: eq(productOptionValues.optionId, productOptions.id),
-      })
+  return tenantSchema(params.tenant, async ({ productOptions }) => {
+    const listProductOptions = await tenantDb(
+      params.tenant,
+    ).query.productOptions.findMany({
+      where: eq(productOptions.productId, params.productId),
+      with: {
+        values: true,
+      },
+    })
 
-      const listProductOptions = await db
-        .select({
-          ...getTableColumns(productOptions),
-          values: productOptionsValuesSubQuery.data,
-        })
-        .from(productOptions)
-        .leftJoinLateral(productOptionsValuesSubQuery, sql`true`)
-        .where(eq(productOptions.productId, params.productId))
-
-      return listProductOptions
-    },
-  )
+    return listProductOptions
+  })
 }

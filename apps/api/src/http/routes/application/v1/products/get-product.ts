@@ -133,8 +133,8 @@ export async function getProduct(app: FastifyTypedInstance) {
           variants: product.variants.map((variant) => ({
             ...variant,
             options: variant.options.map(({ optionValue }) => ({
-              ...optionValue!,
-              option: optionValue!.option!,
+              ...optionValue,
+              option: optionValue.option,
             })),
           })),
         },

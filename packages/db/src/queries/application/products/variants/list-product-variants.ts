@@ -1,19 +1,5 @@
-import {
-  type SQL,
-  and,
-  asc,
-  desc,
-  eq,
-  getTableColumns,
-  ilike,
-  or,
-  sql,
-} from 'drizzle-orm'
+import { type SQL, and, asc, desc, eq, ilike, or } from 'drizzle-orm'
 import { db } from '../../../../db'
-import {
-  buildRelationFirstQuery,
-  buildRelationManyQuery,
-} from '../../../../lib/utils'
 import { tenantDb, tenantSchema } from '../../../../tenant'
 
 const FILTER_BY = ['all', 'name', 'sku'] as const
@@ -39,131 +25,80 @@ async function getListProductVariantsWithRelations(
   params: ListProductVariantsWithRelationsParams,
   filters: ListProductVariantsWithRelationsFiltersParams,
 ) {
-  return tenantSchema(
-    params.tenant,
-    async ({
-      productVariants,
-      productImages,
-      productOptionValuesToProductVariants,
-      productOptionValues,
-      productOptions,
-      priceSets,
-      prices,
-    }) => {
-      const productImagesSubQuery = buildRelationManyQuery({
-        as: 'images',
-        table: productImages,
-        where: eq(productImages.variantId, productVariants.id),
-      })
+  return tenantSchema(params.tenant, async ({ productVariants, priceSets }) => {
+    const WHERE = () => {
+      const searchCondition: SQL[] = []
 
-      const productOptionValuesToProductVariantsSubQuery =
-        buildRelationManyQuery({
-          as: 'options',
-          table: productOptionValuesToProductVariants,
-          where: eq(
-            productOptionValuesToProductVariants.variantId,
-            productVariants.id,
-          ),
-          with: {
-            optionValue: buildRelationFirstQuery({
-              table: productOptionValues,
-              where: eq(
-                productOptionValues.id,
-                productOptionValuesToProductVariants.optionValueId,
-              ),
-              with: {
-                option: buildRelationFirstQuery({
-                  table: productOptions,
-                  where: eq(productOptions.id, productOptionValues.optionId),
-                }),
-              },
-            }),
-          },
-        })
-
-      const priceSetsSubQuery = buildRelationManyQuery({
-        as: 'priceSets',
-        table: priceSets,
-        where: and(
-          eq(priceSets.productVariantId, productVariants.id),
-          params.priceListId
-            ? eq(priceSets.priceListId, params.priceListId)
-            : undefined,
-        ),
-        with: {
-          prices: buildRelationManyQuery({
-            table: prices,
-            where: eq(prices.priceSetId, priceSets.id),
-          }),
-        },
-      })
-
-      const WHERE = () => {
-        const searchCondition: SQL[] = []
-
-        if (filters.search) {
-          if (filters.filterBy === 'all' || filters.filterBy === 'name') {
-            searchCondition.push(
-              ilike(productVariants.name, `%${filters.search}%`),
-            )
-          }
-
-          if (filters.filterBy === 'all' || filters.filterBy === 'sku') {
-            searchCondition.push(
-              ilike(productVariants.sku, `%${filters.search}%`),
-            )
-          }
-        }
-
-        return and(
-          eq(productVariants.productId, params.productId),
-          or(...searchCondition),
-        )
-      }
-
-      const ORDER_BY = () => {
-        const orderFn = filters.order === 'asc' ? asc : desc
-
-        if (filters.sortBy === 'name') {
-          return orderFn(productVariants.name)
-        }
-
-        if (filters.sortBy === 'sku') {
-          return orderFn(productVariants.sku)
-        }
-
-        return orderFn(productVariants.createdAt)
-      }
-
-      const [count, listProductVariants] = await Promise.all([
-        db.$count(productVariants, WHERE()),
-
-        db
-          .select({
-            ...getTableColumns(productVariants),
-            images: productImagesSubQuery.data,
-            options: productOptionValuesToProductVariantsSubQuery.data,
-            priceSets: priceSetsSubQuery.data,
-          })
-          .from(productVariants)
-          .leftJoinLateral(productImagesSubQuery, sql`true`)
-          .leftJoinLateral(
-            productOptionValuesToProductVariantsSubQuery,
-            sql`true`,
+      if (filters.search) {
+        if (filters.filterBy === 'all' || filters.filterBy === 'name') {
+          searchCondition.push(
+            ilike(productVariants.name, `%${filters.search}%`),
           )
-          .leftJoinLateral(priceSetsSubQuery, sql`true`)
-          .where(WHERE())
-          .orderBy(ORDER_BY())
-          .offset((filters.page - 1) * filters.pageSize)
-          .limit(filters.pageSize),
-      ])
+        }
 
-      return {
-        count,
-        productVariants: listProductVariants,
+        if (filters.filterBy === 'all' || filters.filterBy === 'sku') {
+          searchCondition.push(
+            ilike(productVariants.sku, `%${filters.search}%`),
+          )
+        }
       }
-    },
-  )
+
+      return and(
+        eq(productVariants.productId, params.productId),
+        or(...searchCondition),
+      )
+    }
+
+    const ORDER_BY = () => {
+      const orderFn = filters.order === 'asc' ? asc : desc
+
+      if (filters.sortBy === 'name') {
+        return orderFn(productVariants.name)
+      }
+
+      if (filters.sortBy === 'sku') {
+        return orderFn(productVariants.sku)
+      }
+
+      return orderFn(productVariants.createdAt)
+    }
+
+    const [count, listProductVariants] = await Promise.all([
+      db.$count(productVariants, WHERE()),
+
+      tenantDb(params.tenant).query.productVariants.findMany({
+        where: WHERE(),
+        orderBy: ORDER_BY(),
+        offset: (filters.page - 1) * filters.pageSize,
+        limit: filters.pageSize,
+        with: {
+          images: true,
+          options: {
+            with: {
+              optionValue: {
+                with: {
+                  option: true,
+                },
+              },
+            },
+          },
+          priceSets: {
+            where: params.priceListId
+              ? eq(priceSets.priceListId, params.priceListId)
+              : undefined,
+            with: {
+              prices: true,
+            },
+          },
+        },
+      }),
+    ])
+
+    return {
+      count,
+      productVariants: listProductVariants,
+    }
+  })
 }
 
 export const listProductVariantsWithRelations = Object.assign(

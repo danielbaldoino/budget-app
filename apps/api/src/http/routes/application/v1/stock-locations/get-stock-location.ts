@@ -20,8 +20,8 @@ export async function getStockLocation(app: FastifyTypedInstance) {
               stockLocation: z.object({
                 id: z.string(),
                 name: z.string(),
-                addresses: z.array(
-                  z.object({
+                address: z
+                  .object({
                     id: z.string(),
                     street: z.string().nullable(),
                     number: z.string().nullable(),
@@ -34,8 +34,9 @@ export async function getStockLocation(app: FastifyTypedInstance) {
                     reference: z.string().nullable(),
                     createdAt: z.coerce.date(),
                     updatedAt: z.coerce.date(),
-                  }),
-                ),
+                  })
+                  .nullable(),
+
                 createdAt: z.coerce.date(),
                 updatedAt: z.coerce.date(),
               }),

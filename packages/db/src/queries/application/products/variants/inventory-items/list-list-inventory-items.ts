@@ -5,17 +5,12 @@ import {
   desc,
   eq,
   exists,
-  getTableColumns,
   ilike,
   or,
   sql,
 } from 'drizzle-orm'
 import { db } from '../../../../../db'
-import {
-  buildRelationFirstQuery,
-  buildRelationManyQuery,
-} from '../../../../../lib/utils'
-import { tenantSchema } from '../../../../../tenant'
+import { tenantDb, tenantSchema } from '../../../../../tenant'
 
 const FILTER_BY = [
   'all',
@@ -47,69 +42,7 @@ async function getListInventoryItemsWithRelations(
 ) {
   return tenantSchema(
     params.tenant,
-    async ({
-      inventoryItems,
-      productVariants,
-      productImages,
-      productOptionValuesToProductVariants,
-      productOptionValues,
-      productOptions,
-      products,
-    }) => {
-      const productVariantsSubQuery = buildRelationFirstQuery({
-        as: 'variant',
-        table: productVariants,
-        where: eq(productVariants.id, inventoryItems.variantId),
-        with: {
-          images: buildRelationManyQuery({
-            table: productImages,
-            where: eq(productImages.variantId, productVariants.id),
-          }),
-          options: buildRelationManyQuery({
-            table: productOptionValuesToProductVariants,
-            where: eq(
-              productOptionValuesToProductVariants.variantId,
-              productVariants.id,
-            ),
-            with: {
-              optionValue: buildRelationFirstQuery({
-                table: productOptionValues,
-                where: eq(
-                  productOptionValues.id,
-                  productOptionValuesToProductVariants.optionValueId,
-                ),
-                with: {
-                  option: buildRelationFirstQuery({
-                    table: productOptions,
-                    where: eq(productOptions.id, productOptionValues.optionId),
-                  }),
-                },
-              }),
-            },
-          }),
-          product: buildRelationFirstQuery({
-            table: products,
-            where: eq(products.id, productVariants.productId),
-            with: {
-              images: buildRelationManyQuery({
-                table: productImages,
-                where: eq(productImages.productId, products.id),
-              }),
-              options: buildRelationManyQuery({
-                table: productOptions,
-                where: eq(productOptions.productId, products.id),
-                with: {
-                  values: buildRelationManyQuery({
-                    table: productOptionValues,
-                    where: eq(productOptionValues.optionId, productOptions.id),
-                  }),
-                },
-              }),
-            },
-          }),
-        },
-      })
-
+    async ({ inventoryItems, productVariants, products }) => {
       const WHERE = () => {
         const searchCondition: SQL[] = []
 
@@ -197,17 +130,38 @@ async function getListInventoryItemsWithRelations(
       const [count, listInventoryItems] = await Promise.all([
         db.$count(inventoryItems, WHERE()),
 
-        db
-          .select({
-            ...getTableColumns(inventoryItems),
-            variant: productVariantsSubQuery.data,
-          })
-          .from(inventoryItems)
-          .leftJoinLateral(productVariantsSubQuery, sql`true`)
-          .where(WHERE())
-          .orderBy(ORDER_BY())
-          .offset((filters.page - 1) * filters.pageSize)
-          .limit(filters.pageSize),
+        tenantDb(params.tenant).query.inventoryItems.findMany({
+          where: WHERE(),
+          orderBy: ORDER_BY(),
+          offset: (filters.page - 1) * filters.pageSize,
+          limit: filters.pageSize,
+          with: {
+            variant: {
+              with: {
+                images: true,
+                options: {
+                  with: {
+                    optionValue: {
+                      with: {
+                        option: true,
+                      },
+                    },
+                  },
+                },
+                product: {
+                  with: {
+                    images: true,
+                    options: {
+                      with: {
+                        values: true,
+                      },
+                    },
+                  },
+                },
+              },
+            },
+          },
+        }),
       ])
 
       return {

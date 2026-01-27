@@ -1,10 +1,5 @@
-import { and, eq, getTableColumns, sql } from 'drizzle-orm'
-import { db } from '../../../../../db'
-import {
-  buildRelationFirstQuery,
-  buildRelationManyQuery,
-} from '../../../../../lib/utils'
-import { tenantSchema } from '../../../../../tenant'
+import { and, eq } from 'drizzle-orm'
+import { tenantDb, tenantSchema } from '../../../../../tenant'
 
 type GetInventoryItemParams = {
   tenant: string
@@ -14,18 +9,16 @@ type GetInventoryItemParams = {
 
 export async function getInventoryItem(params: GetInventoryItemParams) {
   return tenantSchema(params.tenant, async ({ inventoryItems }) => {
-    const [inventoryItem] = await db
-      .select()
-      .from(inventoryItems)
-      .where(
-        and(
-          params.inventoryItemId
-            ? eq(inventoryItems.id, params.inventoryItemId)
-            : undefined,
-          eq(inventoryItems.variantId, params.productVariantId),
-        ),
-      )
-      .limit(1)
+    const inventoryItem = await tenantDb(
+      params.tenant,
+    ).query.inventoryItems.findFirst({
+      where: and(
+        params.inventoryItemId
+          ? eq(inventoryItems.id, params.inventoryItemId)
+          : undefined,
+        eq(inventoryItems.variantId, params.productVariantId),
+      ),
+    })
 
     return inventoryItem || null
   })
@@ -40,66 +33,32 @@ type GetInventoryWithRelationsParams = {
 export async function getInventoryWithRelations(
   params: GetInventoryWithRelationsParams,
 ) {
-  return tenantSchema(
-    params.tenant,
-    async ({
-      inventoryItems,
-      productVariants,
-      productImages,
-      productOptionValuesToProductVariants,
-      productOptionValues,
-      productOptions,
-    }) => {
-      const productVariantsSubQuery = buildRelationFirstQuery({
-        as: 'variant',
-        table: productVariants,
-        where: eq(productVariants.id, inventoryItems.variantId),
-        with: {
-          images: buildRelationManyQuery({
-            table: productImages,
-            where: eq(productImages.variantId, productVariants.id),
-          }),
-          options: buildRelationManyQuery({
-            table: productOptionValuesToProductVariants,
-            where: eq(
-              productOptionValuesToProductVariants.variantId,
-              productVariants.id,
-            ),
-            with: {
-              optionValue: buildRelationFirstQuery({
-                table: productOptionValues,
-                where: eq(
-                  productOptionValues.id,
-                  productOptionValuesToProductVariants.optionValueId,
-                ),
-                with: {
-                  option: buildRelationFirstQuery({
-                    table: productOptions,
-                    where: eq(productOptions.id, productOptionValues.optionId),
-                  }),
+  return tenantSchema(params.tenant, async ({ inventoryItems }) => {
+    const inventoryItem = await tenantDb(
+      params.tenant,
+    ).query.inventoryItems.findFirst({
+      where: and(
+        eq(inventoryItems.id, params.inventoryItemId),
+        eq(inventoryItems.variantId, params.productVariantId),
+      ),
+      with: {
+        variant: {
+          with: {
+            images: true,
+            options: {
+              with: {
+                optionValue: {
+                  with: {
+                    option: true,
+                  },
                 },
-              }),
+              },
             },
-          }),
+          },
         },
-      })
+      },
+    })
 
-      const [inventoryItem] = await db
-        .select({
-          ...getTableColumns(inventoryItems),
-          variant: productVariantsSubQuery.data,
-        })
-        .from(inventoryItems)
-        .leftJoinLateral(productVariantsSubQuery, sql`true`)
-        .where(
-          and(
-            eq(inventoryItems.id, params.inventoryItemId),
-            eq(inventoryItems.variantId, params.productVariantId),
-          ),
-        )
-        .limit(1)
-
-      return inventoryItem || null
-    },
-  )
+    return inventoryItem || null
+  })
 }

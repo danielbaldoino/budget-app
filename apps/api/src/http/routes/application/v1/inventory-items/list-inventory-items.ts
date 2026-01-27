@@ -139,12 +139,12 @@ export async function listInventoryItems(app: FastifyTypedInstance) {
         inventoryItems: inventoryItems.map((inventoryItem) => ({
           ...inventoryItem,
           variant: {
-            ...inventoryItem.variant!,
-            options: inventoryItem.variant!.options.map(({ optionValue }) => ({
-              ...optionValue!,
-              option: optionValue!.option!,
+            ...inventoryItem.variant,
+            options: inventoryItem.variant.options.map(({ optionValue }) => ({
+              ...optionValue,
+              option: optionValue.option,
             })),
-            product: inventoryItem.variant!.product!,
+            product: inventoryItem.variant.product,
           },
         })),
       }

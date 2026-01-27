@@ -109,10 +109,10 @@ export async function getInventoryItem(app: FastifyTypedInstance) {
         inventoryItem: {
           ...inventoryItem,
           variant: {
-            ...inventoryItem.variant!,
-            options: inventoryItem.variant!.options.map(({ optionValue }) => ({
-              ...optionValue!,
-              option: optionValue!.option!,
+            ...inventoryItem.variant,
+            options: inventoryItem.variant.options.map(({ optionValue }) => ({
+              ...optionValue,
+              option: optionValue.option,
             })),
           },
         },

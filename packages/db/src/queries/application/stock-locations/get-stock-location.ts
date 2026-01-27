@@ -1,7 +1,5 @@
-import { and, eq, getTableColumns, ne, sql } from 'drizzle-orm'
-import { db } from '../../../db'
-import { buildRelationManyQuery } from '../../../lib/utils'
-import { tenantSchema } from '../../../tenant'
+import { and, eq, ne } from 'drizzle-orm'
+import { tenantDb, tenantSchema } from '../../../tenant'
 
 type GetStockLocationParams = {
   tenant: string
@@ -10,11 +8,11 @@ type GetStockLocationParams = {
 
 export async function getStockLocation(params: GetStockLocationParams) {
   return tenantSchema(params.tenant, async ({ stockLocations }) => {
-    const [stockLocation] = await db
-      .select()
-      .from(stockLocations)
-      .where(eq(stockLocations.id, params.stockLocationId))
-      .limit(1)
+    const stockLocation = await tenantDb(
+      params.tenant,
+    ).query.stockLocations.findFirst({
+      where: eq(stockLocations.id, params.stockLocationId),
+    })
 
     return stockLocation || null
   })
@@ -30,18 +28,16 @@ export async function getStockLocationByName(
   params: GetStockLocationByNameParams,
 ) {
   return tenantSchema(params.tenant, async ({ stockLocations }) => {
-    const [stockLocation] = await db
-      .select()
-      .from(stockLocations)
-      .where(
-        and(
-          params.not
-            ? ne(stockLocations.id, params.not.stockLocationId)
-            : undefined,
-          eq(stockLocations.name, params.name),
-        ),
-      )
-      .limit(1)
+    const stockLocation = await tenantDb(
+      params.tenant,
+    ).query.stockLocations.findFirst({
+      where: and(
+        params.not
+          ? ne(stockLocations.id, params.not.stockLocationId)
+          : undefined,
+        eq(stockLocations.name, params.name),
+      ),
+    })
 
     return stockLocation || null
   })
@@ -55,22 +51,15 @@ type GetStockLocationWithRelationsParams = {
 export async function getStockLocationWithRelations(
   params: GetStockLocationWithRelationsParams,
 ) {
-  return tenantSchema(params.tenant, async ({ stockLocations, addresses }) => {
-    const addressesSubQuery = buildRelationManyQuery({
-      as: 'addresses',
-      table: addresses,
-      where: eq(addresses.stockLocationId, stockLocations.id),
+  return tenantSchema(params.tenant, async ({ stockLocations }) => {
+    const stockLocation = await tenantDb(
+      params.tenant,
+    ).query.stockLocations.findFirst({
+      where: eq(stockLocations.id, params.stockLocationId),
+      with: {
+        address: true,
+      },
     })
-
-    const [stockLocation] = await db
-      .select({
-        ...getTableColumns(stockLocations),
-        addresses: addressesSubQuery.data,
-      })
-      .from(stockLocations)
-      .leftJoinLateral(addressesSubQuery, sql`true`)
-      .where(eq(stockLocations.id, params.stockLocationId))
-      .limit(1)
 
     return stockLocation || null
   })

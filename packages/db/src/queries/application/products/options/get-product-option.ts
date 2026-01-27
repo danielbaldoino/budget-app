@@ -1,7 +1,5 @@
-import { and, eq, getTableColumns, ne, sql } from 'drizzle-orm'
-import { db } from '../../../../db'
-import { buildRelationManyQuery } from '../../../../lib/utils'
-import { tenantSchema } from '../../../../tenant'
+import { and, eq, ne } from 'drizzle-orm'
+import { tenantDb, tenantSchema } from '../../../../tenant'
 
 type GetProductOptionParams = {
   tenant: string
@@ -11,16 +9,14 @@ type GetProductOptionParams = {
 
 export async function getProductOption(params: GetProductOptionParams) {
   return tenantSchema(params.tenant, async ({ productOptions }) => {
-    const [productOption] = await db
-      .select()
-      .from(productOptions)
-      .where(
-        and(
-          eq(productOptions.id, params.productOptionId),
-          eq(productOptions.productId, params.productId),
-        ),
-      )
-      .limit(1)
+    const productOption = await tenantDb(
+      params.tenant,
+    ).query.productOptions.findFirst({
+      where: and(
+        eq(productOptions.id, params.productOptionId),
+        eq(productOptions.productId, params.productId),
+      ),
+    })
 
     return productOption || null
   })
@@ -39,19 +35,17 @@ export async function getProductOptionByName(
   params: GetProductOptionByNameParams,
 ) {
   return tenantSchema(params.tenant, async ({ productOptions }) => {
-    const [productOption] = await db
-      .select()
-      .from(productOptions)
-      .where(
-        and(
-          params.not
-            ? ne(productOptions.id, params.not.productOptionId)
-            : undefined,
-          eq(productOptions.productId, params.productId),
-          eq(productOptions.name, params.name),
-        ),
-      )
-      .limit(1)
+    const productOption = await tenantDb(
+      params.tenant,
+    ).query.productOptions.findFirst({
+      where: and(
+        params.not
+          ? ne(productOptions.id, params.not.productOptionId)
+          : undefined,
+        eq(productOptions.productId, params.productId),
+        eq(productOptions.name, params.name),
+      ),
+    })
 
     return productOption || null
   })
@@ -66,30 +60,19 @@ type GetProductOptionWithRelationsParams = {
 export async function getProductOptionWithRelations(
   params: GetProductOptionWithRelationsParams,
 ) {
-  return tenantSchema(
-    params.tenant,
-    async ({ productOptions, productOptionValues }) => {
-      const productOptionsValuesSubQuery = buildRelationManyQuery({
-        as: 'values',
-        table: productOptionValues,
-        where: eq(productOptionValues.optionId, productOptions.id),
-      })
+  return tenantSchema(params.tenant, async ({ productOptions }) => {
+    const productOption = await tenantDb(
+      params.tenant,
+    ).query.productOptions.findFirst({
+      where: and(
+        eq(productOptions.id, params.productOptionId),
+        eq(productOptions.productId, params.productId),
+      ),
+      with: {
+        values: true,
+      },
+    })
 
-      const [productOption] = await db
-        .select({
-          ...getTableColumns(productOptions),
-          values: productOptionsValuesSubQuery.data,
-        })
-        .from(productOptions)
-        .leftJoinLateral(productOptionsValuesSubQuery, sql`true`)
-        .where(
-          and(
-            eq(productOptions.id, params.productOptionId),
-            eq(productOptions.productId, params.productId),
-          ),
-        )
-
-      return productOption || null
-    },
-  )
+    return productOption || null
+  })
 }

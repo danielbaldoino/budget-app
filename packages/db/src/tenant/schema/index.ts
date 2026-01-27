@@ -90,10 +90,9 @@ export function createTenantSchema(schema?: string) {
     customerId: text('customer_id').references(() => customers.id, {
       onDelete: 'cascade',
     }),
-    stockLocationId: text('stock_location_id').references(
-      () => stockLocations.id,
-      { onDelete: 'cascade' },
-    ),
+    stockLocationId: text('stock_location_id')
+      .unique()
+      .references(() => stockLocations.id, { onDelete: 'cascade' }),
     orderId: text('order_id').references(() => orders.id, {
       onDelete: 'cascade',
     }),
@@ -368,10 +367,13 @@ export function createTenantSchema(schema?: string) {
     ...timestamps,
   })
 
-  const stockLocationsRelations = relations(stockLocations, ({ many }) => ({
-    addresses: many(addresses),
-    inventoryLevels: many(inventoryLevels),
-  }))
+  const stockLocationsRelations = relations(
+    stockLocations,
+    ({ one, many }) => ({
+      address: one(addresses),
+      inventoryLevels: many(inventoryLevels),
+    }),
+  )
 
   const productDetails = tenantSchema.table('product_details', {
     ...id,

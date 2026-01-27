@@ -125,8 +125,8 @@ export async function listInventoryLevels(app: FastifyTypedInstance) {
           pageSize,
         },
         inventoryLevels: inventoryLevels.map((inventoryLevel) => ({
-          ...inventoryLevel!,
-          location: inventoryLevel.location!,
+          ...inventoryLevel,
+          location: inventoryLevel.location,
         })),
       }
     },

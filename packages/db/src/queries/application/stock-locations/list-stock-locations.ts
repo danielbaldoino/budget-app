@@ -1,6 +1,6 @@
 import { type SQL, asc, desc, ilike, or } from 'drizzle-orm'
 import { db } from '../../../db'
-import { tenantSchema } from '../../../tenant'
+import { tenantDb, tenantSchema } from '../../../tenant'
 
 const FILTER_BY = ['all', 'name'] as const
 const SORT_BY = ['name', 'createdAt'] as const
@@ -50,13 +50,12 @@ async function getListStockLocations(
     const [count, listStockLocations] = await Promise.all([
       db.$count(stockLocations, WHERE()),
 
-      db
-        .select()
-        .from(stockLocations)
-        .where(WHERE())
-        .orderBy(ORDER_BY())
-        .offset((filters.page - 1) * filters.pageSize)
-        .limit(filters.pageSize),
+      tenantDb(params.tenant).query.stockLocations.findMany({
+        where: WHERE(),
+        orderBy: ORDER_BY(),
+        offset: (filters.page - 1) * filters.pageSize,
+        limit: filters.pageSize,
+      }),
     ])
 
     return {

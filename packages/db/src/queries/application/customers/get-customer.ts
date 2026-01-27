@@ -1,7 +1,5 @@
-import { eq, getTableColumns, sql } from 'drizzle-orm'
-import { db } from '../../../db'
-import { buildRelationManyQuery } from '../../../lib/utils'
-import { tenantSchema } from '../../../tenant'
+import { eq } from 'drizzle-orm'
+import { tenantDb, tenantSchema } from '../../../tenant'
 
 type GetCustomerParams = {
   tenant: string
@@ -10,11 +8,9 @@ type GetCustomerParams = {
 
 export async function getCustomer(params: GetCustomerParams) {
   return tenantSchema(params.tenant, async ({ customers }) => {
-    const [customer] = await db
-      .select()
-      .from(customers)
-      .where(eq(customers.id, params.customerId))
-      .limit(1)
+    const customer = await tenantDb(params.tenant).query.customers.findFirst({
+      where: eq(customers.id, params.customerId),
+    })
 
     return customer || null
   })
@@ -28,22 +24,13 @@ type GetCustomerWithRelationsParams = {
 export async function getCustomerWithRelations(
   params: GetCustomerWithRelationsParams,
 ) {
-  return tenantSchema(params.tenant, async ({ customers, addresses }) => {
-    const addressesSubQuery = buildRelationManyQuery({
-      as: 'addresses',
-      table: addresses,
-      where: eq(addresses.customerId, customers.id),
+  return tenantSchema(params.tenant, async ({ customers }) => {
+    const customer = await tenantDb(params.tenant).query.customers.findFirst({
+      where: eq(customers.id, params.customerId),
+      with: {
+        addresses: true,
+      },
     })
-
-    const [customer] = await db
-      .select({
-        ...getTableColumns(customers),
-        addresses: addressesSubQuery.data,
-      })
-      .from(customers)
-      .leftJoinLateral(addressesSubQuery, sql`true`)
-      .where(eq(customers.id, params.customerId))
-      .limit(1)
 
     return customer || null
   })

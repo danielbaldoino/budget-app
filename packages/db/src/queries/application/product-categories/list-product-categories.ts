@@ -1,6 +1,6 @@
 import { type SQL, asc, desc, ilike, or } from 'drizzle-orm'
 import { db } from '../../../db'
-import { tenantSchema } from '../../../tenant'
+import { tenantDb, tenantSchema } from '../../../tenant'
 
 const FILTER_BY = ['all', 'name', 'description'] as const
 const SORT_BY = ['name', 'description', 'createdAt'] as const
@@ -60,13 +60,12 @@ async function getListProductCategories(
     const [count, listProductCategories] = await Promise.all([
       db.$count(productCategories, WHERE()),
 
-      db
-        .select()
-        .from(productCategories)
-        .where(WHERE())
-        .orderBy(ORDER_BY())
-        .offset((filters.page - 1) * filters.pageSize)
-        .limit(filters.pageSize),
+      tenantDb(params.tenant).query.productCategories.findMany({
+        where: WHERE(),
+        orderBy: ORDER_BY(),
+        offset: (filters.page - 1) * filters.pageSize,
+        limit: filters.pageSize,
+      }),
     ])
 
     return {

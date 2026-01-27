@@ -5,14 +5,12 @@ import {
   desc,
   eq,
   exists,
-  getTableColumns,
   ilike,
   or,
   sql,
 } from 'drizzle-orm'
 import { db } from '../../../../../../db'
-import { buildRelationFirstQuery } from '../../../../../../lib/utils'
-import { tenantSchema } from '../../../../../../tenant'
+import { tenantDb, tenantSchema } from '../../../../../../tenant'
 
 const FILTER_BY = ['all', 'stockedQuantity', 'location.name'] as const
 const SORT_BY = ['stockedQuantity', 'createdAt'] as const
@@ -39,12 +37,6 @@ async function getListInventoryLevelsWithRelations(
   return tenantSchema(
     params.tenant,
     async ({ inventoryLevels, stockLocations }) => {
-      const stockLocationsSubQuery = buildRelationFirstQuery({
-        as: 'location',
-        table: stockLocations,
-        where: eq(stockLocations.id, inventoryLevels.locationId),
-      })
-
       const WHERE = () => {
         const searchCondition: SQL[] = []
 
@@ -108,17 +100,15 @@ async function getListInventoryLevelsWithRelations(
       const [count, listInventoryLevels] = await Promise.all([
         db.$count(inventoryLevels, WHERE()),
 
-        db
-          .select({
-            ...getTableColumns(inventoryLevels),
-            location: stockLocationsSubQuery.data,
-          })
-          .from(inventoryLevels)
-          .leftJoinLateral(stockLocationsSubQuery, sql`true`)
-          .where(WHERE())
-          .orderBy(ORDER_BY())
-          .offset((filters.page - 1) * filters.pageSize)
-          .limit(filters.pageSize),
+        tenantDb(params.tenant).query.inventoryLevels.findMany({
+          where: WHERE(),
+          orderBy: ORDER_BY(),
+          offset: (filters.page - 1) * filters.pageSize,
+          limit: filters.pageSize,
+          with: {
+            location: true,
+          },
+        }),
       ])
 
       return {

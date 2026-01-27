@@ -1,6 +1,5 @@
 import { eq } from 'drizzle-orm'
-import { db } from '../../../../db'
-import { tenantSchema } from '../../../../tenant'
+import { tenantDb, tenantSchema } from '../../../../tenant'
 
 type ListPricesParams = {
   tenant: string
@@ -9,10 +8,9 @@ type ListPricesParams = {
 
 export async function listPrices(params: ListPricesParams) {
   return tenantSchema(params.tenant, async ({ prices }) => {
-    const listPrices = await db
-      .select()
-      .from(prices)
-      .where(eq(prices.priceSetId, params.priceSetId))
+    const listPrices = await tenantDb(params.tenant).query.prices.findMany({
+      where: eq(prices.priceSetId, params.priceSetId),
+    })
 
     return listPrices
   })

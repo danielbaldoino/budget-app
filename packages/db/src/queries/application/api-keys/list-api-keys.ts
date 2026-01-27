@@ -1,6 +1,6 @@
 import { type SQL, asc, desc, ilike, or } from 'drizzle-orm'
 import { db } from '../../../db'
-import { tenantSchema } from '../../../tenant'
+import { tenantDb, tenantSchema } from '../../../tenant'
 
 const FILTER_BY = ['all', 'name'] as const
 const SORT_BY = ['name', 'createdAt'] as const
@@ -49,13 +49,12 @@ async function getListApiKeys(
     const [count, listApiKeys] = await Promise.all([
       db.$count(apiKeys, WHERE()),
 
-      db
-        .select()
-        .from(apiKeys)
-        .where(WHERE())
-        .orderBy(ORDER_BY())
-        .offset((filters.page - 1) * filters.pageSize)
-        .limit(filters.pageSize),
+      tenantDb(params.tenant).query.apiKeys.findMany({
+        where: WHERE(),
+        orderBy: ORDER_BY(),
+        offset: (filters.page - 1) * filters.pageSize,
+        limit: filters.pageSize,
+      }),
     ])
 
     return {

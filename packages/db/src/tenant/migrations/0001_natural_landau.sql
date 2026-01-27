@@ -1,0 +1,1 @@
+ALTER TABLE "__tenant"."addresses" ADD CONSTRAINT "addresses_stock_location_id_unique" UNIQUE("stock_location_id");

@@ -64,6 +64,43 @@ export async function getProductVariant(app: FastifyTypedInstance) {
                     updatedAt: z.coerce.date(),
                   }),
                 ),
+                inventoryItem: z
+                  .object({
+                    id: z.string(),
+                    inventoryLevels: z.array(
+                      z.object({
+                        id: z.string(),
+                        stockedQuantity: z.number(),
+                        location: z.object({
+                          id: z.string(),
+                          name: z.string(),
+                          address: z
+                            .object({
+                              id: z.string(),
+                              street: z.string().nullable(),
+                              number: z.string().nullable(),
+                              complement: z.string().nullable(),
+                              neighborhood: z.string().nullable(),
+                              city: z.string().nullable(),
+                              state: z.string().nullable(),
+                              country: z.string().nullable(),
+                              zipCode: z.string().nullable(),
+                              reference: z.string().nullable(),
+                              createdAt: z.coerce.date(),
+                              updatedAt: z.coerce.date(),
+                            })
+                            .nullable(),
+                          createdAt: z.coerce.date(),
+                          updatedAt: z.coerce.date(),
+                        }),
+                        createdAt: z.coerce.date(),
+                        updatedAt: z.coerce.date(),
+                      }),
+                    ),
+                    createdAt: z.coerce.date(),
+                    updatedAt: z.coerce.date(),
+                  })
+                  .nullable(),
                 productId: z.string(),
                 createdAt: z.coerce.date(),
                 updatedAt: z.coerce.date(),
@@ -108,8 +145,8 @@ export async function getProductVariant(app: FastifyTypedInstance) {
         productVariant: {
           ...productVariant,
           options: productVariant.options.map(({ optionValue }) => ({
-            ...optionValue!,
-            option: optionValue!.option!,
+            ...optionValue,
+            option: optionValue.option,
           })),
         },
       }

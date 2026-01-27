@@ -21,7 +21,7 @@ export async function listProducts(app: FastifyTypedInstance) {
           sortBy: z.enum(SORT_BY).optional().default('createdAt'),
           order: z.enum(ORDER).optional().default('desc'),
           page: z.coerce.number().positive().optional().default(1),
-          pageSize: z.coerce.number().min(10).max(100).optional().default(50),
+          pageSize: z.coerce.number().min(5).max(100).optional().default(50),
         }),
         response: withDefaultErrorResponses({
           200: z
