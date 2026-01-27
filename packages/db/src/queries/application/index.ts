@@ -3,6 +3,12 @@ import { listApiKeys } from './api-keys/list-api-keys'
 import { getCustomer, getCustomerWithRelations } from './customers/get-customer'
 import { listCustomersWithRelations } from './customers/list-customers'
 import {
+  getPriceList,
+  getPriceListByName,
+  getPriceListWithRelations,
+} from './price-lists/get-price-list'
+import { listPriceLists } from './price-lists/list-price-lists'
+import {
   getPriceSet,
   getPriceSetByProductVariantId,
 } from './price-sets/get-price-set'
@@ -111,6 +117,12 @@ export const applicationQueries = {
         },
       },
     },
+  },
+  priceLists: {
+    listPriceLists,
+    getPriceList,
+    getPriceListByName,
+    getPriceListWithRelations,
   },
   priceSets: {
     getPriceSet,

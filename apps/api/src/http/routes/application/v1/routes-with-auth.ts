@@ -2,6 +2,8 @@ import { jwtAuthenticator } from '@/http/middlewares/application/jwt-authenticat
 import type { FastifyTypedInstance } from '@/types/fastify'
 import { listCustomers } from './customers/list-customers'
 import { listInventoryItems } from './inventory-items/list-inventory-items'
+import { getPriceList } from './price-lists/get-price-list'
+import { listPriceLists } from './price-lists/list-price-lists'
 import { createProductCategory } from './product-categories/create-product-category'
 import { deleteProductCategory } from './product-categories/delete-product-category'
 import { getProductCategory } from './product-categories/get-product-category'
@@ -78,6 +80,9 @@ export async function routesWithAuth(app: FastifyTypedInstance) {
   app.register(createInventoryLevel)
   app.register(updateInventoryLevel)
   app.register(deleteInventoryLevel)
+
+  app.register(listPriceLists)
+  app.register(getPriceList)
 
   app.register(listStockLocations)
   app.register(getStockLocation)
