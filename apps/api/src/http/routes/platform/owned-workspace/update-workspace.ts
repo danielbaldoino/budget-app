@@ -15,7 +15,7 @@ export async function updateOwnedWorkspace(app: FastifyTypedInstance) {
         description: 'Update owned workspace details',
         operationId: 'updateOwnedWorkspace',
         body: z.object({
-          name: z.string().optional(),
+          name: z.string().trim().min(3).optional(),
           slug: z.string().transform(createSlug).optional(),
           active: z.boolean().optional(),
           logoUrl: z.string().url().nullish(),

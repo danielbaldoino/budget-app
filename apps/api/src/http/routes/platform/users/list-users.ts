@@ -43,10 +43,9 @@ export async function listUsers(app: FastifyTypedInstance) {
               users: z.array(
                 z.object({
                   id: z.string(),
-                  name: z.string(),
                   username: z.string(),
-                  createdAt: z.coerce.date(),
-                  updatedAt: z.coerce.date(),
+                  createdAt: z.date(),
+                  updatedAt: z.date(),
                 }),
               ),
             })

@@ -21,8 +21,8 @@ export async function getProductCategory(app: FastifyTypedInstance) {
                 id: z.string(),
                 name: z.string(),
                 description: z.string().nullable(),
-                createdAt: z.coerce.date(),
-                updatedAt: z.coerce.date(),
+                createdAt: z.date(),
+                updatedAt: z.date(),
               }),
             })
             .describe('Success'),

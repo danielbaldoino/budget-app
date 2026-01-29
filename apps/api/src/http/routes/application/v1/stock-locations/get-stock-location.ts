@@ -32,13 +32,13 @@ export async function getStockLocation(app: FastifyTypedInstance) {
                     country: z.string().nullable(),
                     zipCode: z.string().nullable(),
                     reference: z.string().nullable(),
-                    createdAt: z.coerce.date(),
-                    updatedAt: z.coerce.date(),
+                    createdAt: z.date(),
+                    updatedAt: z.date(),
                   })
                   .nullable(),
 
-                createdAt: z.coerce.date(),
-                updatedAt: z.coerce.date(),
+                createdAt: z.date(),
+                updatedAt: z.date(),
               }),
             })
             .describe('Success'),

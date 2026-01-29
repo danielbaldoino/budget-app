@@ -14,7 +14,7 @@ export async function createApiKey(app: FastifyTypedInstance) {
         description: 'Create a new API key',
         operationId: 'createApiKey',
         body: z.object({
-          name: z.string(),
+          name: z.string().trim().min(3),
         }),
         response: withDefaultErrorResponses({
           201: z

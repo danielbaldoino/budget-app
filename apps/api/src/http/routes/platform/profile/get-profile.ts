@@ -19,8 +19,8 @@ export async function getProfile(app: FastifyTypedInstance) {
                 email: z.string(),
                 emailVerified: z.boolean(),
                 image: z.string().nullish(),
-                createdAt: z.coerce.date(),
-                updatedAt: z.coerce.date(),
+                createdAt: z.date(),
+                updatedAt: z.date(),
               }),
             })
             .describe('Success'),

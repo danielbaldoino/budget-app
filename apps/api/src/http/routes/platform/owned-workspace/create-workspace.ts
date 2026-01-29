@@ -16,14 +16,14 @@ export async function createOwnedWorkspace(app: FastifyTypedInstance) {
         description: 'Create a new owned workspace',
         operationId: 'createOwnedWorkspace',
         body: z.object({
-          name: z.string(),
+          name: z.string().trim().min(3),
           slug: z.string().transform(createSlug).nullish(),
         }),
         response: withDefaultErrorResponses({
           201: z
             .object({
-              workspaceId: z.string().uuid(),
-              tenantSchemaId: z.string().uuid(),
+              workspaceId: z.string(),
+              tenantSchemaId: z.string(),
             })
             .describe('Success'),
         }),

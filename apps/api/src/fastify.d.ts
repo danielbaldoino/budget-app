@@ -11,6 +11,7 @@ declare module 'fastify' {
 
       user: {
         id: string
+        sellerId: string
         name: string
         username: string
         createdAt: Date

@@ -14,17 +14,16 @@ export async function getUser(app: FastifyTypedInstance) {
         description: 'Get a user',
         operationId: 'getUser',
         params: z.object({
-          userId: z.string().uuid(),
+          userId: z.string(),
         }),
         response: withDefaultErrorResponses({
           200: z
             .object({
               user: z.object({
                 id: z.string(),
-                name: z.string(),
                 username: z.string(),
-                createdAt: z.coerce.date(),
-                updatedAt: z.coerce.date(),
+                createdAt: z.date(),
+                updatedAt: z.date(),
               }),
             })
             .describe('Success'),

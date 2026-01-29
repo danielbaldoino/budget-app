@@ -13,7 +13,7 @@ export async function createPriceList(app: FastifyTypedInstance) {
         operationId: 'createPriceList',
         body: z.object({
           name: z.string(),
-          description: z.string().optional(),
+          description: z.string().nullish(),
         }),
         response: withDefaultErrorResponses({
           201: z

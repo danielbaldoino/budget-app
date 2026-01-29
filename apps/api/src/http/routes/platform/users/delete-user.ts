@@ -14,7 +14,7 @@ export async function deleteUser(app: FastifyTypedInstance) {
         description: 'Delete a user',
         operationId: 'deleteUser',
         params: z.object({
-          userId: z.string().uuid(),
+          userId: z.string(),
         }),
         response: withDefaultErrorResponses({
           204: z.null().describe('Success'),

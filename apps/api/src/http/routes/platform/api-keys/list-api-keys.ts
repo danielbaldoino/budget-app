@@ -45,8 +45,8 @@ export async function listApiKeys(app: FastifyTypedInstance) {
                   id: z.string(),
                   name: z.string(),
                   token: z.string(),
-                  createdAt: z.coerce.date(),
-                  updatedAt: z.coerce.date(),
+                  createdAt: z.date(),
+                  updatedAt: z.date(),
                 }),
               ),
             })

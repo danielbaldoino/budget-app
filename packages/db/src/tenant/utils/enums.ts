@@ -8,4 +8,4 @@ export const Gender = ['male', 'female'] as const
 
 export const ProductStatus = ['active', 'inactive'] as const
 
-export const OrderStatus = ['draft', 'pending', 'completed'] as const
+export const OrderStatus = ['active', 'cancelled'] as const

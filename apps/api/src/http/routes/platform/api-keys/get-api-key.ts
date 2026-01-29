@@ -14,7 +14,7 @@ export async function getApiKey(app: FastifyTypedInstance) {
         description: 'Get an API key',
         operationId: 'getApiKey',
         params: z.object({
-          apiKeyId: z.string().uuid(),
+          apiKeyId: z.string(),
         }),
         response: withDefaultErrorResponses({
           200: z
@@ -23,8 +23,8 @@ export async function getApiKey(app: FastifyTypedInstance) {
                 id: z.string(),
                 name: z.string(),
                 token: z.string(),
-                createdAt: z.coerce.date(),
-                updatedAt: z.coerce.date(),
+                createdAt: z.date(),
+                updatedAt: z.date(),
               }),
             })
             .describe('Success'),

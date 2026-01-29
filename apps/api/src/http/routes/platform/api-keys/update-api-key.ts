@@ -14,10 +14,10 @@ export async function updateApiKey(app: FastifyTypedInstance) {
         description: 'Update an API key',
         operationId: 'updateApiKey',
         params: z.object({
-          apiKeyId: z.string().uuid(),
+          apiKeyId: z.string(),
         }),
         body: z.object({
-          name: z.string(),
+          name: z.string().trim().min(3),
         }),
         response: withDefaultErrorResponses({
           204: z.null().describe('Success'),

@@ -15,10 +15,11 @@ export async function getProfile(app: FastifyTypedInstance) {
             .object({
               user: z.object({
                 id: z.string(),
+                sellerId: z.string(),
                 name: z.string(),
                 username: z.string(),
-                createdAt: z.coerce.date(),
-                updatedAt: z.coerce.date(),
+                createdAt: z.date(),
+                updatedAt: z.date(),
               }),
             })
             .describe('Success'),

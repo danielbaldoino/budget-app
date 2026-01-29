@@ -3,8 +3,7 @@ import { withDefaultErrorResponses } from '@/http/errors/default-error-responses
 import { resolveTenantByWorkspaceOwner } from '@/http/functions/tenant-resolver'
 import type { FastifyTypedInstance } from '@/types/fastify'
 import { hashPassword } from '@workspace/auth'
-import { orm } from '@workspace/db'
-import { tenantDb, tenantSchema } from '@workspace/db/tenant'
+import { db, orm } from '@workspace/db'
 import { z } from 'zod'
 
 export async function updateUser(app: FastifyTypedInstance) {
@@ -16,11 +15,11 @@ export async function updateUser(app: FastifyTypedInstance) {
         description: 'Update a user',
         operationId: 'updateUser',
         params: z.object({
-          userId: z.string().uuid(),
+          userId: z.string(),
         }),
         body: z
           .object({
-            name: z.string().optional(),
+            name: z.string().trim().min(3).optional(),
             username: z.string().trim().min(3).max(30).optional(),
             password: z.string().min(6).max(100).optional(),
           })
@@ -70,15 +69,25 @@ export async function updateUser(app: FastifyTypedInstance) {
 
       const passwordHash = password ? await hashPassword(password) : undefined
 
-      await tenantSchema(tenant.name, ({ users }) =>
-        tenantDb(tenant.name)
-          .update(users)
-          .set({
-            name,
-            username,
-            passwordHash,
-          })
-          .where(orm.eq(users.id, userId)),
+      await db.transaction(async (tx) =>
+        tenant.schema(async ({ users, sellers }) => {
+          await tx
+            .update(users)
+            .set({
+              username,
+              passwordHash,
+            })
+            .where(orm.eq(users.id, userId))
+
+          if (name !== undefined) {
+            await tx
+              .update(sellers)
+              .set({
+                name,
+              })
+              .where(orm.eq(sellers.userId, userId))
+          }
+        }),
       )
 
       return reply.status(204).send()

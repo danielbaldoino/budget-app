@@ -16,7 +16,13 @@ import {
 import { id, timestamps } from '../../utils'
 import { TENANT_MIGRATIONS_SCHEMA } from '../constants'
 import { Gender, OrderStatus, ProductStatus } from '../utils/enums'
-import type { AddressType, CurrencyCode, DocumentType } from '../utils/types'
+import type {
+  AddressType,
+  CurrencyCode,
+  DocumentType,
+  PaymentTermRules,
+  PriceAdjustment,
+} from '../utils/types'
 
 export const metadata = {
   metadata: json('metadata').$type<Record<string, any>>(),
@@ -33,6 +39,7 @@ export function createTenantSchema(schema?: string) {
 
   const apiKeys = tenantSchema.table('api_keys', {
     ...id,
+
     name: text('name').notNull(),
     token: text('token').notNull().unique(),
 
@@ -41,15 +48,37 @@ export function createTenantSchema(schema?: string) {
 
   const users = tenantSchema.table('users', {
     ...id,
-    referenceId: text('reference_id').unique(),
 
-    name: text('name').notNull(),
     username: text('username').notNull().unique(),
     passwordHash: text('password_hash'),
 
-    ...metadata,
     ...timestamps,
   })
+
+  const usersRelations = relations(users, ({ one }) => ({
+    seller: one(sellers),
+  }))
+
+  const sellers = tenantSchema.table('sellers', {
+    ...id,
+    referenceId: text('reference_id').unique(),
+
+    name: text('name').notNull(),
+
+    userId: text('user_id')
+      .notNull()
+      .unique()
+      .references(() => users.id, { onDelete: 'cascade' }),
+
+    ...timestamps,
+  })
+
+  const sellersRelations = relations(sellers, ({ one }) => ({
+    user: one(users, {
+      fields: [sellers.userId],
+      references: [users.id],
+    }),
+  }))
 
   const customers = tenantSchema.table('customers', {
     ...id,
@@ -58,7 +87,6 @@ export function createTenantSchema(schema?: string) {
     name: text('name').notNull(),
     documentType: text('document_type').$type<DocumentType>(),
     document: text('document'),
-    tradeName: text('trade_name'),
     corporateName: text('corporate_name'),
     stateRegistration: text('state_registration'),
     birthDate: timestamp('birth_date', { withTimezone: true }),
@@ -230,6 +258,10 @@ export function createTenantSchema(schema?: string) {
     sku: text('sku'),
     manageInventory: boolean('manage_inventory').notNull().default(false),
     thumbnail: text('thumbnail'),
+    // technicalSpecification: jsonb('technical_specification').$type<
+    //   TechnicalSpecification[]
+    // >(),
+    // customFields: jsonb('custom_fields').$type<ProductVariantCustomField[]>(),
 
     productId: text('product_id')
       .notNull()
@@ -249,6 +281,7 @@ export function createTenantSchema(schema?: string) {
       images: many(productImages),
       priceSets: many(priceSets),
       options: many(productOptionValuesToProductVariants),
+      cartItems: many(cartItems),
     }),
   )
 
@@ -395,33 +428,134 @@ export function createTenantSchema(schema?: string) {
     }),
   }))
 
-  const orders = tenantSchema.table('orders', {
+  const carts = tenantSchema.table('carts', {
     ...id,
-    displayId: bigserial('display_id', { mode: 'number' }).unique().notNull(),
-
-    status: orderStatusEnum('status').notNull().default('draft'),
+    name: text('name').notNull().default('Unnamed'),
     currencyCode: text('currency_code').$type<CurrencyCode>().notNull(),
     notes: text('notes'),
+    priceAdjustment: jsonb('price_adjustment').$type<PriceAdjustment>(),
 
-    isOpened: boolean('is_opened').notNull().default(true),
+    sellerId: text('seller_id').references(() => sellers.id, {
+      onDelete: 'cascade',
+    }),
+    customerId: text('customer_id').references(() => customers.id, {
+      onDelete: 'set null',
+    }),
 
-    sellerUserId: text('seller_user_id').references(() => users.id),
-    customerId: text('customer_id').references(() => customers.id),
+    ...timestamps,
+  })
+
+  const cartsRelations = relations(carts, ({ one, many }) => ({
+    seller: one(sellers, {
+      fields: [carts.sellerId],
+      references: [sellers.id],
+    }),
+    customer: one(customers, {
+      fields: [carts.customerId],
+      references: [customers.id],
+    }),
+    cartItems: many(cartItems),
+  }))
+
+  const cartItems = tenantSchema.table('cart_items', {
+    ...id,
+    quantity: integer('quantity').notNull().default(1),
+    notes: text('notes'),
+    priceAdjustment: jsonb('price_adjustment').$type<PriceAdjustment>(),
+
+    cartId: text('cart_id')
+      .notNull()
+      .references(() => carts.id, { onDelete: 'cascade' }),
+
+    productVariantId: text('product_variant_id')
+      .notNull()
+      .references(() => productVariants.id, { onDelete: 'cascade' }),
+
+    ...timestamps,
+  })
+
+  const cartItemsRelations = relations(cartItems, ({ one }) => ({
+    cart: one(carts, {
+      fields: [cartItems.cartId],
+      references: [carts.id],
+    }),
+    productVariant: one(productVariants, {
+      fields: [cartItems.productVariantId],
+      references: [productVariants.id],
+    }),
+  }))
+
+  const orders = tenantSchema.table('orders', {
+    ...id,
+    referenceId: text('reference_id').unique(),
+    displayId: bigserial('display_id', { mode: 'number' }).notNull().unique(),
+
+    status: orderStatusEnum('status').notNull().default('active'),
+    currencyCode: text('currency_code').$type<CurrencyCode>().notNull(),
+    notes: text('notes'),
+    priceAdjustment: jsonb('price_adjustment').$type<PriceAdjustment>(),
+
+    sellerId: text('seller_id').references(() => sellers.id, {
+      onDelete: 'set null',
+    }),
+    customerId: text('customer_id').references(() => customers.id, {
+      onDelete: 'set null',
+    }),
+
+    paymentMethodId: text('payment_method_id').references(
+      () => paymentMethods.id,
+      { onDelete: 'set null' },
+    ),
+    paymentTermId: text('payment_term_id').references(() => paymentTerms.id, {
+      onDelete: 'set null',
+    }),
+    carrierId: text('carrier_id').references(() => carriers.id, {
+      onDelete: 'set null',
+    }),
 
     ...timestamps,
   })
 
   const ordersRelations = relations(orders, ({ one, many }) => ({
-    sellerUser: one(users, {
-      fields: [orders.sellerUserId],
-      references: [users.id],
+    seller: one(sellers, {
+      fields: [orders.sellerId],
+      references: [sellers.id],
     }),
     customer: one(customers, {
       fields: [orders.customerId],
       references: [customers.id],
     }),
+    details: one(orderDetails),
     addresses: many(addresses),
     orderItems: many(orderItems),
+  }))
+
+  const orderDetails = tenantSchema.table('order_details', {
+    ...id,
+
+    sellerReferenceId: text('seller_reference_id'),
+    sellerName: text('seller_name'),
+    customerReferenceId: text('customer_reference_id'),
+    customerName: text('customer_name'),
+    customerDocumentType: text('customer_document_type'),
+    customerDocument: text('customer_document'),
+    customerCorporateName: text('customer_corporate_name'),
+    customerEmail: text('customer_email'),
+    customerPhone: text('customer_phone'),
+
+    orderId: text('order_id')
+      .unique()
+      .notNull()
+      .references(() => orders.id, { onDelete: 'cascade' }),
+
+    ...timestamps,
+  })
+
+  const orderDetailsRelations = relations(orderDetails, ({ one }) => ({
+    order: one(orders, {
+      fields: [orderDetails.orderId],
+      references: [orders.id],
+    }),
   }))
 
   const orderItems = tenantSchema.table('order_items', {
@@ -432,6 +566,7 @@ export function createTenantSchema(schema?: string) {
     unitPrice: bigint('unit_price', { mode: 'number' }).notNull(),
     compareAtUnitPrice: bigint('compare_at_unit_price', { mode: 'number' }),
     notes: text('notes'),
+    priceAdjustment: jsonb('price_adjustment').$type<PriceAdjustment>(),
 
     orderId: text('order_id')
       .notNull()
@@ -476,6 +611,37 @@ export function createTenantSchema(schema?: string) {
   const orderLineItemsRelations = relations(orderLineItems, ({ one }) => ({
     orderItem: one(orderItems),
   }))
+
+  const paymentMethods = tenantSchema.table('payment_methods', {
+    ...id,
+    code: text('code').notNull().unique(),
+    name: text('name').notNull(),
+    description: text('description'),
+    active: boolean('active').notNull().default(true),
+
+    ...timestamps,
+  })
+
+  const paymentTerms = tenantSchema.table('payment_terms', {
+    ...id,
+    code: text('code').notNull().unique(),
+    name: text('name').notNull(),
+    description: text('description'),
+    active: boolean('active').notNull().default(true),
+    rules: jsonb('rules').$type<PaymentTermRules>(),
+
+    ...timestamps,
+  })
+
+  const carriers = tenantSchema.table('carriers', {
+    ...id,
+    code: text('code').unique(),
+    name: text('name').notNull(),
+    description: text('description'),
+    active: boolean('active').notNull().default(true),
+
+    ...timestamps,
+  })
 
   const productOptionValuesToProductVariants = tenantSchema.table(
     'product_option_values_to_product_variants',
@@ -529,6 +695,9 @@ export function createTenantSchema(schema?: string) {
     orderStatusEnum,
     apiKeys,
     users,
+    usersRelations,
+    sellers,
+    sellersRelations,
     customers,
     customersRelations,
     addresses,
@@ -559,12 +728,21 @@ export function createTenantSchema(schema?: string) {
     stockLocationsRelations,
     productDetails,
     productDetailsRelations,
+    carts,
+    cartsRelations,
+    cartItems,
+    cartItemsRelations,
     orders,
     ordersRelations,
+    orderDetails,
+    orderDetailsRelations,
     orderItems,
     orderItemsRelations,
     orderLineItems,
     orderLineItemsRelations,
+    paymentMethods,
+    paymentTerms,
+    carriers,
     productOptionValuesToProductVariants,
     productOptionValuesToProductVariantsRelations,
   }
@@ -576,6 +754,9 @@ export const {
   orderStatusEnum,
   apiKeys,
   users,
+  usersRelations,
+  sellers,
+  sellersRelations,
   customers,
   customersRelations,
   addresses,
@@ -606,12 +787,21 @@ export const {
   stockLocationsRelations,
   productDetails,
   productDetailsRelations,
+  carts,
+  cartsRelations,
+  cartItems,
+  cartItemsRelations,
   orders,
   ordersRelations,
+  orderDetails,
+  orderDetailsRelations,
   orderItems,
   orderItemsRelations,
   orderLineItems,
   orderLineItemsRelations,
+  paymentMethods,
+  paymentTerms,
+  carriers,
   productOptionValuesToProductVariants,
   productOptionValuesToProductVariantsRelations,
 } = createTenantSchema()

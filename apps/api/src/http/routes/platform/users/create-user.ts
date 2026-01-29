@@ -3,7 +3,7 @@ import { withDefaultErrorResponses } from '@/http/errors/default-error-responses
 import { resolveTenantByWorkspaceOwner } from '@/http/functions/tenant-resolver'
 import type { FastifyTypedInstance } from '@/types/fastify'
 import { hashPassword } from '@workspace/auth'
-import { orm } from '@workspace/db'
+import { db, orm } from '@workspace/db'
 import { z } from 'zod'
 
 export async function createUser(app: FastifyTypedInstance) {
@@ -15,7 +15,7 @@ export async function createUser(app: FastifyTypedInstance) {
         description: 'Create a new user',
         operationId: 'createUser',
         body: z.object({
-          name: z.string(),
+          name: z.string().trim().min(3),
           username: z.string().trim().min(3).max(30),
           password: z.string().min(6).max(100),
         }),
@@ -50,23 +50,31 @@ export async function createUser(app: FastifyTypedInstance) {
 
       const hashedPassword = await hashPassword(password)
 
-      const [user] = await tenant.schema(({ users }) =>
-        tenant.db
-          .insert(users)
-          .values({
-            name,
-            username,
-            passwordHash: hashedPassword,
-          })
-          .returning(),
-      )
+      const user = await db.transaction(async (tx) =>
+        tenant.schema(async ({ users, sellers }) => {
+          const [user] = await tx
+            .insert(users)
+            .values({
+              username,
+              passwordHash: hashedPassword,
+            })
+            .returning()
 
-      if (!user) {
-        throw new BadRequestError({
-          code: 'USER_CREATION_FAILED',
-          message: 'Failed to create user',
-        })
-      }
+          if (!user) {
+            throw new BadRequestError({
+              code: 'USER_CREATION_FAILED',
+              message: 'Failed to create user',
+            })
+          }
+
+          await tx.insert(sellers).values({
+            userId: user.id,
+            name,
+          })
+
+          return user
+        }),
+      )
 
       return reply.status(201).send({ userId: user.id })
     },

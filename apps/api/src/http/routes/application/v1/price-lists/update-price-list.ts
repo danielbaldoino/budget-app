@@ -14,7 +14,7 @@ export async function updatePriceList(app: FastifyTypedInstance) {
         operationId: 'updatePriceList',
         body: z.object({
           name: z.string(),
-          description: z.string().optional(),
+          description: z.string().nullish(),
         }),
         params: z.object({
           priceListId: z.string(),

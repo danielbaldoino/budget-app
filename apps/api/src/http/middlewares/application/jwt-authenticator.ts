@@ -15,18 +15,31 @@ export const jwtAuthenticator = fastifyPlugin(
       try {
         const { sub: userId } = await request.jwtVerify<{ sub: string }>()
 
-        const user = await tenant.schema(({ users }) =>
+        const userRelations = await tenant.schema(({ users }) =>
           tenant.db.query.users.findFirst({
             columns: { passwordHash: false },
             where: orm.eq(users.id, userId),
+            with: {
+              seller: true,
+            },
           }),
         )
 
-        if (!user) {
+        if (!userRelations) {
           throw Error('User not found')
         }
 
-        request.application.user = user
+        if (!userRelations.seller) {
+          throw Error('Seller not found for user')
+        }
+
+        const { seller, ...user } = userRelations
+
+        request.application.user = {
+          ...user,
+          sellerId: seller.id,
+          name: seller.name,
+        }
       } catch {
         throw new UnauthorizedError({
           code: 'INVALID_JWT_TOKEN',

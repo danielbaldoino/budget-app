@@ -48,12 +48,12 @@ export async function listInventoryLevels(app: FastifyTypedInstance) {
                   location: z.object({
                     id: z.string(),
                     name: z.string(),
-                    createdAt: z.coerce.date(),
-                    updatedAt: z.coerce.date(),
+                    createdAt: z.date(),
+                    updatedAt: z.date(),
                   }),
                   inventoryItemId: z.string(),
-                  createdAt: z.coerce.date(),
-                  updatedAt: z.coerce.date(),
+                  createdAt: z.date(),
+                  updatedAt: z.date(),
                 }),
               ),
             })

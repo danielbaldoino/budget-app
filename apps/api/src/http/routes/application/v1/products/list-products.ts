@@ -48,16 +48,16 @@ export async function listProducts(app: FastifyTypedInstance) {
                       id: z.string(),
                       url: z.string().url(),
                       rank: z.number().int().nonnegative(),
-                      createdAt: z.coerce.date(),
-                      updatedAt: z.coerce.date(),
+                      createdAt: z.date(),
+                      updatedAt: z.date(),
                     }),
                   ),
                   category: z
                     .object({
                       id: z.string(),
                       name: z.string(),
-                      createdAt: z.coerce.date(),
-                      updatedAt: z.coerce.date(),
+                      createdAt: z.date(),
+                      updatedAt: z.date(),
                     })
                     .nullable(),
                   options: z.array(
@@ -68,16 +68,16 @@ export async function listProducts(app: FastifyTypedInstance) {
                         z.object({
                           id: z.string(),
                           name: z.string(),
-                          createdAt: z.coerce.date(),
-                          updatedAt: z.coerce.date(),
+                          createdAt: z.date(),
+                          updatedAt: z.date(),
                         }),
                       ),
-                      createdAt: z.coerce.date(),
-                      updatedAt: z.coerce.date(),
+                      createdAt: z.date(),
+                      updatedAt: z.date(),
                     }),
                   ),
-                  createdAt: z.coerce.date(),
-                  updatedAt: z.coerce.date(),
+                  createdAt: z.date(),
+                  updatedAt: z.date(),
                 }),
               ),
             })

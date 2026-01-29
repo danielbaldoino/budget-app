@@ -14,7 +14,7 @@ export async function deleteApiKey(app: FastifyTypedInstance) {
         description: 'Delete an API key',
         operationId: 'deleteApiKey',
         params: z.object({
-          apiKeyId: z.string().uuid(),
+          apiKeyId: z.string(),
         }),
         response: withDefaultErrorResponses({
           204: z.null().describe('Success'),
