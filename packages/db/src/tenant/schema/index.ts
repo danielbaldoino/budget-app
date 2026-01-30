@@ -635,7 +635,7 @@ export function createTenantSchema(schema?: string) {
 
   const carriers = tenantSchema.table('carriers', {
     ...id,
-    code: text('code').unique(),
+    code: text('code').notNull().unique(),
     name: text('name').notNull(),
     description: text('description'),
     active: boolean('active').notNull().default(true),

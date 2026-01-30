@@ -1,20 +1,54 @@
 import { withDefaultErrorResponses } from '@/http/errors/default-error-responses'
 import type { FastifyTypedInstance } from '@/types/fastify'
 import { queries } from '@workspace/db/queries'
-import { DocumentType, Gender } from '@workspace/db/tenant/enums'
 import { z } from 'zod'
 
-const { FILTER_BY, SORT_BY, ORDER } =
-  queries.application.customers.listCustomers
+const AmountRuleSchema = z.discriminatedUnion('type', [
+  z.object({
+    type: z.literal('percentage'),
+    value: z.number(),
+    applyOn: z.enum(['total', 'remaining']),
+  }),
+  z.object({
+    type: z.literal('remaining'),
+  }),
+])
 
-export async function listCustomers(app: FastifyTypedInstance) {
+export const PaymentTermRulesSchema = z.object({
+  entry: z
+    .object({
+      quantity: z.number().optional(),
+      schedule: z.object({
+        startAfterDays: z.number(),
+        intervalDays: z.number().optional(),
+      }),
+      amount: AmountRuleSchema,
+    })
+    .optional(),
+  installments: z.array(
+    z.object({
+      quantity: z.number(),
+      schedule: z.object({
+        startAfterDays: z.number(),
+        intervalDays: z.number().optional(),
+        baseOn: z.enum(['base-date', 'previous-step']),
+      }),
+      amount: AmountRuleSchema,
+    }),
+  ),
+})
+
+const { FILTER_BY, SORT_BY, ORDER } =
+  queries.application.paymentTerms.listPaymentTerms
+
+export async function listPaymentTerms(app: FastifyTypedInstance) {
   app.get(
-    '/customers',
+    '/payment-terms',
     {
       schema: {
-        tags: ['Customers'],
-        description: 'Get all customers',
-        operationId: 'listCustomers',
+        tags: ['Payment Terms'],
+        description: 'Get all payment terms',
+        operationId: 'listPaymentTerms',
         querystring: z.object({
           search: z.string().optional(),
           filterBy: z.enum(FILTER_BY).optional().default('name'),
@@ -41,19 +75,13 @@ export async function listCustomers(app: FastifyTypedInstance) {
                 page: z.number(),
                 pageSize: z.number(),
               }),
-              customers: z.array(
+              paymentTerms: z.array(
                 z.object({
                   id: z.string(),
-                  referenceId: z.string().nullable(),
+                  code: z.string(),
                   name: z.string(),
-                  documentType: z.enum(DocumentType).nullable(),
-                  document: z.string().nullable(),
-                  corporateName: z.string().nullable(),
-                  stateRegistration: z.string().nullable(),
-                  birthDate: z.date().nullable(),
-                  gender: z.enum(Gender).nullable(),
-                  email: z.string().nullable(),
-                  phone: z.string().nullable(),
+                  rules: PaymentTermRulesSchema.nullable(),
+                  active: z.boolean(),
                   createdAt: z.date(),
                   updatedAt: z.date(),
                 }),
@@ -68,10 +96,11 @@ export async function listCustomers(app: FastifyTypedInstance) {
 
       const { search, filterBy, sortBy, order, page, pageSize } = request.query
 
-      const { count, customers } = await tenant.queries.customers.listCustomers(
-        { tenant: tenant.name },
-        { search, filterBy, sortBy, order, page, pageSize },
-      )
+      const { count, paymentTerms } =
+        await tenant.queries.paymentTerms.listPaymentTerms(
+          { tenant: tenant.name },
+          { search, filterBy, sortBy, order, page, pageSize },
+        )
 
       return {
         meta: {
@@ -83,7 +112,7 @@ export async function listCustomers(app: FastifyTypedInstance) {
           page,
           pageSize,
         },
-        customers,
+        paymentTerms,
       }
     },
   )

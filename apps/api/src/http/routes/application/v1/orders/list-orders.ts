@@ -1,23 +1,21 @@
 import { withDefaultErrorResponses } from '@/http/errors/default-error-responses'
 import type { FastifyTypedInstance } from '@/types/fastify'
 import { queries } from '@workspace/db/queries'
-import { DocumentType, Gender } from '@workspace/db/tenant/enums'
 import { z } from 'zod'
 
-const { FILTER_BY, SORT_BY, ORDER } =
-  queries.application.customers.listCustomers
+const { FILTER_BY, SORT_BY, ORDER } = queries.application.orders.listOrders
 
-export async function listCustomers(app: FastifyTypedInstance) {
+export async function listOrders(app: FastifyTypedInstance) {
   app.get(
-    '/customers',
+    '/orders',
     {
       schema: {
-        tags: ['Customers'],
-        description: 'Get all customers',
-        operationId: 'listCustomers',
+        tags: ['Orders'],
+        description: 'Get all orders',
+        operationId: 'listOrders',
         querystring: z.object({
           search: z.string().optional(),
-          filterBy: z.enum(FILTER_BY).optional().default('name'),
+          filterBy: z.enum(FILTER_BY).optional().default('displayId'),
           sortBy: z.enum(SORT_BY).optional().default('createdAt'),
           order: z.enum(ORDER).optional().default('asc'),
           page: z.coerce.number().positive().optional().default(1),
@@ -41,19 +39,12 @@ export async function listCustomers(app: FastifyTypedInstance) {
                 page: z.number(),
                 pageSize: z.number(),
               }),
-              customers: z.array(
+              orders: z.array(
                 z.object({
                   id: z.string(),
                   referenceId: z.string().nullable(),
-                  name: z.string(),
-                  documentType: z.enum(DocumentType).nullable(),
-                  document: z.string().nullable(),
-                  corporateName: z.string().nullable(),
-                  stateRegistration: z.string().nullable(),
-                  birthDate: z.date().nullable(),
-                  gender: z.enum(Gender).nullable(),
-                  email: z.string().nullable(),
-                  phone: z.string().nullable(),
+                  displayId: z.number(),
+
                   createdAt: z.date(),
                   updatedAt: z.date(),
                 }),
@@ -68,7 +59,7 @@ export async function listCustomers(app: FastifyTypedInstance) {
 
       const { search, filterBy, sortBy, order, page, pageSize } = request.query
 
-      const { count, customers } = await tenant.queries.customers.listCustomers(
+      const { count, orders } = await tenant.queries.orders.listOrders(
         { tenant: tenant.name },
         { search, filterBy, sortBy, order, page, pageSize },
       )
@@ -83,7 +74,7 @@ export async function listCustomers(app: FastifyTypedInstance) {
           page,
           pageSize,
         },
-        customers,
+        orders,
       }
     },
   )

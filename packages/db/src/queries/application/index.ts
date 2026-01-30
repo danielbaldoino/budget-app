@@ -1,7 +1,17 @@
 import { getApiKey } from './api-keys/get-api-key'
 import { listApiKeys } from './api-keys/list-api-keys'
+import { getCarrier } from './carriers/get-carrier'
+import { listCarriers } from './carriers/list-carriers'
+import { getCart, getCartWithRelations } from './carts/get-cart'
+import { listCarts } from './carts/list-carts'
 import { getCustomer, getCustomerWithRelations } from './customers/get-customer'
-import { listCustomersWithRelations } from './customers/list-customers'
+import { listCustomers } from './customers/list-customers'
+import { getOrder, getOrderWithRelations } from './orders/get-order'
+import { listOrders } from './orders/list-orders'
+import { getPaymentMethod } from './payment-methods/get-payment-method'
+import { listPaymentMethods } from './payment-methods/list-payment-methods'
+import { getPaymentTerm } from './payment-terms/get-payment-term'
+import { listPaymentTerms } from './payment-terms/list-payment-terms'
 import {
   getPriceList,
   getPriceListByName,
@@ -54,6 +64,8 @@ import {
   listProductVariantsWithOptions,
   listProductVariantsWithRelations,
 } from './products/variants/list-product-variants'
+import { getSeller, getSellerWithRelations } from './sellers/get-seller'
+import { listSellers } from './sellers/list-sellers'
 import {
   getStockLocation,
   getStockLocationByName,
@@ -74,7 +86,7 @@ export const applicationQueries = {
     getUserByUsername,
   },
   customers: {
-    listCustomersWithRelations,
+    listCustomers,
     getCustomer,
     getCustomerWithRelations,
   },
@@ -136,5 +148,32 @@ export const applicationQueries = {
     getStockLocation,
     getStockLocationByName,
     getStockLocationWithRelations,
+  },
+  carts: {
+    getCart,
+    getCartWithRelations,
+    listCarts,
+  },
+  orders: {
+    getOrder,
+    getOrderWithRelations,
+    listOrders,
+  },
+  sellers: {
+    getSeller,
+    getSellerWithRelations,
+    listSellers,
+  },
+  carriers: {
+    getCarrier,
+    listCarriers,
+  },
+  paymentMethods: {
+    getPaymentMethod,
+    listPaymentMethods,
+  },
+  paymentTerms: {
+    getPaymentTerm,
+    listPaymentTerms,
   },
 }
