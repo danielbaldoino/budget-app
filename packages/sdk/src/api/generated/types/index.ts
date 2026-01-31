@@ -287,6 +287,18 @@ export type {
   GetOwnedWorkspaceQuery,
 } from './GetOwnedWorkspace'
 export type {
+  GetPriceListPathParams,
+  GetPriceList200,
+  GetPriceList400,
+  GetPriceList401,
+  GetPriceList403,
+  GetPriceList404,
+  GetPriceList429,
+  GetPriceList500,
+  GetPriceListQueryResponse,
+  GetPriceListQuery,
+} from './GetPriceList'
+export type {
   GetProductPathParams,
   ProductStatusEnumKey,
   GetProduct200,
@@ -382,6 +394,17 @@ export type {
   GetUserQuery,
 } from './GetUser'
 export type {
+  GetUserProfile200,
+  GetUserProfile400,
+  GetUserProfile401,
+  GetUserProfile403,
+  GetUserProfile404,
+  GetUserProfile429,
+  GetUserProfile500,
+  GetUserProfileQueryResponse,
+  GetUserProfileQuery,
+} from './GetUserProfile'
+export type {
   Health200,
   Health400,
   Health401,
@@ -420,7 +443,6 @@ export type {
   MetaOrderEnum3Key,
   CustomersDocumentTypeEnumKey,
   CustomersGenderEnumKey,
-  AddressesTypeEnumKey,
   ListCustomers200,
   ListCustomers400,
   ListCustomers401,
@@ -469,6 +491,24 @@ export type {
   ListInventoryLevelsQueryResponse,
   ListInventoryLevelsQuery,
 } from './ListInventoryLevels'
+export type {
+  ListPriceListsQueryParamsFilterByEnumKey,
+  ListPriceListsQueryParamsSortByEnumKey,
+  ListPriceListsQueryParamsOrderEnumKey,
+  ListPriceListsQueryParams,
+  MetaFilterByEnum10Key,
+  MetaSortByEnum10Key,
+  MetaOrderEnum10Key,
+  ListPriceLists200,
+  ListPriceLists400,
+  ListPriceLists401,
+  ListPriceLists403,
+  ListPriceLists404,
+  ListPriceLists429,
+  ListPriceLists500,
+  ListPriceListsQueryResponse,
+  ListPriceListsQuery,
+} from './ListPriceLists'
 export type {
   ListProductCategoriesQueryParamsFilterByEnumKey,
   ListProductCategoriesQueryParamsSortByEnumKey,
@@ -549,9 +589,9 @@ export type {
   ListStockLocationsQueryParamsSortByEnumKey,
   ListStockLocationsQueryParamsOrderEnumKey,
   ListStockLocationsQueryParams,
-  MetaFilterByEnum10Key,
-  MetaSortByEnum10Key,
-  MetaOrderEnum10Key,
+  MetaFilterByEnum11Key,
+  MetaSortByEnum11Key,
+  MetaOrderEnum11Key,
   ListStockLocations200,
   ListStockLocations400,
   ListStockLocations401,
@@ -746,7 +786,6 @@ export {
   metaOrderEnum3,
   customersDocumentTypeEnum,
   customersGenderEnum,
-  addressesTypeEnum,
 } from './ListCustomers'
 export {
   listInventoryItemsQueryParamsFilterByEnum,
@@ -765,6 +804,14 @@ export {
   metaSortByEnum9,
   metaOrderEnum9,
 } from './ListInventoryLevels'
+export {
+  listPriceListsQueryParamsFilterByEnum,
+  listPriceListsQueryParamsSortByEnum,
+  listPriceListsQueryParamsOrderEnum,
+  metaFilterByEnum10,
+  metaSortByEnum10,
+  metaOrderEnum10,
+} from './ListPriceLists'
 export {
   listProductCategoriesQueryParamsFilterByEnum,
   listProductCategoriesQueryParamsSortByEnum,
@@ -802,9 +849,9 @@ export {
   listStockLocationsQueryParamsFilterByEnum,
   listStockLocationsQueryParamsSortByEnum,
   listStockLocationsQueryParamsOrderEnum,
-  metaFilterByEnum10,
-  metaSortByEnum10,
-  metaOrderEnum10,
+  metaFilterByEnum11,
+  metaSortByEnum11,
+  metaOrderEnum11,
 } from './ListStockLocations'
 export {
   listUsersQueryParamsFilterByEnum,

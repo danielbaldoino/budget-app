@@ -61,29 +61,29 @@ export type ListStockLocationsQueryParams = {
   pageSize?: number
 }
 
-export const metaFilterByEnum10 = {
+export const metaFilterByEnum11 = {
   all: 'all',
   name: 'name',
 } as const
 
-export type MetaFilterByEnum10Key =
-  (typeof metaFilterByEnum10)[keyof typeof metaFilterByEnum10]
+export type MetaFilterByEnum11Key =
+  (typeof metaFilterByEnum11)[keyof typeof metaFilterByEnum11]
 
-export const metaSortByEnum10 = {
+export const metaSortByEnum11 = {
   name: 'name',
   createdAt: 'createdAt',
 } as const
 
-export type MetaSortByEnum10Key =
-  (typeof metaSortByEnum10)[keyof typeof metaSortByEnum10]
+export type MetaSortByEnum11Key =
+  (typeof metaSortByEnum11)[keyof typeof metaSortByEnum11]
 
-export const metaOrderEnum10 = {
+export const metaOrderEnum11 = {
   asc: 'asc',
   desc: 'desc',
 } as const
 
-export type MetaOrderEnum10Key =
-  (typeof metaOrderEnum10)[keyof typeof metaOrderEnum10]
+export type MetaOrderEnum11Key =
+  (typeof metaOrderEnum11)[keyof typeof metaOrderEnum11]
 
 /**
  * @description Success
@@ -100,15 +100,15 @@ export type ListStockLocations200 = {
     /**
      * @type string
      */
-    filterBy: MetaFilterByEnum10Key
+    filterBy: MetaFilterByEnum11Key
     /**
      * @type string
      */
-    sortBy: MetaSortByEnum10Key
+    sortBy: MetaSortByEnum11Key
     /**
      * @type string
      */
-    order: MetaOrderEnum10Key
+    order: MetaOrderEnum11Key
     /**
      * @type number
      */

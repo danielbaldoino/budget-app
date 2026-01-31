@@ -31,7 +31,7 @@ export const getStockLocation200Schema = z
     stockLocation: z.object({
       id: z.string(),
       name: z.string(),
-      addresses: z.array(
+      address: z.nullable(
         z.object({
           id: z.string(),
           street: z.nullable(z.string()),

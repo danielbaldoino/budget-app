@@ -4,7 +4,8 @@ import type { FastifyTypedInstance } from '@/types/fastify'
 import { queries } from '@workspace/db/queries'
 import { z } from 'zod'
 
-const { FILTER_BY, SORT_BY, ORDER } = queries.application.users.listUsers
+const { FILTER_BY, SORT_BY, ORDER } =
+  queries.application.users.listUsersWithRelations
 
 export async function listUsers(app: FastifyTypedInstance) {
   app.get(
@@ -16,7 +17,7 @@ export async function listUsers(app: FastifyTypedInstance) {
         operationId: 'listUsers',
         querystring: z.object({
           search: z.string().optional(),
-          filterBy: z.enum(FILTER_BY).optional().default('name'),
+          filterBy: z.enum(FILTER_BY).optional().default('username'),
           sortBy: z.enum(SORT_BY).optional().default('createdAt'),
           order: z.enum(ORDER).optional().default('asc'),
           page: z.coerce.number().positive().optional().default(1),
@@ -44,6 +45,15 @@ export async function listUsers(app: FastifyTypedInstance) {
                 z.object({
                   id: z.string(),
                   username: z.string(),
+                  seller: z
+                    .object({
+                      id: z.string(),
+                      referenceId: z.string().nullable(),
+                      name: z.string(),
+                      createdAt: z.date(),
+                      updatedAt: z.date(),
+                    })
+                    .nullable(),
                   createdAt: z.date(),
                   updatedAt: z.date(),
                 }),
@@ -60,10 +70,11 @@ export async function listUsers(app: FastifyTypedInstance) {
 
       const { search, filterBy, sortBy, order, page, pageSize } = request.query
 
-      const { count, users } = await tenant.queries.users.listUsers(
-        { tenant: tenant.name },
-        { search, filterBy, sortBy, order, page, pageSize },
-      )
+      const { count, users } =
+        await tenant.queries.users.listUsersWithRelations(
+          { tenant: tenant.name },
+          { search, filterBy, sortBy, order, page, pageSize },
+        )
 
       return {
         meta: {

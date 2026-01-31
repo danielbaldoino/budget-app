@@ -57,7 +57,7 @@ export type ListProductsQueryParams = {
    */
   page?: number
   /**
-   * @minLength 10
+   * @minLength 5
    * @maxLength 100
    * @default 50
    * @type number | undefined

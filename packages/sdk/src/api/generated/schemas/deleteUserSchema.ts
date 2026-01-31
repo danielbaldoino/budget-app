@@ -18,7 +18,7 @@ import type { ToZod } from '@kubb/plugin-zod/utils'
 import { z } from 'zod'
 
 export const deleteUserPathParamsSchema = z.object({
-  userId: z.string().uuid(),
+  userId: z.string(),
 }) as unknown as ToZod<DeleteUserPathParams>
 
 export type DeleteUserPathParamsSchema = DeleteUserPathParams

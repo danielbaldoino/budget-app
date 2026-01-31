@@ -15,6 +15,13 @@
       "when": 1769473938432,
       "tag": "0001_natural_landau",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1769879368783,
+      "tag": "0002_yellow_sandman",
+      "breakpoints": true
     }
   ]
 }

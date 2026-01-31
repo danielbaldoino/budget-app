@@ -122,7 +122,7 @@ export const updateOwnedWorkspace500Schema = z
 export type UpdateOwnedWorkspace500Schema = UpdateOwnedWorkspace500
 
 export const updateOwnedWorkspaceMutationRequestSchema = z.object({
-  name: z.optional(z.string()),
+  name: z.optional(z.string().min(3)),
   slug: z.optional(z.string()),
   active: z.optional(z.boolean()),
   logoUrl: z.string().url().nullish(),

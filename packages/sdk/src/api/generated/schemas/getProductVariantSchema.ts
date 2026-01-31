@@ -75,6 +75,43 @@ export const getProductVariant200Schema = z
           updatedAt: z.string().datetime(),
         }),
       ),
+      inventoryItem: z.nullable(
+        z.object({
+          id: z.string(),
+          inventoryLevels: z.array(
+            z.object({
+              id: z.string(),
+              stockedQuantity: z.number(),
+              location: z.object({
+                id: z.string(),
+                name: z.string(),
+                address: z.nullable(
+                  z.object({
+                    id: z.string(),
+                    street: z.nullable(z.string()),
+                    number: z.nullable(z.string()),
+                    complement: z.nullable(z.string()),
+                    neighborhood: z.nullable(z.string()),
+                    city: z.nullable(z.string()),
+                    state: z.nullable(z.string()),
+                    country: z.nullable(z.string()),
+                    zipCode: z.nullable(z.string()),
+                    reference: z.nullable(z.string()),
+                    createdAt: z.string().datetime(),
+                    updatedAt: z.string().datetime(),
+                  }),
+                ),
+                createdAt: z.string().datetime(),
+                updatedAt: z.string().datetime(),
+              }),
+              createdAt: z.string().datetime(),
+              updatedAt: z.string().datetime(),
+            }),
+          ),
+          createdAt: z.string().datetime(),
+          updatedAt: z.string().datetime(),
+        }),
+      ),
       productId: z.string(),
       createdAt: z.string().datetime(),
       updatedAt: z.string().datetime(),

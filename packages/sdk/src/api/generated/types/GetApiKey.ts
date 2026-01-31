@@ -5,7 +5,7 @@
 
 export type GetApiKeyPathParams = {
   /**
-   * @type string, uuid
+   * @type string
    */
   apiKeyId: string
 }

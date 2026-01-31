@@ -18,7 +18,6 @@ import type { ToZod } from '@kubb/plugin-zod/utils'
 import { z } from 'zod'
 
 export const deleteProductPathParamsSchema = z.object({
-  slug: z.string(),
   productId: z.string(),
 }) as unknown as ToZod<DeleteProductPathParams>
 

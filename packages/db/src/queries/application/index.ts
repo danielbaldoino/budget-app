@@ -72,8 +72,12 @@ import {
   getStockLocationWithRelations,
 } from './stock-locations/get-stock-location'
 import { listStockLocations } from './stock-locations/list-stock-locations'
-import { getUser, getUserByUsername } from './users/get-user'
-import { listUsers } from './users/list-users'
+import {
+  getUser,
+  getUserByUsername,
+  getUserWithRelations,
+} from './users/get-user'
+import { listUsersWithRelations } from './users/list-users'
 
 export const applicationQueries = {
   apiKeys: {
@@ -81,8 +85,9 @@ export const applicationQueries = {
     getApiKey,
   },
   users: {
-    listUsers,
+    listUsersWithRelations,
     getUser,
+    getUserWithRelations,
     getUserByUsername,
   },
   customers: {
@@ -150,30 +155,30 @@ export const applicationQueries = {
     getStockLocationWithRelations,
   },
   carts: {
+    listCarts,
     getCart,
     getCartWithRelations,
-    listCarts,
   },
   orders: {
+    listOrders,
     getOrder,
     getOrderWithRelations,
-    listOrders,
   },
   sellers: {
+    listSellers,
     getSeller,
     getSellerWithRelations,
-    listSellers,
   },
   carriers: {
-    getCarrier,
     listCarriers,
+    getCarrier,
   },
   paymentMethods: {
-    getPaymentMethod,
     listPaymentMethods,
+    getPaymentMethod,
   },
   paymentTerms: {
-    getPaymentTerm,
     listPaymentTerms,
+    getPaymentTerm,
   },
 }

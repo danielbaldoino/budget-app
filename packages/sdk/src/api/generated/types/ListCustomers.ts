@@ -8,7 +8,6 @@ export const listCustomersQueryParamsFilterByEnum = {
   referenceId: 'referenceId',
   name: 'name',
   document: 'document',
-  'addresses.street': 'addresses.street',
 } as const
 
 export type ListCustomersQueryParamsFilterByEnumKey =
@@ -68,7 +67,6 @@ export const metaFilterByEnum3 = {
   referenceId: 'referenceId',
   name: 'name',
   document: 'document',
-  'addresses.street': 'addresses.street',
 } as const
 
 export type MetaFilterByEnum3Key =
@@ -106,14 +104,6 @@ export const customersGenderEnum = {
 
 export type CustomersGenderEnumKey =
   (typeof customersGenderEnum)[keyof typeof customersGenderEnum]
-
-export const addressesTypeEnum = {
-  billing: 'billing',
-  shipping: 'shipping',
-} as const
-
-export type AddressesTypeEnumKey =
-  (typeof addressesTypeEnum)[keyof typeof addressesTypeEnum]
 
 /**
  * @description Success
@@ -179,10 +169,6 @@ export type ListCustomers200 = {
     /**
      * @type string
      */
-    tradeName: string | null
-    /**
-     * @type string
-     */
     corporateName: string | null
     /**
      * @type string
@@ -204,63 +190,6 @@ export type ListCustomers200 = {
      * @type string
      */
     phone: string | null
-    /**
-     * @type array
-     */
-    addresses: {
-      /**
-       * @type string
-       */
-      id: string
-      /**
-       * @type string
-       */
-      type: AddressesTypeEnumKey | null
-      /**
-       * @type string
-       */
-      street: string | null
-      /**
-       * @type string
-       */
-      number: string | null
-      /**
-       * @type string
-       */
-      complement: string | null
-      /**
-       * @type string
-       */
-      neighborhood: string | null
-      /**
-       * @type string
-       */
-      city: string | null
-      /**
-       * @type string
-       */
-      state: string | null
-      /**
-       * @type string
-       */
-      country: string | null
-      /**
-       * @type string
-       */
-      zipCode: string | null
-      /**
-       * @type string
-       */
-      reference: string | null
-      /**
-       * @type string, date-time
-       */
-      createdAt: string
-      /**
-       * @type string, date-time
-       */
-      updatedAt: string
-    }[]
     /**
      * @type string, date-time
      */

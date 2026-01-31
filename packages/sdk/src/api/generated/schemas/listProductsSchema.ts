@@ -29,7 +29,7 @@ export const listProductsQueryParamsSchema = z.object({
   ),
   order: z.optional(z.enum(['asc', 'desc']).default('desc')),
   page: z.optional(z.coerce.number().gt(0).default(1)),
-  pageSize: z.optional(z.coerce.number().min(10).max(100).default(50)),
+  pageSize: z.optional(z.coerce.number().min(5).max(100).default(50)),
 }) as unknown as ToZod<ListProductsQueryParams>
 
 export type ListProductsQueryParamsSchema = ListProductsQueryParams

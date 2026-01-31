@@ -52,9 +52,9 @@ export type GetInventoryLevel200 = {
        */
       name: string
       /**
-       * @type array
+       * @type object
        */
-      addresses: {
+      address: {
         /**
          * @type string
          */
@@ -103,7 +103,7 @@ export type GetInventoryLevel200 = {
          * @type string, date-time
          */
         updatedAt: string
-      }[]
+      } | null
       /**
        * @type string, date-time
        */

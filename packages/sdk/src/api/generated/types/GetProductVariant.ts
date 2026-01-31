@@ -158,6 +158,118 @@ export type GetProductVariant200 = {
       updatedAt: string
     }[]
     /**
+     * @type object
+     */
+    inventoryItem: {
+      /**
+       * @type string
+       */
+      id: string
+      /**
+       * @type array
+       */
+      inventoryLevels: {
+        /**
+         * @type string
+         */
+        id: string
+        /**
+         * @type number
+         */
+        stockedQuantity: number
+        /**
+         * @type object
+         */
+        location: {
+          /**
+           * @type string
+           */
+          id: string
+          /**
+           * @type string
+           */
+          name: string
+          /**
+           * @type object
+           */
+          address: {
+            /**
+             * @type string
+             */
+            id: string
+            /**
+             * @type string
+             */
+            street: string | null
+            /**
+             * @type string
+             */
+            number: string | null
+            /**
+             * @type string
+             */
+            complement: string | null
+            /**
+             * @type string
+             */
+            neighborhood: string | null
+            /**
+             * @type string
+             */
+            city: string | null
+            /**
+             * @type string
+             */
+            state: string | null
+            /**
+             * @type string
+             */
+            country: string | null
+            /**
+             * @type string
+             */
+            zipCode: string | null
+            /**
+             * @type string
+             */
+            reference: string | null
+            /**
+             * @type string, date-time
+             */
+            createdAt: string
+            /**
+             * @type string, date-time
+             */
+            updatedAt: string
+          } | null
+          /**
+           * @type string, date-time
+           */
+          createdAt: string
+          /**
+           * @type string, date-time
+           */
+          updatedAt: string
+        }
+        /**
+         * @type string, date-time
+         */
+        createdAt: string
+        /**
+         * @type string, date-time
+         */
+        updatedAt: string
+      }[]
+      /**
+       * @type string, date-time
+       */
+      createdAt: string
+      /**
+       * @type string, date-time
+       */
+      updatedAt: string
+    } | null
+    /**
      * @type string
      */
     productId: string

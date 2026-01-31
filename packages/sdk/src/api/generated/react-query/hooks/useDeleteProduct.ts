@@ -47,15 +47,12 @@ export function deleteProductMutationOptions(
       | DeleteProduct429
       | DeleteProduct500
     >,
-    {
-      slug: DeleteProductPathParams['slug']
-      productId: DeleteProductPathParams['productId']
-    },
+    { productId: DeleteProductPathParams['productId'] },
     typeof mutationKey
   >({
     mutationKey,
-    mutationFn: async ({ slug, productId }) => {
-      return deleteProduct({ slug, productId }, config)
+    mutationFn: async ({ productId }) => {
+      return deleteProduct({ productId }, config)
     },
   })
 }
@@ -76,10 +73,7 @@ export function useDeleteProduct<TContext>(
         | DeleteProduct429
         | DeleteProduct500
       >,
-      {
-        slug: DeleteProductPathParams['slug']
-        productId: DeleteProductPathParams['productId']
-      },
+      { productId: DeleteProductPathParams['productId'] },
       TContext
     > & { client?: QueryClient }
     client?: Partial<RequestConfig> & { client?: typeof fetch }
@@ -101,10 +95,7 @@ export function useDeleteProduct<TContext>(
       | DeleteProduct429
       | DeleteProduct500
     >,
-    {
-      slug: DeleteProductPathParams['slug']
-      productId: DeleteProductPathParams['productId']
-    },
+    { productId: DeleteProductPathParams['productId'] },
     TContext
   >
 
@@ -118,10 +109,7 @@ export function useDeleteProduct<TContext>(
       | DeleteProduct429
       | DeleteProduct500
     >,
-    {
-      slug: DeleteProductPathParams['slug']
-      productId: DeleteProductPathParams['productId']
-    },
+    { productId: DeleteProductPathParams['productId'] },
     TContext
   >(
     {
@@ -140,10 +128,7 @@ export function useDeleteProduct<TContext>(
       | DeleteProduct429
       | DeleteProduct500
     >,
-    {
-      slug: DeleteProductPathParams['slug']
-      productId: DeleteProductPathParams['productId']
-    },
+    { productId: DeleteProductPathParams['productId'] },
     TContext
   >
 }

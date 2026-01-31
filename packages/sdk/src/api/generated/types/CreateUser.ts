@@ -106,6 +106,7 @@ export type CreateUser500 = {
 
 export type CreateUserMutationRequest = {
   /**
+   * @minLength 3
    * @type string
    */
   name: string

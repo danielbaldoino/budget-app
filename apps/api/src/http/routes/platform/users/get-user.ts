@@ -22,6 +22,15 @@ export async function getUser(app: FastifyTypedInstance) {
               user: z.object({
                 id: z.string(),
                 username: z.string(),
+                seller: z
+                  .object({
+                    id: z.string(),
+                    referenceId: z.string().nullable(),
+                    name: z.string(),
+                    createdAt: z.date(),
+                    updatedAt: z.date(),
+                  })
+                  .nullable(),
                 createdAt: z.date(),
                 updatedAt: z.date(),
               }),
@@ -37,8 +46,13 @@ export async function getUser(app: FastifyTypedInstance) {
 
       const { userId } = request.params
 
-      const [user] = await tenant.schema(({ users }) =>
-        tenant.db.select().from(users).where(orm.eq(users.id, userId)).limit(1),
+      const user = await tenant.schema(({ users }) =>
+        tenant.db.query.users.findFirst({
+          where: orm.eq(users.id, userId),
+          with: {
+            seller: true,
+          },
+        }),
       )
 
       if (!user) {

@@ -8,11 +8,11 @@
  */
 export type CreateOwnedWorkspace201 = {
   /**
-   * @type string, uuid
+   * @type string
    */
   workspaceId: string
   /**
-   * @type string, uuid
+   * @type string
    */
   tenantSchemaId: string
 }
@@ -110,6 +110,7 @@ export type CreateOwnedWorkspace500 = {
 
 export type CreateOwnedWorkspaceMutationRequest = {
   /**
+   * @minLength 3
    * @type string
    */
   name: string

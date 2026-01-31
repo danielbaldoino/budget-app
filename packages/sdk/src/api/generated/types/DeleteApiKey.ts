@@ -5,7 +5,7 @@
 
 export type DeleteApiKeyPathParams = {
   /**
-   * @type string, uuid
+   * @type string
    */
   apiKeyId: string
 }

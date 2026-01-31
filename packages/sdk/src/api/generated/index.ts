@@ -21,6 +21,7 @@ export type { GetApiKeyQueryKey } from './react-query/hooks/useGetApiKey'
 export type { GetInventoryItemQueryKey } from './react-query/hooks/useGetInventoryItem'
 export type { GetInventoryLevelQueryKey } from './react-query/hooks/useGetInventoryLevel'
 export type { GetOwnedWorkspaceQueryKey } from './react-query/hooks/useGetOwnedWorkspace'
+export type { GetPriceListQueryKey } from './react-query/hooks/useGetPriceList'
 export type { GetProductQueryKey } from './react-query/hooks/useGetProduct'
 export type { GetProductCategoryQueryKey } from './react-query/hooks/useGetProductCategory'
 export type { GetProductOptionQueryKey } from './react-query/hooks/useGetProductOption'
@@ -29,11 +30,13 @@ export type { GetProfileQueryKey } from './react-query/hooks/useGetProfile'
 export type { GetStatusQueryKey } from './react-query/hooks/useGetStatus'
 export type { GetStockLocationQueryKey } from './react-query/hooks/useGetStockLocation'
 export type { GetUserQueryKey } from './react-query/hooks/useGetUser'
+export type { GetUserProfileQueryKey } from './react-query/hooks/useGetUserProfile'
 export type { HealthQueryKey } from './react-query/hooks/useHealth'
 export type { ListApiKeysQueryKey } from './react-query/hooks/useListApiKeys'
 export type { ListCustomersQueryKey } from './react-query/hooks/useListCustomers'
 export type { ListInventoryItemsQueryKey } from './react-query/hooks/useListInventoryItems'
 export type { ListInventoryLevelsQueryKey } from './react-query/hooks/useListInventoryLevels'
+export type { ListPriceListsQueryKey } from './react-query/hooks/useListPriceLists'
 export type { ListProductCategoriesQueryKey } from './react-query/hooks/useListProductCategories'
 export type { ListProductOptionsQueryKey } from './react-query/hooks/useListProductOptions'
 export type { ListProductsQueryKey } from './react-query/hooks/useListProducts'
@@ -306,6 +309,17 @@ export type {
   GetOwnedWorkspaceQueryResponseSchema,
 } from './schemas/getOwnedWorkspaceSchema'
 export type {
+  GetPriceListPathParamsSchema,
+  GetPriceList200Schema,
+  GetPriceList400Schema,
+  GetPriceList401Schema,
+  GetPriceList403Schema,
+  GetPriceList404Schema,
+  GetPriceList429Schema,
+  GetPriceList500Schema,
+  GetPriceListQueryResponseSchema,
+} from './schemas/getPriceListSchema'
+export type {
   GetProductCategoryPathParamsSchema,
   GetProductCategory200Schema,
   GetProductCategory400Schema,
@@ -381,6 +395,16 @@ export type {
   GetStockLocationQueryResponseSchema,
 } from './schemas/getStockLocationSchema'
 export type {
+  GetUserProfile200Schema,
+  GetUserProfile400Schema,
+  GetUserProfile401Schema,
+  GetUserProfile403Schema,
+  GetUserProfile404Schema,
+  GetUserProfile429Schema,
+  GetUserProfile500Schema,
+  GetUserProfileQueryResponseSchema,
+} from './schemas/getUserProfileSchema'
+export type {
   GetUserPathParamsSchema,
   GetUser200Schema,
   GetUser400Schema,
@@ -446,6 +470,17 @@ export type {
   ListInventoryLevels500Schema,
   ListInventoryLevelsQueryResponseSchema,
 } from './schemas/listInventoryLevelsSchema'
+export type {
+  ListPriceListsQueryParamsSchema,
+  ListPriceLists200Schema,
+  ListPriceLists400Schema,
+  ListPriceLists401Schema,
+  ListPriceLists403Schema,
+  ListPriceLists404Schema,
+  ListPriceLists429Schema,
+  ListPriceLists500Schema,
+  ListPriceListsQueryResponseSchema,
+} from './schemas/listPriceListsSchema'
 export type {
   ListProductCategoriesQueryParamsSchema,
   ListProductCategories200Schema,
@@ -921,6 +956,18 @@ export type {
   GetOwnedWorkspaceQuery,
 } from './types/GetOwnedWorkspace'
 export type {
+  GetPriceListPathParams,
+  GetPriceList200,
+  GetPriceList400,
+  GetPriceList401,
+  GetPriceList403,
+  GetPriceList404,
+  GetPriceList429,
+  GetPriceList500,
+  GetPriceListQueryResponse,
+  GetPriceListQuery,
+} from './types/GetPriceList'
+export type {
   GetProductPathParams,
   ProductStatusEnumKey,
   GetProduct200,
@@ -1016,6 +1063,17 @@ export type {
   GetUserQuery,
 } from './types/GetUser'
 export type {
+  GetUserProfile200,
+  GetUserProfile400,
+  GetUserProfile401,
+  GetUserProfile403,
+  GetUserProfile404,
+  GetUserProfile429,
+  GetUserProfile500,
+  GetUserProfileQueryResponse,
+  GetUserProfileQuery,
+} from './types/GetUserProfile'
+export type {
   Health200,
   Health400,
   Health401,
@@ -1054,7 +1112,6 @@ export type {
   MetaOrderEnum3Key,
   CustomersDocumentTypeEnumKey,
   CustomersGenderEnumKey,
-  AddressesTypeEnumKey,
   ListCustomers200,
   ListCustomers400,
   ListCustomers401,
@@ -1103,6 +1160,24 @@ export type {
   ListInventoryLevelsQueryResponse,
   ListInventoryLevelsQuery,
 } from './types/ListInventoryLevels'
+export type {
+  ListPriceListsQueryParamsFilterByEnumKey,
+  ListPriceListsQueryParamsSortByEnumKey,
+  ListPriceListsQueryParamsOrderEnumKey,
+  ListPriceListsQueryParams,
+  MetaFilterByEnum10Key,
+  MetaSortByEnum10Key,
+  MetaOrderEnum10Key,
+  ListPriceLists200,
+  ListPriceLists400,
+  ListPriceLists401,
+  ListPriceLists403,
+  ListPriceLists404,
+  ListPriceLists429,
+  ListPriceLists500,
+  ListPriceListsQueryResponse,
+  ListPriceListsQuery,
+} from './types/ListPriceLists'
 export type {
   ListProductCategoriesQueryParamsFilterByEnumKey,
   ListProductCategoriesQueryParamsSortByEnumKey,
@@ -1183,9 +1258,9 @@ export type {
   ListStockLocationsQueryParamsSortByEnumKey,
   ListStockLocationsQueryParamsOrderEnumKey,
   ListStockLocationsQueryParams,
-  MetaFilterByEnum10Key,
-  MetaSortByEnum10Key,
-  MetaOrderEnum10Key,
+  MetaFilterByEnum11Key,
+  MetaSortByEnum11Key,
+  MetaOrderEnum11Key,
   ListStockLocations200,
   ListStockLocations400,
   ListStockLocations401,
@@ -1375,6 +1450,7 @@ export { getApiKey } from './operations/getApiKey'
 export { getInventoryItem } from './operations/getInventoryItem'
 export { getInventoryLevel } from './operations/getInventoryLevel'
 export { getOwnedWorkspace } from './operations/getOwnedWorkspace'
+export { getPriceList } from './operations/getPriceList'
 export { getProduct } from './operations/getProduct'
 export { getProductCategory } from './operations/getProductCategory'
 export { getProductOption } from './operations/getProductOption'
@@ -1383,11 +1459,13 @@ export { getProfile } from './operations/getProfile'
 export { getStatus } from './operations/getStatus'
 export { getStockLocation } from './operations/getStockLocation'
 export { getUser } from './operations/getUser'
+export { getUserProfile } from './operations/getUserProfile'
 export { health } from './operations/health'
 export { listApiKeys } from './operations/listApiKeys'
 export { listCustomers } from './operations/listCustomers'
 export { listInventoryItems } from './operations/listInventoryItems'
 export { listInventoryLevels } from './operations/listInventoryLevels'
+export { listPriceLists } from './operations/listPriceLists'
 export { listProductCategories } from './operations/listProductCategories'
 export { listProductOptions } from './operations/listProductOptions'
 export { listProducts } from './operations/listProducts'
@@ -1520,6 +1598,11 @@ export {
   useGetOwnedWorkspace,
 } from './react-query/hooks/useGetOwnedWorkspace'
 export {
+  getPriceListQueryKey,
+  getPriceListQueryOptions,
+  useGetPriceList,
+} from './react-query/hooks/useGetPriceList'
+export {
   getProductQueryKey,
   getProductQueryOptions,
   useGetProduct,
@@ -1560,6 +1643,11 @@ export {
   useGetUser,
 } from './react-query/hooks/useGetUser'
 export {
+  getUserProfileQueryKey,
+  getUserProfileQueryOptions,
+  useGetUserProfile,
+} from './react-query/hooks/useGetUserProfile'
+export {
   healthQueryKey,
   healthQueryOptions,
   useHealth,
@@ -1584,6 +1672,11 @@ export {
   listInventoryLevelsQueryOptions,
   useListInventoryLevels,
 } from './react-query/hooks/useListInventoryLevels'
+export {
+  listPriceListsQueryKey,
+  listPriceListsQueryOptions,
+  useListPriceLists,
+} from './react-query/hooks/useListPriceLists'
 export {
   listProductCategoriesQueryKey,
   listProductCategoriesQueryOptions,
@@ -1920,6 +2013,17 @@ export {
   getOwnedWorkspaceQueryResponseSchema,
 } from './schemas/getOwnedWorkspaceSchema'
 export {
+  getPriceListPathParamsSchema,
+  getPriceList200Schema,
+  getPriceList400Schema,
+  getPriceList401Schema,
+  getPriceList403Schema,
+  getPriceList404Schema,
+  getPriceList429Schema,
+  getPriceList500Schema,
+  getPriceListQueryResponseSchema,
+} from './schemas/getPriceListSchema'
+export {
   getProductCategoryPathParamsSchema,
   getProductCategory200Schema,
   getProductCategory400Schema,
@@ -1995,6 +2099,16 @@ export {
   getStockLocationQueryResponseSchema,
 } from './schemas/getStockLocationSchema'
 export {
+  getUserProfile200Schema,
+  getUserProfile400Schema,
+  getUserProfile401Schema,
+  getUserProfile403Schema,
+  getUserProfile404Schema,
+  getUserProfile429Schema,
+  getUserProfile500Schema,
+  getUserProfileQueryResponseSchema,
+} from './schemas/getUserProfileSchema'
+export {
   getUserPathParamsSchema,
   getUser200Schema,
   getUser400Schema,
@@ -2060,6 +2174,17 @@ export {
   listInventoryLevels500Schema,
   listInventoryLevelsQueryResponseSchema,
 } from './schemas/listInventoryLevelsSchema'
+export {
+  listPriceListsQueryParamsSchema,
+  listPriceLists200Schema,
+  listPriceLists400Schema,
+  listPriceLists401Schema,
+  listPriceLists403Schema,
+  listPriceLists404Schema,
+  listPriceLists429Schema,
+  listPriceLists500Schema,
+  listPriceListsQueryResponseSchema,
+} from './schemas/listPriceListsSchema'
 export {
   listProductCategoriesQueryParamsSchema,
   listProductCategories200Schema,
@@ -2274,7 +2399,6 @@ export {
   metaOrderEnum3,
   customersDocumentTypeEnum,
   customersGenderEnum,
-  addressesTypeEnum,
 } from './types/ListCustomers'
 export {
   listInventoryItemsQueryParamsFilterByEnum,
@@ -2293,6 +2417,14 @@ export {
   metaSortByEnum9,
   metaOrderEnum9,
 } from './types/ListInventoryLevels'
+export {
+  listPriceListsQueryParamsFilterByEnum,
+  listPriceListsQueryParamsSortByEnum,
+  listPriceListsQueryParamsOrderEnum,
+  metaFilterByEnum10,
+  metaSortByEnum10,
+  metaOrderEnum10,
+} from './types/ListPriceLists'
 export {
   listProductCategoriesQueryParamsFilterByEnum,
   listProductCategoriesQueryParamsSortByEnum,
@@ -2330,9 +2462,9 @@ export {
   listStockLocationsQueryParamsFilterByEnum,
   listStockLocationsQueryParamsSortByEnum,
   listStockLocationsQueryParamsOrderEnum,
-  metaFilterByEnum10,
-  metaSortByEnum10,
-  metaOrderEnum10,
+  metaFilterByEnum11,
+  metaSortByEnum11,
+  metaOrderEnum11,
 } from './types/ListStockLocations'
 export {
   listUsersQueryParamsFilterByEnum,

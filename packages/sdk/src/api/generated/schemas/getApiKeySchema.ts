@@ -18,7 +18,7 @@ import type { ToZod } from '@kubb/plugin-zod/utils'
 import { z } from 'zod'
 
 export const getApiKeyPathParamsSchema = z.object({
-  apiKeyId: z.string().uuid(),
+  apiKeyId: z.string(),
 }) as unknown as ToZod<GetApiKeyPathParams>
 
 export type GetApiKeyPathParamsSchema = GetApiKeyPathParams

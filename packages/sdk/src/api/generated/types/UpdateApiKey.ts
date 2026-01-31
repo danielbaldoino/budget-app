@@ -5,7 +5,7 @@
 
 export type UpdateApiKeyPathParams = {
   /**
-   * @type string, uuid
+   * @type string
    */
   apiKeyId: string
 }
@@ -115,6 +115,7 @@ export type UpdateApiKey500 = {
 
 export type UpdateApiKeyMutationRequest = {
   /**
+   * @minLength 3
    * @type string
    */
   name: string

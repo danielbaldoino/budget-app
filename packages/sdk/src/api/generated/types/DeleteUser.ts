@@ -5,7 +5,7 @@
 
 export type DeleteUserPathParams = {
   /**
-   * @type string, uuid
+   * @type string
    */
   userId: string
 }

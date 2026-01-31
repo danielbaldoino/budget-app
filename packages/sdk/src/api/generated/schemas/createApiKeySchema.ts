@@ -123,7 +123,7 @@ export const createApiKey500Schema = z
 export type CreateApiKey500Schema = CreateApiKey500
 
 export const createApiKeyMutationRequestSchema = z.object({
-  name: z.string(),
+  name: z.string().min(3),
 }) as unknown as ToZod<CreateApiKeyMutationRequest>
 
 export type CreateApiKeyMutationRequestSchema = CreateApiKeyMutationRequest

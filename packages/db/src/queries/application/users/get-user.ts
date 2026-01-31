@@ -16,6 +16,24 @@ export async function getUser(params: GetUserParams) {
   })
 }
 
+type GetUserWithRelationsParams = {
+  tenant: string
+  userId: string
+}
+
+export async function getUserWithRelations(params: GetUserWithRelationsParams) {
+  return tenantSchema(params.tenant, async ({ users }) => {
+    const user = await tenantDb(params.tenant).query.users.findFirst({
+      where: eq(users.id, params.userId),
+      with: {
+        seller: true,
+      },
+    })
+
+    return user || null
+  })
+}
+
 type GetUserByUsernameParams = {
   tenant: string
   username: string

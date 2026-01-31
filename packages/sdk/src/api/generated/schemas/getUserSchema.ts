@@ -18,7 +18,7 @@ import type { ToZod } from '@kubb/plugin-zod/utils'
 import { z } from 'zod'
 
 export const getUserPathParamsSchema = z.object({
-  userId: z.string().uuid(),
+  userId: z.string(),
 }) as unknown as ToZod<GetUserPathParams>
 
 export type GetUserPathParamsSchema = GetUserPathParams
@@ -30,8 +30,16 @@ export const getUser200Schema = z
   .object({
     user: z.object({
       id: z.string(),
-      name: z.string(),
       username: z.string(),
+      seller: z.nullable(
+        z.object({
+          id: z.string(),
+          referenceId: z.nullable(z.string()),
+          name: z.string(),
+          createdAt: z.string().datetime(),
+          updatedAt: z.string().datetime(),
+        }),
+      ),
       createdAt: z.string().datetime(),
       updatedAt: z.string().datetime(),
     }),

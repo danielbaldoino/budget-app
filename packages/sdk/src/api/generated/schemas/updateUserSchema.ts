@@ -19,7 +19,7 @@ import type { ToZod } from '@kubb/plugin-zod/utils'
 import { z } from 'zod'
 
 export const updateUserPathParamsSchema = z.object({
-  userId: z.string().uuid(),
+  userId: z.string(),
 }) as unknown as ToZod<UpdateUserPathParams>
 
 export type UpdateUserPathParamsSchema = UpdateUserPathParams
@@ -129,7 +129,7 @@ export const updateUser500Schema = z
 export type UpdateUser500Schema = UpdateUser500
 
 export const updateUserMutationRequestSchema = z.object({
-  name: z.optional(z.string()),
+  name: z.optional(z.string().min(3)),
   username: z.optional(z.string().min(3).max(30)),
   password: z.optional(z.string().min(6).max(100)),
 }) as unknown as ToZod<UpdateUserMutationRequest>

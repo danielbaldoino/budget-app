@@ -18,7 +18,7 @@ import type { ToZod } from '@kubb/plugin-zod/utils'
 import { z } from 'zod'
 
 export const deleteApiKeyPathParamsSchema = z.object({
-  apiKeyId: z.string().uuid(),
+  apiKeyId: z.string(),
 }) as unknown as ToZod<DeleteApiKeyPathParams>
 
 export type DeleteApiKeyPathParamsSchema = DeleteApiKeyPathParams

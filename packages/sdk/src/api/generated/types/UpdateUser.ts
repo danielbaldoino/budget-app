@@ -5,7 +5,7 @@
 
 export type UpdateUserPathParams = {
   /**
-   * @type string, uuid
+   * @type string
    */
   userId: string
 }
@@ -115,6 +115,7 @@ export type UpdateUser500 = {
 
 export type UpdateUserMutationRequest = {
   /**
+   * @minLength 3
    * @type string | undefined
    */
   name?: string

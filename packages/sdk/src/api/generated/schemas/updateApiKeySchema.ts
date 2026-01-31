@@ -19,7 +19,7 @@ import type { ToZod } from '@kubb/plugin-zod/utils'
 import { z } from 'zod'
 
 export const updateApiKeyPathParamsSchema = z.object({
-  apiKeyId: z.string().uuid(),
+  apiKeyId: z.string(),
 }) as unknown as ToZod<UpdateApiKeyPathParams>
 
 export type UpdateApiKeyPathParamsSchema = UpdateApiKeyPathParams
@@ -129,7 +129,7 @@ export const updateApiKey500Schema = z
 export type UpdateApiKey500Schema = UpdateApiKey500
 
 export const updateApiKeyMutationRequestSchema = z.object({
-  name: z.string(),
+  name: z.string().min(3),
 }) as unknown as ToZod<UpdateApiKeyMutationRequest>
 
 export type UpdateApiKeyMutationRequestSchema = UpdateApiKeyMutationRequest

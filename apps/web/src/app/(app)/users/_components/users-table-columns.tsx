@@ -32,7 +32,7 @@ import type { User } from '../_lib/utils'
 export function getUsersTableColumns(): ColumnDef<User>[] {
   return [
     {
-      accessorKey: 'name',
+      id: 'name',
       header: ({ column }) => {
         return (
           <Button
@@ -44,7 +44,8 @@ export function getUsersTableColumns(): ColumnDef<User>[] {
           </Button>
         )
       },
-      cell: ({ row }) => <div>{row.getValue('name')}</div>,
+      accessorFn: (row) => row.seller?.name,
+      cell: ({ getValue }) => <div>{getValue<string>()}</div>,
     },
     {
       accessorKey: 'username',

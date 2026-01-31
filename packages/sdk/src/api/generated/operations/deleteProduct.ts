@@ -17,12 +17,8 @@ import type {
 } from '../types/DeleteProduct'
 
 function getDeleteProductUrl({
-  slug,
   productId,
-}: {
-  slug: DeleteProductPathParams['slug']
-  productId: DeleteProductPathParams['productId']
-}) {
+}: { productId: DeleteProductPathParams['productId'] }) {
   const res = {
     method: 'DELETE',
     url: `/api/application/v1/products/${productId}` as const,
@@ -35,13 +31,7 @@ function getDeleteProductUrl({
  * {@link /api/application/v1/products/:productId}
  */
 export async function deleteProduct(
-  {
-    slug,
-    productId,
-  }: {
-    slug: DeleteProductPathParams['slug']
-    productId: DeleteProductPathParams['productId']
-  },
+  { productId }: { productId: DeleteProductPathParams['productId'] },
   config: Partial<RequestConfig> & { client?: typeof fetch } = {},
 ) {
   const { client: request = fetch, ...requestConfig } = config
@@ -59,7 +49,7 @@ export async function deleteProduct(
     unknown
   >({
     method: 'DELETE',
-    url: getDeleteProductUrl({ slug, productId }).url.toString(),
+    url: getDeleteProductUrl({ productId }).url.toString(),
     ...requestConfig,
   })
   return res

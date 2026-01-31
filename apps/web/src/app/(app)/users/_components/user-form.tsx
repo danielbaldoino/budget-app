@@ -49,7 +49,7 @@ export function UserForm({
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      name: user?.name || '',
+      name: user?.seller?.name || '',
       username: user?.username || '',
       password: '',
     },

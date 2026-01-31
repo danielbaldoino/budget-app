@@ -5,14 +5,14 @@
 
 export const listUsersQueryParamsFilterByEnum = {
   all: 'all',
-  name: 'name',
+  username: 'username',
 } as const
 
 export type ListUsersQueryParamsFilterByEnumKey =
   (typeof listUsersQueryParamsFilterByEnum)[keyof typeof listUsersQueryParamsFilterByEnum]
 
 export const listUsersQueryParamsSortByEnum = {
-  name: 'name',
+  username: 'username',
   createdAt: 'createdAt',
 } as const
 
@@ -33,7 +33,7 @@ export type ListUsersQueryParams = {
    */
   search?: string
   /**
-   * @default "name"
+   * @default "username"
    * @type string | undefined
    */
   filterBy?: ListUsersQueryParamsFilterByEnumKey
@@ -62,14 +62,14 @@ export type ListUsersQueryParams = {
 
 export const metaFilterByEnum2 = {
   all: 'all',
-  name: 'name',
+  username: 'username',
 } as const
 
 export type MetaFilterByEnum2Key =
   (typeof metaFilterByEnum2)[keyof typeof metaFilterByEnum2]
 
 export const metaSortByEnum2 = {
-  name: 'name',
+  username: 'username',
   createdAt: 'createdAt',
 } as const
 
@@ -132,11 +132,32 @@ export type ListUsers200 = {
     /**
      * @type string
      */
-    name: string
-    /**
-     * @type string
-     */
     username: string
+    /**
+     * @type object
+     */
+    seller: {
+      /**
+       * @type string
+       */
+      id: string
+      /**
+       * @type string
+       */
+      referenceId: string | null
+      /**
+       * @type string
+       */
+      name: string
+      /**
+       * @type string, date-time
+       */
+      createdAt: string
+      /**
+       * @type string, date-time
+       */
+      updatedAt: string
+    } | null
     /**
      * @type string, date-time
      */

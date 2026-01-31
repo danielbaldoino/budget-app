@@ -7,10 +7,6 @@ export type DeleteProductPathParams = {
   /**
    * @type string
    */
-  slug: string
-  /**
-   * @type string
-   */
   productId: string
 }
 

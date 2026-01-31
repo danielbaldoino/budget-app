@@ -20,9 +20,7 @@ import { z } from 'zod'
 export const listCustomersQueryParamsSchema = z.object({
   search: z.optional(z.string()),
   filterBy: z.optional(
-    z
-      .enum(['all', 'referenceId', 'name', 'document', 'addresses.street'])
-      .default('name'),
+    z.enum(['all', 'referenceId', 'name', 'document']).default('name'),
   ),
   sortBy: z.optional(z.enum(['name', 'createdAt']).default('createdAt')),
   order: z.optional(z.enum(['asc', 'desc']).default('asc')),
@@ -39,13 +37,7 @@ export const listCustomers200Schema = z
   .object({
     meta: z.object({
       search: z.optional(z.string()),
-      filterBy: z.enum([
-        'all',
-        'referenceId',
-        'name',
-        'document',
-        'addresses.street',
-      ]),
+      filterBy: z.enum(['all', 'referenceId', 'name', 'document']),
       sortBy: z.enum(['name', 'createdAt']),
       order: z.enum(['asc', 'desc']),
       count: z.number(),
@@ -59,30 +51,12 @@ export const listCustomers200Schema = z
         name: z.string(),
         documentType: z.nullable(z.enum(['cpf', 'cnpj', 'foreign'])),
         document: z.nullable(z.string()),
-        tradeName: z.nullable(z.string()),
         corporateName: z.nullable(z.string()),
         stateRegistration: z.nullable(z.string()),
         birthDate: z.nullable(z.string().datetime()),
         gender: z.nullable(z.enum(['male', 'female'])),
         email: z.nullable(z.string()),
         phone: z.nullable(z.string()),
-        addresses: z.array(
-          z.object({
-            id: z.string(),
-            type: z.nullable(z.enum(['billing', 'shipping'])),
-            street: z.nullable(z.string()),
-            number: z.nullable(z.string()),
-            complement: z.nullable(z.string()),
-            neighborhood: z.nullable(z.string()),
-            city: z.nullable(z.string()),
-            state: z.nullable(z.string()),
-            country: z.nullable(z.string()),
-            zipCode: z.nullable(z.string()),
-            reference: z.nullable(z.string()),
-            createdAt: z.string().datetime(),
-            updatedAt: z.string().datetime(),
-          }),
-        ),
         createdAt: z.string().datetime(),
         updatedAt: z.string().datetime(),
       }),

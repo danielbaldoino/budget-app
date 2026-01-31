@@ -5,7 +5,6 @@ import { deleteApiKey } from './api-keys/delete-api-key'
 import { getApiKey } from './api-keys/get-api-key'
 import { listApiKeys } from './api-keys/list-api-keys'
 import { updateApiKey } from './api-keys/update-api-key'
-import { authRoutes } from './auth-routes'
 import { createOwnedWorkspace } from './owned-workspace/create-workspace'
 import { getOwnedWorkspace } from './owned-workspace/get-workspace'
 import { updateOwnedWorkspace } from './owned-workspace/update-workspace'
@@ -17,8 +16,6 @@ import { listUsers } from './users/list-users'
 import { updateUser } from './users/update-user'
 
 export async function platformRoutes(app: FastifyTypedInstance) {
-  app.register(authRoutes, { prefix: '/auth' })
-
   app.register(authenticator) // Apply authentication middleware
 
   app.register(getProfile)

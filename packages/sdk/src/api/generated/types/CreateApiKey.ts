@@ -106,6 +106,7 @@ export type CreateApiKey500 = {
 
 export type CreateApiKeyMutationRequest = {
   /**
+   * @minLength 3
    * @type string
    */
   name: string

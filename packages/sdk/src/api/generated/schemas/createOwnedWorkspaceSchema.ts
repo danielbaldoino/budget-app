@@ -22,8 +22,8 @@ import { z } from 'zod'
  */
 export const createOwnedWorkspace201Schema = z
   .object({
-    workspaceId: z.string().uuid(),
-    tenantSchemaId: z.string().uuid(),
+    workspaceId: z.string(),
+    tenantSchemaId: z.string(),
   })
   .describe('Success') as unknown as ToZod<CreateOwnedWorkspace201>
 
@@ -124,7 +124,7 @@ export const createOwnedWorkspace500Schema = z
 export type CreateOwnedWorkspace500Schema = CreateOwnedWorkspace500
 
 export const createOwnedWorkspaceMutationRequestSchema = z.object({
-  name: z.string(),
+  name: z.string().min(3),
   slug: z.string().nullish(),
 }) as unknown as ToZod<CreateOwnedWorkspaceMutationRequest>
 

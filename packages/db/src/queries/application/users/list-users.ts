@@ -2,15 +2,15 @@ import { type SQL, asc, desc, ilike, or } from 'drizzle-orm'
 import { db } from '../../../db'
 import { tenantDb, tenantSchema } from '../../../tenant'
 
-const FILTER_BY = ['all', 'name'] as const
-const SORT_BY = ['name', 'createdAt'] as const
+const FILTER_BY = ['all', 'username'] as const
+const SORT_BY = ['username', 'createdAt'] as const
 const ORDER = ['asc', 'desc'] as const
 
-type ListUsersParams = {
+type ListUsersWithRelationsParams = {
   tenant: string
 }
 
-type ListUsersFiltersParams = {
+type ListUsersWithRelationsFiltersParams = {
   search?: string
   filterBy: (typeof FILTER_BY)[number]
   sortBy: (typeof SORT_BY)[number]
@@ -19,17 +19,17 @@ type ListUsersFiltersParams = {
   pageSize: number
 }
 
-async function getListUsers(
-  params: ListUsersParams,
-  filters: ListUsersFiltersParams,
+async function getListUsersWithRelations(
+  params: ListUsersWithRelationsParams,
+  filters: ListUsersWithRelationsFiltersParams,
 ) {
   return tenantSchema(params.tenant, async ({ users }) => {
     const WHERE = () => {
       const searchCondition: SQL[] = []
 
       if (filters.search) {
-        if (filters.filterBy === 'all' || filters.filterBy === 'name') {
-          searchCondition.push(ilike(users.name, `%${filters.search}%`))
+        if (filters.filterBy === 'all' || filters.filterBy === 'username') {
+          searchCondition.push(ilike(users.username, `%${filters.search}%`))
         }
       }
 
@@ -39,8 +39,8 @@ async function getListUsers(
     const ORDER_BY = () => {
       const orderFn = filters.order === 'asc' ? asc : desc
 
-      if (filters.sortBy === 'name') {
-        return orderFn(users.name)
+      if (filters.sortBy === 'username') {
+        return orderFn(users.username)
       }
 
       return orderFn(users.createdAt)
@@ -54,6 +54,9 @@ async function getListUsers(
         orderBy: ORDER_BY(),
         offset: (filters.page - 1) * filters.pageSize,
         limit: filters.pageSize,
+        with: {
+          seller: true,
+        },
       }),
     ])
 
@@ -64,7 +67,7 @@ async function getListUsers(
   })
 }
 
-export const listUsers = Object.assign(getListUsers, {
+export const listUsersWithRelations = Object.assign(getListUsersWithRelations, {
   FILTER_BY,
   SORT_BY,
   ORDER,

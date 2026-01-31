@@ -19,8 +19,8 @@ import { z } from 'zod'
 
 export const listUsersQueryParamsSchema = z.object({
   search: z.optional(z.string()),
-  filterBy: z.optional(z.enum(['all', 'name']).default('name')),
-  sortBy: z.optional(z.enum(['name', 'createdAt']).default('createdAt')),
+  filterBy: z.optional(z.enum(['all', 'username']).default('username')),
+  sortBy: z.optional(z.enum(['username', 'createdAt']).default('createdAt')),
   order: z.optional(z.enum(['asc', 'desc']).default('asc')),
   page: z.optional(z.coerce.number().gt(0).default(1)),
   pageSize: z.optional(z.coerce.number().max(100).gt(10).default(50)),
@@ -35,8 +35,8 @@ export const listUsers200Schema = z
   .object({
     meta: z.object({
       search: z.optional(z.string()),
-      filterBy: z.enum(['all', 'name']),
-      sortBy: z.enum(['name', 'createdAt']),
+      filterBy: z.enum(['all', 'username']),
+      sortBy: z.enum(['username', 'createdAt']),
       order: z.enum(['asc', 'desc']),
       count: z.number(),
       page: z.number(),
@@ -45,8 +45,16 @@ export const listUsers200Schema = z
     users: z.array(
       z.object({
         id: z.string(),
-        name: z.string(),
         username: z.string(),
+        seller: z.nullable(
+          z.object({
+            id: z.string(),
+            referenceId: z.nullable(z.string()),
+            name: z.string(),
+            createdAt: z.string().datetime(),
+            updatedAt: z.string().datetime(),
+          }),
+        ),
         createdAt: z.string().datetime(),
         updatedAt: z.string().datetime(),
       }),

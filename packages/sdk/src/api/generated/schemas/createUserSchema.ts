@@ -123,7 +123,7 @@ export const createUser500Schema = z
 export type CreateUser500Schema = CreateUser500
 
 export const createUserMutationRequestSchema = z.object({
-  name: z.string(),
+  name: z.string().min(3),
   username: z.string().min(3).max(30),
   password: z.string().min(6).max(100),
 }) as unknown as ToZod<CreateUserMutationRequest>

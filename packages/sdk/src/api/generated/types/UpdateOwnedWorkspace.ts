@@ -108,6 +108,7 @@ export type UpdateOwnedWorkspace500 = {
 
 export type UpdateOwnedWorkspaceMutationRequest = {
   /**
+   * @minLength 3
    * @type string | undefined
    */
   name?: string

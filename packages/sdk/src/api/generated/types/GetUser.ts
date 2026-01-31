@@ -5,7 +5,7 @@
 
 export type GetUserPathParams = {
   /**
-   * @type string, uuid
+   * @type string
    */
   userId: string
 }
@@ -25,11 +25,32 @@ export type GetUser200 = {
     /**
      * @type string
      */
-    name: string
-    /**
-     * @type string
-     */
     username: string
+    /**
+     * @type object
+     */
+    seller: {
+      /**
+       * @type string
+       */
+      id: string
+      /**
+       * @type string
+       */
+      referenceId: string | null
+      /**
+       * @type string
+       */
+      name: string
+      /**
+       * @type string, date-time
+       */
+      createdAt: string
+      /**
+       * @type string, date-time
+       */
+      updatedAt: string
+    } | null
     /**
      * @type string, date-time
      */

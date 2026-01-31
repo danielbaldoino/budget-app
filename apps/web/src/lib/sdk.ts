@@ -3,6 +3,6 @@ import { getHeaders } from '@/lib/headers'
 import { createClient } from '@workspace/sdk'
 
 export const sdk = createClient({
-  baseURL: `${env.NEXT_PUBLIC_WEB_URL}/api`,
+  baseURL: `${env.NEXT_PUBLIC_WEB_URL}`,
   headers: getHeaders,
 })
