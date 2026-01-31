@@ -67,6 +67,10 @@ export type GetUser200 = {
  */
 export type GetUser400 = {
   /**
+   * @type number
+   */
+  status: number
+  /**
    * @type string
    */
   code: string
@@ -100,6 +104,10 @@ export type GetUser400 = {
  */
 export type GetUser401 = {
   /**
+   * @type number
+   */
+  status: number
+  /**
    * @type string
    */
   code: string
@@ -114,6 +122,14 @@ export type GetUser401 = {
  */
 export type GetUser403 = {
   /**
+   * @type number
+   */
+  status: number
+  /**
+   * @type string
+   */
+  code: string
+  /**
    * @type string
    */
   message: string
@@ -123,6 +139,14 @@ export type GetUser403 = {
  * @description Not Found. The requested resource was not found.
  */
 export type GetUser404 = {
+  /**
+   * @type number
+   */
+  status: number
+  /**
+   * @type string
+   */
+  code: string
   /**
    * @type string
    */
@@ -134,6 +158,14 @@ export type GetUser404 = {
  */
 export type GetUser429 = {
   /**
+   * @type number
+   */
+  status: number
+  /**
+   * @type string
+   */
+  code: string
+  /**
    * @type string
    */
   message: string
@@ -143,6 +175,10 @@ export type GetUser429 = {
  * @description Internal Server Error. This is a problem with the server that you cannot fix.
  */
 export type GetUser500 = {
+  /**
+   * @type number
+   */
+  status: number
   /**
    * @type string
    */

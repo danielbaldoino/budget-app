@@ -27,6 +27,10 @@ export type DeleteApiKey204 = DeleteApiKey204EnumKey | null
  */
 export type DeleteApiKey400 = {
   /**
+   * @type number
+   */
+  status: number
+  /**
    * @type string
    */
   code: string
@@ -60,6 +64,10 @@ export type DeleteApiKey400 = {
  */
 export type DeleteApiKey401 = {
   /**
+   * @type number
+   */
+  status: number
+  /**
    * @type string
    */
   code: string
@@ -74,6 +82,14 @@ export type DeleteApiKey401 = {
  */
 export type DeleteApiKey403 = {
   /**
+   * @type number
+   */
+  status: number
+  /**
+   * @type string
+   */
+  code: string
+  /**
    * @type string
    */
   message: string
@@ -83,6 +99,14 @@ export type DeleteApiKey403 = {
  * @description Not Found. The requested resource was not found.
  */
 export type DeleteApiKey404 = {
+  /**
+   * @type number
+   */
+  status: number
+  /**
+   * @type string
+   */
+  code: string
   /**
    * @type string
    */
@@ -94,6 +118,14 @@ export type DeleteApiKey404 = {
  */
 export type DeleteApiKey429 = {
   /**
+   * @type number
+   */
+  status: number
+  /**
+   * @type string
+   */
+  code: string
+  /**
    * @type string
    */
   message: string
@@ -103,6 +135,10 @@ export type DeleteApiKey429 = {
  * @description Internal Server Error. This is a problem with the server that you cannot fix.
  */
 export type DeleteApiKey500 = {
+  /**
+   * @type number
+   */
+  status: number
   /**
    * @type string
    */

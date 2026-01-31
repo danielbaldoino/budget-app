@@ -193,6 +193,10 @@ export type ListInventoryLevels200 = {
  */
 export type ListInventoryLevels400 = {
   /**
+   * @type number
+   */
+  status: number
+  /**
    * @type string
    */
   code: string
@@ -226,6 +230,10 @@ export type ListInventoryLevels400 = {
  */
 export type ListInventoryLevels401 = {
   /**
+   * @type number
+   */
+  status: number
+  /**
    * @type string
    */
   code: string
@@ -240,6 +248,14 @@ export type ListInventoryLevels401 = {
  */
 export type ListInventoryLevels403 = {
   /**
+   * @type number
+   */
+  status: number
+  /**
+   * @type string
+   */
+  code: string
+  /**
    * @type string
    */
   message: string
@@ -249,6 +265,14 @@ export type ListInventoryLevels403 = {
  * @description Not Found. The requested resource was not found.
  */
 export type ListInventoryLevels404 = {
+  /**
+   * @type number
+   */
+  status: number
+  /**
+   * @type string
+   */
+  code: string
   /**
    * @type string
    */
@@ -260,6 +284,14 @@ export type ListInventoryLevels404 = {
  */
 export type ListInventoryLevels429 = {
   /**
+   * @type number
+   */
+  status: number
+  /**
+   * @type string
+   */
+  code: string
+  /**
    * @type string
    */
   message: string
@@ -269,6 +301,10 @@ export type ListInventoryLevels429 = {
  * @description Internal Server Error. This is a problem with the server that you cannot fix.
  */
 export type ListInventoryLevels500 = {
+  /**
+   * @type number
+   */
+  status: number
   /**
    * @type string
    */

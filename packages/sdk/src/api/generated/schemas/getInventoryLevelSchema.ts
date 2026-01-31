@@ -70,6 +70,7 @@ export type GetInventoryLevel200Schema = GetInventoryLevel200
  */
 export const getInventoryLevel400Schema = z
   .object({
+    status: z.number(),
     code: z.string(),
     message: z.string(),
     errors: z.optional(
@@ -97,6 +98,7 @@ export type GetInventoryLevel400Schema = GetInventoryLevel400
  */
 export const getInventoryLevel401Schema = z
   .object({
+    status: z.number(),
     code: z.string(),
     message: z.string(),
   })
@@ -111,6 +113,8 @@ export type GetInventoryLevel401Schema = GetInventoryLevel401
  */
 export const getInventoryLevel403Schema = z
   .object({
+    status: z.number(),
+    code: z.string(),
     message: z.string(),
   })
   .describe(
@@ -124,6 +128,8 @@ export type GetInventoryLevel403Schema = GetInventoryLevel403
  */
 export const getInventoryLevel404Schema = z
   .object({
+    status: z.number(),
+    code: z.string(),
     message: z.string(),
   })
   .describe(
@@ -137,6 +143,8 @@ export type GetInventoryLevel404Schema = GetInventoryLevel404
  */
 export const getInventoryLevel429Schema = z
   .object({
+    status: z.number(),
+    code: z.string(),
     message: z.string(),
   })
   .describe(
@@ -150,6 +158,7 @@ export type GetInventoryLevel429Schema = GetInventoryLevel429
  */
 export const getInventoryLevel500Schema = z
   .object({
+    status: z.number(),
     code: z.string(),
     message: z.string(),
   })

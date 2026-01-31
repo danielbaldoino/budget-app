@@ -60,6 +60,7 @@ export type GetStockLocation200Schema = GetStockLocation200
  */
 export const getStockLocation400Schema = z
   .object({
+    status: z.number(),
     code: z.string(),
     message: z.string(),
     errors: z.optional(
@@ -87,6 +88,7 @@ export type GetStockLocation400Schema = GetStockLocation400
  */
 export const getStockLocation401Schema = z
   .object({
+    status: z.number(),
     code: z.string(),
     message: z.string(),
   })
@@ -101,6 +103,8 @@ export type GetStockLocation401Schema = GetStockLocation401
  */
 export const getStockLocation403Schema = z
   .object({
+    status: z.number(),
+    code: z.string(),
     message: z.string(),
   })
   .describe(
@@ -114,6 +118,8 @@ export type GetStockLocation403Schema = GetStockLocation403
  */
 export const getStockLocation404Schema = z
   .object({
+    status: z.number(),
+    code: z.string(),
     message: z.string(),
   })
   .describe(
@@ -127,6 +133,8 @@ export type GetStockLocation404Schema = GetStockLocation404
  */
 export const getStockLocation429Schema = z
   .object({
+    status: z.number(),
+    code: z.string(),
     message: z.string(),
   })
   .describe(
@@ -140,6 +148,7 @@ export type GetStockLocation429Schema = GetStockLocation429
  */
 export const getStockLocation500Schema = z
   .object({
+    status: z.number(),
     code: z.string(),
     message: z.string(),
   })

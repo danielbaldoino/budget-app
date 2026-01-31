@@ -182,6 +182,10 @@ export type ListProductOptions200 = {
  */
 export type ListProductOptions400 = {
   /**
+   * @type number
+   */
+  status: number
+  /**
    * @type string
    */
   code: string
@@ -215,6 +219,10 @@ export type ListProductOptions400 = {
  */
 export type ListProductOptions401 = {
   /**
+   * @type number
+   */
+  status: number
+  /**
    * @type string
    */
   code: string
@@ -229,6 +237,14 @@ export type ListProductOptions401 = {
  */
 export type ListProductOptions403 = {
   /**
+   * @type number
+   */
+  status: number
+  /**
+   * @type string
+   */
+  code: string
+  /**
    * @type string
    */
   message: string
@@ -238,6 +254,14 @@ export type ListProductOptions403 = {
  * @description Not Found. The requested resource was not found.
  */
 export type ListProductOptions404 = {
+  /**
+   * @type number
+   */
+  status: number
+  /**
+   * @type string
+   */
+  code: string
   /**
    * @type string
    */
@@ -249,6 +273,14 @@ export type ListProductOptions404 = {
  */
 export type ListProductOptions429 = {
   /**
+   * @type number
+   */
+  status: number
+  /**
+   * @type string
+   */
+  code: string
+  /**
    * @type string
    */
   message: string
@@ -258,6 +290,10 @@ export type ListProductOptions429 = {
  * @description Internal Server Error. This is a problem with the server that you cannot fix.
  */
 export type ListProductOptions500 = {
+  /**
+   * @type number
+   */
+  status: number
   /**
    * @type string
    */

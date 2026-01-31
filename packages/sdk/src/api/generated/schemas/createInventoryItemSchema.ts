@@ -40,6 +40,7 @@ export type CreateInventoryItem201Schema = CreateInventoryItem201
  */
 export const createInventoryItem400Schema = z
   .object({
+    status: z.number(),
     code: z.string(),
     message: z.string(),
     errors: z.optional(
@@ -67,6 +68,7 @@ export type CreateInventoryItem400Schema = CreateInventoryItem400
  */
 export const createInventoryItem401Schema = z
   .object({
+    status: z.number(),
     code: z.string(),
     message: z.string(),
   })
@@ -81,6 +83,8 @@ export type CreateInventoryItem401Schema = CreateInventoryItem401
  */
 export const createInventoryItem403Schema = z
   .object({
+    status: z.number(),
+    code: z.string(),
     message: z.string(),
   })
   .describe(
@@ -94,6 +98,8 @@ export type CreateInventoryItem403Schema = CreateInventoryItem403
  */
 export const createInventoryItem404Schema = z
   .object({
+    status: z.number(),
+    code: z.string(),
     message: z.string(),
   })
   .describe(
@@ -107,6 +113,8 @@ export type CreateInventoryItem404Schema = CreateInventoryItem404
  */
 export const createInventoryItem429Schema = z
   .object({
+    status: z.number(),
+    code: z.string(),
     message: z.string(),
   })
   .describe(
@@ -120,6 +128,7 @@ export type CreateInventoryItem429Schema = CreateInventoryItem429
  */
 export const createInventoryItem500Schema = z
   .object({
+    status: z.number(),
     code: z.string(),
     message: z.string(),
   })

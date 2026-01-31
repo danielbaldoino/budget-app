@@ -42,6 +42,7 @@ export type DeleteInventoryLevel204Schema = DeleteInventoryLevel204
  */
 export const deleteInventoryLevel400Schema = z
   .object({
+    status: z.number(),
     code: z.string(),
     message: z.string(),
     errors: z.optional(
@@ -69,6 +70,7 @@ export type DeleteInventoryLevel400Schema = DeleteInventoryLevel400
  */
 export const deleteInventoryLevel401Schema = z
   .object({
+    status: z.number(),
     code: z.string(),
     message: z.string(),
   })
@@ -83,6 +85,8 @@ export type DeleteInventoryLevel401Schema = DeleteInventoryLevel401
  */
 export const deleteInventoryLevel403Schema = z
   .object({
+    status: z.number(),
+    code: z.string(),
     message: z.string(),
   })
   .describe(
@@ -96,6 +100,8 @@ export type DeleteInventoryLevel403Schema = DeleteInventoryLevel403
  */
 export const deleteInventoryLevel404Schema = z
   .object({
+    status: z.number(),
+    code: z.string(),
     message: z.string(),
   })
   .describe(
@@ -109,6 +115,8 @@ export type DeleteInventoryLevel404Schema = DeleteInventoryLevel404
  */
 export const deleteInventoryLevel429Schema = z
   .object({
+    status: z.number(),
+    code: z.string(),
     message: z.string(),
   })
   .describe(
@@ -122,6 +130,7 @@ export type DeleteInventoryLevel429Schema = DeleteInventoryLevel429
  */
 export const deleteInventoryLevel500Schema = z
   .object({
+    status: z.number(),
     code: z.string(),
     message: z.string(),
   })

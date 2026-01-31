@@ -60,6 +60,7 @@ export type ListStockLocations200Schema = ListStockLocations200
  */
 export const listStockLocations400Schema = z
   .object({
+    status: z.number(),
     code: z.string(),
     message: z.string(),
     errors: z.optional(
@@ -87,6 +88,7 @@ export type ListStockLocations400Schema = ListStockLocations400
  */
 export const listStockLocations401Schema = z
   .object({
+    status: z.number(),
     code: z.string(),
     message: z.string(),
   })
@@ -101,6 +103,8 @@ export type ListStockLocations401Schema = ListStockLocations401
  */
 export const listStockLocations403Schema = z
   .object({
+    status: z.number(),
+    code: z.string(),
     message: z.string(),
   })
   .describe(
@@ -114,6 +118,8 @@ export type ListStockLocations403Schema = ListStockLocations403
  */
 export const listStockLocations404Schema = z
   .object({
+    status: z.number(),
+    code: z.string(),
     message: z.string(),
   })
   .describe(
@@ -127,6 +133,8 @@ export type ListStockLocations404Schema = ListStockLocations404
  */
 export const listStockLocations429Schema = z
   .object({
+    status: z.number(),
+    code: z.string(),
     message: z.string(),
   })
   .describe(
@@ -140,6 +148,7 @@ export type ListStockLocations429Schema = ListStockLocations429
  */
 export const listStockLocations500Schema = z
   .object({
+    status: z.number(),
     code: z.string(),
     message: z.string(),
   })

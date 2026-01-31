@@ -33,6 +33,7 @@ export type LogIn201Schema = LogIn201
  */
 export const logIn400Schema = z
   .object({
+    status: z.number(),
     code: z.string(),
     message: z.string(),
     errors: z.optional(
@@ -60,6 +61,7 @@ export type LogIn400Schema = LogIn400
  */
 export const logIn401Schema = z
   .object({
+    status: z.number(),
     code: z.string(),
     message: z.string(),
   })
@@ -74,6 +76,8 @@ export type LogIn401Schema = LogIn401
  */
 export const logIn403Schema = z
   .object({
+    status: z.number(),
+    code: z.string(),
     message: z.string(),
   })
   .describe(
@@ -87,6 +91,8 @@ export type LogIn403Schema = LogIn403
  */
 export const logIn404Schema = z
   .object({
+    status: z.number(),
+    code: z.string(),
     message: z.string(),
   })
   .describe(
@@ -100,6 +106,8 @@ export type LogIn404Schema = LogIn404
  */
 export const logIn429Schema = z
   .object({
+    status: z.number(),
+    code: z.string(),
     message: z.string(),
   })
   .describe(
@@ -113,6 +121,7 @@ export type LogIn429Schema = LogIn429
  */
 export const logIn500Schema = z
   .object({
+    status: z.number(),
     code: z.string(),
     message: z.string(),
   })

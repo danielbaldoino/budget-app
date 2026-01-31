@@ -62,6 +62,7 @@ export type GetPriceList200Schema = GetPriceList200
  */
 export const getPriceList400Schema = z
   .object({
+    status: z.number(),
     code: z.string(),
     message: z.string(),
     errors: z.optional(
@@ -89,6 +90,7 @@ export type GetPriceList400Schema = GetPriceList400
  */
 export const getPriceList401Schema = z
   .object({
+    status: z.number(),
     code: z.string(),
     message: z.string(),
   })
@@ -103,6 +105,8 @@ export type GetPriceList401Schema = GetPriceList401
  */
 export const getPriceList403Schema = z
   .object({
+    status: z.number(),
+    code: z.string(),
     message: z.string(),
   })
   .describe(
@@ -116,6 +120,8 @@ export type GetPriceList403Schema = GetPriceList403
  */
 export const getPriceList404Schema = z
   .object({
+    status: z.number(),
+    code: z.string(),
     message: z.string(),
   })
   .describe(
@@ -129,6 +135,8 @@ export type GetPriceList404Schema = GetPriceList404
  */
 export const getPriceList429Schema = z
   .object({
+    status: z.number(),
+    code: z.string(),
     message: z.string(),
   })
   .describe(
@@ -142,6 +150,7 @@ export type GetPriceList429Schema = GetPriceList429
  */
 export const getPriceList500Schema = z
   .object({
+    status: z.number(),
     code: z.string(),
     message: z.string(),
   })

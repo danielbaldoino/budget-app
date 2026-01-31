@@ -43,6 +43,7 @@ export type UpdateInventoryLevel204Schema = UpdateInventoryLevel204
  */
 export const updateInventoryLevel400Schema = z
   .object({
+    status: z.number(),
     code: z.string(),
     message: z.string(),
     errors: z.optional(
@@ -70,6 +71,7 @@ export type UpdateInventoryLevel400Schema = UpdateInventoryLevel400
  */
 export const updateInventoryLevel401Schema = z
   .object({
+    status: z.number(),
     code: z.string(),
     message: z.string(),
   })
@@ -84,6 +86,8 @@ export type UpdateInventoryLevel401Schema = UpdateInventoryLevel401
  */
 export const updateInventoryLevel403Schema = z
   .object({
+    status: z.number(),
+    code: z.string(),
     message: z.string(),
   })
   .describe(
@@ -97,6 +101,8 @@ export type UpdateInventoryLevel403Schema = UpdateInventoryLevel403
  */
 export const updateInventoryLevel404Schema = z
   .object({
+    status: z.number(),
+    code: z.string(),
     message: z.string(),
   })
   .describe(
@@ -110,6 +116,8 @@ export type UpdateInventoryLevel404Schema = UpdateInventoryLevel404
  */
 export const updateInventoryLevel429Schema = z
   .object({
+    status: z.number(),
+    code: z.string(),
     message: z.string(),
   })
   .describe(
@@ -123,6 +131,7 @@ export type UpdateInventoryLevel429Schema = UpdateInventoryLevel429
  */
 export const updateInventoryLevel500Schema = z
   .object({
+    status: z.number(),
     code: z.string(),
     message: z.string(),
   })

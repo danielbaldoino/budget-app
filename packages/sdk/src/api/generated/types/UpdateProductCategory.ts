@@ -27,6 +27,10 @@ export type UpdateProductCategory204 = UpdateProductCategory204EnumKey | null
  */
 export type UpdateProductCategory400 = {
   /**
+   * @type number
+   */
+  status: number
+  /**
    * @type string
    */
   code: string
@@ -60,6 +64,10 @@ export type UpdateProductCategory400 = {
  */
 export type UpdateProductCategory401 = {
   /**
+   * @type number
+   */
+  status: number
+  /**
    * @type string
    */
   code: string
@@ -74,6 +82,14 @@ export type UpdateProductCategory401 = {
  */
 export type UpdateProductCategory403 = {
   /**
+   * @type number
+   */
+  status: number
+  /**
+   * @type string
+   */
+  code: string
+  /**
    * @type string
    */
   message: string
@@ -83,6 +99,14 @@ export type UpdateProductCategory403 = {
  * @description Not Found. The requested resource was not found.
  */
 export type UpdateProductCategory404 = {
+  /**
+   * @type number
+   */
+  status: number
+  /**
+   * @type string
+   */
+  code: string
   /**
    * @type string
    */
@@ -94,6 +118,14 @@ export type UpdateProductCategory404 = {
  */
 export type UpdateProductCategory429 = {
   /**
+   * @type number
+   */
+  status: number
+  /**
+   * @type string
+   */
+  code: string
+  /**
    * @type string
    */
   message: string
@@ -103,6 +135,10 @@ export type UpdateProductCategory429 = {
  * @description Internal Server Error. This is a problem with the server that you cannot fix.
  */
 export type UpdateProductCategory500 = {
+  /**
+   * @type number
+   */
+  status: number
   /**
    * @type string
    */

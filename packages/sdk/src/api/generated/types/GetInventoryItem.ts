@@ -151,6 +151,10 @@ export type GetInventoryItem200 = {
  */
 export type GetInventoryItem400 = {
   /**
+   * @type number
+   */
+  status: number
+  /**
    * @type string
    */
   code: string
@@ -184,6 +188,10 @@ export type GetInventoryItem400 = {
  */
 export type GetInventoryItem401 = {
   /**
+   * @type number
+   */
+  status: number
+  /**
    * @type string
    */
   code: string
@@ -198,6 +206,14 @@ export type GetInventoryItem401 = {
  */
 export type GetInventoryItem403 = {
   /**
+   * @type number
+   */
+  status: number
+  /**
+   * @type string
+   */
+  code: string
+  /**
    * @type string
    */
   message: string
@@ -207,6 +223,14 @@ export type GetInventoryItem403 = {
  * @description Not Found. The requested resource was not found.
  */
 export type GetInventoryItem404 = {
+  /**
+   * @type number
+   */
+  status: number
+  /**
+   * @type string
+   */
+  code: string
   /**
    * @type string
    */
@@ -218,6 +242,14 @@ export type GetInventoryItem404 = {
  */
 export type GetInventoryItem429 = {
   /**
+   * @type number
+   */
+  status: number
+  /**
+   * @type string
+   */
+  code: string
+  /**
    * @type string
    */
   message: string
@@ -227,6 +259,10 @@ export type GetInventoryItem429 = {
  * @description Internal Server Error. This is a problem with the server that you cannot fix.
  */
 export type GetInventoryItem500 = {
+  /**
+   * @type number
+   */
+  status: number
   /**
    * @type string
    */

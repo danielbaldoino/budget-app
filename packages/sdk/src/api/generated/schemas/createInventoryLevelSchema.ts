@@ -43,6 +43,7 @@ export type CreateInventoryLevel201Schema = CreateInventoryLevel201
  */
 export const createInventoryLevel400Schema = z
   .object({
+    status: z.number(),
     code: z.string(),
     message: z.string(),
     errors: z.optional(
@@ -70,6 +71,7 @@ export type CreateInventoryLevel400Schema = CreateInventoryLevel400
  */
 export const createInventoryLevel401Schema = z
   .object({
+    status: z.number(),
     code: z.string(),
     message: z.string(),
   })
@@ -84,6 +86,8 @@ export type CreateInventoryLevel401Schema = CreateInventoryLevel401
  */
 export const createInventoryLevel403Schema = z
   .object({
+    status: z.number(),
+    code: z.string(),
     message: z.string(),
   })
   .describe(
@@ -97,6 +101,8 @@ export type CreateInventoryLevel403Schema = CreateInventoryLevel403
  */
 export const createInventoryLevel404Schema = z
   .object({
+    status: z.number(),
+    code: z.string(),
     message: z.string(),
   })
   .describe(
@@ -110,6 +116,8 @@ export type CreateInventoryLevel404Schema = CreateInventoryLevel404
  */
 export const createInventoryLevel429Schema = z
   .object({
+    status: z.number(),
+    code: z.string(),
     message: z.string(),
   })
   .describe(
@@ -123,6 +131,7 @@ export type CreateInventoryLevel429Schema = CreateInventoryLevel429
  */
 export const createInventoryLevel500Schema = z
   .object({
+    status: z.number(),
     code: z.string(),
     message: z.string(),
   })

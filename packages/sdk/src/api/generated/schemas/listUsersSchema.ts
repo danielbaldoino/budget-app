@@ -69,6 +69,7 @@ export type ListUsers200Schema = ListUsers200
  */
 export const listUsers400Schema = z
   .object({
+    status: z.number(),
     code: z.string(),
     message: z.string(),
     errors: z.optional(
@@ -96,6 +97,7 @@ export type ListUsers400Schema = ListUsers400
  */
 export const listUsers401Schema = z
   .object({
+    status: z.number(),
     code: z.string(),
     message: z.string(),
   })
@@ -110,6 +112,8 @@ export type ListUsers401Schema = ListUsers401
  */
 export const listUsers403Schema = z
   .object({
+    status: z.number(),
+    code: z.string(),
     message: z.string(),
   })
   .describe(
@@ -123,6 +127,8 @@ export type ListUsers403Schema = ListUsers403
  */
 export const listUsers404Schema = z
   .object({
+    status: z.number(),
+    code: z.string(),
     message: z.string(),
   })
   .describe(
@@ -136,6 +142,8 @@ export type ListUsers404Schema = ListUsers404
  */
 export const listUsers429Schema = z
   .object({
+    status: z.number(),
+    code: z.string(),
     message: z.string(),
   })
   .describe(
@@ -149,6 +157,7 @@ export type ListUsers429Schema = ListUsers429
  */
 export const listUsers500Schema = z
   .object({
+    status: z.number(),
     code: z.string(),
     message: z.string(),
   })

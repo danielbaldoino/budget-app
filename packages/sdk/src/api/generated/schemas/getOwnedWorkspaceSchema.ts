@@ -39,6 +39,7 @@ export type GetOwnedWorkspace200Schema = GetOwnedWorkspace200
  */
 export const getOwnedWorkspace400Schema = z
   .object({
+    status: z.number(),
     code: z.string(),
     message: z.string(),
     errors: z.optional(
@@ -66,6 +67,7 @@ export type GetOwnedWorkspace400Schema = GetOwnedWorkspace400
  */
 export const getOwnedWorkspace401Schema = z
   .object({
+    status: z.number(),
     code: z.string(),
     message: z.string(),
   })
@@ -80,6 +82,8 @@ export type GetOwnedWorkspace401Schema = GetOwnedWorkspace401
  */
 export const getOwnedWorkspace403Schema = z
   .object({
+    status: z.number(),
+    code: z.string(),
     message: z.string(),
   })
   .describe(
@@ -93,6 +97,8 @@ export type GetOwnedWorkspace403Schema = GetOwnedWorkspace403
  */
 export const getOwnedWorkspace404Schema = z
   .object({
+    status: z.number(),
+    code: z.string(),
     message: z.string(),
   })
   .describe(
@@ -106,6 +112,8 @@ export type GetOwnedWorkspace404Schema = GetOwnedWorkspace404
  */
 export const getOwnedWorkspace429Schema = z
   .object({
+    status: z.number(),
+    code: z.string(),
     message: z.string(),
   })
   .describe(
@@ -119,6 +127,7 @@ export type GetOwnedWorkspace429Schema = GetOwnedWorkspace429
  */
 export const getOwnedWorkspace500Schema = z
   .object({
+    status: z.number(),
     code: z.string(),
     message: z.string(),
   })

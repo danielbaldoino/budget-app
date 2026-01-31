@@ -33,6 +33,7 @@ export type CreateStockLocation201Schema = CreateStockLocation201
  */
 export const createStockLocation400Schema = z
   .object({
+    status: z.number(),
     code: z.string(),
     message: z.string(),
     errors: z.optional(
@@ -60,6 +61,7 @@ export type CreateStockLocation400Schema = CreateStockLocation400
  */
 export const createStockLocation401Schema = z
   .object({
+    status: z.number(),
     code: z.string(),
     message: z.string(),
   })
@@ -74,6 +76,8 @@ export type CreateStockLocation401Schema = CreateStockLocation401
  */
 export const createStockLocation403Schema = z
   .object({
+    status: z.number(),
+    code: z.string(),
     message: z.string(),
   })
   .describe(
@@ -87,6 +91,8 @@ export type CreateStockLocation403Schema = CreateStockLocation403
  */
 export const createStockLocation404Schema = z
   .object({
+    status: z.number(),
+    code: z.string(),
     message: z.string(),
   })
   .describe(
@@ -100,6 +106,8 @@ export type CreateStockLocation404Schema = CreateStockLocation404
  */
 export const createStockLocation429Schema = z
   .object({
+    status: z.number(),
+    code: z.string(),
     message: z.string(),
   })
   .describe(
@@ -113,6 +121,7 @@ export type CreateStockLocation429Schema = CreateStockLocation429
  */
 export const createStockLocation500Schema = z
   .object({
+    status: z.number(),
     code: z.string(),
     message: z.string(),
   })

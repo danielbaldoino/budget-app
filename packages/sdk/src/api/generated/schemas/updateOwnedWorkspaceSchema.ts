@@ -32,6 +32,7 @@ export type UpdateOwnedWorkspace204Schema = UpdateOwnedWorkspace204
  */
 export const updateOwnedWorkspace400Schema = z
   .object({
+    status: z.number(),
     code: z.string(),
     message: z.string(),
     errors: z.optional(
@@ -59,6 +60,7 @@ export type UpdateOwnedWorkspace400Schema = UpdateOwnedWorkspace400
  */
 export const updateOwnedWorkspace401Schema = z
   .object({
+    status: z.number(),
     code: z.string(),
     message: z.string(),
   })
@@ -73,6 +75,8 @@ export type UpdateOwnedWorkspace401Schema = UpdateOwnedWorkspace401
  */
 export const updateOwnedWorkspace403Schema = z
   .object({
+    status: z.number(),
+    code: z.string(),
     message: z.string(),
   })
   .describe(
@@ -86,6 +90,8 @@ export type UpdateOwnedWorkspace403Schema = UpdateOwnedWorkspace403
  */
 export const updateOwnedWorkspace404Schema = z
   .object({
+    status: z.number(),
+    code: z.string(),
     message: z.string(),
   })
   .describe(
@@ -99,6 +105,8 @@ export type UpdateOwnedWorkspace404Schema = UpdateOwnedWorkspace404
  */
 export const updateOwnedWorkspace429Schema = z
   .object({
+    status: z.number(),
+    code: z.string(),
     message: z.string(),
   })
   .describe(
@@ -112,6 +120,7 @@ export type UpdateOwnedWorkspace429Schema = UpdateOwnedWorkspace429
  */
 export const updateOwnedWorkspace500Schema = z
   .object({
+    status: z.number(),
     code: z.string(),
     message: z.string(),
   })

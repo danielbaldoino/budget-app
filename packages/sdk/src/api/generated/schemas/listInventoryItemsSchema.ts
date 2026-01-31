@@ -144,6 +144,7 @@ export type ListInventoryItems200Schema = ListInventoryItems200
  */
 export const listInventoryItems400Schema = z
   .object({
+    status: z.number(),
     code: z.string(),
     message: z.string(),
     errors: z.optional(
@@ -171,6 +172,7 @@ export type ListInventoryItems400Schema = ListInventoryItems400
  */
 export const listInventoryItems401Schema = z
   .object({
+    status: z.number(),
     code: z.string(),
     message: z.string(),
   })
@@ -185,6 +187,8 @@ export type ListInventoryItems401Schema = ListInventoryItems401
  */
 export const listInventoryItems403Schema = z
   .object({
+    status: z.number(),
+    code: z.string(),
     message: z.string(),
   })
   .describe(
@@ -198,6 +202,8 @@ export type ListInventoryItems403Schema = ListInventoryItems403
  */
 export const listInventoryItems404Schema = z
   .object({
+    status: z.number(),
+    code: z.string(),
     message: z.string(),
   })
   .describe(
@@ -211,6 +217,8 @@ export type ListInventoryItems404Schema = ListInventoryItems404
  */
 export const listInventoryItems429Schema = z
   .object({
+    status: z.number(),
+    code: z.string(),
     message: z.string(),
   })
   .describe(
@@ -224,6 +232,7 @@ export type ListInventoryItems429Schema = ListInventoryItems429
  */
 export const listInventoryItems500Schema = z
   .object({
+    status: z.number(),
     code: z.string(),
     message: z.string(),
   })

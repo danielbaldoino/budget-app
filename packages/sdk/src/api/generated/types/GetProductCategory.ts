@@ -46,6 +46,10 @@ export type GetProductCategory200 = {
  */
 export type GetProductCategory400 = {
   /**
+   * @type number
+   */
+  status: number
+  /**
    * @type string
    */
   code: string
@@ -79,6 +83,10 @@ export type GetProductCategory400 = {
  */
 export type GetProductCategory401 = {
   /**
+   * @type number
+   */
+  status: number
+  /**
    * @type string
    */
   code: string
@@ -93,6 +101,14 @@ export type GetProductCategory401 = {
  */
 export type GetProductCategory403 = {
   /**
+   * @type number
+   */
+  status: number
+  /**
+   * @type string
+   */
+  code: string
+  /**
    * @type string
    */
   message: string
@@ -102,6 +118,14 @@ export type GetProductCategory403 = {
  * @description Not Found. The requested resource was not found.
  */
 export type GetProductCategory404 = {
+  /**
+   * @type number
+   */
+  status: number
+  /**
+   * @type string
+   */
+  code: string
   /**
    * @type string
    */
@@ -113,6 +137,14 @@ export type GetProductCategory404 = {
  */
 export type GetProductCategory429 = {
   /**
+   * @type number
+   */
+  status: number
+  /**
+   * @type string
+   */
+  code: string
+  /**
    * @type string
    */
   message: string
@@ -122,6 +154,10 @@ export type GetProductCategory429 = {
  * @description Internal Server Error. This is a problem with the server that you cannot fix.
  */
 export type GetProductCategory500 = {
+  /**
+   * @type number
+   */
+  status: number
   /**
    * @type string
    */

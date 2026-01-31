@@ -39,6 +39,7 @@ export type GetUserProfile200Schema = GetUserProfile200
  */
 export const getUserProfile400Schema = z
   .object({
+    status: z.number(),
     code: z.string(),
     message: z.string(),
     errors: z.optional(
@@ -66,6 +67,7 @@ export type GetUserProfile400Schema = GetUserProfile400
  */
 export const getUserProfile401Schema = z
   .object({
+    status: z.number(),
     code: z.string(),
     message: z.string(),
   })
@@ -80,6 +82,8 @@ export type GetUserProfile401Schema = GetUserProfile401
  */
 export const getUserProfile403Schema = z
   .object({
+    status: z.number(),
+    code: z.string(),
     message: z.string(),
   })
   .describe(
@@ -93,6 +97,8 @@ export type GetUserProfile403Schema = GetUserProfile403
  */
 export const getUserProfile404Schema = z
   .object({
+    status: z.number(),
+    code: z.string(),
     message: z.string(),
   })
   .describe(
@@ -106,6 +112,8 @@ export type GetUserProfile404Schema = GetUserProfile404
  */
 export const getUserProfile429Schema = z
   .object({
+    status: z.number(),
+    code: z.string(),
     message: z.string(),
   })
   .describe(
@@ -119,6 +127,7 @@ export type GetUserProfile429Schema = GetUserProfile429
  */
 export const getUserProfile500Schema = z
   .object({
+    status: z.number(),
     code: z.string(),
     message: z.string(),
   })

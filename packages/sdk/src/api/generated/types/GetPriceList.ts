@@ -92,6 +92,10 @@ export type GetPriceList200 = {
  */
 export type GetPriceList400 = {
   /**
+   * @type number
+   */
+  status: number
+  /**
    * @type string
    */
   code: string
@@ -125,6 +129,10 @@ export type GetPriceList400 = {
  */
 export type GetPriceList401 = {
   /**
+   * @type number
+   */
+  status: number
+  /**
    * @type string
    */
   code: string
@@ -139,6 +147,14 @@ export type GetPriceList401 = {
  */
 export type GetPriceList403 = {
   /**
+   * @type number
+   */
+  status: number
+  /**
+   * @type string
+   */
+  code: string
+  /**
    * @type string
    */
   message: string
@@ -148,6 +164,14 @@ export type GetPriceList403 = {
  * @description Not Found. The requested resource was not found.
  */
 export type GetPriceList404 = {
+  /**
+   * @type number
+   */
+  status: number
+  /**
+   * @type string
+   */
+  code: string
   /**
    * @type string
    */
@@ -159,6 +183,14 @@ export type GetPriceList404 = {
  */
 export type GetPriceList429 = {
   /**
+   * @type number
+   */
+  status: number
+  /**
+   * @type string
+   */
+  code: string
+  /**
    * @type string
    */
   message: string
@@ -168,6 +200,10 @@ export type GetPriceList429 = {
  * @description Internal Server Error. This is a problem with the server that you cannot fix.
  */
 export type GetPriceList500 = {
+  /**
+   * @type number
+   */
+  status: number
   /**
    * @type string
    */

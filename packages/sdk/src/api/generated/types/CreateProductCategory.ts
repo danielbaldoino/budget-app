@@ -18,6 +18,10 @@ export type CreateProductCategory201 = {
  */
 export type CreateProductCategory400 = {
   /**
+   * @type number
+   */
+  status: number
+  /**
    * @type string
    */
   code: string
@@ -51,6 +55,10 @@ export type CreateProductCategory400 = {
  */
 export type CreateProductCategory401 = {
   /**
+   * @type number
+   */
+  status: number
+  /**
    * @type string
    */
   code: string
@@ -65,6 +73,14 @@ export type CreateProductCategory401 = {
  */
 export type CreateProductCategory403 = {
   /**
+   * @type number
+   */
+  status: number
+  /**
+   * @type string
+   */
+  code: string
+  /**
    * @type string
    */
   message: string
@@ -74,6 +90,14 @@ export type CreateProductCategory403 = {
  * @description Not Found. The requested resource was not found.
  */
 export type CreateProductCategory404 = {
+  /**
+   * @type number
+   */
+  status: number
+  /**
+   * @type string
+   */
+  code: string
   /**
    * @type string
    */
@@ -85,6 +109,14 @@ export type CreateProductCategory404 = {
  */
 export type CreateProductCategory429 = {
   /**
+   * @type number
+   */
+  status: number
+  /**
+   * @type string
+   */
+  code: string
+  /**
    * @type string
    */
   message: string
@@ -94,6 +126,10 @@ export type CreateProductCategory429 = {
  * @description Internal Server Error. This is a problem with the server that you cannot fix.
  */
 export type CreateProductCategory500 = {
+  /**
+   * @type number
+   */
+  status: number
   /**
    * @type string
    */

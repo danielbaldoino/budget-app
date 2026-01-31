@@ -1,6 +1,7 @@
 import { env } from '@/lib/env'
 import type { FastifyInstance } from 'fastify'
 import { hasZodFastifySchemaValidationErrors } from 'fastify-type-provider-zod'
+import { ZodError } from 'zod'
 import { BadRequestError } from './bad-request-error'
 import { BaseError, type BaseErrorParams } from './base-error'
 import { UnauthorizedError } from './unauthorized-error'
@@ -10,9 +11,19 @@ type FastifyErrorHandler = FastifyInstance['errorHandler']
 export const errorHandler: FastifyErrorHandler = (error, _, reply) => {
   if (hasZodFastifySchemaValidationErrors(error)) {
     reply.status(400).send({
+      status: 400,
       code: 'VALIDATION_ERROR',
       message: 'Validation error',
       errors: error.validation.map((error) => error.params.issue),
+    })
+  }
+
+  if (error instanceof ZodError) {
+    reply.status(400).send({
+      status: 400,
+      code: 'VALIDATION_ERROR',
+      message: 'Validation error',
+      errors: error.issues,
     })
   }
 
@@ -22,11 +33,11 @@ export const errorHandler: FastifyErrorHandler = (error, _, reply) => {
     ) as BaseErrorParams
 
     if (error instanceof BadRequestError) {
-      reply.status(status || 400).send({ code, message })
+      reply.status(status || 400).send({ status: status || 400, code, message })
     }
 
     if (error instanceof UnauthorizedError) {
-      reply.status(401).send({ code, message })
+      reply.status(401).send({ status: 401, code, message })
     }
   }
 

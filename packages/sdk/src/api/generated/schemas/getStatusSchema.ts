@@ -33,6 +33,7 @@ export type GetStatus201Schema = GetStatus201
  */
 export const getStatus400Schema = z
   .object({
+    status: z.number(),
     code: z.string(),
     message: z.string(),
     errors: z.optional(
@@ -60,6 +61,7 @@ export type GetStatus400Schema = GetStatus400
  */
 export const getStatus401Schema = z
   .object({
+    status: z.number(),
     code: z.string(),
     message: z.string(),
   })
@@ -74,6 +76,8 @@ export type GetStatus401Schema = GetStatus401
  */
 export const getStatus403Schema = z
   .object({
+    status: z.number(),
+    code: z.string(),
     message: z.string(),
   })
   .describe(
@@ -87,6 +91,8 @@ export type GetStatus403Schema = GetStatus403
  */
 export const getStatus404Schema = z
   .object({
+    status: z.number(),
+    code: z.string(),
     message: z.string(),
   })
   .describe(
@@ -100,6 +106,8 @@ export type GetStatus404Schema = GetStatus404
  */
 export const getStatus429Schema = z
   .object({
+    status: z.number(),
+    code: z.string(),
     message: z.string(),
   })
   .describe(
@@ -113,6 +121,7 @@ export type GetStatus429Schema = GetStatus429
  */
 export const getStatus500Schema = z
   .object({
+    status: z.number(),
     code: z.string(),
     message: z.string(),
   })

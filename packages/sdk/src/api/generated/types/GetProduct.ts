@@ -285,6 +285,10 @@ export type GetProduct200 = {
  */
 export type GetProduct400 = {
   /**
+   * @type number
+   */
+  status: number
+  /**
    * @type string
    */
   code: string
@@ -318,6 +322,10 @@ export type GetProduct400 = {
  */
 export type GetProduct401 = {
   /**
+   * @type number
+   */
+  status: number
+  /**
    * @type string
    */
   code: string
@@ -332,6 +340,14 @@ export type GetProduct401 = {
  */
 export type GetProduct403 = {
   /**
+   * @type number
+   */
+  status: number
+  /**
+   * @type string
+   */
+  code: string
+  /**
    * @type string
    */
   message: string
@@ -341,6 +357,14 @@ export type GetProduct403 = {
  * @description Not Found. The requested resource was not found.
  */
 export type GetProduct404 = {
+  /**
+   * @type number
+   */
+  status: number
+  /**
+   * @type string
+   */
+  code: string
   /**
    * @type string
    */
@@ -352,6 +376,14 @@ export type GetProduct404 = {
  */
 export type GetProduct429 = {
   /**
+   * @type number
+   */
+  status: number
+  /**
+   * @type string
+   */
+  code: string
+  /**
    * @type string
    */
   message: string
@@ -361,6 +393,10 @@ export type GetProduct429 = {
  * @description Internal Server Error. This is a problem with the server that you cannot fix.
  */
 export type GetProduct500 = {
+  /**
+   * @type number
+   */
+  status: number
   /**
    * @type string
    */

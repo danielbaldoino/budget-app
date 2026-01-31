@@ -43,6 +43,10 @@ export type GetOwnedWorkspace200 = {
  */
 export type GetOwnedWorkspace400 = {
   /**
+   * @type number
+   */
+  status: number
+  /**
    * @type string
    */
   code: string
@@ -76,6 +80,10 @@ export type GetOwnedWorkspace400 = {
  */
 export type GetOwnedWorkspace401 = {
   /**
+   * @type number
+   */
+  status: number
+  /**
    * @type string
    */
   code: string
@@ -90,6 +98,14 @@ export type GetOwnedWorkspace401 = {
  */
 export type GetOwnedWorkspace403 = {
   /**
+   * @type number
+   */
+  status: number
+  /**
+   * @type string
+   */
+  code: string
+  /**
    * @type string
    */
   message: string
@@ -99,6 +115,14 @@ export type GetOwnedWorkspace403 = {
  * @description Not Found. The requested resource was not found.
  */
 export type GetOwnedWorkspace404 = {
+  /**
+   * @type number
+   */
+  status: number
+  /**
+   * @type string
+   */
+  code: string
   /**
    * @type string
    */
@@ -110,6 +134,14 @@ export type GetOwnedWorkspace404 = {
  */
 export type GetOwnedWorkspace429 = {
   /**
+   * @type number
+   */
+  status: number
+  /**
+   * @type string
+   */
+  code: string
+  /**
    * @type string
    */
   message: string
@@ -119,6 +151,10 @@ export type GetOwnedWorkspace429 = {
  * @description Internal Server Error. This is a problem with the server that you cannot fix.
  */
 export type GetOwnedWorkspace500 = {
+  /**
+   * @type number
+   */
+  status: number
   /**
    * @type string
    */

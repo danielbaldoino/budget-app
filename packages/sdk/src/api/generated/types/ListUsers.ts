@@ -174,6 +174,10 @@ export type ListUsers200 = {
  */
 export type ListUsers400 = {
   /**
+   * @type number
+   */
+  status: number
+  /**
    * @type string
    */
   code: string
@@ -207,6 +211,10 @@ export type ListUsers400 = {
  */
 export type ListUsers401 = {
   /**
+   * @type number
+   */
+  status: number
+  /**
    * @type string
    */
   code: string
@@ -221,6 +229,14 @@ export type ListUsers401 = {
  */
 export type ListUsers403 = {
   /**
+   * @type number
+   */
+  status: number
+  /**
+   * @type string
+   */
+  code: string
+  /**
    * @type string
    */
   message: string
@@ -230,6 +246,14 @@ export type ListUsers403 = {
  * @description Not Found. The requested resource was not found.
  */
 export type ListUsers404 = {
+  /**
+   * @type number
+   */
+  status: number
+  /**
+   * @type string
+   */
+  code: string
   /**
    * @type string
    */
@@ -241,6 +265,14 @@ export type ListUsers404 = {
  */
 export type ListUsers429 = {
   /**
+   * @type number
+   */
+  status: number
+  /**
+   * @type string
+   */
+  code: string
+  /**
    * @type string
    */
   message: string
@@ -250,6 +282,10 @@ export type ListUsers429 = {
  * @description Internal Server Error. This is a problem with the server that you cannot fix.
  */
 export type ListUsers500 = {
+  /**
+   * @type number
+   */
+  status: number
   /**
    * @type string
    */

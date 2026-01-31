@@ -76,6 +76,7 @@ export type ListProductOptions200Schema = ListProductOptions200
  */
 export const listProductOptions400Schema = z
   .object({
+    status: z.number(),
     code: z.string(),
     message: z.string(),
     errors: z.optional(
@@ -103,6 +104,7 @@ export type ListProductOptions400Schema = ListProductOptions400
  */
 export const listProductOptions401Schema = z
   .object({
+    status: z.number(),
     code: z.string(),
     message: z.string(),
   })
@@ -117,6 +119,8 @@ export type ListProductOptions401Schema = ListProductOptions401
  */
 export const listProductOptions403Schema = z
   .object({
+    status: z.number(),
+    code: z.string(),
     message: z.string(),
   })
   .describe(
@@ -130,6 +134,8 @@ export type ListProductOptions403Schema = ListProductOptions403
  */
 export const listProductOptions404Schema = z
   .object({
+    status: z.number(),
+    code: z.string(),
     message: z.string(),
   })
   .describe(
@@ -143,6 +149,8 @@ export type ListProductOptions404Schema = ListProductOptions404
  */
 export const listProductOptions429Schema = z
   .object({
+    status: z.number(),
+    code: z.string(),
     message: z.string(),
   })
   .describe(
@@ -156,6 +164,7 @@ export type ListProductOptions429Schema = ListProductOptions429
  */
 export const listProductOptions500Schema = z
   .object({
+    status: z.number(),
     code: z.string(),
     message: z.string(),
   })

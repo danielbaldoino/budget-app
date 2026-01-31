@@ -40,6 +40,7 @@ export type UpdateProductCategory204Schema = UpdateProductCategory204
  */
 export const updateProductCategory400Schema = z
   .object({
+    status: z.number(),
     code: z.string(),
     message: z.string(),
     errors: z.optional(
@@ -67,6 +68,7 @@ export type UpdateProductCategory400Schema = UpdateProductCategory400
  */
 export const updateProductCategory401Schema = z
   .object({
+    status: z.number(),
     code: z.string(),
     message: z.string(),
   })
@@ -81,6 +83,8 @@ export type UpdateProductCategory401Schema = UpdateProductCategory401
  */
 export const updateProductCategory403Schema = z
   .object({
+    status: z.number(),
+    code: z.string(),
     message: z.string(),
   })
   .describe(
@@ -94,6 +98,8 @@ export type UpdateProductCategory403Schema = UpdateProductCategory403
  */
 export const updateProductCategory404Schema = z
   .object({
+    status: z.number(),
+    code: z.string(),
     message: z.string(),
   })
   .describe(
@@ -107,6 +113,8 @@ export type UpdateProductCategory404Schema = UpdateProductCategory404
  */
 export const updateProductCategory429Schema = z
   .object({
+    status: z.number(),
+    code: z.string(),
     message: z.string(),
   })
   .describe(
@@ -120,6 +128,7 @@ export type UpdateProductCategory429Schema = UpdateProductCategory429
  */
 export const updateProductCategory500Schema = z
   .object({
+    status: z.number(),
     code: z.string(),
     message: z.string(),
   })

@@ -39,6 +39,7 @@ export type UpdateApiKey204Schema = UpdateApiKey204
  */
 export const updateApiKey400Schema = z
   .object({
+    status: z.number(),
     code: z.string(),
     message: z.string(),
     errors: z.optional(
@@ -66,6 +67,7 @@ export type UpdateApiKey400Schema = UpdateApiKey400
  */
 export const updateApiKey401Schema = z
   .object({
+    status: z.number(),
     code: z.string(),
     message: z.string(),
   })
@@ -80,6 +82,8 @@ export type UpdateApiKey401Schema = UpdateApiKey401
  */
 export const updateApiKey403Schema = z
   .object({
+    status: z.number(),
+    code: z.string(),
     message: z.string(),
   })
   .describe(
@@ -93,6 +97,8 @@ export type UpdateApiKey403Schema = UpdateApiKey403
  */
 export const updateApiKey404Schema = z
   .object({
+    status: z.number(),
+    code: z.string(),
     message: z.string(),
   })
   .describe(
@@ -106,6 +112,8 @@ export type UpdateApiKey404Schema = UpdateApiKey404
  */
 export const updateApiKey429Schema = z
   .object({
+    status: z.number(),
+    code: z.string(),
     message: z.string(),
   })
   .describe(
@@ -119,6 +127,7 @@ export type UpdateApiKey429Schema = UpdateApiKey429
  */
 export const updateApiKey500Schema = z
   .object({
+    status: z.number(),
     code: z.string(),
     message: z.string(),
   })

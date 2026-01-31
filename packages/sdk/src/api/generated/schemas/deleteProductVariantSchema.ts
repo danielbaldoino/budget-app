@@ -40,6 +40,7 @@ export type DeleteProductVariant204Schema = DeleteProductVariant204
  */
 export const deleteProductVariant400Schema = z
   .object({
+    status: z.number(),
     code: z.string(),
     message: z.string(),
     errors: z.optional(
@@ -67,6 +68,7 @@ export type DeleteProductVariant400Schema = DeleteProductVariant400
  */
 export const deleteProductVariant401Schema = z
   .object({
+    status: z.number(),
     code: z.string(),
     message: z.string(),
   })
@@ -81,6 +83,8 @@ export type DeleteProductVariant401Schema = DeleteProductVariant401
  */
 export const deleteProductVariant403Schema = z
   .object({
+    status: z.number(),
+    code: z.string(),
     message: z.string(),
   })
   .describe(
@@ -94,6 +98,8 @@ export type DeleteProductVariant403Schema = DeleteProductVariant403
  */
 export const deleteProductVariant404Schema = z
   .object({
+    status: z.number(),
+    code: z.string(),
     message: z.string(),
   })
   .describe(
@@ -107,6 +113,8 @@ export type DeleteProductVariant404Schema = DeleteProductVariant404
  */
 export const deleteProductVariant429Schema = z
   .object({
+    status: z.number(),
+    code: z.string(),
     message: z.string(),
   })
   .describe(
@@ -120,6 +128,7 @@ export type DeleteProductVariant429Schema = DeleteProductVariant429
  */
 export const deleteProductVariant500Schema = z
   .object({
+    status: z.number(),
     code: z.string(),
     message: z.string(),
   })

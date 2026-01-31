@@ -38,6 +38,7 @@ export type DeleteStockLocation204Schema = DeleteStockLocation204
  */
 export const deleteStockLocation400Schema = z
   .object({
+    status: z.number(),
     code: z.string(),
     message: z.string(),
     errors: z.optional(
@@ -65,6 +66,7 @@ export type DeleteStockLocation400Schema = DeleteStockLocation400
  */
 export const deleteStockLocation401Schema = z
   .object({
+    status: z.number(),
     code: z.string(),
     message: z.string(),
   })
@@ -79,6 +81,8 @@ export type DeleteStockLocation401Schema = DeleteStockLocation401
  */
 export const deleteStockLocation403Schema = z
   .object({
+    status: z.number(),
+    code: z.string(),
     message: z.string(),
   })
   .describe(
@@ -92,6 +96,8 @@ export type DeleteStockLocation403Schema = DeleteStockLocation403
  */
 export const deleteStockLocation404Schema = z
   .object({
+    status: z.number(),
+    code: z.string(),
     message: z.string(),
   })
   .describe(
@@ -105,6 +111,8 @@ export type DeleteStockLocation404Schema = DeleteStockLocation404
  */
 export const deleteStockLocation429Schema = z
   .object({
+    status: z.number(),
+    code: z.string(),
     message: z.string(),
   })
   .describe(
@@ -118,6 +126,7 @@ export type DeleteStockLocation429Schema = DeleteStockLocation429
  */
 export const deleteStockLocation500Schema = z
   .object({
+    status: z.number(),
     code: z.string(),
     message: z.string(),
   })

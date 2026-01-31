@@ -126,6 +126,7 @@ export type GetProductVariant200Schema = GetProductVariant200
  */
 export const getProductVariant400Schema = z
   .object({
+    status: z.number(),
     code: z.string(),
     message: z.string(),
     errors: z.optional(
@@ -153,6 +154,7 @@ export type GetProductVariant400Schema = GetProductVariant400
  */
 export const getProductVariant401Schema = z
   .object({
+    status: z.number(),
     code: z.string(),
     message: z.string(),
   })
@@ -167,6 +169,8 @@ export type GetProductVariant401Schema = GetProductVariant401
  */
 export const getProductVariant403Schema = z
   .object({
+    status: z.number(),
+    code: z.string(),
     message: z.string(),
   })
   .describe(
@@ -180,6 +184,8 @@ export type GetProductVariant403Schema = GetProductVariant403
  */
 export const getProductVariant404Schema = z
   .object({
+    status: z.number(),
+    code: z.string(),
     message: z.string(),
   })
   .describe(
@@ -193,6 +199,8 @@ export type GetProductVariant404Schema = GetProductVariant404
  */
 export const getProductVariant429Schema = z
   .object({
+    status: z.number(),
+    code: z.string(),
     message: z.string(),
   })
   .describe(
@@ -206,6 +214,7 @@ export type GetProductVariant429Schema = GetProductVariant429
  */
 export const getProductVariant500Schema = z
   .object({
+    status: z.number(),
     code: z.string(),
     message: z.string(),
   })

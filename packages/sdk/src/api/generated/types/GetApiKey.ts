@@ -46,6 +46,10 @@ export type GetApiKey200 = {
  */
 export type GetApiKey400 = {
   /**
+   * @type number
+   */
+  status: number
+  /**
    * @type string
    */
   code: string
@@ -79,6 +83,10 @@ export type GetApiKey400 = {
  */
 export type GetApiKey401 = {
   /**
+   * @type number
+   */
+  status: number
+  /**
    * @type string
    */
   code: string
@@ -93,6 +101,14 @@ export type GetApiKey401 = {
  */
 export type GetApiKey403 = {
   /**
+   * @type number
+   */
+  status: number
+  /**
+   * @type string
+   */
+  code: string
+  /**
    * @type string
    */
   message: string
@@ -102,6 +118,14 @@ export type GetApiKey403 = {
  * @description Not Found. The requested resource was not found.
  */
 export type GetApiKey404 = {
+  /**
+   * @type number
+   */
+  status: number
+  /**
+   * @type string
+   */
+  code: string
   /**
    * @type string
    */
@@ -113,6 +137,14 @@ export type GetApiKey404 = {
  */
 export type GetApiKey429 = {
   /**
+   * @type number
+   */
+  status: number
+  /**
+   * @type string
+   */
+  code: string
+  /**
    * @type string
    */
   message: string
@@ -122,6 +154,10 @@ export type GetApiKey429 = {
  * @description Internal Server Error. This is a problem with the server that you cannot fix.
  */
 export type GetApiKey500 = {
+  /**
+   * @type number
+   */
+  status: number
   /**
    * @type string
    */

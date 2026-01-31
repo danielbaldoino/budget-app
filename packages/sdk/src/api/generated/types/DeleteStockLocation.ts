@@ -27,6 +27,10 @@ export type DeleteStockLocation204 = DeleteStockLocation204EnumKey | null
  */
 export type DeleteStockLocation400 = {
   /**
+   * @type number
+   */
+  status: number
+  /**
    * @type string
    */
   code: string
@@ -60,6 +64,10 @@ export type DeleteStockLocation400 = {
  */
 export type DeleteStockLocation401 = {
   /**
+   * @type number
+   */
+  status: number
+  /**
    * @type string
    */
   code: string
@@ -74,6 +82,14 @@ export type DeleteStockLocation401 = {
  */
 export type DeleteStockLocation403 = {
   /**
+   * @type number
+   */
+  status: number
+  /**
+   * @type string
+   */
+  code: string
+  /**
    * @type string
    */
   message: string
@@ -83,6 +99,14 @@ export type DeleteStockLocation403 = {
  * @description Not Found. The requested resource was not found.
  */
 export type DeleteStockLocation404 = {
+  /**
+   * @type number
+   */
+  status: number
+  /**
+   * @type string
+   */
+  code: string
   /**
    * @type string
    */
@@ -94,6 +118,14 @@ export type DeleteStockLocation404 = {
  */
 export type DeleteStockLocation429 = {
   /**
+   * @type number
+   */
+  status: number
+  /**
+   * @type string
+   */
+  code: string
+  /**
    * @type string
    */
   message: string
@@ -103,6 +135,10 @@ export type DeleteStockLocation429 = {
  * @description Internal Server Error. This is a problem with the server that you cannot fix.
  */
 export type DeleteStockLocation500 = {
+  /**
+   * @type number
+   */
+  status: number
   /**
    * @type string
    */

@@ -366,6 +366,10 @@ export type ListInventoryItems200 = {
  */
 export type ListInventoryItems400 = {
   /**
+   * @type number
+   */
+  status: number
+  /**
    * @type string
    */
   code: string
@@ -399,6 +403,10 @@ export type ListInventoryItems400 = {
  */
 export type ListInventoryItems401 = {
   /**
+   * @type number
+   */
+  status: number
+  /**
    * @type string
    */
   code: string
@@ -413,6 +421,14 @@ export type ListInventoryItems401 = {
  */
 export type ListInventoryItems403 = {
   /**
+   * @type number
+   */
+  status: number
+  /**
+   * @type string
+   */
+  code: string
+  /**
    * @type string
    */
   message: string
@@ -422,6 +438,14 @@ export type ListInventoryItems403 = {
  * @description Not Found. The requested resource was not found.
  */
 export type ListInventoryItems404 = {
+  /**
+   * @type number
+   */
+  status: number
+  /**
+   * @type string
+   */
+  code: string
   /**
    * @type string
    */
@@ -433,6 +457,14 @@ export type ListInventoryItems404 = {
  */
 export type ListInventoryItems429 = {
   /**
+   * @type number
+   */
+  status: number
+  /**
+   * @type string
+   */
+  code: string
+  /**
    * @type string
    */
   message: string
@@ -442,6 +474,10 @@ export type ListInventoryItems429 = {
  * @description Internal Server Error. This is a problem with the server that you cannot fix.
  */
 export type ListInventoryItems500 = {
+  /**
+   * @type number
+   */
+  status: number
   /**
    * @type string
    */

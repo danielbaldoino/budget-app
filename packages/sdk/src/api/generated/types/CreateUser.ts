@@ -18,6 +18,10 @@ export type CreateUser201 = {
  */
 export type CreateUser400 = {
   /**
+   * @type number
+   */
+  status: number
+  /**
    * @type string
    */
   code: string
@@ -51,6 +55,10 @@ export type CreateUser400 = {
  */
 export type CreateUser401 = {
   /**
+   * @type number
+   */
+  status: number
+  /**
    * @type string
    */
   code: string
@@ -65,6 +73,14 @@ export type CreateUser401 = {
  */
 export type CreateUser403 = {
   /**
+   * @type number
+   */
+  status: number
+  /**
+   * @type string
+   */
+  code: string
+  /**
    * @type string
    */
   message: string
@@ -74,6 +90,14 @@ export type CreateUser403 = {
  * @description Not Found. The requested resource was not found.
  */
 export type CreateUser404 = {
+  /**
+   * @type number
+   */
+  status: number
+  /**
+   * @type string
+   */
+  code: string
   /**
    * @type string
    */
@@ -85,6 +109,14 @@ export type CreateUser404 = {
  */
 export type CreateUser429 = {
   /**
+   * @type number
+   */
+  status: number
+  /**
+   * @type string
+   */
+  code: string
+  /**
    * @type string
    */
   message: string
@@ -94,6 +126,10 @@ export type CreateUser429 = {
  * @description Internal Server Error. This is a problem with the server that you cannot fix.
  */
 export type CreateUser500 = {
+  /**
+   * @type number
+   */
+  status: number
   /**
    * @type string
    */

@@ -39,6 +39,7 @@ export type Health200Schema = Health200
  */
 export const health400Schema = z
   .object({
+    status: z.number(),
     code: z.string(),
     message: z.string(),
     errors: z.optional(
@@ -66,6 +67,7 @@ export type Health400Schema = Health400
  */
 export const health401Schema = z
   .object({
+    status: z.number(),
     code: z.string(),
     message: z.string(),
   })
@@ -80,6 +82,8 @@ export type Health401Schema = Health401
  */
 export const health403Schema = z
   .object({
+    status: z.number(),
+    code: z.string(),
     message: z.string(),
   })
   .describe(
@@ -93,6 +97,8 @@ export type Health403Schema = Health403
  */
 export const health404Schema = z
   .object({
+    status: z.number(),
+    code: z.string(),
     message: z.string(),
   })
   .describe(
@@ -106,6 +112,8 @@ export type Health404Schema = Health404
  */
 export const health429Schema = z
   .object({
+    status: z.number(),
+    code: z.string(),
     message: z.string(),
   })
   .describe(
@@ -119,6 +127,7 @@ export type Health429Schema = Health429
  */
 export const health500Schema = z
   .object({
+    status: z.number(),
     code: z.string(),
     message: z.string(),
   })

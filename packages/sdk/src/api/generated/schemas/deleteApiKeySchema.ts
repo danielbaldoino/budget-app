@@ -38,6 +38,7 @@ export type DeleteApiKey204Schema = DeleteApiKey204
  */
 export const deleteApiKey400Schema = z
   .object({
+    status: z.number(),
     code: z.string(),
     message: z.string(),
     errors: z.optional(
@@ -65,6 +66,7 @@ export type DeleteApiKey400Schema = DeleteApiKey400
  */
 export const deleteApiKey401Schema = z
   .object({
+    status: z.number(),
     code: z.string(),
     message: z.string(),
   })
@@ -79,6 +81,8 @@ export type DeleteApiKey401Schema = DeleteApiKey401
  */
 export const deleteApiKey403Schema = z
   .object({
+    status: z.number(),
+    code: z.string(),
     message: z.string(),
   })
   .describe(
@@ -92,6 +96,8 @@ export type DeleteApiKey403Schema = DeleteApiKey403
  */
 export const deleteApiKey404Schema = z
   .object({
+    status: z.number(),
+    code: z.string(),
     message: z.string(),
   })
   .describe(
@@ -105,6 +111,8 @@ export type DeleteApiKey404Schema = DeleteApiKey404
  */
 export const deleteApiKey429Schema = z
   .object({
+    status: z.number(),
+    code: z.string(),
     message: z.string(),
   })
   .describe(
@@ -118,6 +126,7 @@ export type DeleteApiKey429Schema = DeleteApiKey429
  */
 export const deleteApiKey500Schema = z
   .object({
+    status: z.number(),
     code: z.string(),
     message: z.string(),
   })

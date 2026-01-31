@@ -61,6 +61,7 @@ export type ListApiKeys200Schema = ListApiKeys200
  */
 export const listApiKeys400Schema = z
   .object({
+    status: z.number(),
     code: z.string(),
     message: z.string(),
     errors: z.optional(
@@ -88,6 +89,7 @@ export type ListApiKeys400Schema = ListApiKeys400
  */
 export const listApiKeys401Schema = z
   .object({
+    status: z.number(),
     code: z.string(),
     message: z.string(),
   })
@@ -102,6 +104,8 @@ export type ListApiKeys401Schema = ListApiKeys401
  */
 export const listApiKeys403Schema = z
   .object({
+    status: z.number(),
+    code: z.string(),
     message: z.string(),
   })
   .describe(
@@ -115,6 +119,8 @@ export type ListApiKeys403Schema = ListApiKeys403
  */
 export const listApiKeys404Schema = z
   .object({
+    status: z.number(),
+    code: z.string(),
     message: z.string(),
   })
   .describe(
@@ -128,6 +134,8 @@ export type ListApiKeys404Schema = ListApiKeys404
  */
 export const listApiKeys429Schema = z
   .object({
+    status: z.number(),
+    code: z.string(),
     message: z.string(),
   })
   .describe(
@@ -141,6 +149,7 @@ export type ListApiKeys429Schema = ListApiKeys429
  */
 export const listApiKeys500Schema = z
   .object({
+    status: z.number(),
     code: z.string(),
     message: z.string(),
   })

@@ -18,6 +18,10 @@ export type CreateStockLocation201 = {
  */
 export type CreateStockLocation400 = {
   /**
+   * @type number
+   */
+  status: number
+  /**
    * @type string
    */
   code: string
@@ -51,6 +55,10 @@ export type CreateStockLocation400 = {
  */
 export type CreateStockLocation401 = {
   /**
+   * @type number
+   */
+  status: number
+  /**
    * @type string
    */
   code: string
@@ -65,6 +73,14 @@ export type CreateStockLocation401 = {
  */
 export type CreateStockLocation403 = {
   /**
+   * @type number
+   */
+  status: number
+  /**
+   * @type string
+   */
+  code: string
+  /**
    * @type string
    */
   message: string
@@ -74,6 +90,14 @@ export type CreateStockLocation403 = {
  * @description Not Found. The requested resource was not found.
  */
 export type CreateStockLocation404 = {
+  /**
+   * @type number
+   */
+  status: number
+  /**
+   * @type string
+   */
+  code: string
   /**
    * @type string
    */
@@ -85,6 +109,14 @@ export type CreateStockLocation404 = {
  */
 export type CreateStockLocation429 = {
   /**
+   * @type number
+   */
+  status: number
+  /**
+   * @type string
+   */
+  code: string
+  /**
    * @type string
    */
   message: string
@@ -94,6 +126,10 @@ export type CreateStockLocation429 = {
  * @description Internal Server Error. This is a problem with the server that you cannot fix.
  */
 export type CreateStockLocation500 = {
+  /**
+   * @type number
+   */
+  status: number
   /**
    * @type string
    */

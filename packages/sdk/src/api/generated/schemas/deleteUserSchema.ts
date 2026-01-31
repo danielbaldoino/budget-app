@@ -38,6 +38,7 @@ export type DeleteUser204Schema = DeleteUser204
  */
 export const deleteUser400Schema = z
   .object({
+    status: z.number(),
     code: z.string(),
     message: z.string(),
     errors: z.optional(
@@ -65,6 +66,7 @@ export type DeleteUser400Schema = DeleteUser400
  */
 export const deleteUser401Schema = z
   .object({
+    status: z.number(),
     code: z.string(),
     message: z.string(),
   })
@@ -79,6 +81,8 @@ export type DeleteUser401Schema = DeleteUser401
  */
 export const deleteUser403Schema = z
   .object({
+    status: z.number(),
+    code: z.string(),
     message: z.string(),
   })
   .describe(
@@ -92,6 +96,8 @@ export type DeleteUser403Schema = DeleteUser403
  */
 export const deleteUser404Schema = z
   .object({
+    status: z.number(),
+    code: z.string(),
     message: z.string(),
   })
   .describe(
@@ -105,6 +111,8 @@ export type DeleteUser404Schema = DeleteUser404
  */
 export const deleteUser429Schema = z
   .object({
+    status: z.number(),
+    code: z.string(),
     message: z.string(),
   })
   .describe(
@@ -118,6 +126,7 @@ export type DeleteUser429Schema = DeleteUser429
  */
 export const deleteUser500Schema = z
   .object({
+    status: z.number(),
     code: z.string(),
     message: z.string(),
   })

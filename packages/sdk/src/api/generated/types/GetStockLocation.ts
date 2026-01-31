@@ -95,6 +95,10 @@ export type GetStockLocation200 = {
  */
 export type GetStockLocation400 = {
   /**
+   * @type number
+   */
+  status: number
+  /**
    * @type string
    */
   code: string
@@ -128,6 +132,10 @@ export type GetStockLocation400 = {
  */
 export type GetStockLocation401 = {
   /**
+   * @type number
+   */
+  status: number
+  /**
    * @type string
    */
   code: string
@@ -142,6 +150,14 @@ export type GetStockLocation401 = {
  */
 export type GetStockLocation403 = {
   /**
+   * @type number
+   */
+  status: number
+  /**
+   * @type string
+   */
+  code: string
+  /**
    * @type string
    */
   message: string
@@ -151,6 +167,14 @@ export type GetStockLocation403 = {
  * @description Not Found. The requested resource was not found.
  */
 export type GetStockLocation404 = {
+  /**
+   * @type number
+   */
+  status: number
+  /**
+   * @type string
+   */
+  code: string
   /**
    * @type string
    */
@@ -162,6 +186,14 @@ export type GetStockLocation404 = {
  */
 export type GetStockLocation429 = {
   /**
+   * @type number
+   */
+  status: number
+  /**
+   * @type string
+   */
+  code: string
+  /**
    * @type string
    */
   message: string
@@ -171,6 +203,10 @@ export type GetStockLocation429 = {
  * @description Internal Server Error. This is a problem with the server that you cannot fix.
  */
 export type GetStockLocation500 = {
+  /**
+   * @type number
+   */
+  status: number
   /**
    * @type string
    */

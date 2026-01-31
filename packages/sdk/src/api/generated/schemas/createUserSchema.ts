@@ -33,6 +33,7 @@ export type CreateUser201Schema = CreateUser201
  */
 export const createUser400Schema = z
   .object({
+    status: z.number(),
     code: z.string(),
     message: z.string(),
     errors: z.optional(
@@ -60,6 +61,7 @@ export type CreateUser400Schema = CreateUser400
  */
 export const createUser401Schema = z
   .object({
+    status: z.number(),
     code: z.string(),
     message: z.string(),
   })
@@ -74,6 +76,8 @@ export type CreateUser401Schema = CreateUser401
  */
 export const createUser403Schema = z
   .object({
+    status: z.number(),
+    code: z.string(),
     message: z.string(),
   })
   .describe(
@@ -87,6 +91,8 @@ export type CreateUser403Schema = CreateUser403
  */
 export const createUser404Schema = z
   .object({
+    status: z.number(),
+    code: z.string(),
     message: z.string(),
   })
   .describe(
@@ -100,6 +106,8 @@ export type CreateUser404Schema = CreateUser404
  */
 export const createUser429Schema = z
   .object({
+    status: z.number(),
+    code: z.string(),
     message: z.string(),
   })
   .describe(
@@ -113,6 +121,7 @@ export type CreateUser429Schema = CreateUser429
  */
 export const createUser500Schema = z
   .object({
+    status: z.number(),
     code: z.string(),
     message: z.string(),
   })

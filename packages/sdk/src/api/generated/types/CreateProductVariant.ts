@@ -25,6 +25,10 @@ export type CreateProductVariant201 = {
  */
 export type CreateProductVariant400 = {
   /**
+   * @type number
+   */
+  status: number
+  /**
    * @type string
    */
   code: string
@@ -58,6 +62,10 @@ export type CreateProductVariant400 = {
  */
 export type CreateProductVariant401 = {
   /**
+   * @type number
+   */
+  status: number
+  /**
    * @type string
    */
   code: string
@@ -72,6 +80,14 @@ export type CreateProductVariant401 = {
  */
 export type CreateProductVariant403 = {
   /**
+   * @type number
+   */
+  status: number
+  /**
+   * @type string
+   */
+  code: string
+  /**
    * @type string
    */
   message: string
@@ -81,6 +97,14 @@ export type CreateProductVariant403 = {
  * @description Not Found. The requested resource was not found.
  */
 export type CreateProductVariant404 = {
+  /**
+   * @type number
+   */
+  status: number
+  /**
+   * @type string
+   */
+  code: string
   /**
    * @type string
    */
@@ -92,6 +116,14 @@ export type CreateProductVariant404 = {
  */
 export type CreateProductVariant429 = {
   /**
+   * @type number
+   */
+  status: number
+  /**
+   * @type string
+   */
+  code: string
+  /**
    * @type string
    */
   message: string
@@ -101,6 +133,10 @@ export type CreateProductVariant429 = {
  * @description Internal Server Error. This is a problem with the server that you cannot fix.
  */
 export type CreateProductVariant500 = {
+  /**
+   * @type number
+   */
+  status: number
   /**
    * @type string
    */

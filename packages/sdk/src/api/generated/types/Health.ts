@@ -43,6 +43,10 @@ export type Health200 = {
  */
 export type Health400 = {
   /**
+   * @type number
+   */
+  status: number
+  /**
    * @type string
    */
   code: string
@@ -76,6 +80,10 @@ export type Health400 = {
  */
 export type Health401 = {
   /**
+   * @type number
+   */
+  status: number
+  /**
    * @type string
    */
   code: string
@@ -90,6 +98,14 @@ export type Health401 = {
  */
 export type Health403 = {
   /**
+   * @type number
+   */
+  status: number
+  /**
+   * @type string
+   */
+  code: string
+  /**
    * @type string
    */
   message: string
@@ -99,6 +115,14 @@ export type Health403 = {
  * @description Not Found. The requested resource was not found.
  */
 export type Health404 = {
+  /**
+   * @type number
+   */
+  status: number
+  /**
+   * @type string
+   */
+  code: string
   /**
    * @type string
    */
@@ -110,6 +134,14 @@ export type Health404 = {
  */
 export type Health429 = {
   /**
+   * @type number
+   */
+  status: number
+  /**
+   * @type string
+   */
+  code: string
+  /**
    * @type string
    */
   message: string
@@ -119,6 +151,10 @@ export type Health429 = {
  * @description Internal Server Error. This is a problem with the server that you cannot fix.
  */
 export type Health500 = {
+  /**
+   * @type number
+   */
+  status: number
   /**
    * @type string
    */

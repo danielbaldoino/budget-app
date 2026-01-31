@@ -39,6 +39,7 @@ export type UpdateUser204Schema = UpdateUser204
  */
 export const updateUser400Schema = z
   .object({
+    status: z.number(),
     code: z.string(),
     message: z.string(),
     errors: z.optional(
@@ -66,6 +67,7 @@ export type UpdateUser400Schema = UpdateUser400
  */
 export const updateUser401Schema = z
   .object({
+    status: z.number(),
     code: z.string(),
     message: z.string(),
   })
@@ -80,6 +82,8 @@ export type UpdateUser401Schema = UpdateUser401
  */
 export const updateUser403Schema = z
   .object({
+    status: z.number(),
+    code: z.string(),
     message: z.string(),
   })
   .describe(
@@ -93,6 +97,8 @@ export type UpdateUser403Schema = UpdateUser403
  */
 export const updateUser404Schema = z
   .object({
+    status: z.number(),
+    code: z.string(),
     message: z.string(),
   })
   .describe(
@@ -106,6 +112,8 @@ export type UpdateUser404Schema = UpdateUser404
  */
 export const updateUser429Schema = z
   .object({
+    status: z.number(),
+    code: z.string(),
     message: z.string(),
   })
   .describe(
@@ -119,6 +127,7 @@ export type UpdateUser429Schema = UpdateUser429
  */
 export const updateUser500Schema = z
   .object({
+    status: z.number(),
     code: z.string(),
     message: z.string(),
   })

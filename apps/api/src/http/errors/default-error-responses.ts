@@ -3,6 +3,7 @@ import { z } from 'zod'
 export const BadRequestResponse = {
   400: z
     .object({
+      status: z.number(),
       code: z.string(),
       message: z.string(),
       errors: z
@@ -26,6 +27,7 @@ export const BadRequestResponse = {
 export const UnauthorizedResponse = {
   401: z
     .object({
+      status: z.number(),
       code: z.string(),
       message: z.string(),
     })
@@ -35,6 +37,8 @@ export const UnauthorizedResponse = {
 export const ForbiddenResponse = {
   403: z
     .object({
+      status: z.number(),
+      code: z.string(),
       message: z.string(),
     })
     .describe(
@@ -45,6 +49,8 @@ export const ForbiddenResponse = {
 export const NotFoundResponse = {
   404: z
     .object({
+      status: z.number(),
+      code: z.string(),
       message: z.string(),
     })
     .describe('Not Found. The requested resource was not found.'),
@@ -53,6 +59,8 @@ export const NotFoundResponse = {
 export const TooManyRequestsResponse = {
   429: z
     .object({
+      status: z.number(),
+      code: z.string(),
       message: z.string(),
     })
     .describe(
@@ -63,6 +71,7 @@ export const TooManyRequestsResponse = {
 export const InternalServerErrorResponse = {
   500: z
     .object({
+      status: z.number(),
       code: z.string(),
       message: z.string(),
     })

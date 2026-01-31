@@ -27,6 +27,10 @@ export type UpdateStockLocation204 = UpdateStockLocation204EnumKey | null
  */
 export type UpdateStockLocation400 = {
   /**
+   * @type number
+   */
+  status: number
+  /**
    * @type string
    */
   code: string
@@ -60,6 +64,10 @@ export type UpdateStockLocation400 = {
  */
 export type UpdateStockLocation401 = {
   /**
+   * @type number
+   */
+  status: number
+  /**
    * @type string
    */
   code: string
@@ -74,6 +82,14 @@ export type UpdateStockLocation401 = {
  */
 export type UpdateStockLocation403 = {
   /**
+   * @type number
+   */
+  status: number
+  /**
+   * @type string
+   */
+  code: string
+  /**
    * @type string
    */
   message: string
@@ -83,6 +99,14 @@ export type UpdateStockLocation403 = {
  * @description Not Found. The requested resource was not found.
  */
 export type UpdateStockLocation404 = {
+  /**
+   * @type number
+   */
+  status: number
+  /**
+   * @type string
+   */
+  code: string
   /**
    * @type string
    */
@@ -94,6 +118,14 @@ export type UpdateStockLocation404 = {
  */
 export type UpdateStockLocation429 = {
   /**
+   * @type number
+   */
+  status: number
+  /**
+   * @type string
+   */
+  code: string
+  /**
    * @type string
    */
   message: string
@@ -103,6 +135,10 @@ export type UpdateStockLocation429 = {
  * @description Internal Server Error. This is a problem with the server that you cannot fix.
  */
 export type UpdateStockLocation500 = {
+  /**
+   * @type number
+   */
+  status: number
   /**
    * @type string
    */

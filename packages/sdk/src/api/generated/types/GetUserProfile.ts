@@ -43,6 +43,10 @@ export type GetUserProfile200 = {
  */
 export type GetUserProfile400 = {
   /**
+   * @type number
+   */
+  status: number
+  /**
    * @type string
    */
   code: string
@@ -76,6 +80,10 @@ export type GetUserProfile400 = {
  */
 export type GetUserProfile401 = {
   /**
+   * @type number
+   */
+  status: number
+  /**
    * @type string
    */
   code: string
@@ -90,6 +98,14 @@ export type GetUserProfile401 = {
  */
 export type GetUserProfile403 = {
   /**
+   * @type number
+   */
+  status: number
+  /**
+   * @type string
+   */
+  code: string
+  /**
    * @type string
    */
   message: string
@@ -99,6 +115,14 @@ export type GetUserProfile403 = {
  * @description Not Found. The requested resource was not found.
  */
 export type GetUserProfile404 = {
+  /**
+   * @type number
+   */
+  status: number
+  /**
+   * @type string
+   */
+  code: string
   /**
    * @type string
    */
@@ -110,6 +134,14 @@ export type GetUserProfile404 = {
  */
 export type GetUserProfile429 = {
   /**
+   * @type number
+   */
+  status: number
+  /**
+   * @type string
+   */
+  code: string
+  /**
    * @type string
    */
   message: string
@@ -119,6 +151,10 @@ export type GetUserProfile429 = {
  * @description Internal Server Error. This is a problem with the server that you cannot fix.
  */
 export type GetUserProfile500 = {
+  /**
+   * @type number
+   */
+  status: number
   /**
    * @type string
    */

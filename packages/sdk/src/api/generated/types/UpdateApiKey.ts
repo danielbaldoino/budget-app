@@ -27,6 +27,10 @@ export type UpdateApiKey204 = UpdateApiKey204EnumKey | null
  */
 export type UpdateApiKey400 = {
   /**
+   * @type number
+   */
+  status: number
+  /**
    * @type string
    */
   code: string
@@ -60,6 +64,10 @@ export type UpdateApiKey400 = {
  */
 export type UpdateApiKey401 = {
   /**
+   * @type number
+   */
+  status: number
+  /**
    * @type string
    */
   code: string
@@ -74,6 +82,14 @@ export type UpdateApiKey401 = {
  */
 export type UpdateApiKey403 = {
   /**
+   * @type number
+   */
+  status: number
+  /**
+   * @type string
+   */
+  code: string
+  /**
    * @type string
    */
   message: string
@@ -83,6 +99,14 @@ export type UpdateApiKey403 = {
  * @description Not Found. The requested resource was not found.
  */
 export type UpdateApiKey404 = {
+  /**
+   * @type number
+   */
+  status: number
+  /**
+   * @type string
+   */
+  code: string
   /**
    * @type string
    */
@@ -94,6 +118,14 @@ export type UpdateApiKey404 = {
  */
 export type UpdateApiKey429 = {
   /**
+   * @type number
+   */
+  status: number
+  /**
+   * @type string
+   */
+  code: string
+  /**
    * @type string
    */
   message: string
@@ -103,6 +135,10 @@ export type UpdateApiKey429 = {
  * @description Internal Server Error. This is a problem with the server that you cannot fix.
  */
 export type UpdateApiKey500 = {
+  /**
+   * @type number
+   */
+  status: number
   /**
    * @type string
    */

@@ -27,6 +27,10 @@ export type UpdateUser204 = UpdateUser204EnumKey | null
  */
 export type UpdateUser400 = {
   /**
+   * @type number
+   */
+  status: number
+  /**
    * @type string
    */
   code: string
@@ -60,6 +64,10 @@ export type UpdateUser400 = {
  */
 export type UpdateUser401 = {
   /**
+   * @type number
+   */
+  status: number
+  /**
    * @type string
    */
   code: string
@@ -74,6 +82,14 @@ export type UpdateUser401 = {
  */
 export type UpdateUser403 = {
   /**
+   * @type number
+   */
+  status: number
+  /**
+   * @type string
+   */
+  code: string
+  /**
    * @type string
    */
   message: string
@@ -83,6 +99,14 @@ export type UpdateUser403 = {
  * @description Not Found. The requested resource was not found.
  */
 export type UpdateUser404 = {
+  /**
+   * @type number
+   */
+  status: number
+  /**
+   * @type string
+   */
+  code: string
   /**
    * @type string
    */
@@ -94,6 +118,14 @@ export type UpdateUser404 = {
  */
 export type UpdateUser429 = {
   /**
+   * @type number
+   */
+  status: number
+  /**
+   * @type string
+   */
+  code: string
+  /**
    * @type string
    */
   message: string
@@ -103,6 +135,10 @@ export type UpdateUser429 = {
  * @description Internal Server Error. This is a problem with the server that you cannot fix.
  */
 export type UpdateUser500 = {
+  /**
+   * @type number
+   */
+  status: number
   /**
    * @type string
    */

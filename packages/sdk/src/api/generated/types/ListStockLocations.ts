@@ -150,6 +150,10 @@ export type ListStockLocations200 = {
  */
 export type ListStockLocations400 = {
   /**
+   * @type number
+   */
+  status: number
+  /**
    * @type string
    */
   code: string
@@ -183,6 +187,10 @@ export type ListStockLocations400 = {
  */
 export type ListStockLocations401 = {
   /**
+   * @type number
+   */
+  status: number
+  /**
    * @type string
    */
   code: string
@@ -197,6 +205,14 @@ export type ListStockLocations401 = {
  */
 export type ListStockLocations403 = {
   /**
+   * @type number
+   */
+  status: number
+  /**
+   * @type string
+   */
+  code: string
+  /**
    * @type string
    */
   message: string
@@ -206,6 +222,14 @@ export type ListStockLocations403 = {
  * @description Not Found. The requested resource was not found.
  */
 export type ListStockLocations404 = {
+  /**
+   * @type number
+   */
+  status: number
+  /**
+   * @type string
+   */
+  code: string
   /**
    * @type string
    */
@@ -217,6 +241,14 @@ export type ListStockLocations404 = {
  */
 export type ListStockLocations429 = {
   /**
+   * @type number
+   */
+  status: number
+  /**
+   * @type string
+   */
+  code: string
+  /**
    * @type string
    */
   message: string
@@ -226,6 +258,10 @@ export type ListStockLocations429 = {
  * @description Internal Server Error. This is a problem with the server that you cannot fix.
  */
 export type ListStockLocations500 = {
+  /**
+   * @type number
+   */
+  status: number
   /**
    * @type string
    */

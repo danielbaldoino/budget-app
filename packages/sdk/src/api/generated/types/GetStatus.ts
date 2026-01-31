@@ -22,6 +22,10 @@ export type GetStatus201 = {
  */
 export type GetStatus400 = {
   /**
+   * @type number
+   */
+  status: number
+  /**
    * @type string
    */
   code: string
@@ -55,6 +59,10 @@ export type GetStatus400 = {
  */
 export type GetStatus401 = {
   /**
+   * @type number
+   */
+  status: number
+  /**
    * @type string
    */
   code: string
@@ -69,6 +77,14 @@ export type GetStatus401 = {
  */
 export type GetStatus403 = {
   /**
+   * @type number
+   */
+  status: number
+  /**
+   * @type string
+   */
+  code: string
+  /**
    * @type string
    */
   message: string
@@ -78,6 +94,14 @@ export type GetStatus403 = {
  * @description Not Found. The requested resource was not found.
  */
 export type GetStatus404 = {
+  /**
+   * @type number
+   */
+  status: number
+  /**
+   * @type string
+   */
+  code: string
   /**
    * @type string
    */
@@ -89,6 +113,14 @@ export type GetStatus404 = {
  */
 export type GetStatus429 = {
   /**
+   * @type number
+   */
+  status: number
+  /**
+   * @type string
+   */
+  code: string
+  /**
    * @type string
    */
   message: string
@@ -98,6 +130,10 @@ export type GetStatus429 = {
  * @description Internal Server Error. This is a problem with the server that you cannot fix.
  */
 export type GetStatus500 = {
+  /**
+   * @type number
+   */
+  status: number
   /**
    * @type string
    */

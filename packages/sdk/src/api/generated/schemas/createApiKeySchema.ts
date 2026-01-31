@@ -33,6 +33,7 @@ export type CreateApiKey201Schema = CreateApiKey201
  */
 export const createApiKey400Schema = z
   .object({
+    status: z.number(),
     code: z.string(),
     message: z.string(),
     errors: z.optional(
@@ -60,6 +61,7 @@ export type CreateApiKey400Schema = CreateApiKey400
  */
 export const createApiKey401Schema = z
   .object({
+    status: z.number(),
     code: z.string(),
     message: z.string(),
   })
@@ -74,6 +76,8 @@ export type CreateApiKey401Schema = CreateApiKey401
  */
 export const createApiKey403Schema = z
   .object({
+    status: z.number(),
+    code: z.string(),
     message: z.string(),
   })
   .describe(
@@ -87,6 +91,8 @@ export type CreateApiKey403Schema = CreateApiKey403
  */
 export const createApiKey404Schema = z
   .object({
+    status: z.number(),
+    code: z.string(),
     message: z.string(),
   })
   .describe(
@@ -100,6 +106,8 @@ export type CreateApiKey404Schema = CreateApiKey404
  */
 export const createApiKey429Schema = z
   .object({
+    status: z.number(),
+    code: z.string(),
     message: z.string(),
   })
   .describe(
@@ -113,6 +121,7 @@ export type CreateApiKey429Schema = CreateApiKey429
  */
 export const createApiKey500Schema = z
   .object({
+    status: z.number(),
     code: z.string(),
     message: z.string(),
   })

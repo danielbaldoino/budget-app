@@ -39,6 +39,10 @@ export type UpdateInventoryLevel204 = UpdateInventoryLevel204EnumKey | null
  */
 export type UpdateInventoryLevel400 = {
   /**
+   * @type number
+   */
+  status: number
+  /**
    * @type string
    */
   code: string
@@ -72,6 +76,10 @@ export type UpdateInventoryLevel400 = {
  */
 export type UpdateInventoryLevel401 = {
   /**
+   * @type number
+   */
+  status: number
+  /**
    * @type string
    */
   code: string
@@ -86,6 +94,14 @@ export type UpdateInventoryLevel401 = {
  */
 export type UpdateInventoryLevel403 = {
   /**
+   * @type number
+   */
+  status: number
+  /**
+   * @type string
+   */
+  code: string
+  /**
    * @type string
    */
   message: string
@@ -95,6 +111,14 @@ export type UpdateInventoryLevel403 = {
  * @description Not Found. The requested resource was not found.
  */
 export type UpdateInventoryLevel404 = {
+  /**
+   * @type number
+   */
+  status: number
+  /**
+   * @type string
+   */
+  code: string
   /**
    * @type string
    */
@@ -106,6 +130,14 @@ export type UpdateInventoryLevel404 = {
  */
 export type UpdateInventoryLevel429 = {
   /**
+   * @type number
+   */
+  status: number
+  /**
+   * @type string
+   */
+  code: string
+  /**
    * @type string
    */
   message: string
@@ -115,6 +147,10 @@ export type UpdateInventoryLevel429 = {
  * @description Internal Server Error. This is a problem with the server that you cannot fix.
  */
 export type UpdateInventoryLevel500 = {
+  /**
+   * @type number
+   */
+  status: number
   /**
    * @type string
    */

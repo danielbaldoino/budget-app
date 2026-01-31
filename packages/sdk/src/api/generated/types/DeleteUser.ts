@@ -27,6 +27,10 @@ export type DeleteUser204 = DeleteUser204EnumKey | null
  */
 export type DeleteUser400 = {
   /**
+   * @type number
+   */
+  status: number
+  /**
    * @type string
    */
   code: string
@@ -60,6 +64,10 @@ export type DeleteUser400 = {
  */
 export type DeleteUser401 = {
   /**
+   * @type number
+   */
+  status: number
+  /**
    * @type string
    */
   code: string
@@ -74,6 +82,14 @@ export type DeleteUser401 = {
  */
 export type DeleteUser403 = {
   /**
+   * @type number
+   */
+  status: number
+  /**
+   * @type string
+   */
+  code: string
+  /**
    * @type string
    */
   message: string
@@ -83,6 +99,14 @@ export type DeleteUser403 = {
  * @description Not Found. The requested resource was not found.
  */
 export type DeleteUser404 = {
+  /**
+   * @type number
+   */
+  status: number
+  /**
+   * @type string
+   */
+  code: string
   /**
    * @type string
    */
@@ -94,6 +118,14 @@ export type DeleteUser404 = {
  */
 export type DeleteUser429 = {
   /**
+   * @type number
+   */
+  status: number
+  /**
+   * @type string
+   */
+  code: string
+  /**
    * @type string
    */
   message: string
@@ -103,6 +135,10 @@ export type DeleteUser429 = {
  * @description Internal Server Error. This is a problem with the server that you cannot fix.
  */
 export type DeleteUser500 = {
+  /**
+   * @type number
+   */
+  status: number
   /**
    * @type string
    */

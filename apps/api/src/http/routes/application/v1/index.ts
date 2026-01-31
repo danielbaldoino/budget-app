@@ -1,10 +1,22 @@
 import { jwtAuthenticator } from '@/http/middlewares/application/jwt-authenticator'
 import { tenantContext } from '@/http/middlewares/application/tenant-context'
 import type { FastifyTypedInstance } from '@/types/fastify'
+
 import { logIn } from './auth/login'
+import { getCarrier } from './carriers/get-carrier'
+import { listCarriers } from './carriers/list-carriers'
+import { getCart } from './carts/get-cart'
+import { listCarts } from './carts/list-carts'
+import { getCustomer } from './customers/get-customer'
 import { listCustomers } from './customers/list-customers'
 import { integrationsRoutes } from './integrations'
 import { listInventoryItems } from './inventory-items/list-inventory-items'
+import { getOrder } from './orders/get-order'
+import { listOrders } from './orders/list-orders'
+import { getPaymentMethod } from './payment-methods/get-payment-method'
+import { listPaymentMethods } from './payment-methods/list-payment-methods'
+import { getPaymentTerm } from './payment-terms/get-payment-term'
+import { listPaymentTerms } from './payment-terms/list-payment-terms'
 import { getPriceList } from './price-lists/get-price-list'
 import { listPriceLists } from './price-lists/list-price-lists'
 import { createProductCategory } from './product-categories/create-product-category'
@@ -48,6 +60,7 @@ async function applicationRoutes(app: FastifyTypedInstance) {
   app.register(getProfile)
 
   app.register(listCustomers)
+  app.register(getCustomer)
 
   app.register(listProductCategories)
   app.register(getProductCategory)
@@ -92,6 +105,21 @@ async function applicationRoutes(app: FastifyTypedInstance) {
   app.register(createStockLocation)
   app.register(updateStockLocation)
   app.register(deleteStockLocation)
+
+  app.register(listCarts)
+  app.register(getCart)
+
+  app.register(listOrders)
+  app.register(getOrder)
+
+  app.register(listCarriers)
+  app.register(getCarrier)
+
+  app.register(listPaymentMethods)
+  app.register(getPaymentMethod)
+
+  app.register(listPaymentTerms)
+  app.register(getPaymentTerm)
 }
 
 export async function applicationV1Routes(app: FastifyTypedInstance) {

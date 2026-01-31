@@ -153,6 +153,10 @@ export type ListApiKeys200 = {
  */
 export type ListApiKeys400 = {
   /**
+   * @type number
+   */
+  status: number
+  /**
    * @type string
    */
   code: string
@@ -186,6 +190,10 @@ export type ListApiKeys400 = {
  */
 export type ListApiKeys401 = {
   /**
+   * @type number
+   */
+  status: number
+  /**
    * @type string
    */
   code: string
@@ -200,6 +208,14 @@ export type ListApiKeys401 = {
  */
 export type ListApiKeys403 = {
   /**
+   * @type number
+   */
+  status: number
+  /**
+   * @type string
+   */
+  code: string
+  /**
    * @type string
    */
   message: string
@@ -209,6 +225,14 @@ export type ListApiKeys403 = {
  * @description Not Found. The requested resource was not found.
  */
 export type ListApiKeys404 = {
+  /**
+   * @type number
+   */
+  status: number
+  /**
+   * @type string
+   */
+  code: string
   /**
    * @type string
    */
@@ -220,6 +244,14 @@ export type ListApiKeys404 = {
  */
 export type ListApiKeys429 = {
   /**
+   * @type number
+   */
+  status: number
+  /**
+   * @type string
+   */
+  code: string
+  /**
    * @type string
    */
   message: string
@@ -229,6 +261,10 @@ export type ListApiKeys429 = {
  * @description Internal Server Error. This is a problem with the server that you cannot fix.
  */
 export type ListApiKeys500 = {
+  /**
+   * @type number
+   */
+  status: number
   /**
    * @type string
    */

@@ -20,6 +20,10 @@ export type UpdateOwnedWorkspace204 = UpdateOwnedWorkspace204EnumKey | null
  */
 export type UpdateOwnedWorkspace400 = {
   /**
+   * @type number
+   */
+  status: number
+  /**
    * @type string
    */
   code: string
@@ -53,6 +57,10 @@ export type UpdateOwnedWorkspace400 = {
  */
 export type UpdateOwnedWorkspace401 = {
   /**
+   * @type number
+   */
+  status: number
+  /**
    * @type string
    */
   code: string
@@ -67,6 +75,14 @@ export type UpdateOwnedWorkspace401 = {
  */
 export type UpdateOwnedWorkspace403 = {
   /**
+   * @type number
+   */
+  status: number
+  /**
+   * @type string
+   */
+  code: string
+  /**
    * @type string
    */
   message: string
@@ -76,6 +92,14 @@ export type UpdateOwnedWorkspace403 = {
  * @description Not Found. The requested resource was not found.
  */
 export type UpdateOwnedWorkspace404 = {
+  /**
+   * @type number
+   */
+  status: number
+  /**
+   * @type string
+   */
+  code: string
   /**
    * @type string
    */
@@ -87,6 +111,14 @@ export type UpdateOwnedWorkspace404 = {
  */
 export type UpdateOwnedWorkspace429 = {
   /**
+   * @type number
+   */
+  status: number
+  /**
+   * @type string
+   */
+  code: string
+  /**
    * @type string
    */
   message: string
@@ -96,6 +128,10 @@ export type UpdateOwnedWorkspace429 = {
  * @description Internal Server Error. This is a problem with the server that you cannot fix.
  */
 export type UpdateOwnedWorkspace500 = {
+  /**
+   * @type number
+   */
+  status: number
   /**
    * @type string
    */

@@ -35,6 +35,10 @@ export type DeleteInventoryItem204 = DeleteInventoryItem204EnumKey | null
  */
 export type DeleteInventoryItem400 = {
   /**
+   * @type number
+   */
+  status: number
+  /**
    * @type string
    */
   code: string
@@ -68,6 +72,10 @@ export type DeleteInventoryItem400 = {
  */
 export type DeleteInventoryItem401 = {
   /**
+   * @type number
+   */
+  status: number
+  /**
    * @type string
    */
   code: string
@@ -82,6 +90,14 @@ export type DeleteInventoryItem401 = {
  */
 export type DeleteInventoryItem403 = {
   /**
+   * @type number
+   */
+  status: number
+  /**
+   * @type string
+   */
+  code: string
+  /**
    * @type string
    */
   message: string
@@ -91,6 +107,14 @@ export type DeleteInventoryItem403 = {
  * @description Not Found. The requested resource was not found.
  */
 export type DeleteInventoryItem404 = {
+  /**
+   * @type number
+   */
+  status: number
+  /**
+   * @type string
+   */
+  code: string
   /**
    * @type string
    */
@@ -102,6 +126,14 @@ export type DeleteInventoryItem404 = {
  */
 export type DeleteInventoryItem429 = {
   /**
+   * @type number
+   */
+  status: number
+  /**
+   * @type string
+   */
+  code: string
+  /**
    * @type string
    */
   message: string
@@ -111,6 +143,10 @@ export type DeleteInventoryItem429 = {
  * @description Internal Server Error. This is a problem with the server that you cannot fix.
  */
 export type DeleteInventoryItem500 = {
+  /**
+   * @type number
+   */
+  status: number
   /**
    * @type string
    */
