@@ -1,6 +1,7 @@
 import { BadRequestError } from '@/http/errors/bad-request-error'
 import { withDefaultErrorResponses } from '@/http/errors/default-error-responses'
 import type { FastifyTypedInstance } from '@/types/fastify'
+import { CurrencyCode } from '@workspace/db/tenant/enums'
 import { z } from 'zod'
 
 export async function getOrder(app: FastifyTypedInstance) {
@@ -21,7 +22,77 @@ export async function getOrder(app: FastifyTypedInstance) {
                 id: z.string(),
                 referenceId: z.string().nullable(),
                 displayId: z.number(),
-
+                seller: z
+                  .object({
+                    id: z.string(),
+                    referenceId: z.string().nullable(),
+                    name: z.string(),
+                    createdAt: z.date(),
+                    updatedAt: z.date(),
+                  })
+                  .nullable(),
+                customer: z
+                  .object({
+                    id: z.string(),
+                    referenceId: z.string().nullable(),
+                    name: z.string(),
+                    createdAt: z.date(),
+                    updatedAt: z.date(),
+                  })
+                  .nullable(),
+                paymentMethod: z
+                  .object({
+                    id: z.string(),
+                    code: z.string(),
+                    name: z.string(),
+                    active: z.boolean(),
+                    createdAt: z.date(),
+                    updatedAt: z.date(),
+                  })
+                  .nullable(),
+                paymentTerm: z
+                  .object({
+                    id: z.string(),
+                    code: z.string(),
+                    name: z.string(),
+                    active: z.boolean(),
+                    createdAt: z.date(),
+                    updatedAt: z.date(),
+                  })
+                  .nullable(),
+                carrier: z
+                  .object({
+                    id: z.string(),
+                    code: z.string(),
+                    name: z.string(),
+                    active: z.boolean(),
+                    createdAt: z.date(),
+                    updatedAt: z.date(),
+                  })
+                  .nullable(),
+                status: z.string(),
+                currencyCode: z.enum(CurrencyCode),
+                notes: z.string().nullable(),
+                orderItems: z.array(
+                  z.object({
+                    id: z.string(),
+                    referenceId: z.string().nullable(),
+                    quantity: z.number(),
+                    unitPrice: z.number(),
+                    compareAtUnitPrice: z.number().nullable(),
+                    notes: z.string().nullable(),
+                    orderLineItem: z
+                      .object({
+                        id: z.string(),
+                        productVariantId: z.string().nullable(),
+                        createdAt: z.date(),
+                        updatedAt: z.date(),
+                      })
+                      .nullable(),
+                    createdAt: z.date(),
+                    updatedAt: z.date(),
+                  }),
+                ),
                 createdAt: z.date(),
                 updatedAt: z.date(),
               }),
@@ -35,7 +106,7 @@ export async function getOrder(app: FastifyTypedInstance) {
 
       const { orderId } = request.params
 
-      const order = await tenant.queries.orders.getOrder({
+      const order = await tenant.queries.orders.getOrderWithRelations({
         tenant: tenant.name,
         orderId,
       })

@@ -30,9 +30,16 @@ export async function getOrderWithRelations(
       with: {
         seller: true,
         customer: true,
+        paymentMethod: true,
+        paymentTerm: true,
+        carrier: true,
         details: true,
         addresses: true,
-        orderItems: true,
+        orderItems: {
+          with: {
+            orderLineItem: true,
+          },
+        },
       },
     })
 

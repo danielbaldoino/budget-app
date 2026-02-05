@@ -63,7 +63,8 @@
     "NEXT_PUBLIC_API_URL",
     "NEXT_PUBLIC_WEB_URL",
     "NEXT_PUBLIC_STORAGE_URL",
-    "NEXT_CONFIG_OUTPUT"
+    "NEXT_CONFIG_OUTPUT",
+    "EXPO_PUBLIC_API_URL"
   ],
   "globalPassThroughEnv": [
     "NODE_ENV",

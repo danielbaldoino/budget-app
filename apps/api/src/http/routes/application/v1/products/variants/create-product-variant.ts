@@ -2,6 +2,7 @@ import { BadRequestError } from '@/http/errors/bad-request-error'
 import { withDefaultErrorResponses } from '@/http/errors/default-error-responses'
 import type { FastifyTypedInstance } from '@/types/fastify'
 import { findDuplicate } from '@/utils/find-duplicate'
+import { CurrencyCode } from '@workspace/db/tenant/enums'
 import { z } from 'zod'
 
 export async function createProductVariant(app: FastifyTypedInstance) {
@@ -32,7 +33,14 @@ export async function createProductVariant(app: FastifyTypedInstance) {
               value: z.string(),
             }),
           ),
-          amount: z.number().nonnegative(),
+          prices: z
+            .array(
+              z.object({
+                currencyCode: z.enum(CurrencyCode),
+                amount: z.number().nonnegative(),
+              }),
+            )
+            .optional(),
         }),
         params: z.object({
           productId: z.string(),
@@ -63,8 +71,15 @@ export async function createProductVariant(app: FastifyTypedInstance) {
         })
       }
 
-      const { name, sku, manageInventory, thumbnail, images, options, amount } =
-        request.body
+      const {
+        name,
+        sku,
+        manageInventory,
+        thumbnail,
+        images,
+        options,
+        prices: pricesData,
+      } = request.body
 
       const productVariantByName =
         await tenant.queries.products.variants.getProductVariantByName({
@@ -234,25 +249,41 @@ export async function createProductVariant(app: FastifyTypedInstance) {
               }),
             )
 
-            const [priceSet] = await tx
-              .insert(priceSets)
-              .values({
-                productVariantId: productVariant.id,
-              })
-              .returning()
+            if (pricesData) {
+              const duplicatedPrice = findDuplicate(
+                pricesData,
+                (price) => price.currencyCode,
+              )
 
-            if (!priceSet) {
-              throw new BadRequestError({
-                code: 'PRICE_SET_NOT_CREATED',
-                message: 'Price set not created.',
-              })
+              if (duplicatedPrice) {
+                throw new BadRequestError({
+                  code: 'PRICE_DUPLICATED',
+                  message: `Price has currency code "${duplicatedPrice.currencyCode}" that is duplicated.`,
+                })
+              }
+
+              const [priceSet] = await tx
+                .insert(priceSets)
+                .values({
+                  productVariantId: productVariant.id,
+                })
+                .returning()
+
+              if (!priceSet) {
+                throw new BadRequestError({
+                  code: 'PRICE_SET_NOT_CREATED',
+                  message: 'Price set not created.',
+                })
+              }
+
+              await tx.insert(prices).values(
+                pricesData.map((price) => ({
+                  priceSetId: priceSet.id,
+                  currencyCode: price.currencyCode,
+                  amount: price.amount,
+                })),
+              )
             }
-
-            await tx.insert(prices).values({
-              priceSetId: priceSet.id,
-              currencyCode: 'BRL',
-              amount,
-            })
 
             if (manageInventory) {
               await tx.insert(inventoryItems).values({

@@ -56,6 +56,8 @@ export async function logIn(app: FastifyTypedInstance) {
 
       const token = await reply.jwtSign({ sub: user.id }, { expiresIn: '30d' })
 
+      console.log(`User ${username} logged in successfully.`)
+
       return reply.status(201).send({ token })
     },
   )

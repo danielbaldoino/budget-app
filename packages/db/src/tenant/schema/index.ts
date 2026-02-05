@@ -525,6 +525,18 @@ export function createTenantSchema(schema?: string) {
       fields: [orders.customerId],
       references: [customers.id],
     }),
+    paymentMethod: one(paymentMethods, {
+      fields: [orders.paymentMethodId],
+      references: [paymentMethods.id],
+    }),
+    paymentTerm: one(paymentTerms, {
+      fields: [orders.paymentTermId],
+      references: [paymentTerms.id],
+    }),
+    carrier: one(carriers, {
+      fields: [orders.carrierId],
+      references: [carriers.id],
+    }),
     details: one(orderDetails),
     addresses: many(addresses),
     orderItems: many(orderItems),
@@ -622,6 +634,10 @@ export function createTenantSchema(schema?: string) {
     ...timestamps,
   })
 
+  const paymentMethodsRelations = relations(paymentMethods, ({ many }) => ({
+    orders: many(orders),
+  }))
+
   const paymentTerms = tenantSchema.table('payment_terms', {
     ...id,
     code: text('code').notNull().unique(),
@@ -633,6 +649,10 @@ export function createTenantSchema(schema?: string) {
     ...timestamps,
   })
 
+  const paymentTermsRelations = relations(paymentTerms, ({ many }) => ({
+    orders: many(orders),
+  }))
+
   const carriers = tenantSchema.table('carriers', {
     ...id,
     code: text('code').notNull().unique(),
@@ -642,6 +662,10 @@ export function createTenantSchema(schema?: string) {
 
     ...timestamps,
   })
+
+  const carriersRelations = relations(carriers, ({ many }) => ({
+    orders: many(orders),
+  }))
 
   const productOptionValuesToProductVariants = tenantSchema.table(
     'product_option_values_to_product_variants',
@@ -741,8 +765,11 @@ export function createTenantSchema(schema?: string) {
     orderLineItems,
     orderLineItemsRelations,
     paymentMethods,
+    paymentMethodsRelations,
     paymentTerms,
+    paymentTermsRelations,
     carriers,
+    carriersRelations,
     productOptionValuesToProductVariants,
     productOptionValuesToProductVariantsRelations,
   }
@@ -800,8 +827,11 @@ export const {
   orderLineItems,
   orderLineItemsRelations,
   paymentMethods,
+  paymentMethodsRelations,
   paymentTerms,
+  paymentTermsRelations,
   carriers,
+  carriersRelations,
   productOptionValuesToProductVariants,
   productOptionValuesToProductVariantsRelations,
 } = createTenantSchema()

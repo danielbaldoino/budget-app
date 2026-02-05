@@ -1,4 +1,4 @@
-import { type SQL, asc, desc, ilike, or } from 'drizzle-orm'
+import { type SQL, asc, desc, eq, ilike, or } from 'drizzle-orm'
 import { db } from '../../../db'
 import { tenantDb, tenantSchema } from '../../../tenant'
 
@@ -6,11 +6,12 @@ const FILTER_BY = ['all', 'name'] as const
 const SORT_BY = ['name', 'createdAt'] as const
 const ORDER = ['asc', 'desc'] as const
 
-type ListCartsParams = {
+type ListCartsWithRelationsParams = {
   tenant: string
+  sellerId: string
 }
 
-type ListCartsFiltersParams = {
+type ListCartsWithRelationsFiltersParams = {
   search?: string
   filterBy: (typeof FILTER_BY)[number]
   sortBy: (typeof SORT_BY)[number]
@@ -19,13 +20,13 @@ type ListCartsFiltersParams = {
   pageSize: number
 }
 
-async function getListCarts(
-  params: ListCartsParams,
-  filters: ListCartsFiltersParams,
+async function getListCartsWithRelations(
+  params: ListCartsWithRelationsParams,
+  filters: ListCartsWithRelationsFiltersParams,
 ) {
   return tenantSchema(params.tenant, async ({ carts }) => {
     const WHERE = () => {
-      const searchCondition: SQL[] = []
+      const searchCondition: SQL[] = [eq(carts.sellerId, params.sellerId)]
 
       if (filters.search) {
         if (filters.filterBy === 'all' || filters.filterBy === 'name') {
@@ -46,7 +47,7 @@ async function getListCarts(
       return orderFn(carts.createdAt)
     }
 
-    const [count, listCarts] = await Promise.all([
+    const [count, listCartsWithRelations] = await Promise.all([
       db.$count(carts, WHERE()),
 
       tenantDb(params.tenant).query.carts.findMany({
@@ -54,17 +55,20 @@ async function getListCarts(
         orderBy: ORDER_BY(),
         offset: (filters.page - 1) * filters.pageSize,
         limit: filters.pageSize,
+        with: {
+          cartItems: true,
+        },
       }),
     ])
 
     return {
       count,
-      carts: listCarts,
+      carts: listCartsWithRelations,
     }
   })
 }
 
-export const listCarts = Object.assign(getListCarts, {
+export const listCartsWithRelations = Object.assign(getListCartsWithRelations, {
   FILTER_BY,
   SORT_BY,
   ORDER,

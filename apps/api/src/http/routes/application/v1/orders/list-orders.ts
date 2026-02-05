@@ -1,9 +1,11 @@
 import { withDefaultErrorResponses } from '@/http/errors/default-error-responses'
 import type { FastifyTypedInstance } from '@/types/fastify'
 import { queries } from '@workspace/db/queries'
+import { CurrencyCode } from '@workspace/db/tenant/enums'
 import { z } from 'zod'
 
-const { FILTER_BY, SORT_BY, ORDER } = queries.application.orders.listOrders
+const { FILTER_BY, SORT_BY, ORDER } =
+  queries.application.orders.listOrdersWithRelations
 
 export async function listOrders(app: FastifyTypedInstance) {
   app.get(
@@ -44,7 +46,27 @@ export async function listOrders(app: FastifyTypedInstance) {
                   id: z.string(),
                   referenceId: z.string().nullable(),
                   displayId: z.number(),
-
+                  sellerId: z.string().nullable(),
+                  customerId: z.string().nullable(),
+                  paymentMethodId: z.string().nullable(),
+                  paymentTermId: z.string().nullable(),
+                  carrierId: z.string().nullable(),
+                  status: z.string(),
+                  currencyCode: z.enum(CurrencyCode),
+                  notes: z.string().nullable(),
+                  orderItems: z.array(
+                    z.object({
+                      id: z.string(),
+                      referenceId: z.string().nullable(),
+                      orderLineItemId: z.string().nullable(),
+                      quantity: z.number(),
+                      unitPrice: z.number(),
+                      compareAtUnitPrice: z.number().nullable(),
+                      notes: z.string().nullable(),
+                      createdAt: z.date(),
+                      updatedAt: z.date(),
+                    }),
+                  ),
                   createdAt: z.date(),
                   updatedAt: z.date(),
                 }),
@@ -59,10 +81,11 @@ export async function listOrders(app: FastifyTypedInstance) {
 
       const { search, filterBy, sortBy, order, page, pageSize } = request.query
 
-      const { count, orders } = await tenant.queries.orders.listOrders(
-        { tenant: tenant.name },
-        { search, filterBy, sortBy, order, page, pageSize },
-      )
+      const { count, orders } =
+        await tenant.queries.orders.listOrdersWithRelations(
+          { tenant: tenant.name },
+          { search, filterBy, sortBy, order, page, pageSize },
+        )
 
       return {
         meta: {

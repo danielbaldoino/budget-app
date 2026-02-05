@@ -3,6 +3,7 @@ import { withDefaultErrorResponses } from '@/http/errors/default-error-responses
 import type { FastifyTypedInstance } from '@/types/fastify'
 import { findDuplicate } from '@/utils/find-duplicate'
 import { orm } from '@workspace/db'
+import { CurrencyCode } from '@workspace/db/tenant/enums'
 import { z } from 'zod'
 
 export async function updateProductVariant(app: FastifyTypedInstance) {
@@ -26,14 +27,21 @@ export async function updateProductVariant(app: FastifyTypedInstance) {
               }),
             )
             .max(20)
-            .nullish(),
+            .optional(),
           options: z.array(
             z.object({
               name: z.string(),
               value: z.string(),
             }),
           ),
-          amount: z.number().nonnegative(),
+          prices: z
+            .array(
+              z.object({
+                currencyCode: z.enum(CurrencyCode),
+                amount: z.number().nonnegative(),
+              }),
+            )
+            .optional(),
         }),
         params: z.object({
           productId: z.string(),
@@ -75,8 +83,15 @@ export async function updateProductVariant(app: FastifyTypedInstance) {
         })
       }
 
-      const { name, sku, manageInventory, thumbnail, images, options, amount } =
-        request.body
+      const {
+        name,
+        sku,
+        manageInventory,
+        thumbnail,
+        images,
+        options,
+        prices: pricesData,
+      } = request.body
 
       const productVariantByName =
         await tenant.queries.products.variants.getProductVariantByName({
@@ -266,53 +281,60 @@ export async function updateProductVariant(app: FastifyTypedInstance) {
               )
             }
 
-            const priceSet =
-              await tenant.queries.priceSets.getPriceSetByProductVariantId({
-                tenant: tenant.name,
-                productVariantId,
-              })
+            if (pricesData) {
+              const duplicatedPrice = findDuplicate(
+                pricesData,
+                (price) => price.currencyCode,
+              )
 
-            if (priceSet) {
-              const [price] = await tenant.queries.priceSets.prices.listPrices({
-                tenant: tenant.name,
-                priceSetId: priceSet.id,
-              })
-
-              if (price) {
-                await tx
-                  .update(prices)
-                  .set({
-                    currencyCode: 'BRL',
-                    amount,
-                  })
-                  .where(orm.eq(prices.id, price.id))
-              } else {
-                await tx.insert(prices).values({
-                  priceSetId: priceSet.id,
-                  currencyCode: 'BRL',
-                  amount,
+              if (duplicatedPrice) {
+                throw new BadRequestError({
+                  code: 'PRICE_DUPLICATED',
+                  message: `Price has currency code "${duplicatedPrice.currencyCode}" that is duplicated.`,
                 })
               }
-            } else {
-              const [createdPriceSet] = await tx
-                .insert(priceSets)
-                .values({
+
+              const priceSet =
+                await tenant.queries.priceSets.getPriceSetByProductVariantId({
+                  tenant: tenant.name,
                   productVariantId,
                 })
-                .returning()
 
-              if (!createdPriceSet) {
-                throw new BadRequestError({
-                  code: 'PRICE_SET_NOT_CREATED',
-                  message: 'Price set not created.',
-                })
+              if (priceSet) {
+                await tx
+                  .delete(prices)
+                  .where(orm.eq(prices.priceSetId, priceSet.id))
+
+                await tx.insert(prices).values(
+                  pricesData.map((price) => ({
+                    priceSetId: priceSet.id,
+                    currencyCode: price.currencyCode,
+                    amount: price.amount,
+                  })),
+                )
+              } else {
+                const [createdPriceSet] = await tx
+                  .insert(priceSets)
+                  .values({
+                    productVariantId: productVariant.id,
+                  })
+                  .returning()
+
+                if (!createdPriceSet) {
+                  throw new BadRequestError({
+                    code: 'PRICE_SET_NOT_CREATED',
+                    message: 'Price set not created.',
+                  })
+                }
+
+                await tx.insert(prices).values(
+                  pricesData.map((price) => ({
+                    priceSetId: createdPriceSet.id,
+                    currencyCode: price.currencyCode,
+                    amount: price.amount,
+                  })),
+                )
               }
-
-              await tx.insert(prices).values({
-                priceSetId: createdPriceSet.id,
-                currencyCode: 'BRL',
-                amount,
-              })
             }
 
             if (!productVariant.manageInventory && manageInventory) {

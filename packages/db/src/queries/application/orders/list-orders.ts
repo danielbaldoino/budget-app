@@ -6,11 +6,11 @@ const FILTER_BY = ['all', 'referenceId', 'displayId'] as const
 const SORT_BY = ['referenceId', 'displayId', 'createdAt'] as const
 const ORDER = ['asc', 'desc'] as const
 
-type ListOrdersParams = {
+type ListOrdersWithRelationsParams = {
   tenant: string
 }
 
-type ListOrdersFiltersParams = {
+type ListOrdersWithRelationsFiltersParams = {
   search?: string
   filterBy: (typeof FILTER_BY)[number]
   sortBy: (typeof SORT_BY)[number]
@@ -19,9 +19,9 @@ type ListOrdersFiltersParams = {
   pageSize: number
 }
 
-async function getListOrders(
-  params: ListOrdersParams,
-  filters: ListOrdersFiltersParams,
+async function getListOrdersWithRelations(
+  params: ListOrdersWithRelationsParams,
+  filters: ListOrdersWithRelationsFiltersParams,
 ) {
   return tenantSchema(params.tenant, async ({ orders }) => {
     const WHERE = () => {
@@ -58,6 +58,9 @@ async function getListOrders(
         orderBy: ORDER_BY(),
         offset: (filters.page - 1) * filters.pageSize,
         limit: filters.pageSize,
+        with: {
+          orderItems: true,
+        },
       }),
     ])
 
@@ -68,8 +71,11 @@ async function getListOrders(
   })
 }
 
-export const listOrders = Object.assign(getListOrders, {
-  FILTER_BY,
-  SORT_BY,
-  ORDER,
-})
+export const listOrdersWithRelations = Object.assign(
+  getListOrdersWithRelations,
+  {
+    FILTER_BY,
+    SORT_BY,
+    ORDER,
+  },
+)

@@ -1,23 +1,27 @@
 import { BadRequestError } from '@/http/errors/bad-request-error'
 import { withDefaultErrorResponses } from '@/http/errors/default-error-responses'
 import type { FastifyTypedInstance } from '@/types/fastify'
+import { findDuplicate } from '@/utils/find-duplicate'
 import { CurrencyCode } from '@workspace/db/tenant/enums'
 import { z } from 'zod'
 
 export async function createPriceSet(app: FastifyTypedInstance) {
   app.post(
-    '/price-lists/sets',
+    '/price-lists/:priceListId/sets',
     {
       schema: {
         tags: ['Price Sets'],
         summary: 'Create a new price set',
         operationId: 'createPriceSet',
+        params: z.object({
+          priceListId: z.string(),
+        }),
         body: z.object({
           productVariantId: z.string(),
           prices: z.array(
             z.object({
               currencyCode: z.enum(CurrencyCode),
-              amount: z.number(),
+              amount: z.number().nonnegative(),
             }),
           ),
         }),
@@ -32,6 +36,20 @@ export async function createPriceSet(app: FastifyTypedInstance) {
     },
     async (request, reply) => {
       const { tenant } = request.application
+
+      const { priceListId } = request.params
+
+      const priceList = await tenant.queries.priceLists.getPriceList({
+        tenant: tenant.name,
+        priceListId,
+      })
+
+      if (!priceList) {
+        throw new BadRequestError({
+          code: 'PRICE_LIST_NOT_FOUND',
+          message: 'Price list not found.',
+        })
+      }
 
       const { productVariantId, prices: pricesData } = request.body
 
@@ -48,11 +66,24 @@ export async function createPriceSet(app: FastifyTypedInstance) {
         })
       }
 
+      const duplicatedPrice = findDuplicate(
+        pricesData,
+        (price) => price.currencyCode,
+      )
+
+      if (duplicatedPrice) {
+        throw new BadRequestError({
+          code: 'PRICE_DUPLICATED',
+          message: `Price has currency code "${duplicatedPrice.currencyCode}" that is duplicated.`,
+        })
+      }
+
       const priceSet = await tenant.db.transaction(async (tx) =>
         tenant.schema(async ({ priceSets, prices }) => {
           const [priceSet] = await tx
             .insert(priceSets)
             .values({
+              priceListId,
               productVariantId,
             })
             .returning()

@@ -3,11 +3,11 @@ import { listApiKeys } from './api-keys/list-api-keys'
 import { getCarrier } from './carriers/get-carrier'
 import { listCarriers } from './carriers/list-carriers'
 import { getCart, getCartWithRelations } from './carts/get-cart'
-import { listCarts } from './carts/list-carts'
+import { listCartsWithRelations } from './carts/list-carts'
 import { getCustomer, getCustomerWithRelations } from './customers/get-customer'
 import { listCustomers } from './customers/list-customers'
 import { getOrder, getOrderWithRelations } from './orders/get-order'
-import { listOrders } from './orders/list-orders'
+import { listOrdersWithRelations } from './orders/list-orders'
 import { getPaymentMethod } from './payment-methods/get-payment-method'
 import { listPaymentMethods } from './payment-methods/list-payment-methods'
 import { getPaymentTerm } from './payment-terms/get-payment-term'
@@ -155,12 +155,12 @@ export const applicationQueries = {
     getStockLocationWithRelations,
   },
   carts: {
-    listCarts,
+    listCartsWithRelations,
     getCart,
     getCartWithRelations,
   },
   orders: {
-    listOrders,
+    listOrdersWithRelations,
     getOrder,
     getOrderWithRelations,
   },

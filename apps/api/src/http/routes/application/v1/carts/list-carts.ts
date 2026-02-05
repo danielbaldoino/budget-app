@@ -1,9 +1,11 @@
 import { withDefaultErrorResponses } from '@/http/errors/default-error-responses'
 import type { FastifyTypedInstance } from '@/types/fastify'
 import { queries } from '@workspace/db/queries'
+import { CurrencyCode } from '@workspace/db/tenant/enums'
 import { z } from 'zod'
 
-const { FILTER_BY, SORT_BY, ORDER } = queries.application.carts.listCarts
+const { FILTER_BY, SORT_BY, ORDER } =
+  queries.application.carts.listCartsWithRelations
 
 export async function listCarts(app: FastifyTypedInstance) {
   app.get(
@@ -42,7 +44,21 @@ export async function listCarts(app: FastifyTypedInstance) {
               carts: z.array(
                 z.object({
                   id: z.string(),
-
+                  sellerId: z.string().nullable(),
+                  customerId: z.string().nullable(),
+                  name: z.string(),
+                  currencyCode: z.enum(CurrencyCode),
+                  notes: z.string().nullable(),
+                  cartItems: z.array(
+                    z.object({
+                      id: z.string(),
+                      productVariantId: z.string(),
+                      quantity: z.number(),
+                      notes: z.string().nullable(),
+                      createdAt: z.date(),
+                      updatedAt: z.date(),
+                    }),
+                  ),
                   createdAt: z.date(),
                   updatedAt: z.date(),
                 }),
@@ -53,14 +69,18 @@ export async function listCarts(app: FastifyTypedInstance) {
       },
     },
     async (request) => {
-      const { tenant } = request.application
+      const {
+        tenant,
+        user: { sellerId },
+      } = request.application
 
       const { search, filterBy, sortBy, order, page, pageSize } = request.query
 
-      const { count, carts } = await tenant.queries.carts.listCarts(
-        { tenant: tenant.name },
-        { search, filterBy, sortBy, order, page, pageSize },
-      )
+      const { count, carts } =
+        await tenant.queries.carts.listCartsWithRelations(
+          { tenant: tenant.name, sellerId },
+          { search, filterBy, sortBy, order, page, pageSize },
+        )
 
       return {
         meta: {

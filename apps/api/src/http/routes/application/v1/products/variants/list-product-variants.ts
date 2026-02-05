@@ -2,6 +2,7 @@ import { BadRequestError } from '@/http/errors/bad-request-error'
 import { withDefaultErrorResponses } from '@/http/errors/default-error-responses'
 import type { FastifyTypedInstance } from '@/types/fastify'
 import { queries } from '@workspace/db/queries'
+import { CurrencyCode } from '@workspace/db/tenant/enums'
 import { z } from 'zod'
 
 const { FILTER_BY, SORT_BY, ORDER } =
@@ -75,7 +76,7 @@ export async function listProductVariants(app: FastifyTypedInstance) {
                       prices: z.array(
                         z.object({
                           id: z.string(),
-                          currencyCode: z.string().nullable(),
+                          currencyCode: z.enum(CurrencyCode).nullable(),
                           amount: z.number().nonnegative().nullable(),
                           createdAt: z.date(),
                           updatedAt: z.date(),

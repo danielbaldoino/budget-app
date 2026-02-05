@@ -6,13 +6,14 @@ import { z } from 'zod'
 
 export async function deletePriceSet(app: FastifyTypedInstance) {
   app.delete(
-    '/price-lists/sets/:priceSetId',
+    '/price-lists/:priceListId/sets/:priceSetId',
     {
       schema: {
         tags: ['Price Sets'],
         summary: 'Delete a price set',
         operationId: 'deletePriceSet',
         params: z.object({
+          priceListId: z.string(),
           priceSetId: z.string(),
         }),
         response: withDefaultErrorResponses({
@@ -23,7 +24,19 @@ export async function deletePriceSet(app: FastifyTypedInstance) {
     async (request, reply) => {
       const { tenant } = request.application
 
-      const { priceSetId } = request.params
+      const { priceListId, priceSetId } = request.params
+
+      const priceList = await tenant.queries.priceLists.getPriceList({
+        tenant: tenant.name,
+        priceListId,
+      })
+
+      if (!priceList) {
+        throw new BadRequestError({
+          code: 'PRICE_LIST_NOT_FOUND',
+          message: 'Price list not found.',
+        })
+      }
 
       const priceSet = await tenant.queries.priceSets.getPriceSet({
         tenant: tenant.name,
@@ -38,7 +51,14 @@ export async function deletePriceSet(app: FastifyTypedInstance) {
       }
 
       await tenant.schema(({ priceSets }) =>
-        tenant.db.delete(priceSets).where(orm.eq(priceSets.id, priceSetId)),
+        tenant.db
+          .delete(priceSets)
+          .where(
+            orm.and(
+              orm.eq(priceSets.id, priceSetId),
+              orm.eq(priceSets.priceListId, priceListId),
+            ),
+          ),
       )
 
       return reply.status(204).send()
