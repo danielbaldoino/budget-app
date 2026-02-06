@@ -1,10 +1,11 @@
 import { Icon } from '@/components/ui/icon'
 import { Text } from '@/components/ui/text'
 import { ICON_SIZES } from '@/constants/theme'
-import { Link, router } from 'expo-router'
+import { i18n } from '@/lib/languages'
+import { Link } from 'expo-router'
 import { ChevronRightIcon, TagIcon } from 'lucide-react-native'
 import { useState } from 'react'
-import { Image, Platform, Pressable, View } from 'react-native'
+import { Image, Platform, Pressable, Share, View } from 'react-native'
 import type { Product } from '../_lib/utils'
 
 export function ProductCard({ product }: { product: Product }) {
@@ -14,7 +15,7 @@ export function ProductCard({ product }: { product: Product }) {
   const [imageError, setImageError] = useState(false)
   const showImage = !!imageUrl && !imageError
 
-  const url = `product/${id}`
+  const productHref = `product/${id}`
 
   const CardContent = () => (
     <View className="flex-row items-center gap-2 rounded-lg border border-border/20 bg-card p-2">
@@ -47,19 +48,37 @@ export function ProductCard({ product }: { product: Product }) {
     </View>
   )
 
-  return Platform.select({
-    ios: (
-      <Link href={url}>
-        <Link.Trigger>
-          <CardContent />
-        </Link.Trigger>
-        <Link.Preview />
-      </Link>
-    ),
-    default: (
-      <Pressable onPress={() => router.push(url)}>
-        <CardContent />
-      </Pressable>
-    ),
-  })
+  return (
+    <View>
+      {Platform.select({
+        ios: (
+          <Link href={productHref}>
+            <Link.Trigger>
+              <CardContent />
+            </Link.Trigger>
+            <Link.Preview />
+            <Link.Menu>
+              <Link.MenuAction
+                title={i18n.t('common.actions.share')}
+                icon="square.and.arrow.up"
+                onPress={() =>
+                  Share.share({
+                    title: i18n.t('common.actions.share'),
+                    message: '/',
+                  })
+                }
+              />
+            </Link.Menu>
+          </Link>
+        ),
+        default: (
+          <Link href={productHref} asChild>
+            <Pressable>
+              <CardContent />
+            </Pressable>
+          </Link>
+        ),
+      })}
+    </View>
+  )
 }

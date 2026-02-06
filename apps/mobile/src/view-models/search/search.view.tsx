@@ -15,7 +15,7 @@ import { ProductCard } from './_components/product-card'
 import { useSearchViewModel } from './search.view-model'
 
 export function SearchView() {
-  const { handleSearch, isLoading, data, errorMessage } = useSearchViewModel()
+  const { onSearchChange, isLoading, data, errorMessage } = useSearchViewModel()
   const { colors } = useAppearance()
 
   const products = data?.products ?? []
@@ -43,7 +43,7 @@ export function SearchView() {
             autoCapitalize: 'sentences',
             onChangeText: ({
               nativeEvent: { text },
-            }: NativeSyntheticEvent<{ text: string }>) => handleSearch(text),
+            }: NativeSyntheticEvent<{ text: string }>) => onSearchChange(text),
             placeholder: i18n.t('search.input.placeholder'),
             textColor: colors.text,
             tintColor: colors.primary, // iOS only
@@ -51,6 +51,7 @@ export function SearchView() {
             shouldShowHintSearchIcon: false,
             headerIconColor: colors.text,
             hintTextColor: colors.txtMuted,
+            placement: 'integratedButton',
           },
         }),
       }}

@@ -132,6 +132,8 @@ export const translations: Dict = {
     common: {
       actions: {
         back: 'Back',
+        open: 'Open',
+        share: 'Share',
       },
 
       states: {
@@ -278,6 +280,8 @@ export const translations: Dict = {
     common: {
       actions: {
         back: 'Voltar',
+        open: 'Abrir',
+        share: 'Compartilhar',
       },
 
       states: {

@@ -6,9 +6,11 @@ import type { ExtendedStackNavigationOptions } from 'expo-router/build/layouts/S
 import { Fragment } from 'react'
 import {
   ActivityIndicator,
+  Keyboard,
   KeyboardAvoidingView,
   Platform,
   ScrollView,
+  TouchableWithoutFeedback,
 } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import type { BackButtonDisplayMode } from 'react-native-screens'
@@ -83,26 +85,28 @@ export function Screen({
           className="flex-1"
           behavior={Platform.select({ ios: 'padding', android: 'height' })}
         >
-          <ScrollView
-            className={cn('flex-1', className)}
-            contentContainerClassName={cn(
-              'gap-4 p-4 lg:gap-6 lg:p-6',
-              constrainWidth && 'mx-auto w-full max-w-6xl',
-              contentClassName,
-            )}
-            centerContent={isEmpty}
-            scrollEnabled={scrollEnabled}
-          >
-            {isPending ? (
-              <ActivityIndicator className="p-16 text-primary" size="large" />
-            ) : isEmpty ? (
-              <Text variant="muted" className="p-16 text-center">
-                {i18n.t('common.states.noContent')}
-              </Text>
-            ) : (
-              children
-            )}
-          </ScrollView>
+          <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+            <ScrollView
+              className={cn('flex-1', className)}
+              contentContainerClassName={cn(
+                'gap-4 p-4 lg:gap-6 lg:p-6',
+                constrainWidth && 'mx-auto w-full max-w-6xl',
+                contentClassName,
+              )}
+              centerContent={isEmpty}
+              scrollEnabled={scrollEnabled}
+            >
+              {isPending ? (
+                <ActivityIndicator className="p-16 text-primary" size="large" />
+              ) : isEmpty ? (
+                <Text variant="muted" className="p-16 text-center">
+                  {i18n.t('common.states.noContent')}
+                </Text>
+              ) : (
+                children
+              )}
+            </ScrollView>
+          </TouchableWithoutFeedback>
         </KeyboardAvoidingView>
       </SafeAreaView>
     </Fragment>

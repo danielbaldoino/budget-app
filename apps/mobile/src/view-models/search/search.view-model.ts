@@ -8,10 +8,10 @@ export function useSearchViewModel() {
     params: { search },
   })
 
-  const handleSearch = (text: string) => router.setParams({ q: text })
+  const onSearchChange = (text: string) => router.setParams({ q: text })
 
   return {
-    handleSearch,
+    onSearchChange,
     isLoading,
     data,
     errorMessage: error?.message,

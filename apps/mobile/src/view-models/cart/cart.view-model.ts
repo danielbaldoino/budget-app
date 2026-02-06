@@ -12,7 +12,7 @@ export function useCartViewModel() {
   const canPushToCarts = !hasSelectedCart && isMounted && !alreadyPushed
   const lastSegment = segments[segments.length - 1]
 
-  const redirectToCarts = () => router.push('cart/carts')
+  const redirectToCarts = () => router.push('carts')
 
   useEffect(() => {
     if (!canPushToCarts) {
