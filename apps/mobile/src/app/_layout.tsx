@@ -1,4 +1,3 @@
-import { SplashScreenController } from '@/components/layout/splash-screen-controller'
 import { useSession } from '@/hooks/use-session'
 import { Providers } from '@/providers'
 import { PortalHost } from '@rn-primitives/portal'
@@ -27,7 +26,6 @@ function RootNavigator() {
 export default function RootLayout() {
   return (
     <Providers>
-      <SplashScreenController />
       <RootNavigator />
       <PortalHost />
     </Providers>

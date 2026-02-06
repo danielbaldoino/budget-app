@@ -3,8 +3,8 @@ import { sdk } from '@/lib/sdk'
 import { useWorkspaceStore } from '@/store/workspace-store'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { NotificationFeedbackType, notificationAsync } from 'expo-haptics'
+import { useState } from 'react'
 import { useForm } from 'react-hook-form'
-import { Toast } from 'toastify-react-native'
 import { z } from 'zod'
 
 const formSchema = z.object({
@@ -17,6 +17,7 @@ export function useSignInViewModel() {
   const { workspaceId, setWorkspaceId } = useWorkspaceStore()
   const { logIn } = useSession()
   const { mutateAsync } = sdk.v1.$reactQuery.useLogIn()
+  const [errorMessage, setErrorMessage] = useState<string | undefined>()
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -32,6 +33,8 @@ export function useSignInViewModel() {
 
     setWorkspaceId(workspaceId)
 
+    setErrorMessage(undefined)
+
     await mutateAsync(
       { data },
       {
@@ -39,9 +42,9 @@ export function useSignInViewModel() {
           notificationAsync(NotificationFeedbackType.Success)
           logIn({ token })
         },
-        onError: () => {
+        onError: ({ message }) => {
           notificationAsync(NotificationFeedbackType.Error)
-          Toast.error('Falha ao fazer login. Verifique suas credenciais.')
+          setErrorMessage(message)
         },
       },
     )
@@ -50,5 +53,6 @@ export function useSignInViewModel() {
   return {
     form,
     onSubmit,
+    errorMessage,
   }
 }

@@ -1,19 +1,23 @@
 import { COLOR_SCHEMES, type ThemeMode } from '@/constants/theme'
-import { useColorScheme } from 'react-native'
+import { useColorScheme } from 'nativewind'
+import { useEffect } from 'react'
 import { useStorage } from './use-storage'
 
 export function useAppearance() {
-  const systemColorScheme = useColorScheme()
+  const { colorScheme, setColorScheme } = useColorScheme()
   const [theme, setTheme] = useStorage<ThemeMode | 'system'>('theme', 'system')
 
   const activeTheme =
     theme === 'system'
-      ? systemColorScheme === null || systemColorScheme === undefined
+      ? colorScheme === null || colorScheme === undefined
         ? 'light'
-        : systemColorScheme
+        : colorScheme
       : theme
   const isDarkMode = activeTheme === 'dark'
   const inverseTheme: ThemeMode = isDarkMode ? 'light' : 'dark'
+
+  const useApplyColorScheme = () =>
+    useEffect(() => setColorScheme(theme), [theme])
 
   return {
     theme,
@@ -21,6 +25,7 @@ export function useAppearance() {
     inverseTheme,
     setTheme,
     toggleTheme: () => setTheme(inverseTheme),
+    useApplyColorScheme,
     colors: COLOR_SCHEMES[activeTheme],
   }
 }

@@ -5,29 +5,25 @@ import {
   ThemeProvider,
 } from '@react-navigation/native'
 import { StatusBar } from 'expo-status-bar'
-import { colorScheme } from 'nativewind'
-import { useEffect } from 'react'
-import ToastManager from 'toastify-react-native/components/ToastManager'
+import Toast from 'toastify-react-native'
 
 export function AppearanceProvider({
   children,
 }: {
   children: React.ReactNode
 }) {
-  const { theme, isDarkMode, inverseTheme, colors } = useAppearance()
+  const { isDarkMode, inverseTheme, useApplyColorScheme, colors } =
+    useAppearance()
 
-  useEffect(() => colorScheme.set(theme), [theme])
+  useApplyColorScheme()
 
   return (
     <ThemeProvider
-      value={{
-        ...(isDarkMode ? DarkTheme : DefaultTheme),
-        colors,
-      }}
+      value={{ ...(isDarkMode ? DarkTheme : DefaultTheme), colors }}
     >
       <StatusBar style={inverseTheme} />
       {children}
-      <ToastManager useModal={false} position="bottom" />
+      <Toast useModal={false} />
     </ThemeProvider>
   )
 }
