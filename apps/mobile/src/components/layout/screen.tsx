@@ -93,10 +93,7 @@ export function Screen({
             scrollEnabled={scrollEnabled}
           >
             {isPending ? (
-              <ActivityIndicator
-                className="p-16 text-primary-foreground"
-                size="large"
-              />
+              <ActivityIndicator className="p-16 text-primary" size="large" />
             ) : isEmpty ? (
               <Text variant="muted" className="p-16 text-center">
                 Nenhum conteúdo disponível.

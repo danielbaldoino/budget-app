@@ -43,10 +43,7 @@ export function ProfileView() {
     >
       <View className="rounded-lg bg-muted p-4">
         {isLoading ? (
-          <ActivityIndicator
-            className="py-8 text-primary-foreground"
-            size="large"
-          />
+          <ActivityIndicator className="py-8 text-primary" size="large" />
         ) : !user ? (
           <Text className="py-8 text-center text-destructive">
             Não foi possível carregar os produtos.

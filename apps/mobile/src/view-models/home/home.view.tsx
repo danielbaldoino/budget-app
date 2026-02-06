@@ -28,10 +28,7 @@ export function HomeView() {
       androidBottomTabInset
     >
       {recentProducts.isLoading ? (
-        <ActivityIndicator
-          className="py-8 text-primary-foreground"
-          size="large"
-        />
+        <ActivityIndicator className="py-8 text-primary" size="large" />
       ) : recentProducts.isError ? (
         <Text className="py-8 text-center text-destructive">
           Não foi possível carregar os produtos.
