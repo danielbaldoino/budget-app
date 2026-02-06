@@ -1,5 +1,3 @@
-import { Controller } from 'react-hook-form'
-import { ActivityIndicator, View } from 'react-native'
 import { Screen } from '@/components/layout/screen'
 import { Button } from '@/components/ui/button'
 import {
@@ -13,6 +11,8 @@ import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { Text } from '@/components/ui/text'
 import { cn } from '@/lib/utils'
+import { Controller } from 'react-hook-form'
+import { ActivityIndicator, View } from 'react-native'
 import { useSignInViewModel } from './sign-in.view-model'
 
 export function SignInView() {

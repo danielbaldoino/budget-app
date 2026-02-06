@@ -11,13 +11,15 @@ export const storage = {
 
   set<T>(key: string, value: T): void {
     localStorage.setItem(key, JSON.stringify(value))
-    listeners.get(key)?.forEach((fn) => {
+    for (const fn of listeners.get(key) ?? []) {
       fn()
-    })
+    }
   },
 
   subscribe(key: string, listener: Listener): () => void {
-    if (!listeners.has(key)) listeners.set(key, new Set())
+    if (!listeners.has(key)) {
+      listeners.set(key, new Set())
+    }
     listeners.get(key)?.add(listener)
     return () => listeners.get(key)?.delete(listener)
   },

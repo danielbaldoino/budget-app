@@ -1,5 +1,5 @@
-import { Platform, TextInput, type TextInputProps } from 'react-native'
 import { cn } from '@/lib/utils'
+import { Platform, TextInput, type TextInputProps } from 'react-native'
 
 function Input({
   className,

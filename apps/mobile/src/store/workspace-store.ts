@@ -1,6 +1,6 @@
+import { asyncStorage } from '@/lib/storages/async-storage'
 import { create } from 'zustand'
 import { createJSONStorage, persist } from 'zustand/middleware'
-import { asyncStorage } from '@/lib/storages/async-storage'
 
 interface WorkspaceStore {
   isHydrate: boolean

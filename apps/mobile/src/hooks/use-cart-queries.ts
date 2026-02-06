@@ -5,9 +5,11 @@ export function useGetCart() {
   const { cartId, quantityOfItems, setCartId, setQuantityOfItems } =
     useCartStore()
 
+  const hasSelectedCart = Boolean(cartId)
+
   const { isLoading, data, error } = sdk.v1.$reactQuery.useGetCart(
-    { cartId: cartId ?? '' },
-    { query: { enabled: Boolean(cartId) } },
+    { cartId },
+    { query: { enabled: hasSelectedCart } },
   )
 
   if (error) {
@@ -15,7 +17,8 @@ export function useGetCart() {
     const { status } = error
 
     if (status === 404) {
-      setCartId(null)
+      setCartId('')
+      setQuantityOfItems(0)
     }
   }
 
@@ -35,7 +38,7 @@ export function useGetCart() {
   return {
     isLoading,
     cart,
-    cartId,
+    hasSelectedCart,
     qtyOfItems: quantityOfItems,
   }
 }

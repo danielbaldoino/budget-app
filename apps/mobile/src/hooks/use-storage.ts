@@ -1,5 +1,5 @@
-import { useSyncExternalStore } from 'react'
 import { storage } from '@/lib/storages/local-storage'
+import { useSyncExternalStore } from 'react'
 
 export function useStorage<T>(
   key: string,

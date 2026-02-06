@@ -1,21 +1,17 @@
-import { useAppHydrated } from '@/hooks/use-app-hydrated'
-import { useMounted } from '@/hooks/use-mounted'
+import { useAppReady } from '@/hooks/use-app-ready'
 import { hideAsync, preventAutoHideAsync } from 'expo-splash-screen'
 import { useEffect } from 'react'
 
 preventAutoHideAsync()
 
 export function SplashScreenController() {
-  const { isHydrated } = useAppHydrated()
-  const { isMounted } = useMounted()
-
-  const isReady = isHydrated && isMounted
+  const { isAppReady } = useAppReady()
 
   useEffect(() => {
-    if (isReady) {
+    if (isAppReady) {
       hideAsync()
     }
-  }, [isReady])
+  }, [isAppReady])
 
   return null
 }

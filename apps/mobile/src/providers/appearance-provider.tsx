@@ -1,3 +1,4 @@
+import { useAppearance } from '@/hooks/use-appearance'
 import {
   DarkTheme,
   DefaultTheme,
@@ -7,7 +8,6 @@ import { StatusBar } from 'expo-status-bar'
 import { colorScheme } from 'nativewind'
 import { useEffect } from 'react'
 import ToastManager from 'toastify-react-native/components/ToastManager'
-import { useAppearance } from '@/hooks/use-appearance'
 
 export function AppearanceProvider({
   children,

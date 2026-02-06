@@ -4,8 +4,8 @@ export const env = createEnv({
   extends: [baseEnv],
   shared: {
     EXPO_PUBLIC_API_URL: z.string().url(),
-    EXPO_UNSTABLE_WEB_MODAL: z.enum(['0', '1']).optional(),
-    EXPO_OS: z.enum(['ios', 'android', 'web']).default('web'),
+    EXPO_UNSTABLE_WEB_MODAL: z.enum(['0', '1']).default('1'),
+    EXPO_OS: z.enum(['ios', 'android', 'web']).optional(),
   },
   runtimeEnv: {
     EXPO_PUBLIC_API_URL: process.env.EXPO_PUBLIC_API_URL,

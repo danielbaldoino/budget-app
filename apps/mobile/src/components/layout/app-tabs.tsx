@@ -26,12 +26,20 @@ export function AppTabs({ tabs }: { tabs: Props[] }) {
   return (
     <NativeTabs
       backgroundColor={colors.bgPrimarySubtle}
-      iconColor={colors.primary}
       indicatorColor={colors.bgPrimaryMuted} // Android only
-      minimizeBehavior="onScrollDown" // iOS only
-      tintColor={colors.primary}
+      iconColor={{
+        default: colors.txtMuted,
+        selected: colors.primary,
+      }}
+      labelStyle={{
+        default: { color: colors.txtMuted },
+        selected: { color: colors.primary },
+      }}
+      labelVisibilityMode="labeled"
       badgeBackgroundColor={colors.notification}
       badgeTextColor={colors.txtNotification}
+      minimizeBehavior="onScrollDown" // iOS only
+      tintColor={colors.primary}
     >
       {tabs.map(({ name, iconIos, iconAndroid, label, role, badge }) => (
         <NativeTabs.Trigger key={name} name={name} role={role}>

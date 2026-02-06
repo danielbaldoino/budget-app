@@ -1,5 +1,5 @@
-import { useColorScheme } from 'react-native'
 import { COLOR_SCHEMES, type ThemeMode } from '@/constants/theme'
+import { useColorScheme } from 'react-native'
 import { useStorage } from './use-storage'
 
 export function useAppearance() {

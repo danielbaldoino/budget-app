@@ -19,6 +19,7 @@ function RootNavigator() {
         <Stack.Screen name="(main)" />
       </Stack.Protected>
       <Stack.Screen name="index" />
+      <Stack.Screen name="+not-found" />
     </Stack>
   )
 }

@@ -1,20 +1,18 @@
+import { useAppReady } from '@/hooks/use-app-ready'
 import { useGetCart } from '@/hooks/use-cart-queries'
-import { useMounted } from '@/hooks/use-mounted'
 import { router, useSegments } from 'expo-router'
 import { useEffect, useState } from 'react'
 
 export function useCartViewModel() {
-  const { isLoading, cart, cartId } = useGetCart()
+  const { isLoading, cart, hasSelectedCart } = useGetCart()
   const segments = useSegments()
-  const { isMounted } = useMounted()
+  const { isMounted } = useAppReady()
   const [alreadyPushed, setAlreadyPushed] = useState(false)
 
-  const canPushToCarts = !cartId && isMounted && !alreadyPushed
+  const canPushToCarts = !hasSelectedCart && isMounted && !alreadyPushed
   const lastSegment = segments[segments.length - 1]
 
-  const redirectToCarts = () => {
-    router.push('cart/carts')
-  }
+  const redirectToCarts = () => router.push('cart/carts')
 
   useEffect(() => {
     if (!canPushToCarts) {
