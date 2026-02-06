@@ -1,5 +1,4 @@
 import { Text } from '@/components/ui/text'
-import { useAppearance } from '@/hooks/use-appearance'
 import { cn } from '@/lib/utils'
 import { Stack, useIsPreview } from 'expo-router'
 import type { ExtendedStackNavigationOptions } from 'expo-router/build/layouts/StackClient'
@@ -37,7 +36,6 @@ export function Screen({
   constrainWidth = true,
 }: Props) {
   const isPreview = useIsPreview()
-  const { colors } = useAppearance()
 
   const isEmpty = !children
   const headerLarge = options?.headerLargeTitleEnabled ?? true
