@@ -1,20 +1,19 @@
-import { router } from 'expo-router'
-import { useEffect, useState } from 'react'
-import { Image, View } from 'react-native'
 import { useAppHydrated } from '@/hooks/use-app-hydrated'
+import { useMounted } from '@/hooks/use-mounted'
 import { useSession } from '@/hooks/use-session'
+import { router } from 'expo-router'
+import { useEffect } from 'react'
+import { Image, View } from 'react-native'
 
 export default function AppEntry() {
   const { isHydrated } = useAppHydrated()
+  const { isMounted } = useMounted()
   const { isAuthenticated } = useSession()
-  const [mounted, setMounted] = useState(false)
 
-  const isReady = isHydrated && mounted
+  const isReady = isHydrated && isMounted
 
   const redirectUser = () =>
     router.replace(isAuthenticated ? '/(main)' : '/(auth)')
-
-  useEffect(() => setMounted(true), [])
 
   useEffect(() => {
     if (isReady) {

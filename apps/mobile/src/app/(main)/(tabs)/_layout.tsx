@@ -22,8 +22,8 @@ export default function TabsLayout() {
         },
         {
           name: 'cart',
-          iconIos: { default: 'bag', selected: 'bag.fill' },
-          iconAndroid: 'shopping-outline',
+          iconIos: { default: 'cart', selected: 'cart.fill' },
+          iconAndroid: 'cart',
           label: 'Carrinho',
           badge:
             qtyOfItems > 0
@@ -31,6 +31,12 @@ export default function TabsLayout() {
                 ? '99+'
                 : String(qtyOfItems)
               : undefined,
+        },
+        {
+          name: 'orders',
+          iconIos: { default: 'bag', selected: 'bag.fill' },
+          iconAndroid: 'shopping-outline',
+          label: 'Pedidos',
         },
         {
           name: 'profile',

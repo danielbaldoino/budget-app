@@ -35,6 +35,7 @@ export function useGetCart() {
   return {
     isLoading,
     cart,
+    cartId,
     qtyOfItems: quantityOfItems,
   }
 }

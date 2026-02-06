@@ -1,5 +1,9 @@
-import { Stack } from 'expo-router'
+import { Text } from '@/components/ui/text'
+import { useAppearance } from '@/hooks/use-appearance'
+import { cn } from '@/lib/utils'
+import { Stack, useIsPreview } from 'expo-router'
 import type { ExtendedStackNavigationOptions } from 'expo-router/build/layouts/StackClient'
+import { Fragment } from 'react'
 import {
   ActivityIndicator,
   KeyboardAvoidingView,
@@ -8,9 +12,6 @@ import {
 } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import type { BackButtonDisplayMode } from 'react-native-screens'
-import { Text } from '@/components/ui/text'
-import { useAppearance } from '@/hooks/use-appearance'
-import { cn } from '@/lib/utils'
 
 type Props = {
   children?: React.ReactNode
@@ -35,33 +36,35 @@ export function Screen({
   androidBottomTabInset,
   constrainWidth = true,
 }: Props) {
+  const isPreview = useIsPreview()
   const { colors } = useAppearance()
 
   const isEmpty = !children
-
   const headerLarge = options?.headerLargeTitleEnabled ?? true
 
   return (
-    <>
-      <Stack.Screen
-        options={{
-          headerBackButtonDisplayMode: Platform.select<BackButtonDisplayMode>({
-            web: 'default',
-            default: 'minimal',
-          }),
-          headerBackTitle: 'Voltar',
-          headerBlurEffect: 'systemChromeMaterial',
-          headerLargeStyle: {
-            backgroundColor: headerLarge ? 'transparent' : undefined,
-          },
-          headerLargeTitleEnabled: headerLarge,
-          headerShadowVisible: false,
-          ...options,
-        }}
-      />
+    <Fragment>
+      {!isPreview && (
+        <Stack.Screen
+          options={{
+            headerBackButtonDisplayMode: Platform.select<BackButtonDisplayMode>(
+              { web: 'default', default: 'minimal' },
+            ),
+            headerBackTitle: 'Voltar',
+            headerBlurEffect: 'systemChromeMaterial',
+            headerLargeStyle: {
+              backgroundColor: headerLarge ? 'transparent' : undefined,
+            },
+            headerLargeTitleEnabled: headerLarge,
+            headerShadowVisible: false,
+            ...options,
+          }}
+        />
+      )}
+
       <SafeAreaView
         className={cn(
-          'flex-1',
+          'flex-1 bg-background',
           androidBottomTabInset && 'android:mb-safe-offset-20',
         )}
         edges={{
@@ -84,7 +87,7 @@ export function Screen({
           <ScrollView
             className={cn('flex-1', className)}
             contentContainerClassName={cn(
-              'gap-4 p-4',
+              'gap-4 p-4 lg:gap-6 lg:p-6',
               constrainWidth && 'mx-auto w-full max-w-6xl',
               contentClassName,
             )}
@@ -107,6 +110,6 @@ export function Screen({
           </ScrollView>
         </KeyboardAvoidingView>
       </SafeAreaView>
-    </>
+    </Fragment>
   )
 }

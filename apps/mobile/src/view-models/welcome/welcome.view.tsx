@@ -1,10 +1,10 @@
-import { ChevronRightIcon } from 'lucide-react-native'
 import { Screen } from '@/components/layout/screen'
 import { Button } from '@/components/ui/button'
 import { Icon } from '@/components/ui/icon'
 import { Text } from '@/components/ui/text'
 import { APP_CONSTANTS } from '@/constants/app'
 import { ICON_SIZES } from '@/constants/theme'
+import { ChevronRightIcon } from 'lucide-react-native'
 import { useWelcomeViewModel } from './welcome.view-model'
 
 export function WelcomeView() {

@@ -14,8 +14,10 @@
     "with-env": "dotenv -e ../../.env --"
   },
   "dependencies": {
+    "@expo/vector-icons": "^15.0.3",
     "@hookform/resolvers": "^5.2.2",
     "@react-native-async-storage/async-storage": "^2.2.0",
+    "@react-navigation/native": "^7.1.28",
     "@rn-primitives/label": "^1.2.0",
     "@rn-primitives/portal": "^1.3.0",
     "@rn-primitives/slot": "^1.2.0",
@@ -27,6 +29,7 @@
     "clsx": "^2.1.1",
     "expo": "~54.0.33",
     "expo-constants": "~18.0.13",
+    "expo-glass-effect": "~0.1.8",
     "expo-haptics": "~15.0.8",
     "expo-linking": "~8.0.11",
     "expo-router": "~6.0.23",

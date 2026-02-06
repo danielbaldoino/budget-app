@@ -9,8 +9,8 @@ function RootNavigator() {
 
   return (
     <Stack
-      screenOptions={{ animation: 'fade', headerShown: false }}
       initialRouteName="index"
+      screenOptions={{ animation: 'fade', headerShown: false }}
     >
       <Stack.Protected guard={!isAuthenticated}>
         <Stack.Screen name="(auth)" />

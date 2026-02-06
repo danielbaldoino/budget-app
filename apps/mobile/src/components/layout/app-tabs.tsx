@@ -1,3 +1,4 @@
+import { useAppearance } from '@/hooks/use-appearance'
 import { MaterialCommunityIcons } from '@expo/vector-icons'
 import {
   Badge,
@@ -9,7 +10,6 @@ import {
   VectorIcon,
 } from 'expo-router/unstable-native-tabs'
 import { Platform } from 'react-native'
-import { useAppearance } from '@/hooks/use-appearance'
 
 type Props = {
   name: string

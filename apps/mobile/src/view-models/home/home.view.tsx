@@ -1,10 +1,10 @@
-import { InfoIcon } from 'lucide-react-native'
-import { ActivityIndicator, View } from 'react-native'
 import { Screen } from '@/components/layout/screen'
 import { Icon } from '@/components/ui/icon'
 import { Text } from '@/components/ui/text'
 import { ICON_SIZES } from '@/constants/theme'
 import { useAppearance } from '@/hooks/use-appearance'
+import { MoreHorizontalIcon, MoreVerticalIcon } from 'lucide-react-native'
+import { ActivityIndicator, Platform, TouchableOpacity } from 'react-native'
 import { ProductCard } from './_components/product-card'
 import { useHomeViewModel } from './home.view-model'
 
@@ -13,18 +13,22 @@ export function HomeView() {
   const { colors } = useAppearance()
 
   return (
-    <Screen androidBottomTabInset>
-      <View className="rounded-xl bg-muted p-4">
-        <View className="flex-row items-center gap-x-2">
-          <Icon as={InfoIcon} size={ICON_SIZES.small} />
-          <Text variant="large">Em desenvolvimento</Text>
-        </View>
-        <Text variant="p" className="text-muted-foreground text-sm sm:mt-3">
-          Este aplicativo está em fase de desenvolvimento e pode conter bugs ou
-          funcionalidades incompletas.
-        </Text>
-      </View>
-
+    <Screen
+      options={{
+        headerRight: () => (
+          <TouchableOpacity className="p-2">
+            <Icon
+              size={ICON_SIZES.small}
+              as={Platform.select({
+                ios: MoreHorizontalIcon,
+                default: MoreVerticalIcon,
+              })}
+            />
+          </TouchableOpacity>
+        ),
+      }}
+      androidBottomTabInset
+    >
       {recentProducts.isLoading ? (
         <ActivityIndicator
           className="py-8"
