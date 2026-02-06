@@ -1,4 +1,5 @@
 import { useSession } from '@/hooks/use-session'
+import { i18n } from '@/lib/languages'
 import { sdk } from '@/lib/sdk'
 import { useWorkspaceStore } from '@/store/workspace-store'
 import { zodResolver } from '@hookform/resolvers/zod'
@@ -8,51 +9,61 @@ import { useForm } from 'react-hook-form'
 import { z } from 'zod'
 
 const formSchema = z.object({
-  username: z.string().min(3, 'Nome de usuário é obrigatório.'),
-  password: z.string().min(3, 'Senha é obrigatória.'),
-  workspaceId: z.string().min(3, 'ID do workspace é obrigatório.'),
+  username: z.string().min(3, i18n.t('signIn.username.validation.required')),
+  password: z.string().min(3, i18n.t('signIn.password.validation.required')),
+  workspaceId: z
+    .string()
+    .min(3, i18n.t('signIn.workspaceId.validation.required')),
 })
+
+const DEFAULT_VALUES = __DEV__
+  ? { username: 'john-doe', password: 'securepassword' }
+  : {}
 
 export function useSignInViewModel() {
   const { workspaceId, setWorkspaceId } = useWorkspaceStore()
-  const { logIn } = useSession()
+  const { signIn } = useSession()
   const { mutateAsync } = sdk.v1.$reactQuery.useLogIn()
-  const [errorMessage, setErrorMessage] = useState<string | undefined>()
+  const [signInError, setSignInError] = useState<string | undefined>()
 
-  const form = useForm<z.infer<typeof formSchema>>({
+  const {
+    control,
+    handleSubmit,
+    formState: { isSubmitting },
+  } = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      username: 'john-doe',
-      password: 'securepassword',
+      ...DEFAULT_VALUES,
       workspaceId: workspaceId ?? undefined,
     },
   })
 
-  const onSubmit = async (values: z.infer<typeof formSchema>) => {
+  const handleSignIn = async (values: z.infer<typeof formSchema>) => {
     const { workspaceId, ...data } = values
 
     setWorkspaceId(workspaceId)
 
-    setErrorMessage(undefined)
+    setSignInError(undefined)
 
     await mutateAsync(
       { data },
       {
         onSuccess: ({ token }) => {
           notificationAsync(NotificationFeedbackType.Success)
-          logIn({ token })
+          signIn({ token })
         },
         onError: ({ message }) => {
           notificationAsync(NotificationFeedbackType.Error)
-          setErrorMessage(message)
+          setSignInError(message)
         },
       },
     )
   }
 
   return {
-    form,
-    onSubmit,
-    errorMessage,
+    control,
+    onSubmit: handleSubmit(handleSignIn),
+    isSubmitting,
+    signInError,
   }
 }

@@ -1,9 +1,9 @@
 import { sdk } from '@/lib/sdk'
-import { useCartStore } from '@/store/cart-store'
+import { useCurrentCartStore } from '@/store/current-cart-store'
+import { useEffect } from 'react'
 
-export function useGetCart() {
-  const { cartId, quantityOfItems, setCartId, setQuantityOfItems } =
-    useCartStore()
+export function useCurrentCartQuery() {
+  const { cartId, quantityOfItems, ...cartFn } = useCurrentCartStore()
 
   const hasSelectedCart = Boolean(cartId)
 
@@ -12,33 +12,33 @@ export function useGetCart() {
     { query: { enabled: hasSelectedCart } },
   )
 
-  if (error) {
-    // Handle cart not found error
-    const { status } = error
-
-    if (status === 404) {
-      setCartId('')
-      setQuantityOfItems(0)
-    }
-  }
-
   const cart = data?.cart
 
-  if (cart) {
+  useEffect(() => {
+    if (error?.status === 404) {
+      cartFn.clear()
+    }
+  }, [error])
+
+  useEffect(() => {
+    if (!cart) {
+      return
+    }
+
     const totalQuantity = cart.cartItems.reduce(
       (total, item) => total + item.quantity,
       0,
     )
 
     if (totalQuantity !== quantityOfItems) {
-      setQuantityOfItems(totalQuantity)
+      cartFn.setQuantityOfItems(totalQuantity)
     }
-  }
+  }, [cart])
 
   return {
     isLoading,
     cart,
     hasSelectedCart,
-    qtyOfItems: quantityOfItems,
+    quantityOfItems,
   }
 }

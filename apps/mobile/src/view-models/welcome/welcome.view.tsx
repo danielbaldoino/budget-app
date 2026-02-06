@@ -4,6 +4,7 @@ import { Icon } from '@/components/ui/icon'
 import { Text } from '@/components/ui/text'
 import { APP_CONSTANTS } from '@/constants/app'
 import { ICON_SIZES } from '@/constants/theme'
+import { i18n } from '@/lib/languages'
 import { ChevronRightIcon } from 'lucide-react-native'
 import { useWelcomeViewModel } from './welcome.view-model'
 
@@ -20,13 +21,10 @@ export function WelcomeView() {
         {APP_CONSTANTS.NAME}
       </Text>
 
-      <Text className="text-left">
-        Bem-vindo ao aplicativo de orçamento! Faça seus orçamentos de produtos
-        de forma fácil e rápida.
-      </Text>
+      <Text className="text-left">{i18n.t('welcome.description')}</Text>
 
       <Button onPress={handleGoToSignIn}>
-        <Text>Continuar</Text>
+        <Text>{i18n.t('welcome.actions.getStarted')}</Text>
         <Icon
           className="text-primary-foreground"
           size={ICON_SIZES.small}

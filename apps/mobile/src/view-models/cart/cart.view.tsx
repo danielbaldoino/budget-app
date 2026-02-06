@@ -4,6 +4,7 @@ import { Button } from '@/components/ui/button'
 import { Icon } from '@/components/ui/icon'
 import { Text } from '@/components/ui/text'
 import { ICON_SIZES } from '@/constants/theme'
+import { i18n } from '@/lib/languages'
 import { cn } from '@/lib/utils'
 import {
   ListIcon,
@@ -28,7 +29,7 @@ export function CartView() {
               onPress={redirectToCarts}
             >
               <Icon size={ICON_SIZES.small} as={ListIcon} />
-              <Text>Ver todos</Text>
+              <Text>{i18n.t('cart.actions.viewAllCarts')}</Text>
             </TouchableOpacity>
           ),
         }),
@@ -49,7 +50,10 @@ export function CartView() {
                 className="p-2"
                 disabled={disabled}
                 onPress={() =>
-                  Share.share({ title: 'Compartilhar carrinho', message: '/' })
+                  Share.share({
+                    title: i18n.t('cart.actions.shareCart'),
+                    message: '/',
+                  })
                 }
               >
                 <Icon
@@ -80,7 +84,7 @@ export function CartView() {
             >
               <Icon size={ICON_SIZES.small} as={ListIcon} />
 
-              <Text>Ver todos</Text>
+              <Text>{i18n.t('cart.actions.viewAllCarts')}</Text>
             </Button>
 
             <Button
@@ -89,7 +93,7 @@ export function CartView() {
               disabled={isLoading}
             >
               <Icon size={ICON_SIZES.small} as={PlusIcon} />
-              <Text>Novo carrinho</Text>
+              <Text>{i18n.t('cart.actions.newCart')}</Text>
             </Button>
           </ScrollView>
         ),
@@ -97,7 +101,7 @@ export function CartView() {
 
       {!cart ? (
         <Text className="px-16 py-8 text-center text-muted-foreground">
-          Nenhum carrinho foi encontrado.
+          {i18n.t('cart.states.noCartFound')}
         </Text>
       ) : (
         <Payload payload={{ cart }} />

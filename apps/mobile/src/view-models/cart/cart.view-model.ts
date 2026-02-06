@@ -1,10 +1,10 @@
 import { useAppReady } from '@/hooks/use-app-ready'
-import { useGetCart } from '@/hooks/use-cart-queries'
+import { useCurrentCartQuery } from '@/hooks/use-cart-queries'
 import { router, useSegments } from 'expo-router'
 import { useEffect, useState } from 'react'
 
 export function useCartViewModel() {
-  const { isLoading, cart, hasSelectedCart } = useGetCart()
+  const { isLoading, cart, hasSelectedCart } = useCurrentCartQuery()
   const segments = useSegments()
   const { isMounted } = useAppReady()
   const [alreadyPushed, setAlreadyPushed] = useState(false)

@@ -2,6 +2,7 @@ import { Screen } from '@/components/layout/screen'
 import { Icon } from '@/components/ui/icon'
 import { Text } from '@/components/ui/text'
 import { ICON_SIZES } from '@/constants/theme'
+import { i18n } from '@/lib/languages'
 import { MoreHorizontalIcon, MoreVerticalIcon } from 'lucide-react-native'
 import { ActivityIndicator, Platform, TouchableOpacity } from 'react-native'
 import { ProductCard } from './_components/product-card'
@@ -27,15 +28,19 @@ export function HomeView() {
       }}
       androidBottomTabInset
     >
+      <Text variant="h2" className="mt-0 mb-0 border-muted">
+        {i18n.t('home.recentProducts.title')}
+      </Text>
+
       {recentProducts.isLoading ? (
         <ActivityIndicator className="py-8 text-primary" size="large" />
       ) : recentProducts.isError ? (
         <Text className="py-8 text-center text-destructive">
-          Não foi possível carregar os produtos.
+          {i18n.t('home.recentProducts.errors.loading')}
         </Text>
       ) : recentProducts.products.length === 0 ? (
         <Text className="py-8 text-center text-muted-foreground">
-          Nenhum produto foi encontrado.
+          {i18n.t('home.recentProducts.states.empty')}
         </Text>
       ) : (
         recentProducts.products.map((product) => (

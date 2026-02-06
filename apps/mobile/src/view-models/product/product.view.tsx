@@ -3,6 +3,7 @@ import { Screen } from '@/components/layout/screen'
 import { Icon } from '@/components/ui/icon'
 import { Text } from '@/components/ui/text'
 import { ICON_SIZES } from '@/constants/theme'
+import { i18n } from '@/lib/languages'
 import { useIsPreview } from 'expo-router'
 import { MoreHorizontalIcon, MoreVerticalIcon } from 'lucide-react-native'
 import { Platform, TouchableOpacity } from 'react-native'
@@ -12,7 +13,7 @@ export function ProductView() {
   const { isLoading, product, errorMessage } = useProductViewModel()
   const isPreview = useIsPreview()
 
-  const title = product?.name || '...'
+  const title = product?.name ?? i18n.t('common.states.loading')
 
   return (
     <Screen
@@ -41,11 +42,11 @@ export function ProductView() {
 
       {errorMessage ? (
         <Text className="px-16 py-8 text-center text-destructive">
-          Não foi possível carregar o produto.
+          {i18n.t('product.errors.loading')}
         </Text>
       ) : !product ? (
         <Text className="px-16 py-8 text-center text-muted-foreground">
-          Nenhum produto foi encontrado.
+          {i18n.t('product.states.notFound')}
         </Text>
       ) : (
         <Payload payload={{ product }} />

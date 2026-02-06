@@ -4,7 +4,7 @@ import { useEffect } from 'react'
 import { useStorage } from './use-storage'
 
 export function useAppearance() {
-  const { colorScheme, setColorScheme } = useColorScheme()
+  const { colorScheme } = useColorScheme()
   const [theme, setTheme] = useStorage<ThemeMode | 'system'>('theme', 'system')
 
   const activeTheme =
@@ -13,11 +13,9 @@ export function useAppearance() {
         ? 'light'
         : colorScheme
       : theme
+
   const isDarkMode = activeTheme === 'dark'
   const inverseTheme: ThemeMode = isDarkMode ? 'light' : 'dark'
-
-  const useApplyColorScheme = () =>
-    useEffect(() => setColorScheme(theme), [theme])
 
   return {
     theme,
@@ -25,7 +23,12 @@ export function useAppearance() {
     inverseTheme,
     setTheme,
     toggleTheme: () => setTheme(inverseTheme),
-    useApplyColorScheme,
     colors: COLOR_SCHEMES[activeTheme],
   }
+}
+
+export function useSyncColorScheme(theme: ThemeMode | 'system') {
+  const { setColorScheme } = useColorScheme()
+
+  useEffect(() => setColorScheme(theme), [theme])
 }

@@ -10,13 +10,14 @@ import {
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { Text } from '@/components/ui/text'
+import { i18n } from '@/lib/languages'
 import { cn } from '@/lib/utils'
 import { Controller } from 'react-hook-form'
 import { ActivityIndicator, View } from 'react-native'
 import { useSignInViewModel } from './sign-in.view-model'
 
 export function SignInView() {
-  const { form, onSubmit } = useSignInViewModel()
+  const { control, onSubmit, isSubmitting } = useSignInViewModel()
 
   return (
     <Screen
@@ -27,15 +28,15 @@ export function SignInView() {
       <Card className="border-border shadow-none">
         <CardHeader>
           <CardTitle variant="h4" className="text-center">
-            Entre na sua conta
+            {i18n.t('signIn.title')}
           </CardTitle>
           <CardDescription className="text-center">
-            Por favor, faça login para continuar
+            {i18n.t('signIn.description')}
           </CardDescription>
         </CardHeader>
         <CardContent className="gap-6">
           <Controller
-            control={form.control}
+            control={control}
             name="username"
             render={({
               field: { onChange, onBlur, value, name },
@@ -47,7 +48,7 @@ export function SignInView() {
                   htmlFor={`form-sign-in-${name}`}
                   className={cn(invalid && 'text-destructive')}
                 >
-                  Nome de usuário
+                  {i18n.t('signIn.username.label')}
                 </Label>
                 <Input
                   aria-labelledby={`form-sign-in-${name}`}
@@ -56,7 +57,7 @@ export function SignInView() {
                   onBlur={onBlur}
                   value={value}
                   className={cn(invalid && 'border-destructive')}
-                  placeholder="Digite seu nome de usuário"
+                  placeholder={i18n.t('signIn.username.placeholder')}
                   autoComplete="username"
                   autoCapitalize="none"
                 />
@@ -70,7 +71,7 @@ export function SignInView() {
           />
 
           <Controller
-            control={form.control}
+            control={control}
             name="password"
             render={({
               field: { onChange, onBlur, value, name },
@@ -82,17 +83,8 @@ export function SignInView() {
                     nativeID={`form-sign-in-${name}`}
                     htmlFor={`form-sign-in-${name}`}
                   >
-                    Senha
+                    {i18n.t('signIn.password.label')}
                   </Label>
-                  {/* <Button
-                        variant="link"
-                        size="sm"
-                        className="ml-auto h-4 web:h-fit px-1 py-0 sm:h-4"
-                      >
-                        <Text className="font-normal leading-4">
-                          Esqueceu sua senha?
-                        </Text>
-                      </Button> */}
                 </View>
                 <Input
                   aria-labelledby={`form-sign-in-${name}`}
@@ -101,7 +93,7 @@ export function SignInView() {
                   onBlur={onBlur}
                   value={value}
                   className={cn(invalid && 'border-destructive')}
-                  placeholder="Digite sua senha"
+                  placeholder={i18n.t('signIn.password.placeholder')}
                   autoComplete="password"
                   autoCapitalize="none"
                   secureTextEntry
@@ -116,7 +108,7 @@ export function SignInView() {
           />
 
           <Controller
-            control={form.control}
+            control={control}
             name="workspaceId"
             render={({
               field: { onChange, onBlur, value, name },
@@ -128,7 +120,7 @@ export function SignInView() {
                   htmlFor={`form-sign-in-${name}`}
                   className={cn(invalid && 'text-destructive')}
                 >
-                  ID do Workspace
+                  {i18n.t('signIn.workspaceId.label')}
                 </Label>
                 <Input
                   aria-labelledby={`form-sign-in-${name}`}
@@ -137,7 +129,7 @@ export function SignInView() {
                   onBlur={onBlur}
                   value={value}
                   className={cn(invalid && 'border-destructive')}
-                  placeholder="Digite o ID do seu workspace"
+                  placeholder={i18n.t('signIn.workspaceId.placeholder')}
                   autoComplete="organization"
                   autoCapitalize="none"
                 />
@@ -150,17 +142,14 @@ export function SignInView() {
             )}
           />
 
-          <Button
-            onPress={form.handleSubmit(onSubmit)}
-            disabled={form.formState.isSubmitting}
-          >
-            {form.formState.isSubmitting && (
+          <Button onPress={onSubmit} disabled={isSubmitting}>
+            {isSubmitting && (
               <ActivityIndicator
                 className="text-primary-foreground"
                 size="small"
               />
             )}
-            <Text>Continuar</Text>
+            <Text>{i18n.t('signIn.actions.submit')}</Text>
           </Button>
         </CardContent>
       </Card>

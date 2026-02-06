@@ -1,4 +1,5 @@
 import { Text } from '@/components/ui/text'
+import { i18n } from '@/lib/languages'
 import { cn } from '@/lib/utils'
 import { Stack, useIsPreview } from 'expo-router'
 import type { ExtendedStackNavigationOptions } from 'expo-router/build/layouts/StackClient'
@@ -48,7 +49,7 @@ export function Screen({
             headerBackButtonDisplayMode: Platform.select<BackButtonDisplayMode>(
               { web: 'default', default: 'minimal' },
             ),
-            headerBackTitle: 'Voltar',
+            headerBackTitle: i18n.t('common.actions.back'),
             headerBlurEffect: 'systemChromeMaterial',
             headerLargeStyle: {
               backgroundColor: headerLarge ? 'transparent' : undefined,
@@ -96,7 +97,7 @@ export function Screen({
               <ActivityIndicator className="p-16 text-primary" size="large" />
             ) : isEmpty ? (
               <Text variant="muted" className="p-16 text-center">
-                Nenhum conteúdo disponível.
+                {i18n.t('common.states.noContent')}
               </Text>
             ) : (
               children

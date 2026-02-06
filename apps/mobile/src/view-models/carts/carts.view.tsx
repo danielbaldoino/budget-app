@@ -3,6 +3,7 @@ import { Button } from '@/components/ui/button'
 import { Icon } from '@/components/ui/icon'
 import { Text } from '@/components/ui/text'
 import { ICON_SIZES } from '@/constants/theme'
+import { i18n } from '@/lib/languages'
 import { router } from 'expo-router'
 import { PlusIcon, XIcon } from 'lucide-react-native'
 import { Platform, TouchableOpacity } from 'react-native'
@@ -33,7 +34,7 @@ export function CartsView() {
             default: (
               <Button variant="outline">
                 <Icon size={ICON_SIZES.small} as={PlusIcon} />
-                <Text>Novo</Text>
+                <Text>{i18n.t('carts.actions.newCart')}</Text>
               </Button>
             ),
           }),

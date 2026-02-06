@@ -3,6 +3,7 @@ import { Icon } from '@/components/ui/icon'
 import { Text } from '@/components/ui/text'
 import { ICON_SIZES } from '@/constants/theme'
 import { useAppearance } from '@/hooks/use-appearance'
+import { i18n } from '@/lib/languages'
 import { QrCodeIcon } from 'lucide-react-native'
 import {
   type NativeSyntheticEvent,
@@ -14,7 +15,7 @@ import { ProductCard } from './_components/product-card'
 import { useSearchViewModel } from './search.view-model'
 
 export function SearchView() {
-  const { onSearch, isLoading, data, errorMessage } = useSearchViewModel()
+  const { handleSearch, isLoading, data, errorMessage } = useSearchViewModel()
   const { colors } = useAppearance()
 
   const products = data?.products ?? []
@@ -30,7 +31,9 @@ export function SearchView() {
               disabled={Platform.select({ web: true })}
             >
               <Icon size={ICON_SIZES.small} as={QrCodeIcon} />
-              {Platform.select({ ios: <Text>QR code</Text> })}
+              {Platform.select({
+                ios: <Text>{i18n.t('search.actions.qrCode')}</Text>,
+              })}
             </TouchableOpacity>
           ),
         }),
@@ -40,8 +43,8 @@ export function SearchView() {
             autoCapitalize: 'sentences',
             onChangeText: ({
               nativeEvent: { text },
-            }: NativeSyntheticEvent<{ text: string }>) => onSearch(text),
-            placeholder: 'Produtos, Variantes e Mais',
+            }: NativeSyntheticEvent<{ text: string }>) => handleSearch(text),
+            placeholder: i18n.t('search.input.placeholder'),
             textColor: colors.text,
             tintColor: colors.primary, // iOS only
             // Android only
@@ -60,7 +63,7 @@ export function SearchView() {
         </Text>
       ) : products.length === 0 ? (
         <Text className="px-16 py-8 text-center text-muted-foreground">
-          Nenhum produto disponível.
+          {i18n.t('search.states.noResults')}
         </Text>
       ) : (
         products.map((product) => (

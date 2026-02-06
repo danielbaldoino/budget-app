@@ -1,4 +1,4 @@
-import { useAppearance } from '@/hooks/use-appearance'
+import { useAppearance, useSyncColorScheme } from '@/hooks/use-appearance'
 import {
   DarkTheme,
   DefaultTheme,
@@ -12,10 +12,9 @@ export function AppearanceProvider({
 }: {
   children: React.ReactNode
 }) {
-  const { isDarkMode, inverseTheme, useApplyColorScheme, colors } =
-    useAppearance()
+  const { theme, isDarkMode, inverseTheme, colors } = useAppearance()
 
-  useApplyColorScheme()
+  useSyncColorScheme(theme)
 
   return (
     <ThemeProvider
