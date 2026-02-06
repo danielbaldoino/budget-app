@@ -4,13 +4,15 @@ import { Button } from '@/components/ui/button'
 import { Icon } from '@/components/ui/icon'
 import { Text } from '@/components/ui/text'
 import { ICON_SIZES } from '@/constants/theme'
+import { cn } from '@/lib/utils'
 import {
   ListIcon,
   PlusIcon,
-  SearchIcon,
   SettingsIcon,
+  ShareIcon,
 } from 'lucide-react-native'
 import { Platform, ScrollView, TouchableOpacity, View } from 'react-native'
+import { Share } from 'react-native'
 import { useCartViewModel } from './cart.view-model'
 
 export function CartView() {
@@ -23,7 +25,6 @@ export function CartView() {
           ios: () => (
             <TouchableOpacity
               className="flex-row gap-2 p-2"
-              disabled={isLoading}
               onPress={redirectToCarts}
             >
               <Icon size={ICON_SIZES.small} as={ListIcon} />
@@ -31,19 +32,37 @@ export function CartView() {
             </TouchableOpacity>
           ),
         }),
-        headerRight: () => (
-          <View className="flex-row gap-2 ios:gap-4">
-            <TouchableOpacity className="p-2" disabled={isLoading}>
-              <Icon size={ICON_SIZES.small} as={SettingsIcon} />
-            </TouchableOpacity>
+        headerRight: () => {
+          const disabled = isLoading || !cart
 
-            <TouchableOpacity className="p-2" disabled={isLoading}>
-              <Icon size={ICON_SIZES.small} as={SearchIcon} />
-            </TouchableOpacity>
-          </View>
-        ),
+          return (
+            <View className="flex-row gap-2 ios:gap-4">
+              <TouchableOpacity className="p-2" disabled={disabled}>
+                <Icon
+                  className={cn(disabled && 'text-muted-foreground/50')}
+                  size={ICON_SIZES.small}
+                  as={SettingsIcon}
+                />
+              </TouchableOpacity>
+
+              <TouchableOpacity
+                className="p-2"
+                disabled={disabled}
+                onPress={() =>
+                  Share.share({ title: 'Compartilhar carrinho', message: '/' })
+                }
+              >
+                <Icon
+                  className={cn(disabled && 'text-muted-foreground/50')}
+                  size={ICON_SIZES.small}
+                  as={ShareIcon}
+                />
+              </TouchableOpacity>
+            </View>
+          )
+        },
       }}
-      contentClassName={'pt-0 lg:p-0'}
+      contentClassName="pt-0 lg:p-0"
       isPending={isLoading}
       androidBottomTabInset
     >

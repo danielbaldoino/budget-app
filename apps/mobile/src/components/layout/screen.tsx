@@ -96,9 +96,8 @@ export function Screen({
           >
             {isPending ? (
               <ActivityIndicator
-                className="p-16"
+                className="p-16 text-primary-foreground"
                 size="large"
-                color={colors.primary}
               />
             ) : isEmpty ? (
               <Text variant="muted" className="p-16 text-center">

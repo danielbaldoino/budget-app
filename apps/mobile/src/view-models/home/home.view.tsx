@@ -2,7 +2,6 @@ import { Screen } from '@/components/layout/screen'
 import { Icon } from '@/components/ui/icon'
 import { Text } from '@/components/ui/text'
 import { ICON_SIZES } from '@/constants/theme'
-import { useAppearance } from '@/hooks/use-appearance'
 import { MoreHorizontalIcon, MoreVerticalIcon } from 'lucide-react-native'
 import { ActivityIndicator, Platform, TouchableOpacity } from 'react-native'
 import { ProductCard } from './_components/product-card'
@@ -10,7 +9,6 @@ import { useHomeViewModel } from './home.view-model'
 
 export function HomeView() {
   const { recentProducts } = useHomeViewModel()
-  const { colors } = useAppearance()
 
   return (
     <Screen
@@ -31,9 +29,8 @@ export function HomeView() {
     >
       {recentProducts.isLoading ? (
         <ActivityIndicator
-          className="py-8"
+          className="py-8 text-primary-foreground"
           size="large"
-          color={colors.primary}
         />
       ) : recentProducts.isError ? (
         <Text className="py-8 text-center text-destructive">

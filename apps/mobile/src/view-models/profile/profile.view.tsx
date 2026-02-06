@@ -21,8 +21,8 @@ import {
 import { useProfileViewModel } from './profile.view-model'
 
 export function ProfileView() {
-  const { isLoading, user, signOut, toggleTheme } = useProfileViewModel()
-  const { isDarkMode, colors } = useAppearance()
+  const { isLoading, user, signOut, onToggleTheme } = useProfileViewModel()
+  const { isDarkMode } = useAppearance()
 
   return (
     <Screen
@@ -44,9 +44,8 @@ export function ProfileView() {
       <View className="rounded-lg bg-muted p-4">
         {isLoading ? (
           <ActivityIndicator
-            className="py-8"
+            className="py-8 text-primary-foreground"
             size="large"
-            color={colors.primary}
           />
         ) : !user ? (
           <Text className="py-8 text-center text-destructive">
@@ -66,7 +65,7 @@ export function ProfileView() {
         )}
       </View>
 
-      <Button variant="outline" onPress={toggleTheme}>
+      <Button variant="outline" onPress={onToggleTheme}>
         <Icon size={ICON_SIZES.small} as={isDarkMode ? SunIcon : MoonIcon} />
         <Text>Alternar Tema</Text>
       </Button>

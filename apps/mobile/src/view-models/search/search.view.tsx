@@ -3,7 +3,6 @@ import { Icon } from '@/components/ui/icon'
 import { Text } from '@/components/ui/text'
 import { ICON_SIZES } from '@/constants/theme'
 import { useAppearance } from '@/hooks/use-appearance'
-import { cn } from '@/lib/utils'
 import { QrCodeIcon } from 'lucide-react-native'
 import {
   type NativeSyntheticEvent,
@@ -23,23 +22,20 @@ export function SearchView() {
   return (
     <Screen
       options={{
-        headerRight: () => (
-          <TouchableOpacity
-            className="flex-row gap-2 p-2"
-            disabled={Platform.select({ web: true })}
-          >
-            <Icon
-              className={cn(
-                Platform.select({ web: 'text-muted-foreground/50' }),
-              )}
-              size={ICON_SIZES.small}
-              as={QrCodeIcon}
-            />
-            {Platform.select({ ios: <Text>QR code</Text> })}
-          </TouchableOpacity>
-        ),
+        headerRight: Platform.select({
+          web: undefined,
+          default: () => (
+            <TouchableOpacity
+              className="flex-row gap-2 p-2"
+              disabled={Platform.select({ web: true })}
+            >
+              <Icon size={ICON_SIZES.small} as={QrCodeIcon} />
+              {Platform.select({ ios: <Text>QR code</Text> })}
+            </TouchableOpacity>
+          ),
+        }),
         headerSearchBarOptions: Platform.select<SearchBarProps>({
-          // web: undefined,
+          web: undefined,
           default: {
             autoCapitalize: 'sentences',
             onChangeText: ({

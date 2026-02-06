@@ -14,13 +14,6 @@ export default function TabsLayout() {
           label: 'Início',
         },
         {
-          name: 'search',
-          role: 'search',
-          iconIos: 'magnifyingglass',
-          iconAndroid: 'magnify',
-          label: 'Buscar',
-        },
-        {
           name: 'cart',
           iconIos: { default: 'cart', selected: 'cart.fill' },
           iconAndroid: 'cart',
@@ -31,6 +24,13 @@ export default function TabsLayout() {
                 ? '99+'
                 : String(qtyOfItems)
               : undefined,
+        },
+        {
+          name: 'search',
+          role: 'search',
+          iconIos: 'magnifyingglass',
+          iconAndroid: 'magnify',
+          label: 'Buscar',
         },
         {
           name: 'orders',
