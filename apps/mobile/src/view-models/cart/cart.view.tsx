@@ -1,27 +1,42 @@
+import { BottomBar } from '@/components/bottom-bar'
 import { Payload } from '@/components/debug/payload'
 import { Screen } from '@/components/layout/screen'
+import { QuantitySelector } from '@/components/quantity-selector'
 import { Button } from '@/components/ui/button'
 import { Icon } from '@/components/ui/icon'
 import { Text } from '@/components/ui/text'
 import { ICON_SIZES } from '@/constants/theme'
 import { i18n } from '@/lib/languages'
 import { cn } from '@/lib/utils'
+import { isLiquidGlassAvailable } from 'expo-glass-effect'
 import {
+  CheckIcon,
   ListIcon,
   PlusIcon,
   SettingsIcon,
   ShareIcon,
 } from 'lucide-react-native'
-import { Platform, ScrollView, TouchableOpacity, View } from 'react-native'
+import { useState } from 'react'
+import {
+  FlatList,
+  Platform,
+  ScrollView,
+  TouchableOpacity,
+  View,
+} from 'react-native'
 import { Share } from 'react-native'
 import { useCartViewModel } from './cart.view-model'
 
 export function CartView() {
   const { isLoading, cart, redirectToCarts } = useCartViewModel()
+  const [count, setCount] = useState(0)
+
+  const hasGlass = isLiquidGlassAvailable()
 
   return (
     <Screen
       options={{
+        title: i18n.t('cart.title'),
         headerLeft: Platform.select({
           ios: () => (
             <TouchableOpacity
@@ -66,46 +81,72 @@ export function CartView() {
           )
         },
       }}
-      contentClassName="pt-0 lg:p-0"
-      isPending={isLoading}
-      androidBottomTabInset
+      className="android:mb-safe-offset-20"
+      loading={isLoading}
+      // empty={!cart ? i18n.t('cart.states.noCartFound') : undefined}
     >
       {Platform.select({
         ios: null,
         default: (
-          <ScrollView
-            horizontal
-            className="-mx-4 rounded-b-lg bg-card p-4 pt-0"
-          >
-            <Button
-              variant="outline"
-              className="me-4 w-fit"
-              onPress={redirectToCarts}
-            >
-              <Icon size={ICON_SIZES.small} as={ListIcon} />
+          <View className="rounded-b-lg bg-card p-4">
+            <ScrollView horizontal contentContainerClassName="gap-x-4">
+              <Button variant="outline" onPress={redirectToCarts}>
+                <Icon size={ICON_SIZES.small} as={ListIcon} />
+                <Text>{i18n.t('cart.actions.viewAllCarts')}</Text>
+              </Button>
 
-              <Text>{i18n.t('cart.actions.viewAllCarts')}</Text>
-            </Button>
-
-            <Button
-              variant="outline"
-              className="me-4 w-fit"
-              disabled={isLoading}
-            >
-              <Icon size={ICON_SIZES.small} as={PlusIcon} />
-              <Text>{i18n.t('cart.actions.newCart')}</Text>
-            </Button>
-          </ScrollView>
+              <Button variant="outline" disabled={isLoading}>
+                <Icon size={ICON_SIZES.small} as={PlusIcon} />
+                <Text>{i18n.t('cart.actions.newCart')}</Text>
+              </Button>
+            </ScrollView>
+          </View>
         ),
       })}
 
-      {!cart ? (
-        <Text className="px-16 py-8 text-center text-muted-foreground">
-          {i18n.t('cart.states.noCartFound')}
-        </Text>
-      ) : (
-        <Payload payload={{ cart }} />
-      )}
+      <FlatList
+        contentContainerClassName={cn(
+          'gap-y-2 p-4',
+          hasGlass && 'pb-safe-offset-24',
+        )}
+        data={[]}
+        keyExtractor={(item) => item}
+        renderItem={({ item }) => <Payload payload={{ item }} />}
+        ListEmptyComponent={() => (
+          <Text className="px-16 py-8 text-center text-muted-foreground">
+            {i18n.t('cart.states.noItems')}
+          </Text>
+        )}
+      />
+
+      <BottomBar
+        containerClassName={cn(
+          hasGlass && 'absolute bottom-0 mx-4 mb-safe-offset-16',
+        )}
+        className={cn(
+          'h-24 flex-row items-center justify-between gap-4 p-4',
+          !hasGlass && 'rounded-t-lg bg-primary/5',
+        )}
+      >
+        <QuantitySelector
+          className="h-full flex-1 border-muted-foreground/50 "
+          quantity={count}
+          onQuantityChange={setCount}
+        />
+
+        <Button
+          className="h-full flex-1"
+          onPress={() => {}}
+          disabled={(cart?.cartItems.length ?? 0) === 0}
+        >
+          <Icon
+            className="text-primary-foreground"
+            size={ICON_SIZES.small}
+            as={CheckIcon}
+          />
+          <Text>{i18n.t('cart.actions.checkout')}</Text>
+        </Button>
+      </BottomBar>
     </Screen>
   )
 }

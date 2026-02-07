@@ -66,10 +66,12 @@ export const translations: Dict = {
         viewAllCarts: 'View all',
         newCart: 'New cart',
         shareCart: 'Share cart',
+        checkout: 'Checkout',
       },
 
       states: {
         noCartFound: 'No cart selected.',
+        noItems: 'No items in the cart.',
       },
     },
 
@@ -90,6 +92,10 @@ export const translations: Dict = {
 
       actions: {
         qrCode: 'QR Code',
+      },
+
+      errors: {
+        loading: 'Error loading search results. Please try again later.',
       },
 
       states: {
@@ -114,6 +120,10 @@ export const translations: Dict = {
     },
 
     product: {
+      actions: {
+        addToCart: 'Add to cart',
+      },
+
       errors: {
         loading: 'Error loading product. Please try again later.',
       },
@@ -139,6 +149,7 @@ export const translations: Dict = {
       states: {
         loading: 'Loading...',
         noContent: 'No content available.',
+        error: 'An error occurred.',
       },
 
       fallback: {
@@ -212,10 +223,12 @@ export const translations: Dict = {
         viewAllCarts: 'Ver todos',
         newCart: 'Novo carrinho',
         shareCart: 'Compartilhar carrinho',
+        checkout: 'Finalizar compra',
       },
 
       states: {
         noCartFound: 'Nenhum carrinho selecionado.',
+        noItems: 'Nenhum item no carrinho.',
       },
     },
 
@@ -236,6 +249,11 @@ export const translations: Dict = {
 
       actions: {
         qrCode: 'Código QR',
+      },
+
+      errors: {
+        loading:
+          'Erro ao carregar os resultados da busca. Por favor, tente novamente mais tarde.',
       },
 
       states: {
@@ -261,6 +279,10 @@ export const translations: Dict = {
     },
 
     product: {
+      actions: {
+        addToCart: 'Adicionar',
+      },
+
       errors: {
         loading:
           'Erro ao carregar o produto. Por favor, tente novamente mais tarde.',
@@ -287,6 +309,7 @@ export const translations: Dict = {
       states: {
         loading: 'Carregando...',
         noContent: 'Nenhum conteúdo disponível.',
+        error: 'Ocorreu um erro.',
       },
 
       fallback: {

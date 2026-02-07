@@ -3,7 +3,7 @@ import { Text } from '@/components/ui/text'
 import { ICON_SIZES } from '@/constants/theme'
 import { i18n } from '@/lib/languages'
 import { Link } from 'expo-router'
-import { ChevronRightIcon, TagIcon } from 'lucide-react-native'
+import { ChevronRightIcon, ImageOffIcon } from 'lucide-react-native'
 import { useState } from 'react'
 import { Image, Platform, Pressable, Share, View } from 'react-native'
 import type { Product } from '../_lib/utils'
@@ -13,14 +13,13 @@ export function ProductCard({ product }: { product: Product }) {
   const imageUrl = product.images[0]?.url
 
   const [imageError, setImageError] = useState(false)
-  const showImage = !!imageUrl && !imageError
 
-  const productHref = `product/${id}`
+  const productHref = `products/${id}`
 
   const CardContent = () => (
-    <View className="flex-row items-center gap-2 rounded-lg border border-border/20 bg-card p-2">
+    <View className="flex-row items-center gap-4 bg-card px-4 py-2">
       <View className="size-16 overflow-hidden rounded-sm bg-muted">
-        {showImage ? (
+        {Boolean(imageUrl) && !imageError ? (
           <Image
             source={{ uri: imageUrl }}
             className="size-full object-contain"
@@ -29,8 +28,8 @@ export function ProductCard({ product }: { product: Product }) {
         ) : (
           <Icon
             className="m-auto text-muted-foreground"
-            as={TagIcon}
-            size={ICON_SIZES.large}
+            as={ImageOffIcon}
+            size={ICON_SIZES.small}
           />
         )}
       </View>

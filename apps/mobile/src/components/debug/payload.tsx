@@ -12,7 +12,7 @@ import { ScrollView, View } from 'react-native'
 export function Payload({ payload }: { payload: unknown }) {
   return (
     <View className="max-h-64 rounded-lg border border-border border-dashed bg-muted">
-      <ScrollView className="p-2">
+      <ScrollView contentContainerClassName="p-2">
         <Text variant="code" className="text-muted-foreground text-xs">
           {JSON.stringify(payload, null, 2)}
         </Text>

@@ -12,6 +12,7 @@ export function CartsView() {
   return (
     <Screen
       options={{
+        title: i18n.t('carts.title'),
         headerLargeTitleEnabled: false,
         headerLeft: Platform.select({
           ios: ({ canGoBack }) => (

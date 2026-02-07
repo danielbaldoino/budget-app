@@ -1,17 +1,30 @@
+import { BottomBar } from '@/components/bottom-bar'
 import { Payload } from '@/components/debug/payload'
 import { Screen } from '@/components/layout/screen'
+import { Button } from '@/components/ui/button'
 import { Icon } from '@/components/ui/icon'
 import { Text } from '@/components/ui/text'
 import { ICON_SIZES } from '@/constants/theme'
 import { i18n } from '@/lib/languages'
+import { cn } from '@/lib/utils'
+import { isLiquidGlassAvailable } from 'expo-glass-effect'
 import { useIsPreview } from 'expo-router'
-import { MoreHorizontalIcon, MoreVerticalIcon } from 'lucide-react-native'
-import { Platform, TouchableOpacity } from 'react-native'
+import {
+  MoreHorizontalIcon,
+  MoreVerticalIcon,
+  ShoppingCartIcon,
+} from 'lucide-react-native'
+import { useState } from 'react'
+import { Platform, ScrollView, TouchableOpacity } from 'react-native'
+import { QuantitySelector } from '../../components/quantity-selector'
 import { useProductViewModel } from './product.view-model'
 
 export function ProductView() {
-  const { isLoading, product, errorMessage } = useProductViewModel()
+  const { isLoading, product, isError } = useProductViewModel()
   const isPreview = useIsPreview()
+  const [count, setCount] = useState(0)
+
+  const hasGlass = isLiquidGlassAvailable()
 
   const title = product?.name ?? i18n.t('common.states.loading')
 
@@ -32,24 +45,51 @@ export function ProductView() {
           </TouchableOpacity>
         ),
       }}
-      isPending={isLoading}
+      loading={isLoading}
+      error={isError ? i18n.t('product.errors.loading') : undefined}
+      empty={!product ? i18n.t('product.states.notFound') : undefined}
     >
       {isPreview && (
-        <Text variant="h1" className="mt-0 rounded-lg text-start">
+        <Text variant="h2" className="mx-4 mt-8 text-start">
           {title}
         </Text>
       )}
 
-      {errorMessage ? (
-        <Text className="px-16 py-8 text-center text-destructive">
-          {i18n.t('product.errors.loading')}
-        </Text>
-      ) : !product ? (
-        <Text className="px-16 py-8 text-center text-muted-foreground">
-          {i18n.t('product.states.notFound')}
-        </Text>
-      ) : (
+      <ScrollView
+        contentContainerClassName={cn(
+          'gap-y-4 p-4',
+          hasGlass && 'pb-safe-offset-28',
+        )}
+      >
         <Payload payload={{ product }} />
+      </ScrollView>
+
+      {!isPreview && (
+        <BottomBar
+          containerClassName={cn(
+            'mb-safe',
+            hasGlass && 'absolute bottom-0 mx-4',
+          )}
+          className={cn(
+            'h-24 flex-row items-center justify-between gap-4 p-4',
+            !hasGlass && 'rounded-t-lg bg-primary/5',
+          )}
+        >
+          <QuantitySelector
+            className="h-full flex-1 border-muted-foreground/50 "
+            quantity={count}
+            onQuantityChange={setCount}
+          />
+
+          <Button className="h-full flex-1" onPress={() => {}}>
+            <Icon
+              className="text-primary-foreground"
+              size={ICON_SIZES.small}
+              as={ShoppingCartIcon}
+            />
+            <Text>{i18n.t('product.actions.addToCart')}</Text>
+          </Button>
+        </BottomBar>
       )}
     </Screen>
   )

@@ -19,7 +19,7 @@ export function useCartViewModel() {
       return
     }
     if (lastSegment === 'cart') {
-      redirectToCarts()
+      // redirectToCarts()
     }
     if (lastSegment === 'carts') {
       setAlreadyPushed(true)

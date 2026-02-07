@@ -6,6 +6,7 @@ import { useAppearance } from '@/hooks/use-appearance'
 import { i18n } from '@/lib/languages'
 import { QrCodeIcon } from 'lucide-react-native'
 import {
+  FlatList,
   type NativeSyntheticEvent,
   Platform,
   TouchableOpacity,
@@ -15,21 +16,16 @@ import { ProductCard } from './_components/product-card'
 import { useSearchViewModel } from './search.view-model'
 
 export function SearchView() {
-  const { onSearchChange, isLoading, data, errorMessage } = useSearchViewModel()
+  const { onSearchChange, isLoading, products, isError } = useSearchViewModel()
   const { colors } = useAppearance()
-
-  const products = data?.products ?? []
 
   return (
     <Screen
       options={{
+        title: i18n.t('search.title'),
         headerRight: Platform.select({
-          web: undefined,
-          default: () => (
-            <TouchableOpacity
-              className="flex-row gap-2 p-2"
-              disabled={Platform.select({ web: true })}
-            >
+          native: () => (
+            <TouchableOpacity className="flex-row gap-2 p-2">
               <Icon size={ICON_SIZES.small} as={QrCodeIcon} />
               {Platform.select({
                 ios: <Text>{i18n.t('search.actions.qrCode')}</Text>,
@@ -38,8 +34,7 @@ export function SearchView() {
           ),
         }),
         headerSearchBarOptions: Platform.select<SearchBarProps>({
-          web: undefined,
-          default: {
+          native: {
             autoCapitalize: 'sentences',
             onChangeText: ({
               nativeEvent: { text },
@@ -51,26 +46,25 @@ export function SearchView() {
             shouldShowHintSearchIcon: false,
             headerIconColor: colors.text,
             hintTextColor: colors.txtMuted,
-            placement: 'integratedButton',
+            placement: 'integratedCentered',
           },
         }),
       }}
-      isPending={isLoading}
-      androidBottomTabInset
+      className="android:mb-safe-offset-20"
+      keyboard
+      loading={isLoading}
+      error={isError ? i18n.t('search.errors.loading') : undefined}
     >
-      {errorMessage ? (
-        <Text className="px-16 py-8 text-center text-destructive">
-          {errorMessage}
-        </Text>
-      ) : products.length === 0 ? (
-        <Text className="px-16 py-8 text-center text-muted-foreground">
-          {i18n.t('search.states.noResults')}
-        </Text>
-      ) : (
-        products.map((product) => (
-          <ProductCard key={product.id} product={product} />
-        ))
-      )}
+      <FlatList
+        data={products}
+        keyExtractor={({ id }) => id}
+        renderItem={({ item }) => <ProductCard product={item} />}
+        ListEmptyComponent={() => (
+          <Text className="px-16 py-8 text-center text-muted-foreground">
+            {i18n.t('search.states.noResults')}
+          </Text>
+        )}
+      />
     </Screen>
   )
 }

@@ -11,13 +11,10 @@ export function useProfileViewModel() {
     fn()
   }
 
-  const handleSignOut = withSoftHaptic(signOut)
-  const handleToggleTheme = withSoftHaptic(toggleTheme)
-
   return {
     isLoading: isLoadingUser,
     user,
-    handleSignOut,
-    handleToggleTheme,
+    handleSignOut: withSoftHaptic(signOut),
+    handleToggleTheme: withSoftHaptic(toggleTheme),
   }
 }
