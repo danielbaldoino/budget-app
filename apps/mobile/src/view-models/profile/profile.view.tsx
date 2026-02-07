@@ -59,10 +59,7 @@ export function ProfileView() {
                 </Text>
               </View>
 
-              <Text
-                variant="p"
-                className="text-muted-foreground text-sm sm:mt-3"
-              >
+              <Text variant="p" className="text-muted-foreground text-sm">
                 {i18n.t('profile.description')}
               </Text>
             </>

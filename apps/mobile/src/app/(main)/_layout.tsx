@@ -1,6 +1,10 @@
 import { Stack } from 'expo-router'
 import { Platform } from 'react-native'
 
+export const unstable_settings = {
+  initialRouteName: '(tabs)',
+}
+
 export default function PrivateLayout() {
   return (
     <Stack>
@@ -27,6 +31,8 @@ export default function PrivateLayout() {
         name="products/[id]/inventory"
         options={{ presentation: 'modal' }}
       />
+
+      <Stack.Screen name="scanner" options={{ presentation: 'modal' }} />
     </Stack>
   )
 }

@@ -15,13 +15,16 @@
     ]
   },
   "linter": {
-    "ignore": ["node_modules"],
+    "ignore": [
+      "node_modules"
+    ],
     "enabled": true,
     "rules": {
       "recommended": true,
       "a11y": {
         "noSvgWithoutTitle": "off",
-        "useKeyWithClickEvents": "off"
+        "useKeyWithClickEvents": "off",
+        "useSemanticElements": "off"
       },
       "style": {
         "recommended": true,
@@ -42,7 +45,9 @@
         "useSortedClasses": {
           "level": "warn",
           "options": {
-            "functions": ["cva"]
+            "functions": [
+              "cva"
+            ]
           }
         }
       }

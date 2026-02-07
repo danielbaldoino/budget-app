@@ -4,6 +4,7 @@ import { Text } from '@/components/ui/text'
 import { ICON_SIZES } from '@/constants/theme'
 import { useAppearance } from '@/hooks/use-appearance'
 import { i18n } from '@/lib/languages'
+import { router } from 'expo-router'
 import { QrCodeIcon } from 'lucide-react-native'
 import {
   FlatList,
@@ -25,7 +26,10 @@ export function SearchView() {
         title: i18n.t('search.title'),
         headerRight: Platform.select({
           native: () => (
-            <TouchableOpacity className="flex-row gap-2 p-2">
+            <TouchableOpacity
+              className="flex-row gap-2 p-2"
+              onPress={() => router.push('scanner')}
+            >
               <Icon size={ICON_SIZES.small} as={QrCodeIcon} />
               {Platform.select({
                 ios: <Text>{i18n.t('search.actions.qrCode')}</Text>,

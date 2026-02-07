@@ -2,6 +2,33 @@ import type { Dict } from 'i18n-js'
 
 export const translations: Dict = {
   en: {
+    common: {
+      actions: {
+        back: 'Back',
+        open: 'Open',
+        share: 'Share',
+      },
+
+      states: {
+        loading: 'Loading...',
+        noContent: 'No content available.',
+      },
+
+      errors: {
+        generic: 'An error occurred.',
+        permissionRequired: 'Permission is required to continue.',
+      },
+
+      permissions: {
+        camera: 'Camera permission is required.',
+        location: 'Location permission is required.',
+      },
+
+      fallback: {
+        noName: 'No name',
+      },
+    },
+
     welcome: {
       description:
         'Welcome to the budgeting app! Make your product budgets easily and quickly.',
@@ -43,19 +70,63 @@ export const translations: Dict = {
       },
     },
 
+    session: {
+      errors: {
+        expired: 'Your session has expired. Please sign in again.',
+      },
+    },
+
     home: {
       title: 'Home',
 
       recentProducts: {
         title: 'Recent products',
 
-        errors: {
-          loading: 'Unable to load recent products.',
-        },
-
         states: {
           empty: 'No recent products found.',
         },
+
+        errors: {
+          loading: 'Unable to load recent products.',
+        },
+      },
+    },
+
+    search: {
+      title: 'Search',
+
+      input: {
+        placeholder: 'Products, variants and more',
+      },
+
+      actions: {
+        qrCode: 'QR Code',
+      },
+
+      states: {
+        noResults: 'No results found.',
+      },
+
+      errors: {
+        loading: 'Error loading search results. Please try again later.',
+      },
+    },
+
+    scanner: {
+      title: 'Scanner',
+    },
+
+    product: {
+      actions: {
+        addToCart: 'Add to cart',
+      },
+
+      states: {
+        notFound: 'Product not found.',
+      },
+
+      errors: {
+        loading: 'Error loading product. Please try again later.',
       },
     },
 
@@ -83,27 +154,9 @@ export const translations: Dict = {
       },
     },
 
-    search: {
-      title: 'Search',
-
-      input: {
-        placeholder: 'Products, variants and more',
-      },
-
-      actions: {
-        qrCode: 'QR Code',
-      },
-
-      errors: {
-        loading: 'Error loading search results. Please try again later.',
-      },
-
-      states: {
-        noResults: 'No results found.',
-      },
+    orders: {
+      title: 'Orders',
     },
-
-    orders: { title: 'Orders' },
 
     profile: {
       title: 'Profile',
@@ -118,47 +171,36 @@ export const translations: Dict = {
         loading: 'Error loading profile. Please try again later.',
       },
     },
-
-    product: {
-      actions: {
-        addToCart: 'Add to cart',
-      },
-
-      errors: {
-        loading: 'Error loading product. Please try again later.',
-      },
-
-      states: {
-        notFound: 'Product not found.',
-      },
-    },
-
-    session: {
-      errors: {
-        expired: 'Your session has expired. Please sign in again.',
-      },
-    },
-
-    common: {
-      actions: {
-        back: 'Back',
-        open: 'Open',
-        share: 'Share',
-      },
-
-      states: {
-        loading: 'Loading...',
-        noContent: 'No content available.',
-        error: 'An error occurred.',
-      },
-
-      fallback: {
-        noName: 'No name',
-      },
-    },
   },
 
   pt: {
+    common: {
+      actions: {
+        back: 'Voltar',
+        open: 'Abrir',
+        share: 'Compartilhar',
+      },
+
+      states: {
+        loading: 'Carregando...',
+        noContent: 'Nenhum conteúdo disponível.',
+      },
+
+      errors: {
+        generic: 'Ocorreu um erro.',
+        permissionRequired: 'Permissão é necessária para continuar.',
+      },
+
+      permissions: {
+        camera: 'Permissão de câmera é necessária.',
+        location: 'Permissão de localização é necessária.',
+      },
+
+      fallback: {
+        noName: 'Sem nome',
+      },
+    },
+
     welcome: {
       description:
         'Bem-vindo ao aplicativo de orçamento! Faça seus orçamentos de produtos de forma fácil e rápida.',
@@ -200,19 +242,65 @@ export const translations: Dict = {
       },
     },
 
+    session: {
+      errors: {
+        expired: 'Sua sessão expirou. Por favor, faça login novamente.',
+      },
+    },
+
     home: {
       title: 'Início',
 
       recentProducts: {
         title: 'Produtos recentes',
 
-        errors: {
-          loading: 'Não foi possível carregar os produtos recentes.',
-        },
-
         states: {
           empty: 'Nenhum produto recente encontrado.',
         },
+
+        errors: {
+          loading: 'Não foi possível carregar os produtos recentes.',
+        },
+      },
+    },
+
+    search: {
+      title: 'Buscar',
+
+      input: {
+        placeholder: 'Produtos, variantes e mais',
+      },
+
+      actions: {
+        qrCode: 'Código QR',
+      },
+
+      states: {
+        noResults: 'Nenhum resultado encontrado.',
+      },
+
+      errors: {
+        loading:
+          'Erro ao carregar os resultados da busca. Por favor, tente novamente mais tarde.',
+      },
+    },
+
+    scanner: {
+      title: 'Scanner',
+    },
+
+    product: {
+      actions: {
+        addToCart: 'Adicionar',
+      },
+
+      states: {
+        notFound: 'Produto não encontrado.',
+      },
+
+      errors: {
+        loading:
+          'Erro ao carregar o produto. Por favor, tente novamente mais tarde.',
       },
     },
 
@@ -240,28 +328,9 @@ export const translations: Dict = {
       },
     },
 
-    search: {
-      title: 'Buscar',
-
-      input: {
-        placeholder: 'Produtos, variantes e mais',
-      },
-
-      actions: {
-        qrCode: 'Código QR',
-      },
-
-      errors: {
-        loading:
-          'Erro ao carregar os resultados da busca. Por favor, tente novamente mais tarde.',
-      },
-
-      states: {
-        noResults: 'Nenhum resultado encontrado.',
-      },
+    orders: {
+      title: 'Pedidos',
     },
-
-    orders: { title: 'Pedidos' },
 
     profile: {
       title: 'Perfil',
@@ -275,45 +344,6 @@ export const translations: Dict = {
       errors: {
         loading:
           'Erro ao carregar o perfil. Por favor, tente novamente mais tarde.',
-      },
-    },
-
-    product: {
-      actions: {
-        addToCart: 'Adicionar',
-      },
-
-      errors: {
-        loading:
-          'Erro ao carregar o produto. Por favor, tente novamente mais tarde.',
-      },
-
-      states: {
-        notFound: 'Produto não encontrado.',
-      },
-    },
-
-    session: {
-      errors: {
-        expired: 'Sua sessão expirou. Por favor, faça login novamente.',
-      },
-    },
-
-    common: {
-      actions: {
-        back: 'Voltar',
-        open: 'Abrir',
-        share: 'Compartilhar',
-      },
-
-      states: {
-        loading: 'Carregando...',
-        noContent: 'Nenhum conteúdo disponível.',
-        error: 'Ocorreu um erro.',
-      },
-
-      fallback: {
-        noName: 'Sem nome',
       },
     },
   },

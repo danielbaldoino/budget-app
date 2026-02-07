@@ -35,7 +35,7 @@ export function ProductCard({ product }: { product: Product }) {
       </View>
       <View className="flex-1">
         <Text variant="large">{name}</Text>
-        <Text variant="p" className="mt-0 text-muted-foreground sm:mt-0">
+        <Text variant="p" className="text-muted-foreground">
           {description}
         </Text>
       </View>

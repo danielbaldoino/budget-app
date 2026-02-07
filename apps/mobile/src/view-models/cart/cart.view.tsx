@@ -83,7 +83,7 @@ export function CartView() {
       }}
       className="android:mb-safe-offset-20"
       loading={isLoading}
-      // empty={!cart ? i18n.t('cart.states.noCartFound') : undefined}
+      empty={!cart ? i18n.t('cart.states.noCartFound') : undefined}
     >
       {Platform.select({
         ios: null,
@@ -109,8 +109,8 @@ export function CartView() {
           'gap-y-2 p-4',
           hasGlass && 'pb-safe-offset-24',
         )}
-        data={[]}
-        keyExtractor={(item) => item}
+        data={cart?.cartItems ?? []}
+        keyExtractor={({ id }) => id}
         renderItem={({ item }) => <Payload payload={{ item }} />}
         ListEmptyComponent={() => (
           <Text className="px-16 py-8 text-center text-muted-foreground">
