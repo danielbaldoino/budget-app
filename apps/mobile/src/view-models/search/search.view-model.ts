@@ -13,6 +13,6 @@ export function useSearchViewModel() {
     isError,
     products: data?.products ?? [],
     onSearchChange: (text: string) => router.setParams({ q: text }),
-    handleQrCodePress: () => router.push('scanner'),
+    handleQrCodePress: () => router.push('search/scanner'),
   }
 }

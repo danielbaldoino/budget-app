@@ -1,3 +1,10 @@
 import { Stack } from 'expo-router'
 
-export default Stack
+export default function CartLayout() {
+  return (
+    <Stack>
+      <Stack.Screen name="index" />
+      <Stack.Screen name="settings" options={{ presentation: 'modal' }} />
+    </Stack>
+  )
+}

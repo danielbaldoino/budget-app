@@ -31,6 +31,7 @@ export function ProductView() {
       options={{
         title,
         headerLargeTitleEnabled: false,
+        headerTitleAlign: 'center',
         headerRight: () => (
           <TouchableOpacity className="p-2">
             <Icon
@@ -69,7 +70,7 @@ export function ProductView() {
             hasGlass && 'absolute bottom-0 mx-4',
           )}
           className={cn(
-            'h-24 flex-row items-center justify-between gap-4 p-4',
+            'h-24 flex-row items-center justify-between gap-x-4 p-4',
             !hasGlass && 'rounded-t-lg bg-primary/5',
           )}
         >

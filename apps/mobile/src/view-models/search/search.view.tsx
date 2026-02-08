@@ -27,7 +27,7 @@ export function SearchView() {
         headerRight: Platform.select({
           native: () => (
             <TouchableOpacity
-              className="flex-row gap-2 p-2"
+              className="flex-row gap-x-2 p-2"
               onPress={handleQrCodePress}
             >
               <Icon size={ICON_SIZES.small} as={QrCodeIcon} />

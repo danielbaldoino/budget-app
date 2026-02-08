@@ -41,7 +41,7 @@ function SignInForm() {
           {i18n.t('signIn.description')}
         </CardDescription>
       </CardHeader>
-      <CardContent className="gap-6">
+      <CardContent className="gap-y-6">
         <Controller
           control={control}
           name="username"

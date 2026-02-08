@@ -39,7 +39,10 @@ export function useCartViewModel() {
   return {
     isLoading,
     cart,
-    redirectToCarts,
+    handleGoToCarts: redirectToCarts,
+    handleGoToNewCart: () => router.push('carts/new'),
+    handleGoToCheckout: () => router.push('checkout'),
+    handleGoToSettings: () => router.push('cart/settings'),
     handleShare,
   }
 }

@@ -9,7 +9,7 @@ import { Platform, TouchableOpacity } from 'react-native'
 import { useCartsViewModel } from './carts.view-model'
 
 export function CartsView() {
-  const { handlerGoBack } = useCartsViewModel()
+  const { handlerGoBack, handlerGoToNewCart } = useCartsViewModel()
 
   return (
     <Screen
@@ -30,12 +30,12 @@ export function CartsView() {
         headerRight: () =>
           Platform.select({
             ios: (
-              <TouchableOpacity className="p-2">
+              <TouchableOpacity className="p-2" onPress={handlerGoToNewCart}>
                 <Icon size={ICON_SIZES.small} as={PlusIcon} />
               </TouchableOpacity>
             ),
             default: (
-              <Button variant="outline">
+              <Button variant="outline" onPress={handlerGoToNewCart}>
                 <Icon size={ICON_SIZES.small} as={PlusIcon} />
                 <Text>{i18n.t('carts.actions.newCart')}</Text>
               </Button>

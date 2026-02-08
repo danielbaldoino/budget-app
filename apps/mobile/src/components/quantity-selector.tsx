@@ -43,7 +43,7 @@ export function QuantitySelector({
   return (
     <View
       className={cn(
-        'flex-row items-center justify-between gap-4 rounded-lg border border-border bg-card p-2',
+        'flex-row items-center justify-between gap-x-4 rounded-lg border border-border bg-card p-2',
         className,
         disabled && 'opacity-50',
       )}
@@ -55,9 +55,9 @@ export function QuantitySelector({
         disabled={!canDecrease}
       >
         <Icon
-          as={MinusIcon}
-          size={ICON_SIZES.small}
           className={cn(!canDecrease && 'text-muted-foreground/50')}
+          size={ICON_SIZES.small}
+          as={MinusIcon}
         />
       </TouchableOpacity>
 
@@ -70,9 +70,9 @@ export function QuantitySelector({
         disabled={!canIncrease}
       >
         <Icon
-          as={PlusIcon}
-          size={ICON_SIZES.small}
           className={cn(!canIncrease && 'text-muted-foreground/50')}
+          size={ICON_SIZES.small}
+          as={PlusIcon}
         />
       </TouchableOpacity>
     </View>

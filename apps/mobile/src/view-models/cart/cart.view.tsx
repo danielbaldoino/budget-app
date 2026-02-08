@@ -26,7 +26,15 @@ import {
 import { useCartViewModel } from './cart.view-model'
 
 export function CartView() {
-  const { isLoading, cart, redirectToCarts, handleShare } = useCartViewModel()
+  const {
+    isLoading,
+    cart,
+    handleGoToCarts,
+    handleGoToNewCart,
+    handleGoToCheckout,
+    handleGoToSettings,
+    handleShare,
+  } = useCartViewModel()
 
   const hasGlass = isLiquidGlassAvailable()
   const hasItems = (cart?.cartItems.length ?? 0) > 0
@@ -38,8 +46,8 @@ export function CartView() {
         headerLeft: Platform.select({
           ios: () => (
             <TouchableOpacity
-              className="flex-row gap-2 p-2"
-              onPress={redirectToCarts}
+              className="flex-row gap-x-2 p-2"
+              onPress={handleGoToCarts}
             >
               <Icon size={ICON_SIZES.small} as={ListIcon} />
               <Text>{i18n.t('cart.actions.viewAllCarts')}</Text>
@@ -50,8 +58,12 @@ export function CartView() {
           const disabled = isLoading || !cart
 
           return (
-            <View className="flex-row gap-2 ios:gap-4">
-              <TouchableOpacity className="p-2" disabled={disabled}>
+            <View className="flex-row gap-x-2 ios:gap-x-4">
+              <TouchableOpacity
+                className="p-2"
+                onPress={handleGoToSettings}
+                disabled={disabled}
+              >
                 <Icon
                   className={cn(disabled && 'text-muted-foreground/50')}
                   size={ICON_SIZES.small}
@@ -61,8 +73,8 @@ export function CartView() {
 
               <TouchableOpacity
                 className="p-2"
-                disabled={disabled}
                 onPress={handleShare}
+                disabled={disabled}
               >
                 <Icon
                   className={cn(disabled && 'text-muted-foreground/50')}
@@ -83,12 +95,16 @@ export function CartView() {
         default: (
           <View className="rounded-b-lg bg-card p-4">
             <ScrollView horizontal contentContainerClassName="gap-x-4">
-              <Button variant="outline" onPress={redirectToCarts}>
+              <Button variant="outline" onPress={handleGoToCarts}>
                 <Icon size={ICON_SIZES.small} as={ListIcon} />
                 <Text>{i18n.t('cart.actions.viewAllCarts')}</Text>
               </Button>
 
-              <Button variant="outline" disabled={isLoading}>
+              <Button
+                variant="outline"
+                onPress={handleGoToNewCart}
+                disabled={isLoading}
+              >
                 <Icon size={ICON_SIZES.small} as={PlusIcon} />
                 <Text>{i18n.t('cart.actions.newCart')}</Text>
               </Button>
@@ -117,7 +133,7 @@ export function CartView() {
           hasGlass && 'absolute bottom-0 mx-4 mb-safe-offset-16',
         )}
         className={cn(
-          'h-24 flex-row items-center justify-between gap-4 p-4',
+          'h-24 flex-row items-center justify-between gap-x-4 p-4',
           !hasGlass && 'rounded-t-lg bg-primary/5',
         )}
       >
@@ -130,7 +146,11 @@ export function CartView() {
           <Text>Lorem ipsum</Text>
         </Button>
 
-        <Button className="min-h-16 flex-1" disabled={!hasItems}>
+        <Button
+          className="min-h-16 flex-1"
+          onPress={handleGoToCheckout}
+          disabled={!hasItems}
+        >
           <Icon
             className="text-primary-foreground"
             size={ICON_SIZES.small}
