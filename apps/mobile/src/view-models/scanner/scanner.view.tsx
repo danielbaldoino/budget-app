@@ -32,17 +32,25 @@ export function ScannerView() {
               disabled={!canGoBack}
               onPress={router.back}
             >
-              <Icon size={ICON_SIZES.small} as={XIcon} />
+              <Icon
+                className={cn(!canGoBack && 'text-muted-foreground/50')}
+                size={ICON_SIZES.small}
+                as={XIcon}
+              />
             </TouchableOpacity>
           ),
         }),
         headerRight: () => (
           <TouchableOpacity
-            className="p-2 disabled:opacity-50"
+            className="p-2"
             onPress={toggleCameraFacing}
             disabled={!hasPermission}
           >
-            <Icon size={ICON_SIZES.small} as={SwitchCameraIcon} />
+            <Icon
+              className={cn(!hasPermission && 'text-muted-foreground/50')}
+              size={ICON_SIZES.small}
+              as={SwitchCameraIcon}
+            />
           </TouchableOpacity>
         ),
       }}

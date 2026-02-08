@@ -14,10 +14,10 @@ import {
 import {
   ActivityIndicator,
   Platform,
+  ScrollView,
   TouchableOpacity,
   View,
 } from 'react-native'
-import { ScrollView } from 'react-native-gesture-handler'
 import { useProfileViewModel } from './profile.view-model'
 
 export function ProfileView() {

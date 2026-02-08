@@ -14,16 +14,14 @@ import {
   MoreVerticalIcon,
   ShoppingCartIcon,
 } from 'lucide-react-native'
-import { useState } from 'react'
 import { Platform, ScrollView, TouchableOpacity } from 'react-native'
 import { QuantitySelector } from '../../components/quantity-selector'
 import { useProductViewModel } from './product.view-model'
 
 export function ProductView() {
-  const { isLoading, product, isError } = useProductViewModel()
+  const { isLoading, product, isError, quantity, handleQuantityChange } =
+    useProductViewModel()
   const isPreview = useIsPreview()
-  const [count, setCount] = useState(0)
-
   const hasGlass = isLiquidGlassAvailable()
 
   const title = product?.name ?? i18n.t('common.states.loading')
@@ -77,11 +75,11 @@ export function ProductView() {
         >
           <QuantitySelector
             className="h-full flex-1 border-muted-foreground/50 "
-            quantity={count}
-            onQuantityChange={setCount}
+            quantity={quantity}
+            onQuantityChange={handleQuantityChange}
           />
 
-          <Button className="h-full flex-1" onPress={() => {}}>
+          <Button className="min-h-16 flex-1">
             <Icon
               className="text-primary-foreground"
               size={ICON_SIZES.small}

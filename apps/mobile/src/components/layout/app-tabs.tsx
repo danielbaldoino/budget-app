@@ -23,23 +23,25 @@ type Props = {
 export function AppTabs({ tabs }: { tabs: Props[] }) {
   const { colors } = useAppearance()
 
+  const DEFAULT_COLOR = colors.txtMuted
+  const SELECTED_COLOR = colors.primary
+
   return (
     <NativeTabs
       backgroundColor={colors.bgPrimarySubtle}
       indicatorColor={colors.bgPrimaryMuted} // Android only
       iconColor={{
-        default: colors.txtMuted,
-        selected: colors.primary,
+        default: DEFAULT_COLOR,
+        selected: SELECTED_COLOR,
       }}
       labelStyle={{
-        default: { color: colors.txtMuted },
-        selected: { color: colors.primary },
+        default: { color: DEFAULT_COLOR },
+        selected: { color: SELECTED_COLOR },
       }}
       labelVisibilityMode="labeled"
       badgeBackgroundColor={colors.notification}
       badgeTextColor={colors.txtNotification}
       minimizeBehavior="onScrollDown" // iOS only
-      tintColor={colors.primary}
     >
       {tabs.map(({ name, iconIos, iconAndroid, label, role, badge }) => (
         <NativeTabs.Trigger key={name} name={name} role={role}>

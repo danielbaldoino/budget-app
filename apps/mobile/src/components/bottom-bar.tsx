@@ -20,7 +20,12 @@ export function BottomBar({
   return (
     <View className={containerClassName}>
       {hasGlass ? (
-        <GlassView style={{ borderRadius: BORDER_RADIUS }}>{content}</GlassView>
+        <GlassView
+          // GlassView does not support className
+          style={{ borderRadius: BORDER_RADIUS }}
+        >
+          {content}
+        </GlassView>
       ) : (
         content
       )}

@@ -1,7 +1,9 @@
 import { useAppReady } from '@/hooks/use-app-ready'
 import { useCurrentCartQuery } from '@/hooks/use-cart-queries'
+import { i18n } from '@/lib/languages'
 import { router, useSegments } from 'expo-router'
 import { useEffect, useState } from 'react'
+import { Share } from 'react-native'
 
 export function useCartViewModel() {
   const { isLoading, cart, hasSelectedCart } = useCurrentCartQuery()
@@ -13,6 +15,12 @@ export function useCartViewModel() {
   const lastSegment = segments[segments.length - 1]
 
   const redirectToCarts = () => router.push('carts')
+
+  const handleShare = () =>
+    Share.share({
+      title: i18n.t('cart.actions.shareCart'),
+      message: '/',
+    })
 
   useEffect(() => {
     if (!canPushToCarts) {
@@ -30,5 +38,6 @@ export function useCartViewModel() {
     isLoading,
     cart,
     redirectToCarts,
+    handleShare,
   }
 }

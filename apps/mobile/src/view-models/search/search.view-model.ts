@@ -8,10 +8,13 @@ export function useSearchViewModel() {
     params: { search },
   })
 
+  const handleQrCodePress = () => router.push('scanner')
+
   return {
     onSearchChange: (text: string) => router.setParams({ q: text }),
     isLoading,
     products: data?.products ?? [],
     isError,
+    handleQrCodePress,
   }
 }

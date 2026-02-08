@@ -1,7 +1,6 @@
 import { BottomBar } from '@/components/bottom-bar'
 import { Payload } from '@/components/debug/payload'
 import { Screen } from '@/components/layout/screen'
-import { QuantitySelector } from '@/components/quantity-selector'
 import { Button } from '@/components/ui/button'
 import { Icon } from '@/components/ui/icon'
 import { Text } from '@/components/ui/text'
@@ -11,12 +10,12 @@ import { cn } from '@/lib/utils'
 import { isLiquidGlassAvailable } from 'expo-glass-effect'
 import {
   CheckIcon,
+  InfoIcon,
   ListIcon,
   PlusIcon,
   SettingsIcon,
   ShareIcon,
 } from 'lucide-react-native'
-import { useState } from 'react'
 import {
   FlatList,
   Platform,
@@ -24,14 +23,13 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native'
-import { Share } from 'react-native'
 import { useCartViewModel } from './cart.view-model'
 
 export function CartView() {
-  const { isLoading, cart, redirectToCarts } = useCartViewModel()
-  const [count, setCount] = useState(0)
+  const { isLoading, cart, redirectToCarts, handleShare } = useCartViewModel()
 
   const hasGlass = isLiquidGlassAvailable()
+  const hasItems = (cart?.cartItems.length ?? 0) > 0
 
   return (
     <Screen
@@ -64,12 +62,7 @@ export function CartView() {
               <TouchableOpacity
                 className="p-2"
                 disabled={disabled}
-                onPress={() =>
-                  Share.share({
-                    title: i18n.t('cart.actions.shareCart'),
-                    message: '/',
-                  })
-                }
+                onPress={handleShare}
               >
                 <Icon
                   className={cn(disabled && 'text-muted-foreground/50')}
@@ -128,17 +121,16 @@ export function CartView() {
           !hasGlass && 'rounded-t-lg bg-primary/5',
         )}
       >
-        <QuantitySelector
-          className="h-full flex-1 border-muted-foreground/50 "
-          quantity={count}
-          onQuantityChange={setCount}
-        />
+        <Button variant="outline" className="min-h-16 flex-1" disabled>
+          <Icon
+            className="text-foreground"
+            size={ICON_SIZES.small}
+            as={InfoIcon}
+          />
+          <Text>Lorem ipsum</Text>
+        </Button>
 
-        <Button
-          className="h-full flex-1"
-          onPress={() => {}}
-          disabled={(cart?.cartItems.length ?? 0) === 0}
-        >
+        <Button className="min-h-16 flex-1" disabled={!hasItems}>
           <Icon
             className="text-primary-foreground"
             size={ICON_SIZES.small}

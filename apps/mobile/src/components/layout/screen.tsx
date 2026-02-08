@@ -107,9 +107,7 @@ export function Screen({
 
             ...(headerLargeEnabled && {
               headerLargeTitleEnabled: true,
-              headerLargeStyle: {
-                backgroundColor: 'transparent',
-              },
+              headerLargeStyle: { backgroundColor: 'transparent' },
             }),
 
             ...options,
@@ -118,7 +116,11 @@ export function Screen({
       )}
 
       <SafeAreaView
-        className={cn('flex-1 bg-background', className)}
+        className={cn(
+          'flex-1 bg-background',
+          'mx-auto w-full max-w-5xl',
+          className,
+        )}
         edges={safeAreaEdges}
       >
         {content}

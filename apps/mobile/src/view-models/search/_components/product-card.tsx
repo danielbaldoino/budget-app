@@ -9,12 +9,17 @@ import { Image, Platform, Pressable, Share, View } from 'react-native'
 import type { Product } from '../_lib/utils'
 
 export function ProductCard({ product }: { product: Product }) {
-  const { id, name, description } = product
-  const imageUrl = product.images[0]?.url
-
   const [imageError, setImageError] = useState(false)
 
+  const { id, name, description } = product
+  const imageUrl = product.images[0]?.url
   const productHref = `products/${id}`
+
+  const handleShare = () =>
+    Share.share({
+      title: i18n.t('common.actions.share'),
+      message: '/',
+    })
 
   const CardContent = () => (
     <View className="flex-row items-center gap-4 bg-card px-4 py-2">
@@ -60,12 +65,7 @@ export function ProductCard({ product }: { product: Product }) {
               <Link.MenuAction
                 title={i18n.t('common.actions.share')}
                 icon="square.and.arrow.up"
-                onPress={() =>
-                  Share.share({
-                    title: i18n.t('common.actions.share'),
-                    message: '/',
-                  })
-                }
+                onPress={handleShare}
               />
             </Link.Menu>
           </Link>

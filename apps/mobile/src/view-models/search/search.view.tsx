@@ -4,7 +4,6 @@ import { Text } from '@/components/ui/text'
 import { ICON_SIZES } from '@/constants/theme'
 import { useAppearance } from '@/hooks/use-appearance'
 import { i18n } from '@/lib/languages'
-import { router } from 'expo-router'
 import { QrCodeIcon } from 'lucide-react-native'
 import {
   FlatList,
@@ -17,7 +16,8 @@ import { ProductCard } from './_components/product-card'
 import { useSearchViewModel } from './search.view-model'
 
 export function SearchView() {
-  const { onSearchChange, isLoading, products, isError } = useSearchViewModel()
+  const { onSearchChange, isLoading, products, isError, handleQrCodePress } =
+    useSearchViewModel()
   const { colors } = useAppearance()
 
   return (
@@ -28,7 +28,7 @@ export function SearchView() {
           native: () => (
             <TouchableOpacity
               className="flex-row gap-2 p-2"
-              onPress={() => router.push('scanner')}
+              onPress={handleQrCodePress}
             >
               <Icon size={ICON_SIZES.small} as={QrCodeIcon} />
               {Platform.select({

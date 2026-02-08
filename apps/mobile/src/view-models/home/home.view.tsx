@@ -44,11 +44,12 @@ export function HomeView() {
     >
       <SectionList
         sections={sections}
-        keyExtractor={(item) => item.id}
-        contentContainerClassName="gap-y-2 p-4"
+        keyExtractor={({ id }) => id}
+        // SectionList does not support className on the web.
+        contentContainerStyle={{ gap: 8, padding: 16 }}
         stickySectionHeadersEnabled={false}
-        renderSectionHeader={({ section }) => (
-          <Text variant="h2">{section.title}</Text>
+        renderSectionHeader={({ section: { title } }) => (
+          <Text variant="h2">{title}</Text>
         )}
         renderItem={({ item }) => <ProductCard product={item} />}
         ListEmptyComponent={

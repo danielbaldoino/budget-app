@@ -1,5 +1,5 @@
 import { type CameraType, useCameraPermissions } from 'expo-camera'
-import * as Haptics from 'expo-haptics'
+import { NotificationFeedbackType, notificationAsync } from 'expo-haptics'
 import { useCallback, useEffect, useRef, useState } from 'react'
 
 export function useScannerViewModel() {
@@ -8,9 +8,6 @@ export function useScannerViewModel() {
   const [permission, requestPermission] = useCameraPermissions()
 
   const timeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null)
-
-  const hasPermission = !!permission?.granted
-  const isLoading = permission === null
 
   const toggleCameraFacing = useCallback(
     () => setFacing((current) => (current === 'back' ? 'front' : 'back')),
@@ -25,7 +22,7 @@ export function useScannerViewModel() {
 
       setScanned(true)
 
-      Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success)
+      notificationAsync(NotificationFeedbackType.Success)
 
       console.log('Barcode:', data)
 
@@ -50,8 +47,8 @@ export function useScannerViewModel() {
 
   return {
     facing,
-    hasPermission,
-    isLoading,
+    hasPermission: Boolean(permission?.granted),
+    isLoading: permission === null,
     isScanned: scanned,
 
     toggleCameraFacing,
