@@ -1,9 +1,12 @@
+import { HTTP_STATUS } from '@/constants/http'
 import { sdk } from '@/lib/sdk'
-import { useEffect, useMemo } from 'react'
+import { useCallback, useEffect, useMemo } from 'react'
 import { useStorage } from './use-storage'
 
+const SELECTED_CART_STORAGE_KEY = 'selected-cart-id'
+
 function useSelectedCart() {
-  return useStorage<string>('selected-cart-id', '')
+  return useStorage<string>(SELECTED_CART_STORAGE_KEY, '')
 }
 
 export function useCurrentCartQuery() {
@@ -11,18 +14,10 @@ export function useCurrentCartQuery() {
 
   const hasSelectedCart = Boolean(selectedCartId)
 
-  if (!hasSelectedCart) {
-    return {
-      isLoading: false,
-      cart: undefined,
-      hasSelectedCart: false,
-      quantityOfItems: 0,
-    }
-  }
-
-  const { isLoading, data, error } = sdk.v1.$reactQuery.useGetCart({
-    cartId: selectedCartId,
-  })
+  const { isLoading, data, error } = sdk.v1.$reactQuery.useGetCart(
+    { cartId: selectedCartId },
+    { query: { enabled: hasSelectedCart } },
+  )
 
   const cart = data?.cart
 
@@ -30,18 +25,22 @@ export function useCurrentCartQuery() {
     return (
       cart?.cartItems.reduce((total, item) => total + item.quantity, 0) ?? 0
     )
-  }, [cart])
+  }, [cart?.cartItems])
+
+  const clearSelectedCart = useCallback(() => {
+    setSelectedCartId('')
+  }, [setSelectedCartId])
 
   useEffect(() => {
-    if (error?.status === 404) {
-      setSelectedCartId('')
+    if (error?.status === HTTP_STATUS.NOT_FOUND) {
+      clearSelectedCart()
     }
-  }, [error?.status])
+  }, [error?.status, clearSelectedCart])
 
   return {
     isLoading,
-    cart,
     hasSelectedCart,
+    cart,
     quantityOfItems,
   }
 }

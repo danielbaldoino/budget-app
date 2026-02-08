@@ -16,7 +16,7 @@ import { ProductCard } from './_components/product-card'
 import { useSearchViewModel } from './search.view-model'
 
 export function SearchView() {
-  const { onSearchChange, isLoading, products, isError, handleQrCodePress } =
+  const { products, isLoading, isError, onSearchChange, handleQrCodePress } =
     useSearchViewModel()
   const { colors } = useAppearance()
 

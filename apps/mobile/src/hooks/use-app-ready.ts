@@ -4,13 +4,17 @@ import { useEffect, useState } from 'react'
 
 export function useAppReady() {
   const [isMounted, setIsMounted] = useState(false)
-  const { isHydrate: isAuthHydrated } = useAuthStore()
-  const { isHydrate: isWorkspaceHydrated } = useWorkspaceStore()
+  const { isHydrated: isAuthHydrated } = useAuthStore()
+  const { isHydrated: isWorkspaceHydrated } = useWorkspaceStore()
 
   const isHydrated = isAuthHydrated && isWorkspaceHydrated
   const isAppReady = isHydrated && isMounted
 
   useEffect(() => setIsMounted(true), [])
 
-  return { isAppReady, isHydrated, isMounted }
+  return {
+    isAppReady,
+    isHydrated,
+    isMounted,
+  }
 }

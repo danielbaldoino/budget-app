@@ -7,9 +7,9 @@ export function useHomeViewModel() {
 
   return {
     recentProducts: {
-      products: recentProductsQuery.data?.products ?? [],
       isLoading: recentProductsQuery.isLoading,
       isError: recentProductsQuery.isError,
+      products: recentProductsQuery.data?.products ?? [],
     },
   }
 }

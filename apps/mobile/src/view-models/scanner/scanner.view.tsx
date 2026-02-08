@@ -12,11 +12,11 @@ import { useScannerViewModel } from './scanner.view-model'
 export function ScannerView() {
   const {
     facing,
-    hasPermission,
+    scanned,
     isLoading,
-    isScanned,
+    hasPermission,
     toggleCameraFacing,
-    handleBarcodeScanned,
+    onBarcodeScanned,
   } = useScannerViewModel()
 
   return (
@@ -62,7 +62,7 @@ export function ScannerView() {
           style={{ flex: 1 }}
           facing={facing}
           barcodeScannerSettings={{ barcodeTypes: ['qr'] }}
-          onBarcodeScanned={handleBarcodeScanned}
+          onBarcodeScanned={onBarcodeScanned}
         />
       )}
 
@@ -70,7 +70,7 @@ export function ScannerView() {
         <View
           className={cn(
             'size-56 rounded-lg border-4 border-white/25',
-            isScanned && 'border-white',
+            scanned && 'border-white',
           )}
         />
       </View>

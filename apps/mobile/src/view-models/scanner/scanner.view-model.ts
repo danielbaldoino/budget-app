@@ -14,7 +14,7 @@ export function useScannerViewModel() {
     [],
   )
 
-  const handleBarcodeScanned = useCallback(
+  const onBarcodeScanned = useCallback(
     ({ data }: { data: string }) => {
       if (scanned) {
         return
@@ -47,11 +47,11 @@ export function useScannerViewModel() {
 
   return {
     facing,
-    hasPermission: Boolean(permission?.granted),
+    scanned,
     isLoading: permission === null,
-    isScanned: scanned,
+    hasPermission: Boolean(permission?.granted),
 
     toggleCameraFacing,
-    handleBarcodeScanned,
+    onBarcodeScanned,
   }
 }

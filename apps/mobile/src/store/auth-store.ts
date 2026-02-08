@@ -9,7 +9,7 @@ import {
 } from 'zustand/middleware'
 
 interface AuthStore {
-  isHydrate: boolean
+  isHydrated: boolean
   token: string | null
   setToken: (token: string | null) => void
 }
@@ -17,7 +17,7 @@ interface AuthStore {
 export const useAuthStore = create<AuthStore>()(
   persist(
     (set) => ({
-      isHydrate: false,
+      isHydrated: false,
       token: null,
       setToken: (token: string | null) => set(() => ({ token })),
     }),
@@ -30,7 +30,7 @@ export const useAuthStore = create<AuthStore>()(
         }),
       ),
       onRehydrateStorage: () => () =>
-        useAuthStore.setState({ isHydrate: true }),
+        useAuthStore.setState({ isHydrated: true }),
     },
   ),
 )

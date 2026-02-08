@@ -22,12 +22,23 @@ export function QuantitySelector({
   disabled = false,
   className,
 }: QuantitySelectorProps) {
-  const _min = Math.max(1, min)
-  const _max = Math.max(_min, max)
-  const _quantity = Math.min(Math.max(quantity, _min), _max)
+  const minValue = Math.max(1, min)
+  const maxValue = Math.max(minValue, max)
+  const clampedQuantity = Math.min(Math.max(quantity, minValue), maxValue)
 
-  const canDecrease = !disabled && _quantity > _min
-  const canIncrease = !disabled && _quantity < _max
+  const canDecrease = !disabled && clampedQuantity > minValue
+  const canIncrease = !disabled && clampedQuantity < maxValue
+
+  const handleDecrease = () => onQuantityChange(clampedQuantity - 1)
+  const handleIncrease = () => onQuantityChange(clampedQuantity + 1)
+  const handleResetToMin = () => onQuantityChange(minValue)
+  const handleIncreaseBy10 = () => {
+    const newQuantity = clampedQuantity + 10
+    const isUnlimited = maxValue === Number.POSITIVE_INFINITY
+    onQuantityChange(
+      isUnlimited ? newQuantity : Math.min(newQuantity, maxValue),
+    )
+  }
 
   return (
     <View
@@ -39,8 +50,8 @@ export function QuantitySelector({
     >
       <TouchableOpacity
         className="rounded-full bg-muted p-2"
-        onPress={() => onQuantityChange(_quantity - 1)}
-        onLongPress={() => onQuantityChange(_min)}
+        onPress={handleDecrease}
+        onLongPress={handleResetToMin}
         disabled={!canDecrease}
       >
         <Icon
@@ -50,20 +61,12 @@ export function QuantitySelector({
         />
       </TouchableOpacity>
 
-      <Text className="font-medium text-xl">{_quantity}</Text>
+      <Text className="font-medium text-xl">{clampedQuantity}</Text>
 
       <TouchableOpacity
         className="rounded-full bg-muted p-2"
-        onPress={() => onQuantityChange(_quantity + 1)}
-        onLongPress={() =>
-          onQuantityChange(
-            _max === Number.POSITIVE_INFINITY
-              ? _quantity + 10
-              : _quantity + 10 > _max
-                ? _max
-                : _quantity + 10,
-          )
-        }
+        onPress={handleIncrease}
+        onLongPress={handleIncreaseBy10}
         disabled={!canIncrease}
       >
         <Icon

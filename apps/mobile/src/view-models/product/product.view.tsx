@@ -19,9 +19,8 @@ import { QuantitySelector } from '../../components/quantity-selector'
 import { useProductViewModel } from './product.view-model'
 
 export function ProductView() {
-  const { isLoading, product, isError, quantity, handleQuantityChange } =
+  const { isLoading, isError, product, quantity, handleQuantityChange } =
     useProductViewModel()
-
   const isPreview = useIsPreview()
   const hasGlass = isLiquidGlassAvailable()
 

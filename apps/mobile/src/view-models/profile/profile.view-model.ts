@@ -3,7 +3,7 @@ import { useSession } from '@/hooks/use-session'
 import { ImpactFeedbackStyle, impactAsync } from 'expo-haptics'
 
 export function useProfileViewModel() {
-  const { isLoadingUser, user, signOut } = useSession()
+  const { isLoading, user, signOut } = useSession()
   const { toggleTheme } = useAppearance()
 
   const withSoftHaptic = (fn: () => void) => () => {
@@ -12,7 +12,7 @@ export function useProfileViewModel() {
   }
 
   return {
-    isLoading: isLoadingUser,
+    isLoading,
     user,
     handleSignOut: withSoftHaptic(signOut),
     handleToggleTheme: withSoftHaptic(toggleTheme),

@@ -9,7 +9,7 @@ export function useAppearance() {
 
   const activeTheme =
     theme === 'system'
-      ? colorScheme === null || colorScheme === undefined
+      ? colorScheme === undefined
         ? 'light'
         : colorScheme
       : theme
@@ -18,12 +18,12 @@ export function useAppearance() {
   const inverseTheme: ThemeMode = isDarkMode ? 'light' : 'dark'
 
   return {
-    theme,
     isDarkMode,
+    theme,
     inverseTheme,
+    colors: COLOR_SCHEMES[activeTheme],
     setTheme,
     toggleTheme: () => setTheme(inverseTheme),
-    colors: COLOR_SCHEMES[activeTheme],
   }
 }
 

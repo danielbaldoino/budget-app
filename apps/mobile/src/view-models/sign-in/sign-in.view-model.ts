@@ -1,24 +1,52 @@
+import { VALIDATION } from '@/constants/validation'
 import { useSession } from '@/hooks/use-session'
 import { i18n } from '@/lib/languages'
 import { sdk } from '@/lib/sdk'
 import { useWorkspaceStore } from '@/store/workspace-store'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { NotificationFeedbackType, notificationAsync } from 'expo-haptics'
-import { useState } from 'react'
+import { useCallback, useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { z } from 'zod'
 
 const formSchema = z.object({
-  username: z.string().min(3, i18n.t('signIn.username.validation.required')),
-  password: z.string().min(3, i18n.t('signIn.password.validation.required')),
+  username: z
+    .string()
+    .min(
+      VALIDATION.MIN_INPUT_LENGTH,
+      i18n.t('signIn.username.validation.required'),
+    ),
+  password: z
+    .string()
+    .min(
+      VALIDATION.MIN_INPUT_LENGTH,
+      i18n.t('signIn.password.validation.required'),
+    ),
   workspaceId: z
     .string()
-    .min(3, i18n.t('signIn.workspaceId.validation.required')),
+    .min(
+      VALIDATION.MIN_INPUT_LENGTH,
+      i18n.t('signIn.workspaceId.validation.required'),
+    ),
 })
 
-const DEFAULT_VALUES = __DEV__
-  ? { username: 'john-doe', password: 'securepassword' }
-  : {}
+type SignInFormData = z.infer<typeof formSchema>
+
+// Only use default values in development for testing
+const getDefaultValues = (
+  workspaceId: string | null,
+): Partial<SignInFormData> => {
+  const defaults: Partial<SignInFormData> = {
+    workspaceId: workspaceId ?? undefined,
+  }
+
+  if (__DEV__) {
+    defaults.username = 'john-doe'
+    defaults.password = 'securepassword'
+  }
+
+  return defaults
+}
 
 export function useSignInViewModel() {
   const { workspaceId, setWorkspaceId } = useWorkspaceStore()
@@ -30,35 +58,34 @@ export function useSignInViewModel() {
     control,
     handleSubmit,
     formState: { isSubmitting },
-  } = useForm<z.infer<typeof formSchema>>({
+  } = useForm<SignInFormData>({
     resolver: zodResolver(formSchema),
-    defaultValues: {
-      ...DEFAULT_VALUES,
-      workspaceId: workspaceId ?? undefined,
-    },
+    defaultValues: getDefaultValues(workspaceId),
   })
 
-  const handleSignIn = async (values: z.infer<typeof formSchema>) => {
-    const { workspaceId, ...data } = values
+  const handleSignIn = useCallback(
+    async (values: SignInFormData) => {
+      const { workspaceId: formWorkspaceId, ...credentials } = values
 
-    setWorkspaceId(workspaceId)
+      setWorkspaceId(formWorkspaceId)
+      setSignInError(undefined)
 
-    setSignInError(undefined)
-
-    await mutateAsync(
-      { data },
-      {
-        onSuccess: ({ token }) => {
-          notificationAsync(NotificationFeedbackType.Success)
-          signIn({ token })
+      await mutateAsync(
+        { data: credentials },
+        {
+          onSuccess: ({ token }) => {
+            notificationAsync(NotificationFeedbackType.Success)
+            signIn(token)
+          },
+          onError: ({ message }) => {
+            notificationAsync(NotificationFeedbackType.Error)
+            setSignInError(message)
+          },
         },
-        onError: ({ message }) => {
-          notificationAsync(NotificationFeedbackType.Error)
-          setSignInError(message)
-        },
-      },
-    )
-  }
+      )
+    },
+    [mutateAsync, setWorkspaceId, signIn],
+  )
 
   return {
     control,

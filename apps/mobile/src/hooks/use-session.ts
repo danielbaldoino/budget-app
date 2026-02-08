@@ -1,8 +1,9 @@
+import { HTTP_STATUS } from '@/constants/http'
 import { i18n } from '@/lib/languages'
 import { sdk } from '@/lib/sdk'
 import { useAuthStore } from '@/store/auth-store'
 import { NotificationFeedbackType, notificationAsync } from 'expo-haptics'
-import { useEffect } from 'react'
+import { useCallback, useEffect } from 'react'
 import { Toast } from 'toastify-react-native'
 
 export function useSession() {
@@ -10,32 +11,35 @@ export function useSession() {
 
   const isAuthenticated = Boolean(token)
 
-  const signIn = (token: string) => setToken(token)
-  const signOut = () => setToken(null)
+  const signIn = useCallback(
+    (newToken: string) => {
+      setToken(newToken)
+    },
+    [setToken],
+  )
 
-  const {
-    isLoading: isLoadingUser,
-    data,
-    error,
-  } = sdk.v1.$reactQuery.useGetUserProfile({
-    query: { enabled: isAuthenticated },
-  })
+  const signOut = useCallback(() => {
+    setToken(null)
+  }, [setToken])
 
-  const user = data?.user
+  const { isLoading, isError, data, error } =
+    sdk.v1.$reactQuery.useGetUserProfile({
+      query: { enabled: isAuthenticated },
+    })
 
   useEffect(() => {
-    if (error?.status === 401) {
+    if (error?.status === HTTP_STATUS.UNAUTHORIZED) {
       notificationAsync(NotificationFeedbackType.Error)
       signOut()
       Toast.error(i18n.t('session.errors.expired'))
     }
-  }, [error?.status])
+  }, [error?.status, signOut])
 
   return {
     isAuthenticated,
-    isLoadingUser,
-    user,
-    error,
+    isLoading,
+    isError,
+    user: data?.user,
     signIn,
     signOut,
   }

@@ -1,22 +1,21 @@
+import { VALIDATION } from '@/constants/validation'
 import { sdk } from '@/lib/sdk'
 import { useLocalSearchParams } from 'expo-router'
 import { useState } from 'react'
 
 export function useProductViewModel() {
   const { id: productId } = useLocalSearchParams<{ id: string }>()
-  const [quantity, setQuantity] = useState(1)
+  const [quantity, setQuantity] = useState<number>(VALIDATION.DEFAULT_QUANTITY)
 
-  const { isLoading, data, isError } = sdk.v1.$reactQuery.useGetProduct({
+  const { isLoading, isError, data } = sdk.v1.$reactQuery.useGetProduct({
     productId,
   })
 
-  const handleQuantityChange = (newQuantity: number) => setQuantity(newQuantity)
-
   return {
     isLoading,
-    product: data?.product,
     isError,
+    product: data?.product,
     quantity,
-    handleQuantityChange,
+    handleQuantityChange: setQuantity,
   }
 }
