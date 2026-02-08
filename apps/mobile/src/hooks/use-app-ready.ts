@@ -10,7 +10,9 @@ export function useAppReady() {
   const isHydrated = isAuthHydrated && isWorkspaceHydrated
   const isAppReady = isHydrated && isMounted
 
-  useEffect(() => setIsMounted(true), [])
+  useEffect(() => {
+    setIsMounted(true)
+  }, [])
 
   return {
     isAppReady,
