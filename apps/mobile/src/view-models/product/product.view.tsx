@@ -1,6 +1,7 @@
 import { BottomBar } from '@/components/bottom-bar'
 import { Payload } from '@/components/debug/payload'
 import { Screen } from '@/components/layout/screen'
+import { QuantitySelector } from '@/components/quantity-selector'
 import { Button } from '@/components/ui/button'
 import { Icon } from '@/components/ui/icon'
 import { Text } from '@/components/ui/text'
@@ -15,7 +16,6 @@ import {
   ShoppingCartIcon,
 } from 'lucide-react-native'
 import { Platform, ScrollView, TouchableOpacity } from 'react-native'
-import { QuantitySelector } from '../../components/quantity-selector'
 import { useProductViewModel } from './product.view-model'
 
 export function ProductView() {

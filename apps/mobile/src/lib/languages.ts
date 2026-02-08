@@ -1,6 +1,6 @@
+import { translations } from '@/constants/translations'
 import { getLocales } from 'expo-localization'
 import { I18n } from 'i18n-js'
-import { translations } from './translations'
 
 const { languageCode } = getLocales()[0]
 
