@@ -1,4 +1,4 @@
-import { useAppearance, useSyncColorScheme } from '@/hooks/use-appearance'
+import { useAppearance, useApplyTheme } from '@/hooks/use-appearance'
 import {
   DarkTheme,
   DefaultTheme,
@@ -12,15 +12,15 @@ export function AppearanceProvider({
 }: {
   children: React.ReactNode
 }) {
-  const { theme, isDarkMode, inverseTheme, colors } = useAppearance()
+  const { themePreference, isDarkMode, colors } = useAppearance()
 
-  useSyncColorScheme(theme)
+  useApplyTheme(themePreference)
 
   return (
     <ThemeProvider
       value={{ ...(isDarkMode ? DarkTheme : DefaultTheme), colors }}
     >
-      <StatusBar style={inverseTheme} />
+      <StatusBar />
       {children}
       <Toast useModal={false} />
     </ThemeProvider>
