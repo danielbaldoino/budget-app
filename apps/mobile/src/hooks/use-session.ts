@@ -10,7 +10,7 @@ export function useSession() {
 
   const isAuthenticated = Boolean(token)
 
-  const signIn = ({ token }: { token: string }) => setToken(token)
+  const signIn = (token: string) => setToken(token)
   const signOut = () => setToken(null)
 
   const {
@@ -24,19 +24,18 @@ export function useSession() {
   const user = data?.user
 
   useEffect(() => {
-    if (error?.status !== 401) {
-      return
+    if (error?.status === 401) {
+      notificationAsync(NotificationFeedbackType.Error)
+      signOut()
+      Toast.error(i18n.t('session.errors.expired'))
     }
-
-    notificationAsync(NotificationFeedbackType.Error)
-    signOut()
-    Toast.error(i18n.t('session.errors.expired'))
-  }, [error])
+  }, [error?.status])
 
   return {
     isAuthenticated,
     isLoadingUser,
     user,
+    error,
     signIn,
     signOut,
   }

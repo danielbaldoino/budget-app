@@ -1,39 +1,42 @@
 import { sdk } from '@/lib/sdk'
-import { useCurrentCartStore } from '@/store/current-cart-store'
-import { useEffect } from 'react'
+import { useEffect, useMemo } from 'react'
+import { useStorage } from './use-storage'
+
+function useSelectedCart() {
+  return useStorage<string>('selected-cart-id', '')
+}
 
 export function useCurrentCartQuery() {
-  const { cartId, quantityOfItems, ...cartFn } = useCurrentCartStore()
+  const [selectedCartId, setSelectedCartId] = useSelectedCart()
 
-  const hasSelectedCart = Boolean(cartId)
+  const hasSelectedCart = Boolean(selectedCartId)
 
-  const { isLoading, data, error } = sdk.v1.$reactQuery.useGetCart(
-    { cartId },
-    { query: { enabled: hasSelectedCart } },
-  )
+  if (!hasSelectedCart) {
+    return {
+      isLoading: false,
+      cart: undefined,
+      hasSelectedCart: false,
+      quantityOfItems: 0,
+    }
+  }
+
+  const { isLoading, data, error } = sdk.v1.$reactQuery.useGetCart({
+    cartId: selectedCartId,
+  })
 
   const cart = data?.cart
 
+  const quantityOfItems = useMemo(() => {
+    return (
+      cart?.cartItems.reduce((total, item) => total + item.quantity, 0) ?? 0
+    )
+  }, [cart])
+
   useEffect(() => {
     if (error?.status === 404) {
-      cartFn.clear()
+      setSelectedCartId('')
     }
-  }, [error])
-
-  useEffect(() => {
-    if (!cart) {
-      return
-    }
-
-    const totalQuantity = cart.cartItems.reduce(
-      (total, item) => total + item.quantity,
-      0,
-    )
-
-    if (totalQuantity !== quantityOfItems) {
-      cartFn.setQuantityOfItems(totalQuantity)
-    }
-  }, [cart])
+  }, [error?.status])
 
   return {
     isLoading,
