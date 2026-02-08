@@ -1,11 +1,10 @@
 import { Icon } from '@/components/ui/icon'
 import { Text } from '@/components/ui/text'
 import { ICON_SIZES } from '@/constants/theme'
-import { i18n } from '@/lib/languages'
-import { Link } from 'expo-router'
+import { type Href, Link } from 'expo-router'
 import { ChevronRightIcon, ImageOffIcon } from 'lucide-react-native'
 import { useState } from 'react'
-import { Image, Platform, Pressable, Share, View } from 'react-native'
+import { Image, Platform, Pressable, View } from 'react-native'
 import type { Product } from '../_lib/utils'
 
 export function ProductCard({ product }: { product: Product }) {
@@ -13,41 +12,9 @@ export function ProductCard({ product }: { product: Product }) {
 
   const { id, name, description } = product
   const imageUrl = product.images[0]?.url
-  const productHref = `products/${id}`
-
-  const handleShare = () =>
-    Share.share({
-      title: i18n.t('common.actions.share'),
-      message: '/',
-    })
-
-  const LinkWrapper = ({ children }: { children: React.ReactNode }) => (
-    <View>
-      {Platform.select({
-        ios: (
-          <Link href={productHref}>
-            <Link.Trigger>{children}</Link.Trigger>
-            <Link.Preview />
-            <Link.Menu>
-              <Link.MenuAction
-                title={i18n.t('common.actions.share')}
-                icon="square.and.arrow.up"
-                onPress={handleShare}
-              />
-            </Link.Menu>
-          </Link>
-        ),
-        default: (
-          <Link href={productHref} asChild>
-            <Pressable onLongPress={handleShare}>{children}</Pressable>
-          </Link>
-        ),
-      })}
-    </View>
-  )
 
   return (
-    <LinkWrapper>
+    <LinkWrapper href={{ pathname: 'products/[id]', params: { id } }}>
       <View className="flex-row items-center gap-4 bg-card px-4 py-2">
         <View className="size-16 overflow-hidden rounded-sm bg-muted">
           {Boolean(imageUrl) && !imageError ? (
@@ -71,11 +38,37 @@ export function ProductCard({ product }: { product: Product }) {
           </Text>
         </View>
         <Icon
-          className="m-auto text-muted-foreground"
+          className="text-muted-foreground"
           as={ChevronRightIcon}
           size={ICON_SIZES.small}
         />
       </View>
     </LinkWrapper>
+  )
+}
+
+function LinkWrapper({
+  children,
+  href,
+}: {
+  children: React.ReactNode
+  href: Href
+}) {
+  return (
+    <View>
+      {Platform.select({
+        ios: (
+          <Link href={href}>
+            <Link.Trigger>{children}</Link.Trigger>
+            <Link.Preview />
+          </Link>
+        ),
+        default: (
+          <Link href={href} asChild>
+            <Pressable>{children}</Pressable>
+          </Link>
+        ),
+      })}
+    </View>
   )
 }

@@ -20,10 +20,7 @@ export function useCartViewModel() {
   }, [])
 
   const handleShare = () =>
-    Share.share({
-      title: i18n.t('cart.actions.shareCart'),
-      message: '/',
-    })
+    Share.share({ title: i18n.t('cart.actions.shareCart'), message: '' })
 
   useEffect(() => {
     if (!shouldRedirectToCarts) {
