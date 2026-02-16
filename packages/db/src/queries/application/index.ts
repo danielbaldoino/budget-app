@@ -3,6 +3,10 @@ import { listApiKeys } from './api-keys/list-api-keys'
 import { getCarrier } from './carriers/get-carrier'
 import { listCarriers } from './carriers/list-carriers'
 import { getCart, getCartWithRelations } from './carts/get-cart'
+import {
+  getCartItem,
+  getCartItemByProductVariantId,
+} from './carts/items/get-cart-item'
 import { listCartsWithRelations } from './carts/list-carts'
 import { getCustomer, getCustomerWithRelations } from './customers/get-customer'
 import { listCustomers } from './customers/list-customers'
@@ -158,6 +162,10 @@ export const applicationQueries = {
     listCartsWithRelations,
     getCart,
     getCartWithRelations,
+    items: {
+      getCartItem,
+      getCartItemByProductVariantId,
+    },
   },
   orders: {
     listOrdersWithRelations,

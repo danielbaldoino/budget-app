@@ -2,14 +2,13 @@ import { Screen } from '@/components/layout/screen'
 import { Button } from '@/components/ui/button'
 import { Icon } from '@/components/ui/icon'
 import { Text } from '@/components/ui/text'
-import { ICON_SIZES } from '@/constants/theme'
 import { i18n } from '@/lib/languages'
 import { PlusIcon, XIcon } from 'lucide-react-native'
 import { Platform, TouchableOpacity } from 'react-native'
 import { useCartsViewModel } from './carts.view-model'
 
 export function CartsView() {
-  const { handlerGoBack, handlerGoToNewCart } = useCartsViewModel()
+  const { handlerGoBack, handlerGoToCreateCart } = useCartsViewModel()
 
   return (
     <Screen
@@ -23,20 +22,20 @@ export function CartsView() {
               disabled={!canGoBack}
               onPress={handlerGoBack}
             >
-              <Icon size={ICON_SIZES.small} as={XIcon} />
+              <Icon as={XIcon} />
             </TouchableOpacity>
           ),
         }),
         headerRight: () =>
           Platform.select({
             ios: (
-              <TouchableOpacity className="p-2" onPress={handlerGoToNewCart}>
-                <Icon size={ICON_SIZES.small} as={PlusIcon} />
+              <TouchableOpacity className="p-2" onPress={handlerGoToCreateCart}>
+                <Icon as={PlusIcon} />
               </TouchableOpacity>
             ),
             default: (
-              <Button variant="outline" onPress={handlerGoToNewCart}>
-                <Icon size={ICON_SIZES.small} as={PlusIcon} />
+              <Button variant="outline" onPress={handlerGoToCreateCart}>
+                <Icon as={PlusIcon} />
                 <Text>{i18n.t('carts.actions.newCart')}</Text>
               </Button>
             ),

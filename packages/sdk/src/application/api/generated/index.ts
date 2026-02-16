@@ -1,12 +1,23 @@
+export type { CreateCarrierMutationKey } from './v1/react-query/hooks/useCreateCarrier'
+export type { CreateCartMutationKey } from './v1/react-query/hooks/useCreateCart'
+export type { CreateCustomerMutationKey } from './v1/react-query/hooks/useCreateCustomer'
 export type { CreateInventoryItemMutationKey } from './v1/react-query/hooks/useCreateInventoryItem'
 export type { CreateInventoryLevelMutationKey } from './v1/react-query/hooks/useCreateInventoryLevel'
+export type { CreatePaymentMethodMutationKey } from './v1/react-query/hooks/useCreatePaymentMethod'
+export type { CreatePaymentTermMutationKey } from './v1/react-query/hooks/useCreatePaymentTerm'
 export type { CreateProductMutationKey } from './v1/react-query/hooks/useCreateProduct'
 export type { CreateProductCategoryMutationKey } from './v1/react-query/hooks/useCreateProductCategory'
 export type { CreateProductOptionMutationKey } from './v1/react-query/hooks/useCreateProductOption'
 export type { CreateProductVariantMutationKey } from './v1/react-query/hooks/useCreateProductVariant'
 export type { CreateStockLocationMutationKey } from './v1/react-query/hooks/useCreateStockLocation'
+export type { DeleteCarrierMutationKey } from './v1/react-query/hooks/useDeleteCarrier'
+export type { DeleteCartMutationKey } from './v1/react-query/hooks/useDeleteCart'
+export type { DeleteCartItemMutationKey } from './v1/react-query/hooks/useDeleteCartItem'
+export type { DeleteCustomerMutationKey } from './v1/react-query/hooks/useDeleteCustomer'
 export type { DeleteInventoryItemMutationKey } from './v1/react-query/hooks/useDeleteInventoryItem'
 export type { DeleteInventoryLevelMutationKey } from './v1/react-query/hooks/useDeleteInventoryLevel'
+export type { DeletePaymentMethodMutationKey } from './v1/react-query/hooks/useDeletePaymentMethod'
+export type { DeletePaymentTermMutationKey } from './v1/react-query/hooks/useDeletePaymentTerm'
 export type { DeleteProductMutationKey } from './v1/react-query/hooks/useDeleteProduct'
 export type { DeleteProductCategoryMutationKey } from './v1/react-query/hooks/useDeleteProductCategory'
 export type { DeleteProductOptionMutationKey } from './v1/react-query/hooks/useDeleteProductOption'
@@ -73,12 +84,51 @@ export type { ListProductVariantsSuspenseQueryKey } from './v1/react-query/hooks
 export type { ListStockLocationsQueryKey } from './v1/react-query/hooks/useListStockLocations'
 export type { ListStockLocationsSuspenseQueryKey } from './v1/react-query/hooks/useListStockLocationsSuspense'
 export type { LogInMutationKey } from './v1/react-query/hooks/useLogIn'
+export type { UpdateCarrierMutationKey } from './v1/react-query/hooks/useUpdateCarrier'
+export type { UpdateCartMutationKey } from './v1/react-query/hooks/useUpdateCart'
+export type { UpdateCustomerMutationKey } from './v1/react-query/hooks/useUpdateCustomer'
 export type { UpdateInventoryLevelMutationKey } from './v1/react-query/hooks/useUpdateInventoryLevel'
+export type { UpdatePaymentMethodMutationKey } from './v1/react-query/hooks/useUpdatePaymentMethod'
+export type { UpdatePaymentTermMutationKey } from './v1/react-query/hooks/useUpdatePaymentTerm'
 export type { UpdateProductMutationKey } from './v1/react-query/hooks/useUpdateProduct'
 export type { UpdateProductCategoryMutationKey } from './v1/react-query/hooks/useUpdateProductCategory'
 export type { UpdateProductOptionMutationKey } from './v1/react-query/hooks/useUpdateProductOption'
 export type { UpdateProductVariantMutationKey } from './v1/react-query/hooks/useUpdateProductVariant'
 export type { UpdateStockLocationMutationKey } from './v1/react-query/hooks/useUpdateStockLocation'
+export type { UpsertCartItemMutationKey } from './v1/react-query/hooks/useUpsertCartItem'
+export type {
+  CreateCarrier201Schema,
+  CreateCarrier400Schema,
+  CreateCarrier401Schema,
+  CreateCarrier403Schema,
+  CreateCarrier404Schema,
+  CreateCarrier429Schema,
+  CreateCarrier500Schema,
+  CreateCarrierMutationRequestSchema,
+  CreateCarrierMutationResponseSchema,
+} from './v1/schemas/createCarrierSchema'
+export type {
+  CreateCart201Schema,
+  CreateCart400Schema,
+  CreateCart401Schema,
+  CreateCart403Schema,
+  CreateCart404Schema,
+  CreateCart429Schema,
+  CreateCart500Schema,
+  CreateCartMutationRequestSchema,
+  CreateCartMutationResponseSchema,
+} from './v1/schemas/createCartSchema'
+export type {
+  CreateCustomer201Schema,
+  CreateCustomer400Schema,
+  CreateCustomer401Schema,
+  CreateCustomer403Schema,
+  CreateCustomer404Schema,
+  CreateCustomer429Schema,
+  CreateCustomer500Schema,
+  CreateCustomerMutationRequestSchema,
+  CreateCustomerMutationResponseSchema,
+} from './v1/schemas/createCustomerSchema'
 export type {
   CreateInventoryItemPathParamsSchema,
   CreateInventoryItem201Schema,
@@ -102,6 +152,28 @@ export type {
   CreateInventoryLevelMutationRequestSchema,
   CreateInventoryLevelMutationResponseSchema,
 } from './v1/schemas/createInventoryLevelSchema'
+export type {
+  CreatePaymentMethod201Schema,
+  CreatePaymentMethod400Schema,
+  CreatePaymentMethod401Schema,
+  CreatePaymentMethod403Schema,
+  CreatePaymentMethod404Schema,
+  CreatePaymentMethod429Schema,
+  CreatePaymentMethod500Schema,
+  CreatePaymentMethodMutationRequestSchema,
+  CreatePaymentMethodMutationResponseSchema,
+} from './v1/schemas/createPaymentMethodSchema'
+export type {
+  CreatePaymentTerm201Schema,
+  CreatePaymentTerm400Schema,
+  CreatePaymentTerm401Schema,
+  CreatePaymentTerm403Schema,
+  CreatePaymentTerm404Schema,
+  CreatePaymentTerm429Schema,
+  CreatePaymentTerm500Schema,
+  CreatePaymentTermMutationRequestSchema,
+  CreatePaymentTermMutationResponseSchema,
+} from './v1/schemas/createPaymentTermSchema'
 export type {
   CreateProductCategory201Schema,
   CreateProductCategory400Schema,
@@ -160,6 +232,50 @@ export type {
   CreateStockLocationMutationResponseSchema,
 } from './v1/schemas/createStockLocationSchema'
 export type {
+  DeleteCarrierPathParamsSchema,
+  DeleteCarrier204Schema,
+  DeleteCarrier400Schema,
+  DeleteCarrier401Schema,
+  DeleteCarrier403Schema,
+  DeleteCarrier404Schema,
+  DeleteCarrier429Schema,
+  DeleteCarrier500Schema,
+  DeleteCarrierMutationResponseSchema,
+} from './v1/schemas/deleteCarrierSchema'
+export type {
+  DeleteCartItemPathParamsSchema,
+  DeleteCartItem204Schema,
+  DeleteCartItem400Schema,
+  DeleteCartItem401Schema,
+  DeleteCartItem403Schema,
+  DeleteCartItem404Schema,
+  DeleteCartItem429Schema,
+  DeleteCartItem500Schema,
+  DeleteCartItemMutationResponseSchema,
+} from './v1/schemas/deleteCartItemSchema'
+export type {
+  DeleteCartPathParamsSchema,
+  DeleteCart204Schema,
+  DeleteCart400Schema,
+  DeleteCart401Schema,
+  DeleteCart403Schema,
+  DeleteCart404Schema,
+  DeleteCart429Schema,
+  DeleteCart500Schema,
+  DeleteCartMutationResponseSchema,
+} from './v1/schemas/deleteCartSchema'
+export type {
+  DeleteCustomerPathParamsSchema,
+  DeleteCustomer204Schema,
+  DeleteCustomer400Schema,
+  DeleteCustomer401Schema,
+  DeleteCustomer403Schema,
+  DeleteCustomer404Schema,
+  DeleteCustomer429Schema,
+  DeleteCustomer500Schema,
+  DeleteCustomerMutationResponseSchema,
+} from './v1/schemas/deleteCustomerSchema'
+export type {
   DeleteInventoryItemPathParamsSchema,
   DeleteInventoryItem204Schema,
   DeleteInventoryItem400Schema,
@@ -181,6 +297,28 @@ export type {
   DeleteInventoryLevel500Schema,
   DeleteInventoryLevelMutationResponseSchema,
 } from './v1/schemas/deleteInventoryLevelSchema'
+export type {
+  DeletePaymentMethodPathParamsSchema,
+  DeletePaymentMethod204Schema,
+  DeletePaymentMethod400Schema,
+  DeletePaymentMethod401Schema,
+  DeletePaymentMethod403Schema,
+  DeletePaymentMethod404Schema,
+  DeletePaymentMethod429Schema,
+  DeletePaymentMethod500Schema,
+  DeletePaymentMethodMutationResponseSchema,
+} from './v1/schemas/deletePaymentMethodSchema'
+export type {
+  DeletePaymentTermPathParamsSchema,
+  DeletePaymentTerm204Schema,
+  DeletePaymentTerm400Schema,
+  DeletePaymentTerm401Schema,
+  DeletePaymentTerm403Schema,
+  DeletePaymentTerm404Schema,
+  DeletePaymentTerm429Schema,
+  DeletePaymentTerm500Schema,
+  DeletePaymentTermMutationResponseSchema,
+} from './v1/schemas/deletePaymentTermSchema'
 export type {
   DeleteProductCategoryPathParamsSchema,
   DeleteProductCategory204Schema,
@@ -579,6 +717,42 @@ export type {
   LogInMutationResponseSchema,
 } from './v1/schemas/logInSchema'
 export type {
+  UpdateCarrierPathParamsSchema,
+  UpdateCarrier204Schema,
+  UpdateCarrier400Schema,
+  UpdateCarrier401Schema,
+  UpdateCarrier403Schema,
+  UpdateCarrier404Schema,
+  UpdateCarrier429Schema,
+  UpdateCarrier500Schema,
+  UpdateCarrierMutationRequestSchema,
+  UpdateCarrierMutationResponseSchema,
+} from './v1/schemas/updateCarrierSchema'
+export type {
+  UpdateCartPathParamsSchema,
+  UpdateCart204Schema,
+  UpdateCart400Schema,
+  UpdateCart401Schema,
+  UpdateCart403Schema,
+  UpdateCart404Schema,
+  UpdateCart429Schema,
+  UpdateCart500Schema,
+  UpdateCartMutationRequestSchema,
+  UpdateCartMutationResponseSchema,
+} from './v1/schemas/updateCartSchema'
+export type {
+  UpdateCustomerPathParamsSchema,
+  UpdateCustomer204Schema,
+  UpdateCustomer400Schema,
+  UpdateCustomer401Schema,
+  UpdateCustomer403Schema,
+  UpdateCustomer404Schema,
+  UpdateCustomer429Schema,
+  UpdateCustomer500Schema,
+  UpdateCustomerMutationRequestSchema,
+  UpdateCustomerMutationResponseSchema,
+} from './v1/schemas/updateCustomerSchema'
+export type {
   UpdateInventoryLevelPathParamsSchema,
   UpdateInventoryLevel204Schema,
   UpdateInventoryLevel400Schema,
@@ -590,6 +764,30 @@ export type {
   UpdateInventoryLevelMutationRequestSchema,
   UpdateInventoryLevelMutationResponseSchema,
 } from './v1/schemas/updateInventoryLevelSchema'
+export type {
+  UpdatePaymentMethodPathParamsSchema,
+  UpdatePaymentMethod204Schema,
+  UpdatePaymentMethod400Schema,
+  UpdatePaymentMethod401Schema,
+  UpdatePaymentMethod403Schema,
+  UpdatePaymentMethod404Schema,
+  UpdatePaymentMethod429Schema,
+  UpdatePaymentMethod500Schema,
+  UpdatePaymentMethodMutationRequestSchema,
+  UpdatePaymentMethodMutationResponseSchema,
+} from './v1/schemas/updatePaymentMethodSchema'
+export type {
+  UpdatePaymentTermPathParamsSchema,
+  UpdatePaymentTerm204Schema,
+  UpdatePaymentTerm400Schema,
+  UpdatePaymentTerm401Schema,
+  UpdatePaymentTerm403Schema,
+  UpdatePaymentTerm404Schema,
+  UpdatePaymentTerm429Schema,
+  UpdatePaymentTerm500Schema,
+  UpdatePaymentTermMutationRequestSchema,
+  UpdatePaymentTermMutationResponseSchema,
+} from './v1/schemas/updatePaymentTermSchema'
 export type {
   UpdateProductCategoryPathParamsSchema,
   UpdateProductCategory204Schema,
@@ -651,6 +849,60 @@ export type {
   UpdateStockLocationMutationResponseSchema,
 } from './v1/schemas/updateStockLocationSchema'
 export type {
+  UpsertCartItemPathParamsSchema,
+  UpsertCartItem201Schema,
+  UpsertCartItem400Schema,
+  UpsertCartItem401Schema,
+  UpsertCartItem403Schema,
+  UpsertCartItem404Schema,
+  UpsertCartItem429Schema,
+  UpsertCartItem500Schema,
+  UpsertCartItemMutationRequestSchema,
+  UpsertCartItemMutationResponseSchema,
+} from './v1/schemas/upsertCartItemSchema'
+export type {
+  CreateCarrier201,
+  CreateCarrier400,
+  CreateCarrier401,
+  CreateCarrier403,
+  CreateCarrier404,
+  CreateCarrier429,
+  CreateCarrier500,
+  CreateCarrierMutationRequest,
+  CreateCarrierMutationResponse,
+  CreateCarrierMutation,
+} from './v1/types/CreateCarrier'
+export type {
+  CreateCart201,
+  CreateCart400,
+  CreateCart401,
+  CreateCart403,
+  CreateCart404,
+  CreateCart429,
+  CreateCart500,
+  CreateCartMutationRequestCurrencyCodeEnumKey,
+  PriceAdjustmentTypeEnumKey,
+  PriceAdjustmentModeEnumKey,
+  CreateCartMutationRequest,
+  CreateCartMutationResponse,
+  CreateCartMutation,
+} from './v1/types/CreateCart'
+export type {
+  CreateCustomer201,
+  CreateCustomer400,
+  CreateCustomer401,
+  CreateCustomer403,
+  CreateCustomer404,
+  CreateCustomer429,
+  CreateCustomer500,
+  CreateCustomerMutationRequestDocumentTypeEnumKey,
+  CreateCustomerMutationRequestGenderEnumKey,
+  AddressesTypeEnumKey,
+  CreateCustomerMutationRequest,
+  CreateCustomerMutationResponse,
+  CreateCustomerMutation,
+} from './v1/types/CreateCustomer'
+export type {
   CreateInventoryItemPathParams,
   CreateInventoryItem201,
   CreateInventoryItem400,
@@ -675,6 +927,34 @@ export type {
   CreateInventoryLevelMutationResponse,
   CreateInventoryLevelMutation,
 } from './v1/types/CreateInventoryLevel'
+export type {
+  CreatePaymentMethod201,
+  CreatePaymentMethod400,
+  CreatePaymentMethod401,
+  CreatePaymentMethod403,
+  CreatePaymentMethod404,
+  CreatePaymentMethod429,
+  CreatePaymentMethod500,
+  CreatePaymentMethodMutationRequest,
+  CreatePaymentMethodMutationResponse,
+  CreatePaymentMethodMutation,
+} from './v1/types/CreatePaymentMethod'
+export type {
+  CreatePaymentTerm201,
+  CreatePaymentTerm400,
+  CreatePaymentTerm401,
+  CreatePaymentTerm403,
+  CreatePaymentTerm404,
+  CreatePaymentTerm429,
+  CreatePaymentTerm500,
+  AmountTypeEnum3Key,
+  AmountApplyOnEnum2Key,
+  AmountTypeEnum4Key,
+  ScheduleBaseOnEnum2Key,
+  CreatePaymentTermMutationRequest,
+  CreatePaymentTermMutationResponse,
+  CreatePaymentTermMutation,
+} from './v1/types/CreatePaymentTerm'
 export type {
   CreateProduct201,
   CreateProduct400,
@@ -741,6 +1021,58 @@ export type {
   CreateStockLocationMutation,
 } from './v1/types/CreateStockLocation'
 export type {
+  DeleteCarrierPathParams,
+  DeleteCarrier204EnumKey,
+  DeleteCarrier204,
+  DeleteCarrier400,
+  DeleteCarrier401,
+  DeleteCarrier403,
+  DeleteCarrier404,
+  DeleteCarrier429,
+  DeleteCarrier500,
+  DeleteCarrierMutationResponse,
+  DeleteCarrierMutation,
+} from './v1/types/DeleteCarrier'
+export type {
+  DeleteCartPathParams,
+  DeleteCart204EnumKey,
+  DeleteCart204,
+  DeleteCart400,
+  DeleteCart401,
+  DeleteCart403,
+  DeleteCart404,
+  DeleteCart429,
+  DeleteCart500,
+  DeleteCartMutationResponse,
+  DeleteCartMutation,
+} from './v1/types/DeleteCart'
+export type {
+  DeleteCartItemPathParams,
+  DeleteCartItem204EnumKey,
+  DeleteCartItem204,
+  DeleteCartItem400,
+  DeleteCartItem401,
+  DeleteCartItem403,
+  DeleteCartItem404,
+  DeleteCartItem429,
+  DeleteCartItem500,
+  DeleteCartItemMutationResponse,
+  DeleteCartItemMutation,
+} from './v1/types/DeleteCartItem'
+export type {
+  DeleteCustomerPathParams,
+  DeleteCustomer204EnumKey,
+  DeleteCustomer204,
+  DeleteCustomer400,
+  DeleteCustomer401,
+  DeleteCustomer403,
+  DeleteCustomer404,
+  DeleteCustomer429,
+  DeleteCustomer500,
+  DeleteCustomerMutationResponse,
+  DeleteCustomerMutation,
+} from './v1/types/DeleteCustomer'
+export type {
   DeleteInventoryItemPathParams,
   DeleteInventoryItem204EnumKey,
   DeleteInventoryItem204,
@@ -766,6 +1098,32 @@ export type {
   DeleteInventoryLevelMutationResponse,
   DeleteInventoryLevelMutation,
 } from './v1/types/DeleteInventoryLevel'
+export type {
+  DeletePaymentMethodPathParams,
+  DeletePaymentMethod204EnumKey,
+  DeletePaymentMethod204,
+  DeletePaymentMethod400,
+  DeletePaymentMethod401,
+  DeletePaymentMethod403,
+  DeletePaymentMethod404,
+  DeletePaymentMethod429,
+  DeletePaymentMethod500,
+  DeletePaymentMethodMutationResponse,
+  DeletePaymentMethodMutation,
+} from './v1/types/DeletePaymentMethod'
+export type {
+  DeletePaymentTermPathParams,
+  DeletePaymentTerm204EnumKey,
+  DeletePaymentTerm204,
+  DeletePaymentTerm400,
+  DeletePaymentTerm401,
+  DeletePaymentTerm403,
+  DeletePaymentTerm404,
+  DeletePaymentTerm429,
+  DeletePaymentTerm500,
+  DeletePaymentTermMutationResponse,
+  DeletePaymentTermMutation,
+} from './v1/types/DeletePaymentTerm'
 export type {
   DeleteProductPathParams,
   DeleteProduct204EnumKey,
@@ -846,6 +1204,9 @@ export type {
 export type {
   GetCartPathParams,
   CartCurrencyCodeEnumKey,
+  PriceAdjustmentTypeEnum2Key,
+  PriceAdjustmentModeEnum2Key,
+  PriceAdjustmentApplyOnEnumKey,
   PricesCurrencyCodeEnum7Key,
   GetCart200,
   GetCart400,
@@ -861,7 +1222,7 @@ export type {
   GetCustomerPathParams,
   CustomerDocumentTypeEnumKey,
   CustomerGenderEnumKey,
-  AddressesTypeEnumKey,
+  AddressesTypeEnum2Key,
   GetCustomer200,
   GetCustomer400,
   GetCustomer401,
@@ -923,10 +1284,10 @@ export type {
 } from './v1/types/GetPaymentMethod'
 export type {
   GetPaymentTermPathParams,
-  AmountTypeEnum3Key,
-  AmountApplyOnEnum2Key,
-  AmountTypeEnum4Key,
-  ScheduleBaseOnEnum2Key,
+  AmountTypeEnum5Key,
+  AmountApplyOnEnum3Key,
+  AmountTypeEnum6Key,
+  ScheduleBaseOnEnum3Key,
   GetPaymentTerm200,
   GetPaymentTerm400,
   GetPaymentTerm401,
@@ -1313,6 +1674,54 @@ export type {
   LogInMutation,
 } from './v1/types/LogIn'
 export type {
+  UpdateCarrierPathParams,
+  UpdateCarrier204EnumKey,
+  UpdateCarrier204,
+  UpdateCarrier400,
+  UpdateCarrier401,
+  UpdateCarrier403,
+  UpdateCarrier404,
+  UpdateCarrier429,
+  UpdateCarrier500,
+  UpdateCarrierMutationRequest,
+  UpdateCarrierMutationResponse,
+  UpdateCarrierMutation,
+} from './v1/types/UpdateCarrier'
+export type {
+  UpdateCartPathParams,
+  UpdateCart204EnumKey,
+  UpdateCart204,
+  UpdateCart400,
+  UpdateCart401,
+  UpdateCart403,
+  UpdateCart404,
+  UpdateCart429,
+  UpdateCart500,
+  UpdateCartMutationRequestCurrencyCodeEnumKey,
+  PriceAdjustmentTypeEnum3Key,
+  PriceAdjustmentModeEnum3Key,
+  UpdateCartMutationRequest,
+  UpdateCartMutationResponse,
+  UpdateCartMutation,
+} from './v1/types/UpdateCart'
+export type {
+  UpdateCustomerPathParams,
+  UpdateCustomer204EnumKey,
+  UpdateCustomer204,
+  UpdateCustomer400,
+  UpdateCustomer401,
+  UpdateCustomer403,
+  UpdateCustomer404,
+  UpdateCustomer429,
+  UpdateCustomer500,
+  UpdateCustomerMutationRequestDocumentTypeEnumKey,
+  UpdateCustomerMutationRequestGenderEnumKey,
+  AddressesTypeEnum3Key,
+  UpdateCustomerMutationRequest,
+  UpdateCustomerMutationResponse,
+  UpdateCustomerMutation,
+} from './v1/types/UpdateCustomer'
+export type {
   UpdateInventoryLevelPathParams,
   UpdateInventoryLevel204EnumKey,
   UpdateInventoryLevel204,
@@ -1326,6 +1735,38 @@ export type {
   UpdateInventoryLevelMutationResponse,
   UpdateInventoryLevelMutation,
 } from './v1/types/UpdateInventoryLevel'
+export type {
+  UpdatePaymentMethodPathParams,
+  UpdatePaymentMethod204EnumKey,
+  UpdatePaymentMethod204,
+  UpdatePaymentMethod400,
+  UpdatePaymentMethod401,
+  UpdatePaymentMethod403,
+  UpdatePaymentMethod404,
+  UpdatePaymentMethod429,
+  UpdatePaymentMethod500,
+  UpdatePaymentMethodMutationRequest,
+  UpdatePaymentMethodMutationResponse,
+  UpdatePaymentMethodMutation,
+} from './v1/types/UpdatePaymentMethod'
+export type {
+  UpdatePaymentTermPathParams,
+  UpdatePaymentTerm204EnumKey,
+  UpdatePaymentTerm204,
+  UpdatePaymentTerm400,
+  UpdatePaymentTerm401,
+  UpdatePaymentTerm403,
+  UpdatePaymentTerm404,
+  UpdatePaymentTerm429,
+  UpdatePaymentTerm500,
+  AmountTypeEnum7Key,
+  AmountApplyOnEnum4Key,
+  AmountTypeEnum8Key,
+  ScheduleBaseOnEnum4Key,
+  UpdatePaymentTermMutationRequest,
+  UpdatePaymentTermMutationResponse,
+  UpdatePaymentTermMutation,
+} from './v1/types/UpdatePaymentTerm'
 export type {
   UpdateProductPathParams,
   UpdateProduct204EnumKey,
@@ -1398,15 +1839,42 @@ export type {
   UpdateStockLocationMutationResponse,
   UpdateStockLocationMutation,
 } from './v1/types/UpdateStockLocation'
+export type {
+  UpsertCartItemPathParams,
+  UpsertCartItem201,
+  UpsertCartItem400,
+  UpsertCartItem401,
+  UpsertCartItem403,
+  UpsertCartItem404,
+  UpsertCartItem429,
+  UpsertCartItem500,
+  PriceAdjustmentTypeEnum4Key,
+  PriceAdjustmentModeEnum4Key,
+  PriceAdjustmentApplyOnEnum2Key,
+  UpsertCartItemMutationRequest,
+  UpsertCartItemMutationResponse,
+  UpsertCartItemMutation,
+} from './v1/types/UpsertCartItem'
+export { createCarrier } from './v1/operations/createCarrier'
+export { createCart } from './v1/operations/createCart'
+export { createCustomer } from './v1/operations/createCustomer'
 export { createInventoryItem } from './v1/operations/createInventoryItem'
 export { createInventoryLevel } from './v1/operations/createInventoryLevel'
+export { createPaymentMethod } from './v1/operations/createPaymentMethod'
+export { createPaymentTerm } from './v1/operations/createPaymentTerm'
 export { createProduct } from './v1/operations/createProduct'
 export { createProductCategory } from './v1/operations/createProductCategory'
 export { createProductOption } from './v1/operations/createProductOption'
 export { createProductVariant } from './v1/operations/createProductVariant'
 export { createStockLocation } from './v1/operations/createStockLocation'
+export { deleteCarrier } from './v1/operations/deleteCarrier'
+export { deleteCart } from './v1/operations/deleteCart'
+export { deleteCartItem } from './v1/operations/deleteCartItem'
+export { deleteCustomer } from './v1/operations/deleteCustomer'
 export { deleteInventoryItem } from './v1/operations/deleteInventoryItem'
 export { deleteInventoryLevel } from './v1/operations/deleteInventoryLevel'
+export { deletePaymentMethod } from './v1/operations/deletePaymentMethod'
+export { deletePaymentTerm } from './v1/operations/deletePaymentTerm'
 export { deleteProduct } from './v1/operations/deleteProduct'
 export { deleteProductCategory } from './v1/operations/deleteProductCategory'
 export { deleteProductOption } from './v1/operations/deleteProductOption'
@@ -1443,18 +1911,39 @@ export { listProducts } from './v1/operations/listProducts'
 export { listProductVariants } from './v1/operations/listProductVariants'
 export { listStockLocations } from './v1/operations/listStockLocations'
 export { logIn } from './v1/operations/logIn'
+export { updateCarrier } from './v1/operations/updateCarrier'
+export { updateCart } from './v1/operations/updateCart'
+export { updateCustomer } from './v1/operations/updateCustomer'
 export { updateInventoryLevel } from './v1/operations/updateInventoryLevel'
+export { updatePaymentMethod } from './v1/operations/updatePaymentMethod'
+export { updatePaymentTerm } from './v1/operations/updatePaymentTerm'
 export { updateProduct } from './v1/operations/updateProduct'
 export { updateProductCategory } from './v1/operations/updateProductCategory'
 export { updateProductOption } from './v1/operations/updateProductOption'
 export { updateProductVariant } from './v1/operations/updateProductVariant'
 export { updateStockLocation } from './v1/operations/updateStockLocation'
+export { upsertCartItem } from './v1/operations/upsertCartItem'
+export { createCarrierMutationKey } from './v1/react-query/hooks/useCreateCarrier'
+export { createCarrierMutationOptions } from './v1/react-query/hooks/useCreateCarrier'
+export { useCreateCarrier } from './v1/react-query/hooks/useCreateCarrier'
+export { createCartMutationKey } from './v1/react-query/hooks/useCreateCart'
+export { createCartMutationOptions } from './v1/react-query/hooks/useCreateCart'
+export { useCreateCart } from './v1/react-query/hooks/useCreateCart'
+export { createCustomerMutationKey } from './v1/react-query/hooks/useCreateCustomer'
+export { createCustomerMutationOptions } from './v1/react-query/hooks/useCreateCustomer'
+export { useCreateCustomer } from './v1/react-query/hooks/useCreateCustomer'
 export { createInventoryItemMutationKey } from './v1/react-query/hooks/useCreateInventoryItem'
 export { createInventoryItemMutationOptions } from './v1/react-query/hooks/useCreateInventoryItem'
 export { useCreateInventoryItem } from './v1/react-query/hooks/useCreateInventoryItem'
 export { createInventoryLevelMutationKey } from './v1/react-query/hooks/useCreateInventoryLevel'
 export { createInventoryLevelMutationOptions } from './v1/react-query/hooks/useCreateInventoryLevel'
 export { useCreateInventoryLevel } from './v1/react-query/hooks/useCreateInventoryLevel'
+export { createPaymentMethodMutationKey } from './v1/react-query/hooks/useCreatePaymentMethod'
+export { createPaymentMethodMutationOptions } from './v1/react-query/hooks/useCreatePaymentMethod'
+export { useCreatePaymentMethod } from './v1/react-query/hooks/useCreatePaymentMethod'
+export { createPaymentTermMutationKey } from './v1/react-query/hooks/useCreatePaymentTerm'
+export { createPaymentTermMutationOptions } from './v1/react-query/hooks/useCreatePaymentTerm'
+export { useCreatePaymentTerm } from './v1/react-query/hooks/useCreatePaymentTerm'
 export { createProductMutationKey } from './v1/react-query/hooks/useCreateProduct'
 export { createProductMutationOptions } from './v1/react-query/hooks/useCreateProduct'
 export { useCreateProduct } from './v1/react-query/hooks/useCreateProduct'
@@ -1470,12 +1959,30 @@ export { useCreateProductVariant } from './v1/react-query/hooks/useCreateProduct
 export { createStockLocationMutationKey } from './v1/react-query/hooks/useCreateStockLocation'
 export { createStockLocationMutationOptions } from './v1/react-query/hooks/useCreateStockLocation'
 export { useCreateStockLocation } from './v1/react-query/hooks/useCreateStockLocation'
+export { deleteCarrierMutationKey } from './v1/react-query/hooks/useDeleteCarrier'
+export { deleteCarrierMutationOptions } from './v1/react-query/hooks/useDeleteCarrier'
+export { useDeleteCarrier } from './v1/react-query/hooks/useDeleteCarrier'
+export { deleteCartMutationKey } from './v1/react-query/hooks/useDeleteCart'
+export { deleteCartMutationOptions } from './v1/react-query/hooks/useDeleteCart'
+export { useDeleteCart } from './v1/react-query/hooks/useDeleteCart'
+export { deleteCartItemMutationKey } from './v1/react-query/hooks/useDeleteCartItem'
+export { deleteCartItemMutationOptions } from './v1/react-query/hooks/useDeleteCartItem'
+export { useDeleteCartItem } from './v1/react-query/hooks/useDeleteCartItem'
+export { deleteCustomerMutationKey } from './v1/react-query/hooks/useDeleteCustomer'
+export { deleteCustomerMutationOptions } from './v1/react-query/hooks/useDeleteCustomer'
+export { useDeleteCustomer } from './v1/react-query/hooks/useDeleteCustomer'
 export { deleteInventoryItemMutationKey } from './v1/react-query/hooks/useDeleteInventoryItem'
 export { deleteInventoryItemMutationOptions } from './v1/react-query/hooks/useDeleteInventoryItem'
 export { useDeleteInventoryItem } from './v1/react-query/hooks/useDeleteInventoryItem'
 export { deleteInventoryLevelMutationKey } from './v1/react-query/hooks/useDeleteInventoryLevel'
 export { deleteInventoryLevelMutationOptions } from './v1/react-query/hooks/useDeleteInventoryLevel'
 export { useDeleteInventoryLevel } from './v1/react-query/hooks/useDeleteInventoryLevel'
+export { deletePaymentMethodMutationKey } from './v1/react-query/hooks/useDeletePaymentMethod'
+export { deletePaymentMethodMutationOptions } from './v1/react-query/hooks/useDeletePaymentMethod'
+export { useDeletePaymentMethod } from './v1/react-query/hooks/useDeletePaymentMethod'
+export { deletePaymentTermMutationKey } from './v1/react-query/hooks/useDeletePaymentTerm'
+export { deletePaymentTermMutationOptions } from './v1/react-query/hooks/useDeletePaymentTerm'
+export { useDeletePaymentTerm } from './v1/react-query/hooks/useDeletePaymentTerm'
 export { deleteProductMutationKey } from './v1/react-query/hooks/useDeleteProduct'
 export { deleteProductMutationOptions } from './v1/react-query/hooks/useDeleteProduct'
 export { useDeleteProduct } from './v1/react-query/hooks/useDeleteProduct'
@@ -1674,9 +2181,24 @@ export { useListStockLocationsSuspense } from './v1/react-query/hooks/useListSto
 export { logInMutationKey } from './v1/react-query/hooks/useLogIn'
 export { logInMutationOptions } from './v1/react-query/hooks/useLogIn'
 export { useLogIn } from './v1/react-query/hooks/useLogIn'
+export { updateCarrierMutationKey } from './v1/react-query/hooks/useUpdateCarrier'
+export { updateCarrierMutationOptions } from './v1/react-query/hooks/useUpdateCarrier'
+export { useUpdateCarrier } from './v1/react-query/hooks/useUpdateCarrier'
+export { updateCartMutationKey } from './v1/react-query/hooks/useUpdateCart'
+export { updateCartMutationOptions } from './v1/react-query/hooks/useUpdateCart'
+export { useUpdateCart } from './v1/react-query/hooks/useUpdateCart'
+export { updateCustomerMutationKey } from './v1/react-query/hooks/useUpdateCustomer'
+export { updateCustomerMutationOptions } from './v1/react-query/hooks/useUpdateCustomer'
+export { useUpdateCustomer } from './v1/react-query/hooks/useUpdateCustomer'
 export { updateInventoryLevelMutationKey } from './v1/react-query/hooks/useUpdateInventoryLevel'
 export { updateInventoryLevelMutationOptions } from './v1/react-query/hooks/useUpdateInventoryLevel'
 export { useUpdateInventoryLevel } from './v1/react-query/hooks/useUpdateInventoryLevel'
+export { updatePaymentMethodMutationKey } from './v1/react-query/hooks/useUpdatePaymentMethod'
+export { updatePaymentMethodMutationOptions } from './v1/react-query/hooks/useUpdatePaymentMethod'
+export { useUpdatePaymentMethod } from './v1/react-query/hooks/useUpdatePaymentMethod'
+export { updatePaymentTermMutationKey } from './v1/react-query/hooks/useUpdatePaymentTerm'
+export { updatePaymentTermMutationOptions } from './v1/react-query/hooks/useUpdatePaymentTerm'
+export { useUpdatePaymentTerm } from './v1/react-query/hooks/useUpdatePaymentTerm'
 export { updateProductMutationKey } from './v1/react-query/hooks/useUpdateProduct'
 export { updateProductMutationOptions } from './v1/react-query/hooks/useUpdateProduct'
 export { useUpdateProduct } from './v1/react-query/hooks/useUpdateProduct'
@@ -1692,6 +2214,36 @@ export { useUpdateProductVariant } from './v1/react-query/hooks/useUpdateProduct
 export { updateStockLocationMutationKey } from './v1/react-query/hooks/useUpdateStockLocation'
 export { updateStockLocationMutationOptions } from './v1/react-query/hooks/useUpdateStockLocation'
 export { useUpdateStockLocation } from './v1/react-query/hooks/useUpdateStockLocation'
+export { upsertCartItemMutationKey } from './v1/react-query/hooks/useUpsertCartItem'
+export { upsertCartItemMutationOptions } from './v1/react-query/hooks/useUpsertCartItem'
+export { useUpsertCartItem } from './v1/react-query/hooks/useUpsertCartItem'
+export { createCarrier201Schema } from './v1/schemas/createCarrierSchema'
+export { createCarrier400Schema } from './v1/schemas/createCarrierSchema'
+export { createCarrier401Schema } from './v1/schemas/createCarrierSchema'
+export { createCarrier403Schema } from './v1/schemas/createCarrierSchema'
+export { createCarrier404Schema } from './v1/schemas/createCarrierSchema'
+export { createCarrier429Schema } from './v1/schemas/createCarrierSchema'
+export { createCarrier500Schema } from './v1/schemas/createCarrierSchema'
+export { createCarrierMutationRequestSchema } from './v1/schemas/createCarrierSchema'
+export { createCarrierMutationResponseSchema } from './v1/schemas/createCarrierSchema'
+export { createCart201Schema } from './v1/schemas/createCartSchema'
+export { createCart400Schema } from './v1/schemas/createCartSchema'
+export { createCart401Schema } from './v1/schemas/createCartSchema'
+export { createCart403Schema } from './v1/schemas/createCartSchema'
+export { createCart404Schema } from './v1/schemas/createCartSchema'
+export { createCart429Schema } from './v1/schemas/createCartSchema'
+export { createCart500Schema } from './v1/schemas/createCartSchema'
+export { createCartMutationRequestSchema } from './v1/schemas/createCartSchema'
+export { createCartMutationResponseSchema } from './v1/schemas/createCartSchema'
+export { createCustomer201Schema } from './v1/schemas/createCustomerSchema'
+export { createCustomer400Schema } from './v1/schemas/createCustomerSchema'
+export { createCustomer401Schema } from './v1/schemas/createCustomerSchema'
+export { createCustomer403Schema } from './v1/schemas/createCustomerSchema'
+export { createCustomer404Schema } from './v1/schemas/createCustomerSchema'
+export { createCustomer429Schema } from './v1/schemas/createCustomerSchema'
+export { createCustomer500Schema } from './v1/schemas/createCustomerSchema'
+export { createCustomerMutationRequestSchema } from './v1/schemas/createCustomerSchema'
+export { createCustomerMutationResponseSchema } from './v1/schemas/createCustomerSchema'
 export { createInventoryItemPathParamsSchema } from './v1/schemas/createInventoryItemSchema'
 export { createInventoryItem201Schema } from './v1/schemas/createInventoryItemSchema'
 export { createInventoryItem400Schema } from './v1/schemas/createInventoryItemSchema'
@@ -1711,6 +2263,24 @@ export { createInventoryLevel429Schema } from './v1/schemas/createInventoryLevel
 export { createInventoryLevel500Schema } from './v1/schemas/createInventoryLevelSchema'
 export { createInventoryLevelMutationRequestSchema } from './v1/schemas/createInventoryLevelSchema'
 export { createInventoryLevelMutationResponseSchema } from './v1/schemas/createInventoryLevelSchema'
+export { createPaymentMethod201Schema } from './v1/schemas/createPaymentMethodSchema'
+export { createPaymentMethod400Schema } from './v1/schemas/createPaymentMethodSchema'
+export { createPaymentMethod401Schema } from './v1/schemas/createPaymentMethodSchema'
+export { createPaymentMethod403Schema } from './v1/schemas/createPaymentMethodSchema'
+export { createPaymentMethod404Schema } from './v1/schemas/createPaymentMethodSchema'
+export { createPaymentMethod429Schema } from './v1/schemas/createPaymentMethodSchema'
+export { createPaymentMethod500Schema } from './v1/schemas/createPaymentMethodSchema'
+export { createPaymentMethodMutationRequestSchema } from './v1/schemas/createPaymentMethodSchema'
+export { createPaymentMethodMutationResponseSchema } from './v1/schemas/createPaymentMethodSchema'
+export { createPaymentTerm201Schema } from './v1/schemas/createPaymentTermSchema'
+export { createPaymentTerm400Schema } from './v1/schemas/createPaymentTermSchema'
+export { createPaymentTerm401Schema } from './v1/schemas/createPaymentTermSchema'
+export { createPaymentTerm403Schema } from './v1/schemas/createPaymentTermSchema'
+export { createPaymentTerm404Schema } from './v1/schemas/createPaymentTermSchema'
+export { createPaymentTerm429Schema } from './v1/schemas/createPaymentTermSchema'
+export { createPaymentTerm500Schema } from './v1/schemas/createPaymentTermSchema'
+export { createPaymentTermMutationRequestSchema } from './v1/schemas/createPaymentTermSchema'
+export { createPaymentTermMutationResponseSchema } from './v1/schemas/createPaymentTermSchema'
 export { createProductCategory201Schema } from './v1/schemas/createProductCategorySchema'
 export { createProductCategory400Schema } from './v1/schemas/createProductCategorySchema'
 export { createProductCategory401Schema } from './v1/schemas/createProductCategorySchema'
@@ -1758,6 +2328,42 @@ export { createStockLocation429Schema } from './v1/schemas/createStockLocationSc
 export { createStockLocation500Schema } from './v1/schemas/createStockLocationSchema'
 export { createStockLocationMutationRequestSchema } from './v1/schemas/createStockLocationSchema'
 export { createStockLocationMutationResponseSchema } from './v1/schemas/createStockLocationSchema'
+export { deleteCarrierPathParamsSchema } from './v1/schemas/deleteCarrierSchema'
+export { deleteCarrier204Schema } from './v1/schemas/deleteCarrierSchema'
+export { deleteCarrier400Schema } from './v1/schemas/deleteCarrierSchema'
+export { deleteCarrier401Schema } from './v1/schemas/deleteCarrierSchema'
+export { deleteCarrier403Schema } from './v1/schemas/deleteCarrierSchema'
+export { deleteCarrier404Schema } from './v1/schemas/deleteCarrierSchema'
+export { deleteCarrier429Schema } from './v1/schemas/deleteCarrierSchema'
+export { deleteCarrier500Schema } from './v1/schemas/deleteCarrierSchema'
+export { deleteCarrierMutationResponseSchema } from './v1/schemas/deleteCarrierSchema'
+export { deleteCartItemPathParamsSchema } from './v1/schemas/deleteCartItemSchema'
+export { deleteCartItem204Schema } from './v1/schemas/deleteCartItemSchema'
+export { deleteCartItem400Schema } from './v1/schemas/deleteCartItemSchema'
+export { deleteCartItem401Schema } from './v1/schemas/deleteCartItemSchema'
+export { deleteCartItem403Schema } from './v1/schemas/deleteCartItemSchema'
+export { deleteCartItem404Schema } from './v1/schemas/deleteCartItemSchema'
+export { deleteCartItem429Schema } from './v1/schemas/deleteCartItemSchema'
+export { deleteCartItem500Schema } from './v1/schemas/deleteCartItemSchema'
+export { deleteCartItemMutationResponseSchema } from './v1/schemas/deleteCartItemSchema'
+export { deleteCartPathParamsSchema } from './v1/schemas/deleteCartSchema'
+export { deleteCart204Schema } from './v1/schemas/deleteCartSchema'
+export { deleteCart400Schema } from './v1/schemas/deleteCartSchema'
+export { deleteCart401Schema } from './v1/schemas/deleteCartSchema'
+export { deleteCart403Schema } from './v1/schemas/deleteCartSchema'
+export { deleteCart404Schema } from './v1/schemas/deleteCartSchema'
+export { deleteCart429Schema } from './v1/schemas/deleteCartSchema'
+export { deleteCart500Schema } from './v1/schemas/deleteCartSchema'
+export { deleteCartMutationResponseSchema } from './v1/schemas/deleteCartSchema'
+export { deleteCustomerPathParamsSchema } from './v1/schemas/deleteCustomerSchema'
+export { deleteCustomer204Schema } from './v1/schemas/deleteCustomerSchema'
+export { deleteCustomer400Schema } from './v1/schemas/deleteCustomerSchema'
+export { deleteCustomer401Schema } from './v1/schemas/deleteCustomerSchema'
+export { deleteCustomer403Schema } from './v1/schemas/deleteCustomerSchema'
+export { deleteCustomer404Schema } from './v1/schemas/deleteCustomerSchema'
+export { deleteCustomer429Schema } from './v1/schemas/deleteCustomerSchema'
+export { deleteCustomer500Schema } from './v1/schemas/deleteCustomerSchema'
+export { deleteCustomerMutationResponseSchema } from './v1/schemas/deleteCustomerSchema'
 export { deleteInventoryItemPathParamsSchema } from './v1/schemas/deleteInventoryItemSchema'
 export { deleteInventoryItem204Schema } from './v1/schemas/deleteInventoryItemSchema'
 export { deleteInventoryItem400Schema } from './v1/schemas/deleteInventoryItemSchema'
@@ -1776,6 +2382,24 @@ export { deleteInventoryLevel404Schema } from './v1/schemas/deleteInventoryLevel
 export { deleteInventoryLevel429Schema } from './v1/schemas/deleteInventoryLevelSchema'
 export { deleteInventoryLevel500Schema } from './v1/schemas/deleteInventoryLevelSchema'
 export { deleteInventoryLevelMutationResponseSchema } from './v1/schemas/deleteInventoryLevelSchema'
+export { deletePaymentMethodPathParamsSchema } from './v1/schemas/deletePaymentMethodSchema'
+export { deletePaymentMethod204Schema } from './v1/schemas/deletePaymentMethodSchema'
+export { deletePaymentMethod400Schema } from './v1/schemas/deletePaymentMethodSchema'
+export { deletePaymentMethod401Schema } from './v1/schemas/deletePaymentMethodSchema'
+export { deletePaymentMethod403Schema } from './v1/schemas/deletePaymentMethodSchema'
+export { deletePaymentMethod404Schema } from './v1/schemas/deletePaymentMethodSchema'
+export { deletePaymentMethod429Schema } from './v1/schemas/deletePaymentMethodSchema'
+export { deletePaymentMethod500Schema } from './v1/schemas/deletePaymentMethodSchema'
+export { deletePaymentMethodMutationResponseSchema } from './v1/schemas/deletePaymentMethodSchema'
+export { deletePaymentTermPathParamsSchema } from './v1/schemas/deletePaymentTermSchema'
+export { deletePaymentTerm204Schema } from './v1/schemas/deletePaymentTermSchema'
+export { deletePaymentTerm400Schema } from './v1/schemas/deletePaymentTermSchema'
+export { deletePaymentTerm401Schema } from './v1/schemas/deletePaymentTermSchema'
+export { deletePaymentTerm403Schema } from './v1/schemas/deletePaymentTermSchema'
+export { deletePaymentTerm404Schema } from './v1/schemas/deletePaymentTermSchema'
+export { deletePaymentTerm429Schema } from './v1/schemas/deletePaymentTermSchema'
+export { deletePaymentTerm500Schema } from './v1/schemas/deletePaymentTermSchema'
+export { deletePaymentTermMutationResponseSchema } from './v1/schemas/deletePaymentTermSchema'
 export { deleteProductCategoryPathParamsSchema } from './v1/schemas/deleteProductCategorySchema'
 export { deleteProductCategory204Schema } from './v1/schemas/deleteProductCategorySchema'
 export { deleteProductCategory400Schema } from './v1/schemas/deleteProductCategorySchema'
@@ -2101,6 +2725,36 @@ export { logIn429Schema } from './v1/schemas/logInSchema'
 export { logIn500Schema } from './v1/schemas/logInSchema'
 export { logInMutationRequestSchema } from './v1/schemas/logInSchema'
 export { logInMutationResponseSchema } from './v1/schemas/logInSchema'
+export { updateCarrierPathParamsSchema } from './v1/schemas/updateCarrierSchema'
+export { updateCarrier204Schema } from './v1/schemas/updateCarrierSchema'
+export { updateCarrier400Schema } from './v1/schemas/updateCarrierSchema'
+export { updateCarrier401Schema } from './v1/schemas/updateCarrierSchema'
+export { updateCarrier403Schema } from './v1/schemas/updateCarrierSchema'
+export { updateCarrier404Schema } from './v1/schemas/updateCarrierSchema'
+export { updateCarrier429Schema } from './v1/schemas/updateCarrierSchema'
+export { updateCarrier500Schema } from './v1/schemas/updateCarrierSchema'
+export { updateCarrierMutationRequestSchema } from './v1/schemas/updateCarrierSchema'
+export { updateCarrierMutationResponseSchema } from './v1/schemas/updateCarrierSchema'
+export { updateCartPathParamsSchema } from './v1/schemas/updateCartSchema'
+export { updateCart204Schema } from './v1/schemas/updateCartSchema'
+export { updateCart400Schema } from './v1/schemas/updateCartSchema'
+export { updateCart401Schema } from './v1/schemas/updateCartSchema'
+export { updateCart403Schema } from './v1/schemas/updateCartSchema'
+export { updateCart404Schema } from './v1/schemas/updateCartSchema'
+export { updateCart429Schema } from './v1/schemas/updateCartSchema'
+export { updateCart500Schema } from './v1/schemas/updateCartSchema'
+export { updateCartMutationRequestSchema } from './v1/schemas/updateCartSchema'
+export { updateCartMutationResponseSchema } from './v1/schemas/updateCartSchema'
+export { updateCustomerPathParamsSchema } from './v1/schemas/updateCustomerSchema'
+export { updateCustomer204Schema } from './v1/schemas/updateCustomerSchema'
+export { updateCustomer400Schema } from './v1/schemas/updateCustomerSchema'
+export { updateCustomer401Schema } from './v1/schemas/updateCustomerSchema'
+export { updateCustomer403Schema } from './v1/schemas/updateCustomerSchema'
+export { updateCustomer404Schema } from './v1/schemas/updateCustomerSchema'
+export { updateCustomer429Schema } from './v1/schemas/updateCustomerSchema'
+export { updateCustomer500Schema } from './v1/schemas/updateCustomerSchema'
+export { updateCustomerMutationRequestSchema } from './v1/schemas/updateCustomerSchema'
+export { updateCustomerMutationResponseSchema } from './v1/schemas/updateCustomerSchema'
 export { updateInventoryLevelPathParamsSchema } from './v1/schemas/updateInventoryLevelSchema'
 export { updateInventoryLevel204Schema } from './v1/schemas/updateInventoryLevelSchema'
 export { updateInventoryLevel400Schema } from './v1/schemas/updateInventoryLevelSchema'
@@ -2111,6 +2765,26 @@ export { updateInventoryLevel429Schema } from './v1/schemas/updateInventoryLevel
 export { updateInventoryLevel500Schema } from './v1/schemas/updateInventoryLevelSchema'
 export { updateInventoryLevelMutationRequestSchema } from './v1/schemas/updateInventoryLevelSchema'
 export { updateInventoryLevelMutationResponseSchema } from './v1/schemas/updateInventoryLevelSchema'
+export { updatePaymentMethodPathParamsSchema } from './v1/schemas/updatePaymentMethodSchema'
+export { updatePaymentMethod204Schema } from './v1/schemas/updatePaymentMethodSchema'
+export { updatePaymentMethod400Schema } from './v1/schemas/updatePaymentMethodSchema'
+export { updatePaymentMethod401Schema } from './v1/schemas/updatePaymentMethodSchema'
+export { updatePaymentMethod403Schema } from './v1/schemas/updatePaymentMethodSchema'
+export { updatePaymentMethod404Schema } from './v1/schemas/updatePaymentMethodSchema'
+export { updatePaymentMethod429Schema } from './v1/schemas/updatePaymentMethodSchema'
+export { updatePaymentMethod500Schema } from './v1/schemas/updatePaymentMethodSchema'
+export { updatePaymentMethodMutationRequestSchema } from './v1/schemas/updatePaymentMethodSchema'
+export { updatePaymentMethodMutationResponseSchema } from './v1/schemas/updatePaymentMethodSchema'
+export { updatePaymentTermPathParamsSchema } from './v1/schemas/updatePaymentTermSchema'
+export { updatePaymentTerm204Schema } from './v1/schemas/updatePaymentTermSchema'
+export { updatePaymentTerm400Schema } from './v1/schemas/updatePaymentTermSchema'
+export { updatePaymentTerm401Schema } from './v1/schemas/updatePaymentTermSchema'
+export { updatePaymentTerm403Schema } from './v1/schemas/updatePaymentTermSchema'
+export { updatePaymentTerm404Schema } from './v1/schemas/updatePaymentTermSchema'
+export { updatePaymentTerm429Schema } from './v1/schemas/updatePaymentTermSchema'
+export { updatePaymentTerm500Schema } from './v1/schemas/updatePaymentTermSchema'
+export { updatePaymentTermMutationRequestSchema } from './v1/schemas/updatePaymentTermSchema'
+export { updatePaymentTermMutationResponseSchema } from './v1/schemas/updatePaymentTermSchema'
 export { updateProductCategoryPathParamsSchema } from './v1/schemas/updateProductCategorySchema'
 export { updateProductCategory204Schema } from './v1/schemas/updateProductCategorySchema'
 export { updateProductCategory400Schema } from './v1/schemas/updateProductCategorySchema'
@@ -2161,26 +2835,55 @@ export { updateStockLocation429Schema } from './v1/schemas/updateStockLocationSc
 export { updateStockLocation500Schema } from './v1/schemas/updateStockLocationSchema'
 export { updateStockLocationMutationRequestSchema } from './v1/schemas/updateStockLocationSchema'
 export { updateStockLocationMutationResponseSchema } from './v1/schemas/updateStockLocationSchema'
+export { upsertCartItemPathParamsSchema } from './v1/schemas/upsertCartItemSchema'
+export { upsertCartItem201Schema } from './v1/schemas/upsertCartItemSchema'
+export { upsertCartItem400Schema } from './v1/schemas/upsertCartItemSchema'
+export { upsertCartItem401Schema } from './v1/schemas/upsertCartItemSchema'
+export { upsertCartItem403Schema } from './v1/schemas/upsertCartItemSchema'
+export { upsertCartItem404Schema } from './v1/schemas/upsertCartItemSchema'
+export { upsertCartItem429Schema } from './v1/schemas/upsertCartItemSchema'
+export { upsertCartItem500Schema } from './v1/schemas/upsertCartItemSchema'
+export { upsertCartItemMutationRequestSchema } from './v1/schemas/upsertCartItemSchema'
+export { upsertCartItemMutationResponseSchema } from './v1/schemas/upsertCartItemSchema'
+export { createCartMutationRequestCurrencyCodeEnum } from './v1/types/CreateCart'
+export { priceAdjustmentTypeEnum } from './v1/types/CreateCart'
+export { priceAdjustmentModeEnum } from './v1/types/CreateCart'
+export { createCustomerMutationRequestDocumentTypeEnum } from './v1/types/CreateCustomer'
+export { createCustomerMutationRequestGenderEnum } from './v1/types/CreateCustomer'
+export { addressesTypeEnum } from './v1/types/CreateCustomer'
+export { amountTypeEnum3 } from './v1/types/CreatePaymentTerm'
+export { amountApplyOnEnum2 } from './v1/types/CreatePaymentTerm'
+export { amountTypeEnum4 } from './v1/types/CreatePaymentTerm'
+export { scheduleBaseOnEnum2 } from './v1/types/CreatePaymentTerm'
 export { createProductMutationRequestStatusEnum } from './v1/types/CreateProduct'
 export { pricesCurrencyCodeEnum } from './v1/types/CreateProduct'
 export { pricesCurrencyCodeEnum3 } from './v1/types/CreateProductVariant'
+export { deleteCarrier204Enum } from './v1/types/DeleteCarrier'
+export { deleteCart204Enum } from './v1/types/DeleteCart'
+export { deleteCartItem204Enum } from './v1/types/DeleteCartItem'
+export { deleteCustomer204Enum } from './v1/types/DeleteCustomer'
 export { deleteInventoryItem204Enum } from './v1/types/DeleteInventoryItem'
 export { deleteInventoryLevel204Enum } from './v1/types/DeleteInventoryLevel'
+export { deletePaymentMethod204Enum } from './v1/types/DeletePaymentMethod'
+export { deletePaymentTerm204Enum } from './v1/types/DeletePaymentTerm'
 export { deleteProduct204Enum } from './v1/types/DeleteProduct'
 export { deleteProductCategory204Enum } from './v1/types/DeleteProductCategory'
 export { deleteProductOption204Enum } from './v1/types/DeleteProductOption'
 export { deleteProductVariant204Enum } from './v1/types/DeleteProductVariant'
 export { deleteStockLocation204Enum } from './v1/types/DeleteStockLocation'
 export { cartCurrencyCodeEnum } from './v1/types/GetCart'
+export { priceAdjustmentTypeEnum2 } from './v1/types/GetCart'
+export { priceAdjustmentModeEnum2 } from './v1/types/GetCart'
+export { priceAdjustmentApplyOnEnum } from './v1/types/GetCart'
 export { pricesCurrencyCodeEnum7 } from './v1/types/GetCart'
 export { customerDocumentTypeEnum } from './v1/types/GetCustomer'
 export { customerGenderEnum } from './v1/types/GetCustomer'
-export { addressesTypeEnum } from './v1/types/GetCustomer'
+export { addressesTypeEnum2 } from './v1/types/GetCustomer'
 export { orderCurrencyCodeEnum } from './v1/types/GetOrder'
-export { amountTypeEnum3 } from './v1/types/GetPaymentTerm'
-export { amountApplyOnEnum2 } from './v1/types/GetPaymentTerm'
-export { amountTypeEnum4 } from './v1/types/GetPaymentTerm'
-export { scheduleBaseOnEnum2 } from './v1/types/GetPaymentTerm'
+export { amountTypeEnum5 } from './v1/types/GetPaymentTerm'
+export { amountApplyOnEnum3 } from './v1/types/GetPaymentTerm'
+export { amountTypeEnum6 } from './v1/types/GetPaymentTerm'
+export { scheduleBaseOnEnum3 } from './v1/types/GetPaymentTerm'
 export { pricesCurrencyCodeEnum6 } from './v1/types/GetPriceList'
 export { productStatusEnum } from './v1/types/GetProduct'
 export { pricesCurrencyCodeEnum4 } from './v1/types/GetProductVariant'
@@ -2279,7 +2982,22 @@ export { listStockLocationsQueryParamsOrderEnum } from './v1/types/ListStockLoca
 export { metaFilterByEnum9 } from './v1/types/ListStockLocations'
 export { metaSortByEnum9 } from './v1/types/ListStockLocations'
 export { metaOrderEnum9 } from './v1/types/ListStockLocations'
+export { updateCarrier204Enum } from './v1/types/UpdateCarrier'
+export { updateCart204Enum } from './v1/types/UpdateCart'
+export { updateCartMutationRequestCurrencyCodeEnum } from './v1/types/UpdateCart'
+export { priceAdjustmentTypeEnum3 } from './v1/types/UpdateCart'
+export { priceAdjustmentModeEnum3 } from './v1/types/UpdateCart'
+export { updateCustomer204Enum } from './v1/types/UpdateCustomer'
+export { updateCustomerMutationRequestDocumentTypeEnum } from './v1/types/UpdateCustomer'
+export { updateCustomerMutationRequestGenderEnum } from './v1/types/UpdateCustomer'
+export { addressesTypeEnum3 } from './v1/types/UpdateCustomer'
 export { updateInventoryLevel204Enum } from './v1/types/UpdateInventoryLevel'
+export { updatePaymentMethod204Enum } from './v1/types/UpdatePaymentMethod'
+export { updatePaymentTerm204Enum } from './v1/types/UpdatePaymentTerm'
+export { amountTypeEnum7 } from './v1/types/UpdatePaymentTerm'
+export { amountApplyOnEnum4 } from './v1/types/UpdatePaymentTerm'
+export { amountTypeEnum8 } from './v1/types/UpdatePaymentTerm'
+export { scheduleBaseOnEnum4 } from './v1/types/UpdatePaymentTerm'
 export { updateProduct204Enum } from './v1/types/UpdateProduct'
 export { updateProductMutationRequestStatusEnum } from './v1/types/UpdateProduct'
 export { updateProductCategory204Enum } from './v1/types/UpdateProductCategory'
@@ -2287,3 +3005,6 @@ export { updateProductOption204Enum } from './v1/types/UpdateProductOption'
 export { updateProductVariant204Enum } from './v1/types/UpdateProductVariant'
 export { pricesCurrencyCodeEnum5 } from './v1/types/UpdateProductVariant'
 export { updateStockLocation204Enum } from './v1/types/UpdateStockLocation'
+export { priceAdjustmentTypeEnum4 } from './v1/types/UpsertCartItem'
+export { priceAdjustmentModeEnum4 } from './v1/types/UpsertCartItem'
+export { priceAdjustmentApplyOnEnum2 } from './v1/types/UpsertCartItem'

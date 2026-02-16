@@ -23,6 +23,13 @@ export async function getCart(app: FastifyTypedInstance) {
                 name: z.string(),
                 currencyCode: z.enum(CurrencyCode),
                 notes: z.string().nullable(),
+                priceAdjustment: z
+                  .object({
+                    type: z.enum(['discount', 'surcharge']),
+                    mode: z.enum(['fixed', 'percentage']),
+                    value: z.number(),
+                  })
+                  .nullable(),
                 seller: z
                   .object({
                     id: z.string(),
@@ -41,11 +48,27 @@ export async function getCart(app: FastifyTypedInstance) {
                     updatedAt: z.date(),
                   })
                   .nullable(),
+                priceList: z
+                  .object({
+                    id: z.string(),
+                    name: z.string(),
+                    createdAt: z.date(),
+                    updatedAt: z.date(),
+                  })
+                  .nullable(),
                 cartItems: z.array(
                   z.object({
                     id: z.string(),
                     quantity: z.number(),
                     notes: z.string().nullable(),
+                    priceAdjustment: z
+                      .object({
+                        type: z.enum(['discount', 'surcharge']),
+                        mode: z.enum(['fixed', 'percentage']),
+                        value: z.number(),
+                        applyOn: z.enum(['unit', 'item-total', 'cart-total']),
+                      })
+                      .nullable(),
                     productVariant: z.object({
                       id: z.string(),
                       name: z.string(),
@@ -72,6 +95,14 @@ export async function getCart(app: FastifyTypedInstance) {
                       createdAt: z.date(),
                       updatedAt: z.date(),
                     }),
+                    priceList: z
+                      .object({
+                        id: z.string(),
+                        name: z.string(),
+                        createdAt: z.date(),
+                        updatedAt: z.date(),
+                      })
+                      .nullable(),
                     createdAt: z.date(),
                     updatedAt: z.date(),
                   }),

@@ -1,10 +1,9 @@
 import { Icon } from '@/components/ui/icon'
 import { Text } from '@/components/ui/text'
-import { ICON_SIZES } from '@/constants/theme'
 import { type Href, Link } from 'expo-router'
 import { ChevronRightIcon, ImageOffIcon } from 'lucide-react-native'
 import { useState } from 'react'
-import { Image, Platform, Pressable, View } from 'react-native'
+import { Image, Platform, TouchableOpacity, View } from 'react-native'
 import type { Product } from '../_lib/utils'
 
 export function ProductCard({ product }: { product: Product }) {
@@ -24,11 +23,7 @@ export function ProductCard({ product }: { product: Product }) {
               onError={() => setImageError(true)}
             />
           ) : (
-            <Icon
-              className="m-auto text-muted-foreground"
-              as={ImageOffIcon}
-              size={ICON_SIZES.small}
-            />
+            <Icon className="m-auto text-muted-foreground" as={ImageOffIcon} />
           )}
         </View>
         <View className="flex-1">
@@ -37,11 +32,7 @@ export function ProductCard({ product }: { product: Product }) {
             {description}
           </Text>
         </View>
-        <Icon
-          className="text-muted-foreground"
-          as={ChevronRightIcon}
-          size={ICON_SIZES.small}
-        />
+        <Icon className="text-muted-foreground" as={ChevronRightIcon} />
       </View>
     </LinkWrapper>
   )
@@ -65,7 +56,7 @@ function LinkWrapper({
         ),
         default: (
           <Link href={href} asChild>
-            <Pressable>{children}</Pressable>
+            <TouchableOpacity>{children}</TouchableOpacity>
           </Link>
         ),
       })}

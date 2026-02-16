@@ -27,13 +27,13 @@ export const customerGenderEnum = {
 export type CustomerGenderEnumKey =
   (typeof customerGenderEnum)[keyof typeof customerGenderEnum]
 
-export const addressesTypeEnum = {
+export const addressesTypeEnum2 = {
   billing: 'billing',
   shipping: 'shipping',
 } as const
 
-export type AddressesTypeEnumKey =
-  (typeof addressesTypeEnum)[keyof typeof addressesTypeEnum]
+export type AddressesTypeEnum2Key =
+  (typeof addressesTypeEnum2)[keyof typeof addressesTypeEnum2]
 
 /**
  * @description Success
@@ -98,7 +98,7 @@ export type GetCustomer200 = {
       /**
        * @type string
        */
-      type: AddressesTypeEnumKey | null
+      type: AddressesTypeEnum2Key | null
       /**
        * @type string
        */

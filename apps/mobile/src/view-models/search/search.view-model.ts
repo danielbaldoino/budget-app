@@ -5,7 +5,9 @@ export function useSearchViewModel() {
   const { q: search } = useLocalSearchParams<{ q?: string }>()
 
   const { isLoading, isError, data } = sdk.v1.$reactQuery.useListProducts({
-    params: { search },
+    params: {
+      search,
+    },
   })
 
   return {

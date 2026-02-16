@@ -1,41 +1,48 @@
-import { BottomBar } from '@/components/bottom-bar'
-import { Payload } from '@/components/debug/payload'
 import { Screen } from '@/components/layout/screen'
-import { QuantitySelector } from '@/components/quantity-selector'
-import { Button } from '@/components/ui/button'
 import { Icon } from '@/components/ui/icon'
+import { Separator } from '@/components/ui/separator'
 import { Text } from '@/components/ui/text'
-import { ICON_SIZES } from '@/constants/theme'
 import { i18n } from '@/lib/languages'
 import { cn } from '@/lib/utils'
 import { isLiquidGlassAvailable } from 'expo-glass-effect'
 import { useIsPreview } from 'expo-router'
-import {
-  MoreHorizontalIcon,
-  MoreVerticalIcon,
-  ShoppingCartIcon,
-} from 'lucide-react-native'
-import { Platform, ScrollView, TouchableOpacity } from 'react-native'
-import { useProductViewModel } from './product.view-model'
+import { MoreHorizontalIcon, MoreVerticalIcon } from 'lucide-react-native'
+import { Platform, ScrollView, TouchableOpacity, View } from 'react-native'
+import { ProductActionsBar } from './_components/product-actions-bar'
+import { ProductCategory } from './_components/product-category'
+import { ProductDescription } from './_components/product-description'
+import { ProductImages } from './_components/product-images'
+import { ProductInventoryCard } from './_components/product-inventory-card'
+import { ProductNotes } from './_components/product-notes'
+import { ProductPriceCard } from './_components/product-price-card'
+import { ProductPriceSettingsCard } from './_components/product-price-settings-card'
+import { ProductVariantInfo } from './_components/product-variant-info'
+import { SelectVariantButton } from './_components/select-variant-button'
+import { ProductProvider, useProductContext } from './product.context'
 
 export function ProductView() {
-  const { isLoading, isError, product, quantity, handleQuantityChange } =
-    useProductViewModel()
-  const isPreview = useIsPreview()
-  const hasGlass = isLiquidGlassAvailable()
+  return (
+    <ProductProvider>
+      <ProductContent />
+    </ProductProvider>
+  )
+}
 
-  const title = product?.name ?? i18n.t('common.states.loading')
+function ProductContent() {
+  const { isLoading, isError, product } = useProductContext()
+  const isPreview = useIsPreview()
+
+  const productName = product?.name ?? i18n.t('common.states.loading')
 
   return (
     <Screen
       options={{
-        title,
+        title: productName,
         headerLargeTitleEnabled: false,
         headerTitleAlign: 'center',
         headerRight: () => (
           <TouchableOpacity className="p-2">
             <Icon
-              size={ICON_SIZES.small}
               as={Platform.select({
                 ios: MoreHorizontalIcon,
                 default: MoreVerticalIcon,
@@ -44,52 +51,38 @@ export function ProductView() {
           </TouchableOpacity>
         ),
       }}
+      keyboard
       loading={isLoading}
       error={isError ? i18n.t('product.errors.loading') : undefined}
       empty={!product ? i18n.t('product.states.notFound') : undefined}
     >
       {isPreview && (
         <Text variant="h2" className="mx-4 mt-8 text-start">
-          {title}
+          {productName}
         </Text>
       )}
 
       <ScrollView
         contentContainerClassName={cn(
-          'gap-y-4 p-4',
-          hasGlass && 'pb-safe-offset-28',
+          'gap-y-4 p-4 pb-10',
+          isLiquidGlassAvailable() && 'pb-safe-offset-36',
         )}
       >
-        <Payload payload={{ product }} />
+        <ProductImages />
+        <View className="flex-row items-start justify-between gap-x-4">
+          <ProductCategory />
+          <ProductPriceCard />
+        </View>
+        <Separator />
+        <ProductVariantInfo />
+        <ProductDescription />
+        <SelectVariantButton />
+        <ProductInventoryCard />
+        <Separator />
+        <ProductPriceSettingsCard />
+        <ProductNotes />
       </ScrollView>
-
-      {!isPreview && (
-        <BottomBar
-          containerClassName={cn(
-            'mb-safe',
-            hasGlass && 'absolute bottom-0 mx-4',
-          )}
-          className={cn(
-            'h-24 flex-row items-center justify-between gap-x-4 p-4',
-            !hasGlass && 'rounded-t-lg bg-primary/5',
-          )}
-        >
-          <QuantitySelector
-            className="h-full flex-1 border-muted-foreground/50 "
-            quantity={quantity}
-            onQuantityChange={handleQuantityChange}
-          />
-
-          <Button className="min-h-16 flex-1">
-            <Icon
-              className="text-primary-foreground"
-              size={ICON_SIZES.small}
-              as={ShoppingCartIcon}
-            />
-            <Text>{i18n.t('product.actions.addToCart')}</Text>
-          </Button>
-        </BottomBar>
-      )}
+      {!isPreview && <ProductActionsBar />}
     </Screen>
   )
 }

@@ -34,7 +34,7 @@ function SignInForm() {
   return (
     <Card className="rounded-lg border-border shadow-none">
       <CardHeader>
-        <CardTitle variant="h4" className="text-center">
+        <CardTitle variant="h4" className="text-center font-bold">
           {i18n.t('signIn.title')}
         </CardTitle>
         <CardDescription className="text-center">
@@ -63,10 +63,11 @@ function SignInForm() {
                 onChangeText={onChange}
                 onBlur={onBlur}
                 value={value}
-                className={cn(invalid && 'border-destructive')}
+                className={cn('shadow-none', invalid && 'border-destructive')}
                 placeholder={i18n.t('signIn.username.placeholder')}
                 autoComplete="username"
                 autoCapitalize="none"
+                readOnly={isSubmitting}
               />
               {invalid && (
                 <Text className="text-destructive text-sm">
@@ -89,6 +90,7 @@ function SignInForm() {
                 <Label
                   nativeID={`form-sign-in-${name}`}
                   htmlFor={`form-sign-in-${name}`}
+                  className={cn(invalid && 'text-destructive')}
                 >
                   {i18n.t('signIn.password.label')}
                 </Label>
@@ -99,11 +101,12 @@ function SignInForm() {
                 onChangeText={onChange}
                 onBlur={onBlur}
                 value={value}
-                className={cn(invalid && 'border-destructive')}
+                className={cn('shadow-none', invalid && 'border-destructive')}
                 placeholder={i18n.t('signIn.password.placeholder')}
                 autoComplete="password"
                 autoCapitalize="none"
                 secureTextEntry
+                readOnly={isSubmitting}
               />
               {invalid && (
                 <Text className="text-destructive text-sm">
@@ -135,10 +138,11 @@ function SignInForm() {
                 onChangeText={onChange}
                 onBlur={onBlur}
                 value={value}
-                className={cn(invalid && 'border-destructive')}
+                className={cn('shadow-none', invalid && 'border-destructive')}
                 placeholder={i18n.t('signIn.workspaceId.placeholder')}
                 autoComplete="organization"
                 autoCapitalize="none"
+                readOnly={isSubmitting}
               />
               {invalid && (
                 <Text className="text-destructive text-sm">

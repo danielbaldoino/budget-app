@@ -19,6 +19,31 @@ export const cartCurrencyCodeEnum = {
 export type CartCurrencyCodeEnumKey =
   (typeof cartCurrencyCodeEnum)[keyof typeof cartCurrencyCodeEnum]
 
+export const priceAdjustmentTypeEnum2 = {
+  discount: 'discount',
+  surcharge: 'surcharge',
+} as const
+
+export type PriceAdjustmentTypeEnum2Key =
+  (typeof priceAdjustmentTypeEnum2)[keyof typeof priceAdjustmentTypeEnum2]
+
+export const priceAdjustmentModeEnum2 = {
+  fixed: 'fixed',
+  percentage: 'percentage',
+} as const
+
+export type PriceAdjustmentModeEnum2Key =
+  (typeof priceAdjustmentModeEnum2)[keyof typeof priceAdjustmentModeEnum2]
+
+export const priceAdjustmentApplyOnEnum = {
+  unit: 'unit',
+  'item-total': 'item-total',
+  'cart-total': 'cart-total',
+} as const
+
+export type PriceAdjustmentApplyOnEnumKey =
+  (typeof priceAdjustmentApplyOnEnum)[keyof typeof priceAdjustmentApplyOnEnum]
+
 export const pricesCurrencyCodeEnum7 = {
   BRL: 'BRL',
   USD: 'USD',
@@ -52,6 +77,23 @@ export type GetCart200 = {
      * @type string
      */
     notes: string | null
+    /**
+     * @type object
+     */
+    priceAdjustment: {
+      /**
+       * @type string
+       */
+      type: PriceAdjustmentTypeEnum2Key
+      /**
+       * @type string
+       */
+      mode: PriceAdjustmentModeEnum2Key
+      /**
+       * @type number
+       */
+      value: number
+    } | null
     /**
      * @type object
      */
@@ -103,6 +145,27 @@ export type GetCart200 = {
       updatedAt: string
     } | null
     /**
+     * @type object
+     */
+    priceList: {
+      /**
+       * @type string
+       */
+      id: string
+      /**
+       * @type string
+       */
+      name: string
+      /**
+       * @type string, date-time
+       */
+      createdAt: string
+      /**
+       * @type string, date-time
+       */
+      updatedAt: string
+    } | null
+    /**
      * @type array
      */
     cartItems: {
@@ -118,6 +181,27 @@ export type GetCart200 = {
        * @type string
        */
       notes: string | null
+      /**
+       * @type object
+       */
+      priceAdjustment: {
+        /**
+         * @type string
+         */
+        type: PriceAdjustmentTypeEnum2Key
+        /**
+         * @type string
+         */
+        mode: PriceAdjustmentModeEnum2Key
+        /**
+         * @type number
+         */
+        value: number
+        /**
+         * @type string
+         */
+        applyOn: PriceAdjustmentApplyOnEnumKey
+      } | null
       /**
        * @type object
        */
@@ -197,6 +281,27 @@ export type GetCart200 = {
          */
         updatedAt: string
       }
+      /**
+       * @type object
+       */
+      priceList: {
+        /**
+         * @type string
+         */
+        id: string
+        /**
+         * @type string
+         */
+        name: string
+        /**
+         * @type string, date-time
+         */
+        createdAt: string
+        /**
+         * @type string, date-time
+         */
+        updatedAt: string
+      } | null
       /**
        * @type string, date-time
        */

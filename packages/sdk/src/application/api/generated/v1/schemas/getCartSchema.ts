@@ -33,6 +33,13 @@ export const getCart200Schema = z
       name: z.string(),
       currencyCode: z.enum(['BRL', 'USD', 'EUR']),
       notes: z.nullable(z.string()),
+      priceAdjustment: z.nullable(
+        z.object({
+          type: z.enum(['discount', 'surcharge']),
+          mode: z.enum(['fixed', 'percentage']),
+          value: z.number(),
+        }),
+      ),
       seller: z.nullable(
         z.object({
           id: z.string(),
@@ -51,11 +58,27 @@ export const getCart200Schema = z
           updatedAt: z.string().datetime(),
         }),
       ),
+      priceList: z.nullable(
+        z.object({
+          id: z.string(),
+          name: z.string(),
+          createdAt: z.string().datetime(),
+          updatedAt: z.string().datetime(),
+        }),
+      ),
       cartItems: z.array(
         z.object({
           id: z.string(),
           quantity: z.number(),
           notes: z.nullable(z.string()),
+          priceAdjustment: z.nullable(
+            z.object({
+              type: z.enum(['discount', 'surcharge']),
+              mode: z.enum(['fixed', 'percentage']),
+              value: z.number(),
+              applyOn: z.enum(['unit', 'item-total', 'cart-total']),
+            }),
+          ),
           productVariant: z.object({
             id: z.string(),
             name: z.string(),
@@ -82,6 +105,14 @@ export const getCart200Schema = z
             createdAt: z.string().datetime(),
             updatedAt: z.string().datetime(),
           }),
+          priceList: z.nullable(
+            z.object({
+              id: z.string(),
+              name: z.string(),
+              createdAt: z.string().datetime(),
+              updatedAt: z.string().datetime(),
+            }),
+          ),
           createdAt: z.string().datetime(),
           updatedAt: z.string().datetime(),
         }),

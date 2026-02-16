@@ -3,7 +3,7 @@ import { tenantDb, tenantSchema } from '../../../../tenant'
 
 type GetProductVariantParams = {
   tenant: string
-  productId: string
+  productId?: string
   productVariantId: string
 }
 
@@ -14,7 +14,9 @@ export async function getProductVariant(params: GetProductVariantParams) {
     ).query.productVariants.findFirst({
       where: and(
         eq(productVariants.id, params.productVariantId),
-        eq(productVariants.productId, params.productId),
+        params.productId
+          ? eq(productVariants.productId, params.productId)
+          : undefined,
       ),
     })
 

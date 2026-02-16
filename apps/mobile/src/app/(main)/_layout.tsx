@@ -10,17 +10,24 @@ export default function PrivateLayout() {
     <Stack>
       <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
 
-      <Stack.Screen name="products/[id]/index" />
+      <Stack.Screen name="products/[productId]/index" />
       <Stack.Screen
-        name="products/[id]/variants/index"
+        name="products/[productId]/select-variant"
+        options={{
+          presentation: Platform.select({ ios: 'formSheet', default: 'modal' }),
+          sheetAllowedDetents: [0.8, 1],
+        }}
+      />
+      <Stack.Screen
+        name="products/[productId]/variants/[variantId]/pricing"
         options={{ presentation: 'modal' }}
       />
       <Stack.Screen
-        name="products/[id]/variants/[id]/pricing"
+        name="products/[productId]/variants/[variantId]/inventory"
         options={{ presentation: 'modal' }}
       />
       <Stack.Screen
-        name="products/[id]/variants/[id]/inventory"
+        name="products/[productId]/variants/[variantId]/price-adjustments"
         options={{ presentation: 'modal' }}
       />
 
@@ -31,7 +38,7 @@ export default function PrivateLayout() {
           sheetAllowedDetents: [0.8, 1],
         }}
       />
-      <Stack.Screen name="carts/new" options={{ presentation: 'modal' }} />
+      <Stack.Screen name="carts/manage" options={{ presentation: 'modal' }} />
     </Stack>
   )
 }

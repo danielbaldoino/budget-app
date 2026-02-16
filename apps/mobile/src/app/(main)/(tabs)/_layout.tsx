@@ -1,16 +1,20 @@
 import { AppTabs } from '@/components/layout/app-tabs'
-import { useCurrentCartQuery } from '@/hooks/use-cart-queries'
+import { useActiveCart } from '@/hooks/use-active-cart'
 import { i18n } from '@/lib/languages'
+import { useMemo } from 'react'
 
 export default function TabsLayout() {
-  const { quantityOfItems } = useCurrentCartQuery()
+  const { cart } = useActiveCart()
 
-  const cartBadge =
-    quantityOfItems > 0
-      ? quantityOfItems > 99
+  const cartBadge = useMemo(() => {
+    const cartQuantity =
+      cart?.cartItems.reduce((t, i) => t + i.quantity, 0) ?? 0
+    return cartQuantity > 0
+      ? cartQuantity > 99
         ? '99+'
-        : String(quantityOfItems)
+        : String(cartQuantity)
       : undefined
+  }, [cart])
 
   return (
     <AppTabs

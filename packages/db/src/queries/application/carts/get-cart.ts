@@ -39,8 +39,10 @@ export async function getCartWithRelations(params: GetCartWithRelationsParams) {
                 },
               },
             },
+            priceList: true,
           },
         },
+        priceList: true,
       },
     })
 

@@ -1,7 +1,6 @@
 import { Screen } from '@/components/layout/screen'
 import { Icon } from '@/components/ui/icon'
 import { Text } from '@/components/ui/text'
-import { ICON_SIZES } from '@/constants/theme'
 import { i18n } from '@/lib/languages'
 import { MoreHorizontalIcon, MoreVerticalIcon } from 'lucide-react-native'
 import {
@@ -31,7 +30,6 @@ export function HomeView() {
         headerRight: () => (
           <TouchableOpacity className="p-2">
             <Icon
-              size={ICON_SIZES.small}
               as={Platform.select({
                 ios: MoreHorizontalIcon,
                 default: MoreVerticalIcon,

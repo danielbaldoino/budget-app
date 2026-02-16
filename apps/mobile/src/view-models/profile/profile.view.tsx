@@ -3,7 +3,6 @@ import { ThemeIcon } from '@/components/theme-icon'
 import { Button } from '@/components/ui/button'
 import { Icon } from '@/components/ui/icon'
 import { Text } from '@/components/ui/text'
-import { ICON_SIZES } from '@/constants/theme'
 import { i18n } from '@/lib/languages'
 import {
   LogOutIcon,
@@ -21,8 +20,13 @@ import {
 import { useProfileViewModel } from './profile.view-model'
 
 export function ProfileView() {
-  const { isLoading, user, handleSignOut, handleToggleTheme } =
-    useProfileViewModel()
+  const {
+    isLoading,
+    user,
+    handleSignOut,
+    handleSetSystemTheme,
+    handleToggleTheme,
+  } = useProfileViewModel()
 
   return (
     <Screen
@@ -31,7 +35,6 @@ export function ProfileView() {
         headerRight: () => (
           <TouchableOpacity className="p-2">
             <Icon
-              size={ICON_SIZES.small}
               as={Platform.select({
                 ios: MoreHorizontalIcon,
                 default: MoreVerticalIcon,
@@ -53,7 +56,7 @@ export function ProfileView() {
           ) : (
             <>
               <View className="flex-row items-center gap-x-2">
-                <Icon as={UserIcon} size={ICON_SIZES.small} />
+                <Icon as={UserIcon} />
                 <Text variant="large">
                   {user?.name || i18n.t('common.fallback.noName')}
                 </Text>
@@ -66,17 +69,17 @@ export function ProfileView() {
           )}
         </View>
 
-        <Button variant="outline" onPress={handleToggleTheme}>
+        <Button
+          variant="outline"
+          onPress={handleToggleTheme}
+          onLongPress={handleSetSystemTheme}
+        >
           <ThemeIcon />
           <Text>{i18n.t('profile.actions.toggleTheme')}</Text>
         </Button>
 
         <Button variant="outline" onPress={handleSignOut}>
-          <Icon
-            className="text-destructive"
-            size={ICON_SIZES.small}
-            as={LogOutIcon}
-          />
+          <Icon className="text-destructive" as={LogOutIcon} />
           <Text className="text-destructive">
             {i18n.t('profile.actions.signOut')}
           </Text>

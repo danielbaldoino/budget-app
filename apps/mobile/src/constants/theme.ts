@@ -97,6 +97,8 @@ export const COLOR_SCHEMES: Record<ThemeMode, ExtendedThemeColors> = {
 }
 
 export const ICON_SIZES = {
+  smaller: 14,
   small: 20,
   large: 36,
+  larger: 48,
 } as const

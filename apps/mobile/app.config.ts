@@ -33,6 +33,7 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
       backgroundColor: '#ffffff',
     },
     package: APP_CONFIG.PACKAGE_NAME,
+    softwareKeyboardLayoutMode: 'pan',
   },
   web: {
     favicon: './assets/favicon.png',

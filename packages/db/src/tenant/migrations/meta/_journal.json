@@ -22,6 +22,13 @@
       "when": 1769879368783,
       "tag": "0002_yellow_sandman",
       "breakpoints": true
+    },
+    {
+      "idx": 3,
+      "version": "7",
+      "when": 1771000360093,
+      "tag": "0003_wise_chameleon",
+      "breakpoints": true
     }
   ]
 }

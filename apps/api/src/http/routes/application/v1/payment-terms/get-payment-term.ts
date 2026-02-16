@@ -2,41 +2,7 @@ import { BadRequestError } from '@/http/errors/bad-request-error'
 import { withDefaultErrorResponses } from '@/http/errors/default-error-responses'
 import type { FastifyTypedInstance } from '@/types/fastify'
 import { z } from 'zod'
-
-const AmountRuleSchema = z.discriminatedUnion('type', [
-  z.object({
-    type: z.literal('percentage'),
-    value: z.number(),
-    applyOn: z.enum(['total', 'remaining']),
-  }),
-  z.object({
-    type: z.literal('remaining'),
-  }),
-])
-
-export const PaymentTermRulesSchema = z.object({
-  entry: z
-    .object({
-      quantity: z.number().optional(),
-      schedule: z.object({
-        startAfterDays: z.number(),
-        intervalDays: z.number().optional(),
-      }),
-      amount: AmountRuleSchema,
-    })
-    .optional(),
-  installments: z.array(
-    z.object({
-      quantity: z.number(),
-      schedule: z.object({
-        startAfterDays: z.number(),
-        intervalDays: z.number().optional(),
-        baseOn: z.enum(['base-date', 'previous-step']),
-      }),
-      amount: AmountRuleSchema,
-    }),
-  ),
-})
+import { PaymentTermRulesSchema } from './list-payment-terms'
 
 export async function getPaymentTerm(app: FastifyTypedInstance) {
   app.get(

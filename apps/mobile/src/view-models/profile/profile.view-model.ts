@@ -4,7 +4,7 @@ import { ImpactFeedbackStyle, impactAsync } from 'expo-haptics'
 
 export function useProfileViewModel() {
   const { isLoading, user, signOut } = useSession()
-  const { toggleTheme } = useAppearance()
+  const { setThemePreference, toggleTheme } = useAppearance()
 
   const withSoftHaptic = (fn: () => void) => () => {
     impactAsync(ImpactFeedbackStyle.Soft)
@@ -15,6 +15,7 @@ export function useProfileViewModel() {
     isLoading,
     user,
     handleSignOut: withSoftHaptic(signOut),
+    handleSetSystemTheme: withSoftHaptic(() => setThemePreference('system')),
     handleToggleTheme: withSoftHaptic(toggleTheme),
   }
 }

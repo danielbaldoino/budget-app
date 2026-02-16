@@ -3,7 +3,6 @@ import { Button } from '@/components/ui/button'
 import { Icon } from '@/components/ui/icon'
 import { Text } from '@/components/ui/text'
 import { APP_CONSTANTS } from '@/constants/app'
-import { ICON_SIZES } from '@/constants/theme'
 import { i18n } from '@/lib/languages'
 import { ChevronRightIcon } from 'lucide-react-native'
 import { View } from 'react-native'
@@ -23,11 +22,7 @@ export function WelcomeView() {
 
         <Button onPress={handleGoToSignIn}>
           <Text>{i18n.t('welcome.actions.getStarted')}</Text>
-          <Icon
-            className="text-primary-foreground"
-            size={ICON_SIZES.small}
-            as={ChevronRightIcon}
-          />
+          <Icon className="text-primary-foreground" as={ChevronRightIcon} />
         </Button>
       </View>
     </Screen>

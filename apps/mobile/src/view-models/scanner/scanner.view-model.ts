@@ -50,7 +50,6 @@ export function useScannerViewModel() {
     scanned,
     isLoading: permission === null,
     hasPermission: Boolean(permission?.granted),
-
     toggleCameraFacing,
     onBarcodeScanned,
   }

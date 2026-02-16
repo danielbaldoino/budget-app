@@ -13,6 +13,7 @@ type Props = {
   options?: ExtendedStackNavigationOptions
   safeAreaEdges?: Edges
   className?: string
+  constrainWidth?: boolean
   keyboard?: boolean
   loading?: boolean | React.ReactNode
   error?: string | React.ReactNode
@@ -24,6 +25,7 @@ export function Screen({
   options,
   safeAreaEdges = [],
   className,
+  constrainWidth = true,
   keyboard = false,
   loading = false,
   error,
@@ -83,7 +85,7 @@ export function Screen({
       return (
         <KeyboardAvoidingView
           className="flex-1"
-          behavior={Platform.select({ ios: 'padding', default: undefined })}
+          behavior={Platform.select({ ios: 'padding' })}
         >
           {children}
         </KeyboardAvoidingView>
@@ -118,7 +120,7 @@ export function Screen({
       <SafeAreaView
         className={cn(
           'flex-1 bg-background',
-          'mx-auto w-full max-w-5xl',
+          constrainWidth && 'mx-auto w-full max-w-5xl',
           className,
         )}
         edges={safeAreaEdges}

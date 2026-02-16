@@ -1,7 +1,6 @@
 import { Screen } from '@/components/layout/screen'
 import { Icon } from '@/components/ui/icon'
 import { Text } from '@/components/ui/text'
-import { ICON_SIZES } from '@/constants/theme'
 import { useAppearance } from '@/hooks/use-appearance'
 import { i18n } from '@/lib/languages'
 import { QrCodeIcon } from 'lucide-react-native'
@@ -16,7 +15,7 @@ import { ProductCard } from './_components/product-card'
 import { useSearchViewModel } from './search.view-model'
 
 export function SearchView() {
-  const { products, isLoading, isError, onSearchChange, handleQrCodePress } =
+  const { isLoading, isError, products, onSearchChange, handleQrCodePress } =
     useSearchViewModel()
   const { colors } = useAppearance()
 
@@ -30,7 +29,7 @@ export function SearchView() {
               className="flex-row gap-x-2 p-2"
               onPress={handleQrCodePress}
             >
-              <Icon size={ICON_SIZES.small} as={QrCodeIcon} />
+              <Icon as={QrCodeIcon} />
               {Platform.select({
                 ios: <Text>{i18n.t('search.actions.qrCode')}</Text>,
               })}
@@ -50,7 +49,6 @@ export function SearchView() {
             shouldShowHintSearchIcon: false,
             headerIconColor: colors.text,
             hintTextColor: colors.txtMuted,
-            placement: 'integratedCentered',
           },
         }),
       }}

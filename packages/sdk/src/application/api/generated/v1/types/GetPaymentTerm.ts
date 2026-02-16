@@ -10,35 +10,35 @@ export type GetPaymentTermPathParams = {
   paymentTermId: string
 }
 
-export const amountTypeEnum3 = {
+export const amountTypeEnum5 = {
   percentage: 'percentage',
 } as const
 
-export type AmountTypeEnum3Key =
-  (typeof amountTypeEnum3)[keyof typeof amountTypeEnum3]
+export type AmountTypeEnum5Key =
+  (typeof amountTypeEnum5)[keyof typeof amountTypeEnum5]
 
-export const amountApplyOnEnum2 = {
+export const amountApplyOnEnum3 = {
   total: 'total',
   remaining: 'remaining',
 } as const
 
-export type AmountApplyOnEnum2Key =
-  (typeof amountApplyOnEnum2)[keyof typeof amountApplyOnEnum2]
+export type AmountApplyOnEnum3Key =
+  (typeof amountApplyOnEnum3)[keyof typeof amountApplyOnEnum3]
 
-export const amountTypeEnum4 = {
+export const amountTypeEnum6 = {
   remaining: 'remaining',
 } as const
 
-export type AmountTypeEnum4Key =
-  (typeof amountTypeEnum4)[keyof typeof amountTypeEnum4]
+export type AmountTypeEnum6Key =
+  (typeof amountTypeEnum6)[keyof typeof amountTypeEnum6]
 
-export const scheduleBaseOnEnum2 = {
+export const scheduleBaseOnEnum3 = {
   'base-date': 'base-date',
   'previous-step': 'previous-step',
 } as const
 
-export type ScheduleBaseOnEnum2Key =
-  (typeof scheduleBaseOnEnum2)[keyof typeof scheduleBaseOnEnum2]
+export type ScheduleBaseOnEnum3Key =
+  (typeof scheduleBaseOnEnum3)[keyof typeof scheduleBaseOnEnum3]
 
 /**
  * @description Success
@@ -94,7 +94,7 @@ export type GetPaymentTerm200 = {
               /**
                * @type string
                */
-              type: AmountTypeEnum3Key
+              type: AmountTypeEnum5Key
               /**
                * @type number
                */
@@ -102,13 +102,13 @@ export type GetPaymentTerm200 = {
               /**
                * @type string
                */
-              applyOn: AmountApplyOnEnum2Key
+              applyOn: AmountApplyOnEnum3Key
             }
           | {
               /**
                * @type string
                */
-              type: AmountTypeEnum4Key
+              type: AmountTypeEnum6Key
             }
       }
       /**
@@ -134,14 +134,14 @@ export type GetPaymentTerm200 = {
           /**
            * @type string
            */
-          baseOn: ScheduleBaseOnEnum2Key
+          baseOn: ScheduleBaseOnEnum3Key
         }
         amount:
           | {
               /**
                * @type string
                */
-              type: AmountTypeEnum3Key
+              type: AmountTypeEnum5Key
               /**
                * @type number
                */
@@ -149,13 +149,13 @@ export type GetPaymentTerm200 = {
               /**
                * @type string
                */
-              applyOn: AmountApplyOnEnum2Key
+              applyOn: AmountApplyOnEnum3Key
             }
           | {
               /**
                * @type string
                */
-              type: AmountTypeEnum4Key
+              type: AmountTypeEnum6Key
             }
       }[]
     } | null

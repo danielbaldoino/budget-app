@@ -149,6 +149,10 @@ export type ListCarts200 = {
     /**
      * @type string
      */
+    priceListId: string | null
+    /**
+     * @type string
+     */
     name: string
     /**
      * @type string

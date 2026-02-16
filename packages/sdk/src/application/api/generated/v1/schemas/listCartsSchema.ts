@@ -47,6 +47,7 @@ export const listCarts200Schema = z
         id: z.string(),
         sellerId: z.nullable(z.string()),
         customerId: z.nullable(z.string()),
+        priceListId: z.nullable(z.string()),
         name: z.string(),
         currencyCode: z.enum(['BRL', 'USD', 'EUR']),
         notes: z.nullable(z.string()),

@@ -1,3 +1,4 @@
+import { ICON_SIZES } from '@/constants/theme'
 import { cn } from '@/lib/utils'
 import type { LucideIcon, LucideProps } from 'lucide-react-native'
 import { cssInterop } from 'nativewind'
@@ -43,7 +44,7 @@ cssInterop(IconImpl, {
 function Icon({
   as: IconComponent,
   className,
-  size = 14,
+  size = ICON_SIZES.small,
   ...props
 }: IconProps) {
   return (

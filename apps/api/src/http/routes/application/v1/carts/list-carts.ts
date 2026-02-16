@@ -46,6 +46,7 @@ export async function listCarts(app: FastifyTypedInstance) {
                   id: z.string(),
                   sellerId: z.string().nullable(),
                   customerId: z.string().nullable(),
+                  priceListId: z.string().nullable(),
                   name: z.string(),
                   currencyCode: z.enum(CurrencyCode),
                   notes: z.string().nullable(),

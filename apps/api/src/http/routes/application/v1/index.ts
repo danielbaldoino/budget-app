@@ -3,20 +3,37 @@ import { tenantContext } from '@/http/middlewares/application/tenant-context'
 import type { FastifyTypedInstance } from '@/types/fastify'
 
 import { logIn } from './auth/login'
+import { createCarrier } from './carriers/create-carrier'
+import { deleteCarrier } from './carriers/delete-carrier'
 import { getCarrier } from './carriers/get-carrier'
 import { listCarriers } from './carriers/list-carriers'
+import { updateCarrier } from './carriers/update-carrier'
+import { createCart } from './carts/create-cart'
+import { deleteCart } from './carts/delete-cart'
 import { getCart } from './carts/get-cart'
+import { deleteCartItem } from './carts/items/delete-cart-item'
+import { upsertCartItem } from './carts/items/upsert-cart-item'
 import { listCarts } from './carts/list-carts'
+import { updateCart } from './carts/update-cart'
+import { createCustomer } from './customers/create-customer'
+import { deleteCustomer } from './customers/delete-customer'
 import { getCustomer } from './customers/get-customer'
 import { listCustomers } from './customers/list-customers'
+import { updateCustomer } from './customers/update-customer'
 import { integrationsRoutes } from './integrations'
 import { listInventoryItems } from './inventory-items/list-inventory-items'
 import { getOrder } from './orders/get-order'
 import { listOrders } from './orders/list-orders'
+import { createPaymentMethod } from './payment-methods/create-payment-method'
+import { deletePaymentMethod } from './payment-methods/delete-payment-method'
 import { getPaymentMethod } from './payment-methods/get-payment-method'
 import { listPaymentMethods } from './payment-methods/list-payment-methods'
+import { updatePaymentMethod } from './payment-methods/update-payment-method'
+import { createPaymentTerm } from './payment-terms/create-payment-term'
+import { deletePaymentTerm } from './payment-terms/delete-payment-term'
 import { getPaymentTerm } from './payment-terms/get-payment-term'
 import { listPaymentTerms } from './payment-terms/list-payment-terms'
+import { updatePaymentTerm } from './payment-terms/update-payment-term'
 import { getPriceList } from './price-lists/get-price-list'
 import { listPriceLists } from './price-lists/list-price-lists'
 import { createProductCategory } from './product-categories/create-product-category'
@@ -61,6 +78,9 @@ async function applicationRoutes(app: FastifyTypedInstance) {
 
   app.register(listCustomers)
   app.register(getCustomer)
+  app.register(createCustomer)
+  app.register(updateCustomer)
+  app.register(deleteCustomer)
 
   app.register(listProductCategories)
   app.register(getProductCategory)
@@ -108,18 +128,32 @@ async function applicationRoutes(app: FastifyTypedInstance) {
 
   app.register(listCarts)
   app.register(getCart)
+  app.register(createCart)
+  app.register(updateCart)
+  app.register(deleteCart)
+  app.register(upsertCartItem)
+  app.register(deleteCartItem)
 
   app.register(listOrders)
   app.register(getOrder)
 
   app.register(listCarriers)
   app.register(getCarrier)
+  app.register(createCarrier)
+  app.register(updateCarrier)
+  app.register(deleteCarrier)
 
   app.register(listPaymentMethods)
   app.register(getPaymentMethod)
+  app.register(createPaymentMethod)
+  app.register(updatePaymentMethod)
+  app.register(deletePaymentMethod)
 
   app.register(listPaymentTerms)
   app.register(getPaymentTerm)
+  app.register(createPaymentTerm)
+  app.register(updatePaymentTerm)
+  app.register(deletePaymentTerm)
 }
 
 export async function applicationV1Routes(app: FastifyTypedInstance) {

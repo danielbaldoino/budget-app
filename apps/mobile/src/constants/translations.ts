@@ -3,10 +3,15 @@ import type { Dict } from 'i18n-js'
 export const translations: Dict = {
   en: {
     common: {
+      messages: {
+        copiedToClipboard: 'Copied to clipboard',
+      },
+
       actions: {
         back: 'Back',
         open: 'Open',
         share: 'Share',
+        copy: 'Copy',
       },
 
       states: {
@@ -175,10 +180,15 @@ export const translations: Dict = {
 
   pt: {
     common: {
+      messages: {
+        copiedToClipboard: 'Copiado para a área de transferência',
+      },
+
       actions: {
         back: 'Voltar',
         open: 'Abrir',
         share: 'Compartilhar',
+        copy: 'Copiar',
       },
 
       states: {

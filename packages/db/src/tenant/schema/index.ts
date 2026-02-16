@@ -295,6 +295,8 @@ export function createTenantSchema(schema?: string) {
 
   const priceListsRelations = relations(priceLists, ({ many }) => ({
     priceSets: many(priceSets),
+    carts: many(carts),
+    cartItems: many(cartItems),
   }))
 
   const priceSets = tenantSchema.table(
@@ -441,6 +443,9 @@ export function createTenantSchema(schema?: string) {
     customerId: text('customer_id').references(() => customers.id, {
       onDelete: 'set null',
     }),
+    priceListId: text('price_list_id').references(() => priceLists.id, {
+      onDelete: 'set null',
+    }),
 
     ...timestamps,
   })
@@ -453,6 +458,10 @@ export function createTenantSchema(schema?: string) {
     customer: one(customers, {
       fields: [carts.customerId],
       references: [customers.id],
+    }),
+    priceList: one(priceLists, {
+      fields: [carts.priceListId],
+      references: [priceLists.id],
     }),
     cartItems: many(cartItems),
   }))
@@ -471,6 +480,10 @@ export function createTenantSchema(schema?: string) {
       .notNull()
       .references(() => productVariants.id, { onDelete: 'cascade' }),
 
+    priceListId: text('price_list_id').references(() => priceLists.id, {
+      onDelete: 'set null',
+    }),
+
     ...timestamps,
   })
 
@@ -482,6 +495,10 @@ export function createTenantSchema(schema?: string) {
     productVariant: one(productVariants, {
       fields: [cartItems.productVariantId],
       references: [productVariants.id],
+    }),
+    priceList: one(priceLists, {
+      fields: [cartItems.priceListId],
+      references: [priceLists.id],
     }),
   }))
 
@@ -537,7 +554,10 @@ export function createTenantSchema(schema?: string) {
       fields: [orders.carrierId],
       references: [carriers.id],
     }),
-    details: one(orderDetails),
+    details: one(orderDetails, {
+      fields: [orders.id],
+      references: [orderDetails.orderId],
+    }),
     addresses: many(addresses),
     orderItems: many(orderItems),
   }))

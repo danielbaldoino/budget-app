@@ -1,6 +1,5 @@
 import { Screen } from '@/components/layout/screen'
 import { Icon } from '@/components/ui/icon'
-import { ICON_SIZES } from '@/constants/theme'
 import { i18n } from '@/lib/languages'
 import { cn } from '@/lib/utils'
 import { CameraView } from 'expo-camera'
@@ -34,7 +33,6 @@ export function ScannerView() {
             >
               <Icon
                 className={cn(!canGoBack && 'text-muted-foreground/50')}
-                size={ICON_SIZES.small}
                 as={XIcon}
               />
             </TouchableOpacity>
@@ -48,7 +46,6 @@ export function ScannerView() {
           >
             <Icon
               className={cn(!hasPermission && 'text-muted-foreground/50')}
-              size={ICON_SIZES.small}
               as={SwitchCameraIcon}
             />
           </TouchableOpacity>

@@ -1,0 +1,4 @@
+ALTER TABLE "__tenant"."cart_items" ADD COLUMN "price_list_id" text;--> statement-breakpoint
+ALTER TABLE "__tenant"."carts" ADD COLUMN "price_list_id" text;--> statement-breakpoint
+ALTER TABLE "__tenant"."cart_items" ADD CONSTRAINT "cart_items_price_list_id_price_lists_id_fk" FOREIGN KEY ("price_list_id") REFERENCES "__tenant"."price_lists"("id") ON DELETE set null ON UPDATE no action;--> statement-breakpoint
+ALTER TABLE "__tenant"."carts" ADD CONSTRAINT "carts_price_list_id_price_lists_id_fk" FOREIGN KEY ("price_list_id") REFERENCES "__tenant"."price_lists"("id") ON DELETE set null ON UPDATE no action;

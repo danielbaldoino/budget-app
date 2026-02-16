@@ -1,4 +1,46 @@
 export type {
+  CreateCarrier201,
+  CreateCarrier400,
+  CreateCarrier401,
+  CreateCarrier403,
+  CreateCarrier404,
+  CreateCarrier429,
+  CreateCarrier500,
+  CreateCarrierMutationRequest,
+  CreateCarrierMutationResponse,
+  CreateCarrierMutation,
+} from './CreateCarrier'
+export type {
+  CreateCart201,
+  CreateCart400,
+  CreateCart401,
+  CreateCart403,
+  CreateCart404,
+  CreateCart429,
+  CreateCart500,
+  CreateCartMutationRequestCurrencyCodeEnumKey,
+  PriceAdjustmentTypeEnumKey,
+  PriceAdjustmentModeEnumKey,
+  CreateCartMutationRequest,
+  CreateCartMutationResponse,
+  CreateCartMutation,
+} from './CreateCart'
+export type {
+  CreateCustomer201,
+  CreateCustomer400,
+  CreateCustomer401,
+  CreateCustomer403,
+  CreateCustomer404,
+  CreateCustomer429,
+  CreateCustomer500,
+  CreateCustomerMutationRequestDocumentTypeEnumKey,
+  CreateCustomerMutationRequestGenderEnumKey,
+  AddressesTypeEnumKey,
+  CreateCustomerMutationRequest,
+  CreateCustomerMutationResponse,
+  CreateCustomerMutation,
+} from './CreateCustomer'
+export type {
   CreateInventoryItemPathParams,
   CreateInventoryItem201,
   CreateInventoryItem400,
@@ -23,6 +65,34 @@ export type {
   CreateInventoryLevelMutationResponse,
   CreateInventoryLevelMutation,
 } from './CreateInventoryLevel'
+export type {
+  CreatePaymentMethod201,
+  CreatePaymentMethod400,
+  CreatePaymentMethod401,
+  CreatePaymentMethod403,
+  CreatePaymentMethod404,
+  CreatePaymentMethod429,
+  CreatePaymentMethod500,
+  CreatePaymentMethodMutationRequest,
+  CreatePaymentMethodMutationResponse,
+  CreatePaymentMethodMutation,
+} from './CreatePaymentMethod'
+export type {
+  CreatePaymentTerm201,
+  CreatePaymentTerm400,
+  CreatePaymentTerm401,
+  CreatePaymentTerm403,
+  CreatePaymentTerm404,
+  CreatePaymentTerm429,
+  CreatePaymentTerm500,
+  AmountTypeEnum3Key,
+  AmountApplyOnEnum2Key,
+  AmountTypeEnum4Key,
+  ScheduleBaseOnEnum2Key,
+  CreatePaymentTermMutationRequest,
+  CreatePaymentTermMutationResponse,
+  CreatePaymentTermMutation,
+} from './CreatePaymentTerm'
 export type {
   CreateProduct201,
   CreateProduct400,
@@ -89,6 +159,58 @@ export type {
   CreateStockLocationMutation,
 } from './CreateStockLocation'
 export type {
+  DeleteCarrierPathParams,
+  DeleteCarrier204EnumKey,
+  DeleteCarrier204,
+  DeleteCarrier400,
+  DeleteCarrier401,
+  DeleteCarrier403,
+  DeleteCarrier404,
+  DeleteCarrier429,
+  DeleteCarrier500,
+  DeleteCarrierMutationResponse,
+  DeleteCarrierMutation,
+} from './DeleteCarrier'
+export type {
+  DeleteCartPathParams,
+  DeleteCart204EnumKey,
+  DeleteCart204,
+  DeleteCart400,
+  DeleteCart401,
+  DeleteCart403,
+  DeleteCart404,
+  DeleteCart429,
+  DeleteCart500,
+  DeleteCartMutationResponse,
+  DeleteCartMutation,
+} from './DeleteCart'
+export type {
+  DeleteCartItemPathParams,
+  DeleteCartItem204EnumKey,
+  DeleteCartItem204,
+  DeleteCartItem400,
+  DeleteCartItem401,
+  DeleteCartItem403,
+  DeleteCartItem404,
+  DeleteCartItem429,
+  DeleteCartItem500,
+  DeleteCartItemMutationResponse,
+  DeleteCartItemMutation,
+} from './DeleteCartItem'
+export type {
+  DeleteCustomerPathParams,
+  DeleteCustomer204EnumKey,
+  DeleteCustomer204,
+  DeleteCustomer400,
+  DeleteCustomer401,
+  DeleteCustomer403,
+  DeleteCustomer404,
+  DeleteCustomer429,
+  DeleteCustomer500,
+  DeleteCustomerMutationResponse,
+  DeleteCustomerMutation,
+} from './DeleteCustomer'
+export type {
   DeleteInventoryItemPathParams,
   DeleteInventoryItem204EnumKey,
   DeleteInventoryItem204,
@@ -114,6 +236,32 @@ export type {
   DeleteInventoryLevelMutationResponse,
   DeleteInventoryLevelMutation,
 } from './DeleteInventoryLevel'
+export type {
+  DeletePaymentMethodPathParams,
+  DeletePaymentMethod204EnumKey,
+  DeletePaymentMethod204,
+  DeletePaymentMethod400,
+  DeletePaymentMethod401,
+  DeletePaymentMethod403,
+  DeletePaymentMethod404,
+  DeletePaymentMethod429,
+  DeletePaymentMethod500,
+  DeletePaymentMethodMutationResponse,
+  DeletePaymentMethodMutation,
+} from './DeletePaymentMethod'
+export type {
+  DeletePaymentTermPathParams,
+  DeletePaymentTerm204EnumKey,
+  DeletePaymentTerm204,
+  DeletePaymentTerm400,
+  DeletePaymentTerm401,
+  DeletePaymentTerm403,
+  DeletePaymentTerm404,
+  DeletePaymentTerm429,
+  DeletePaymentTerm500,
+  DeletePaymentTermMutationResponse,
+  DeletePaymentTermMutation,
+} from './DeletePaymentTerm'
 export type {
   DeleteProductPathParams,
   DeleteProduct204EnumKey,
@@ -194,6 +342,9 @@ export type {
 export type {
   GetCartPathParams,
   CartCurrencyCodeEnumKey,
+  PriceAdjustmentTypeEnum2Key,
+  PriceAdjustmentModeEnum2Key,
+  PriceAdjustmentApplyOnEnumKey,
   PricesCurrencyCodeEnum7Key,
   GetCart200,
   GetCart400,
@@ -209,7 +360,7 @@ export type {
   GetCustomerPathParams,
   CustomerDocumentTypeEnumKey,
   CustomerGenderEnumKey,
-  AddressesTypeEnumKey,
+  AddressesTypeEnum2Key,
   GetCustomer200,
   GetCustomer400,
   GetCustomer401,
@@ -271,10 +422,10 @@ export type {
 } from './GetPaymentMethod'
 export type {
   GetPaymentTermPathParams,
-  AmountTypeEnum3Key,
-  AmountApplyOnEnum2Key,
-  AmountTypeEnum4Key,
-  ScheduleBaseOnEnum2Key,
+  AmountTypeEnum5Key,
+  AmountApplyOnEnum3Key,
+  AmountTypeEnum6Key,
+  ScheduleBaseOnEnum3Key,
   GetPaymentTerm200,
   GetPaymentTerm400,
   GetPaymentTerm401,
@@ -661,6 +812,54 @@ export type {
   LogInMutation,
 } from './LogIn'
 export type {
+  UpdateCarrierPathParams,
+  UpdateCarrier204EnumKey,
+  UpdateCarrier204,
+  UpdateCarrier400,
+  UpdateCarrier401,
+  UpdateCarrier403,
+  UpdateCarrier404,
+  UpdateCarrier429,
+  UpdateCarrier500,
+  UpdateCarrierMutationRequest,
+  UpdateCarrierMutationResponse,
+  UpdateCarrierMutation,
+} from './UpdateCarrier'
+export type {
+  UpdateCartPathParams,
+  UpdateCart204EnumKey,
+  UpdateCart204,
+  UpdateCart400,
+  UpdateCart401,
+  UpdateCart403,
+  UpdateCart404,
+  UpdateCart429,
+  UpdateCart500,
+  UpdateCartMutationRequestCurrencyCodeEnumKey,
+  PriceAdjustmentTypeEnum3Key,
+  PriceAdjustmentModeEnum3Key,
+  UpdateCartMutationRequest,
+  UpdateCartMutationResponse,
+  UpdateCartMutation,
+} from './UpdateCart'
+export type {
+  UpdateCustomerPathParams,
+  UpdateCustomer204EnumKey,
+  UpdateCustomer204,
+  UpdateCustomer400,
+  UpdateCustomer401,
+  UpdateCustomer403,
+  UpdateCustomer404,
+  UpdateCustomer429,
+  UpdateCustomer500,
+  UpdateCustomerMutationRequestDocumentTypeEnumKey,
+  UpdateCustomerMutationRequestGenderEnumKey,
+  AddressesTypeEnum3Key,
+  UpdateCustomerMutationRequest,
+  UpdateCustomerMutationResponse,
+  UpdateCustomerMutation,
+} from './UpdateCustomer'
+export type {
   UpdateInventoryLevelPathParams,
   UpdateInventoryLevel204EnumKey,
   UpdateInventoryLevel204,
@@ -674,6 +873,38 @@ export type {
   UpdateInventoryLevelMutationResponse,
   UpdateInventoryLevelMutation,
 } from './UpdateInventoryLevel'
+export type {
+  UpdatePaymentMethodPathParams,
+  UpdatePaymentMethod204EnumKey,
+  UpdatePaymentMethod204,
+  UpdatePaymentMethod400,
+  UpdatePaymentMethod401,
+  UpdatePaymentMethod403,
+  UpdatePaymentMethod404,
+  UpdatePaymentMethod429,
+  UpdatePaymentMethod500,
+  UpdatePaymentMethodMutationRequest,
+  UpdatePaymentMethodMutationResponse,
+  UpdatePaymentMethodMutation,
+} from './UpdatePaymentMethod'
+export type {
+  UpdatePaymentTermPathParams,
+  UpdatePaymentTerm204EnumKey,
+  UpdatePaymentTerm204,
+  UpdatePaymentTerm400,
+  UpdatePaymentTerm401,
+  UpdatePaymentTerm403,
+  UpdatePaymentTerm404,
+  UpdatePaymentTerm429,
+  UpdatePaymentTerm500,
+  AmountTypeEnum7Key,
+  AmountApplyOnEnum4Key,
+  AmountTypeEnum8Key,
+  ScheduleBaseOnEnum4Key,
+  UpdatePaymentTermMutationRequest,
+  UpdatePaymentTermMutationResponse,
+  UpdatePaymentTermMutation,
+} from './UpdatePaymentTerm'
 export type {
   UpdateProductPathParams,
   UpdateProduct204EnumKey,
@@ -746,26 +977,61 @@ export type {
   UpdateStockLocationMutationResponse,
   UpdateStockLocationMutation,
 } from './UpdateStockLocation'
+export type {
+  UpsertCartItemPathParams,
+  UpsertCartItem201,
+  UpsertCartItem400,
+  UpsertCartItem401,
+  UpsertCartItem403,
+  UpsertCartItem404,
+  UpsertCartItem429,
+  UpsertCartItem500,
+  PriceAdjustmentTypeEnum4Key,
+  PriceAdjustmentModeEnum4Key,
+  PriceAdjustmentApplyOnEnum2Key,
+  UpsertCartItemMutationRequest,
+  UpsertCartItemMutationResponse,
+  UpsertCartItemMutation,
+} from './UpsertCartItem'
+export { createCartMutationRequestCurrencyCodeEnum } from './CreateCart'
+export { priceAdjustmentTypeEnum } from './CreateCart'
+export { priceAdjustmentModeEnum } from './CreateCart'
+export { createCustomerMutationRequestDocumentTypeEnum } from './CreateCustomer'
+export { createCustomerMutationRequestGenderEnum } from './CreateCustomer'
+export { addressesTypeEnum } from './CreateCustomer'
+export { amountTypeEnum3 } from './CreatePaymentTerm'
+export { amountApplyOnEnum2 } from './CreatePaymentTerm'
+export { amountTypeEnum4 } from './CreatePaymentTerm'
+export { scheduleBaseOnEnum2 } from './CreatePaymentTerm'
 export { createProductMutationRequestStatusEnum } from './CreateProduct'
 export { pricesCurrencyCodeEnum } from './CreateProduct'
 export { pricesCurrencyCodeEnum3 } from './CreateProductVariant'
+export { deleteCarrier204Enum } from './DeleteCarrier'
+export { deleteCart204Enum } from './DeleteCart'
+export { deleteCartItem204Enum } from './DeleteCartItem'
+export { deleteCustomer204Enum } from './DeleteCustomer'
 export { deleteInventoryItem204Enum } from './DeleteInventoryItem'
 export { deleteInventoryLevel204Enum } from './DeleteInventoryLevel'
+export { deletePaymentMethod204Enum } from './DeletePaymentMethod'
+export { deletePaymentTerm204Enum } from './DeletePaymentTerm'
 export { deleteProduct204Enum } from './DeleteProduct'
 export { deleteProductCategory204Enum } from './DeleteProductCategory'
 export { deleteProductOption204Enum } from './DeleteProductOption'
 export { deleteProductVariant204Enum } from './DeleteProductVariant'
 export { deleteStockLocation204Enum } from './DeleteStockLocation'
 export { cartCurrencyCodeEnum } from './GetCart'
+export { priceAdjustmentTypeEnum2 } from './GetCart'
+export { priceAdjustmentModeEnum2 } from './GetCart'
+export { priceAdjustmentApplyOnEnum } from './GetCart'
 export { pricesCurrencyCodeEnum7 } from './GetCart'
 export { customerDocumentTypeEnum } from './GetCustomer'
 export { customerGenderEnum } from './GetCustomer'
-export { addressesTypeEnum } from './GetCustomer'
+export { addressesTypeEnum2 } from './GetCustomer'
 export { orderCurrencyCodeEnum } from './GetOrder'
-export { amountTypeEnum3 } from './GetPaymentTerm'
-export { amountApplyOnEnum2 } from './GetPaymentTerm'
-export { amountTypeEnum4 } from './GetPaymentTerm'
-export { scheduleBaseOnEnum2 } from './GetPaymentTerm'
+export { amountTypeEnum5 } from './GetPaymentTerm'
+export { amountApplyOnEnum3 } from './GetPaymentTerm'
+export { amountTypeEnum6 } from './GetPaymentTerm'
+export { scheduleBaseOnEnum3 } from './GetPaymentTerm'
 export { pricesCurrencyCodeEnum6 } from './GetPriceList'
 export { productStatusEnum } from './GetProduct'
 export { pricesCurrencyCodeEnum4 } from './GetProductVariant'
@@ -864,7 +1130,22 @@ export { listStockLocationsQueryParamsOrderEnum } from './ListStockLocations'
 export { metaFilterByEnum9 } from './ListStockLocations'
 export { metaSortByEnum9 } from './ListStockLocations'
 export { metaOrderEnum9 } from './ListStockLocations'
+export { updateCarrier204Enum } from './UpdateCarrier'
+export { updateCart204Enum } from './UpdateCart'
+export { updateCartMutationRequestCurrencyCodeEnum } from './UpdateCart'
+export { priceAdjustmentTypeEnum3 } from './UpdateCart'
+export { priceAdjustmentModeEnum3 } from './UpdateCart'
+export { updateCustomer204Enum } from './UpdateCustomer'
+export { updateCustomerMutationRequestDocumentTypeEnum } from './UpdateCustomer'
+export { updateCustomerMutationRequestGenderEnum } from './UpdateCustomer'
+export { addressesTypeEnum3 } from './UpdateCustomer'
 export { updateInventoryLevel204Enum } from './UpdateInventoryLevel'
+export { updatePaymentMethod204Enum } from './UpdatePaymentMethod'
+export { updatePaymentTerm204Enum } from './UpdatePaymentTerm'
+export { amountTypeEnum7 } from './UpdatePaymentTerm'
+export { amountApplyOnEnum4 } from './UpdatePaymentTerm'
+export { amountTypeEnum8 } from './UpdatePaymentTerm'
+export { scheduleBaseOnEnum4 } from './UpdatePaymentTerm'
 export { updateProduct204Enum } from './UpdateProduct'
 export { updateProductMutationRequestStatusEnum } from './UpdateProduct'
 export { updateProductCategory204Enum } from './UpdateProductCategory'
@@ -872,3 +1153,6 @@ export { updateProductOption204Enum } from './UpdateProductOption'
 export { updateProductVariant204Enum } from './UpdateProductVariant'
 export { pricesCurrencyCodeEnum5 } from './UpdateProductVariant'
 export { updateStockLocation204Enum } from './UpdateStockLocation'
+export { priceAdjustmentTypeEnum4 } from './UpsertCartItem'
+export { priceAdjustmentModeEnum4 } from './UpsertCartItem'
+export { priceAdjustmentApplyOnEnum2 } from './UpsertCartItem'
