@@ -1,9 +1,9 @@
+import { setConfig } from '../lib/config'
+
 import * as v1_operations from './api/generated/v1/operations'
 import * as v1_hooks from './api/generated/v1/react-query/hooks'
 import * as v1_schemas from './api/generated/v1/schemas'
 import * as v1_types from './api/generated/v1/types'
-
-import { setConfig } from '../lib/config'
 
 type ClientOptions = {
   baseURL?: string
