@@ -1,11 +1,10 @@
 import { withDefaultErrorResponses } from '@/http/errors/default-error-responses'
 import type { FastifyTypedInstance } from '@/types/fastify'
-import { queries } from '@workspace/db/queries'
-import { CurrencyCode } from '@workspace/db/tenant/enums'
+import { currencyCodeEnum } from '@/utils/schemas'
+import { queries } from '@workspace/db/tenant/queries'
 import { z } from 'zod'
 
-const { FILTER_BY, SORT_BY, ORDER } =
-  queries.application.orders.listOrdersWithRelations
+const { FILTER_BY, SORT_BY, ORDER } = queries.orders.listOrdersWithRelations
 
 export async function listOrders(app: FastifyTypedInstance) {
   app.get(
@@ -52,7 +51,7 @@ export async function listOrders(app: FastifyTypedInstance) {
                   paymentTermId: z.string().nullable(),
                   carrierId: z.string().nullable(),
                   status: z.string(),
-                  currencyCode: z.enum(CurrencyCode),
+                  currencyCode: currencyCodeEnum,
                   notes: z.string().nullable(),
                   orderItems: z.array(
                     z.object({

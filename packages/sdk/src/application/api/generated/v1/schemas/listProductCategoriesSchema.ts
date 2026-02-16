@@ -19,8 +19,8 @@ import { ToZod } from '../../.kubb/ToZod'
 
 export const listProductCategoriesQueryParamsSchema = z.object({
   search: z.optional(z.string()),
-  filterBy: z.enum(['all', 'name', 'description']).default('all'),
-  sortBy: z.enum(['name', 'description', 'createdAt']).default('createdAt'),
+  filterBy: z.enum(['all', 'referenceId', 'name']).default('all'),
+  sortBy: z.enum(['referenceId', 'name', 'createdAt']).default('createdAt'),
   order: z.enum(['asc', 'desc']).default('desc'),
   page: z.coerce.number().gt(0).default(1),
   pageSize: z.coerce.number().min(10).max(100).default(50),
@@ -36,8 +36,8 @@ export const listProductCategories200Schema = z
   .object({
     meta: z.object({
       search: z.optional(z.string()),
-      filterBy: z.enum(['all', 'name', 'description']),
-      sortBy: z.enum(['name', 'description', 'createdAt']),
+      filterBy: z.enum(['all', 'referenceId', 'name']),
+      sortBy: z.enum(['referenceId', 'name', 'createdAt']),
       order: z.enum(['asc', 'desc']),
       count: z.number(),
       page: z.number(),

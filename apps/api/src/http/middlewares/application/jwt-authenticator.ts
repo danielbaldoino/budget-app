@@ -7,7 +7,10 @@ export const jwtAuthenticator = fastifyPlugin(
   async (app: FastifyTypedInstance) => {
     app.addHook('preHandler', async (request) => {
       if (!request.headers.authorization) {
-        throw new UnauthorizedError()
+        throw new UnauthorizedError({
+          code: 'MISSING_JWT_TOKEN',
+          message: 'Missing JWT token in authorization header',
+        })
       }
 
       const { tenant } = request.application

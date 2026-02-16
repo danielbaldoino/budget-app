@@ -1,7 +1,6 @@
 import { BadRequestError } from '@/http/errors/bad-request-error'
 import { UnauthorizedError } from '@/http/errors/unauthorized-error'
 import { db, orm } from '@workspace/db'
-import { queries } from '@workspace/db/queries'
 import { tenantSchemas, workspaces } from '@workspace/db/schema'
 import {
   type TenantDatabase,
@@ -9,12 +8,13 @@ import {
   tenantDb,
   tenantSchema,
 } from '@workspace/db/tenant'
+import { queries } from '@workspace/db/tenant/queries'
 
 export interface TenantContext {
   name: string
   schema: <T>(cb: TenantSchemaCallback<T>) => T | Promise<T>
   db: TenantDatabase
-  queries: typeof queries.application
+  queries: typeof queries
 }
 
 interface ResolveTenantOptions {
@@ -48,7 +48,7 @@ async function getTenantBySchemaId(
     schema: <T>(cb: TenantSchemaCallback<T>) =>
       tenantSchema<T>(tenant.schemaName, cb),
     db: tenantDb(tenant.schemaName),
-    queries: queries.application,
+    queries: queries,
   }
 }
 

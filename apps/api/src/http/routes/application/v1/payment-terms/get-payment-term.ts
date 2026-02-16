@@ -1,8 +1,8 @@
 import { BadRequestError } from '@/http/errors/bad-request-error'
 import { withDefaultErrorResponses } from '@/http/errors/default-error-responses'
 import type { FastifyTypedInstance } from '@/types/fastify'
+import { paymentTermRulesSchema } from '@/utils/schemas'
 import { z } from 'zod'
-import { PaymentTermRulesSchema } from './list-payment-terms'
 
 export async function getPaymentTerm(app: FastifyTypedInstance) {
   app.get(
@@ -23,7 +23,7 @@ export async function getPaymentTerm(app: FastifyTypedInstance) {
                 code: z.string(),
                 name: z.string(),
                 description: z.string().nullable(),
-                rule: PaymentTermRulesSchema.nullish(),
+                rules: paymentTermRulesSchema.nullish(),
                 active: z.boolean(),
                 createdAt: z.date(),
                 updatedAt: z.date(),

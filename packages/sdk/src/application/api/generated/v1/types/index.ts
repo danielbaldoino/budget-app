@@ -21,6 +21,7 @@ export type {
   CreateCartMutationRequestCurrencyCodeEnumKey,
   PriceAdjustmentTypeEnumKey,
   PriceAdjustmentModeEnumKey,
+  PriceAdjustmentApplyOnEnumKey,
   CreateCartMutationRequest,
   CreateCartMutationResponse,
   CreateCartMutation,
@@ -344,8 +345,7 @@ export type {
   CartCurrencyCodeEnumKey,
   PriceAdjustmentTypeEnum2Key,
   PriceAdjustmentModeEnum2Key,
-  PriceAdjustmentApplyOnEnumKey,
-  PricesCurrencyCodeEnum7Key,
+  PriceAdjustmentApplyOnEnum2Key,
   GetCart200,
   GetCart400,
   GetCart401,
@@ -838,6 +838,7 @@ export type {
   UpdateCartMutationRequestCurrencyCodeEnumKey,
   PriceAdjustmentTypeEnum3Key,
   PriceAdjustmentModeEnum3Key,
+  PriceAdjustmentApplyOnEnum3Key,
   UpdateCartMutationRequest,
   UpdateCartMutationResponse,
   UpdateCartMutation,
@@ -854,7 +855,6 @@ export type {
   UpdateCustomer500,
   UpdateCustomerMutationRequestDocumentTypeEnumKey,
   UpdateCustomerMutationRequestGenderEnumKey,
-  AddressesTypeEnum3Key,
   UpdateCustomerMutationRequest,
   UpdateCustomerMutationResponse,
   UpdateCustomerMutation,
@@ -988,7 +988,7 @@ export type {
   UpsertCartItem500,
   PriceAdjustmentTypeEnum4Key,
   PriceAdjustmentModeEnum4Key,
-  PriceAdjustmentApplyOnEnum2Key,
+  PriceAdjustmentApplyOnEnum4Key,
   UpsertCartItemMutationRequest,
   UpsertCartItemMutationResponse,
   UpsertCartItemMutation,
@@ -996,6 +996,7 @@ export type {
 export { createCartMutationRequestCurrencyCodeEnum } from './CreateCart'
 export { priceAdjustmentTypeEnum } from './CreateCart'
 export { priceAdjustmentModeEnum } from './CreateCart'
+export { priceAdjustmentApplyOnEnum } from './CreateCart'
 export { createCustomerMutationRequestDocumentTypeEnum } from './CreateCustomer'
 export { createCustomerMutationRequestGenderEnum } from './CreateCustomer'
 export { addressesTypeEnum } from './CreateCustomer'
@@ -1022,8 +1023,7 @@ export { deleteStockLocation204Enum } from './DeleteStockLocation'
 export { cartCurrencyCodeEnum } from './GetCart'
 export { priceAdjustmentTypeEnum2 } from './GetCart'
 export { priceAdjustmentModeEnum2 } from './GetCart'
-export { priceAdjustmentApplyOnEnum } from './GetCart'
-export { pricesCurrencyCodeEnum7 } from './GetCart'
+export { priceAdjustmentApplyOnEnum2 } from './GetCart'
 export { customerDocumentTypeEnum } from './GetCustomer'
 export { customerGenderEnum } from './GetCustomer'
 export { addressesTypeEnum2 } from './GetCustomer'
@@ -1135,10 +1135,10 @@ export { updateCart204Enum } from './UpdateCart'
 export { updateCartMutationRequestCurrencyCodeEnum } from './UpdateCart'
 export { priceAdjustmentTypeEnum3 } from './UpdateCart'
 export { priceAdjustmentModeEnum3 } from './UpdateCart'
+export { priceAdjustmentApplyOnEnum3 } from './UpdateCart'
 export { updateCustomer204Enum } from './UpdateCustomer'
 export { updateCustomerMutationRequestDocumentTypeEnum } from './UpdateCustomer'
 export { updateCustomerMutationRequestGenderEnum } from './UpdateCustomer'
-export { addressesTypeEnum3 } from './UpdateCustomer'
 export { updateInventoryLevel204Enum } from './UpdateInventoryLevel'
 export { updatePaymentMethod204Enum } from './UpdatePaymentMethod'
 export { updatePaymentTerm204Enum } from './UpdatePaymentTerm'
@@ -1155,4 +1155,4 @@ export { pricesCurrencyCodeEnum5 } from './UpdateProductVariant'
 export { updateStockLocation204Enum } from './UpdateStockLocation'
 export { priceAdjustmentTypeEnum4 } from './UpsertCartItem'
 export { priceAdjustmentModeEnum4 } from './UpsertCartItem'
-export { priceAdjustmentApplyOnEnum2 } from './UpsertCartItem'
+export { priceAdjustmentApplyOnEnum4 } from './UpsertCartItem'

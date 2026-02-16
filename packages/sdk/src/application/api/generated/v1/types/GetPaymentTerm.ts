@@ -67,7 +67,7 @@ export type GetPaymentTerm200 = {
     /**
      * @type object
      */
-    rule?: {
+    rules?: {
       /**
        * @type object | undefined
        */

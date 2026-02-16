@@ -1,11 +1,10 @@
 import { withDefaultErrorResponses } from '@/http/errors/default-error-responses'
 import type { FastifyTypedInstance } from '@/types/fastify'
-import { queries } from '@workspace/db/queries'
-import { ProductStatus } from '@workspace/db/tenant/enums'
+import { productStatusEnum } from '@/utils/schemas'
+import { queries } from '@workspace/db/tenant/queries'
 import { z } from 'zod'
 
-const { FILTER_BY, SORT_BY, ORDER } =
-  queries.application.products.listProductsWithRelations
+const { FILTER_BY, SORT_BY, ORDER } = queries.products.listProductsWithRelations
 
 export async function listProducts(app: FastifyTypedInstance) {
   app.get(
@@ -41,7 +40,7 @@ export async function listProducts(app: FastifyTypedInstance) {
                   name: z.string(),
                   subtitle: z.string().nullable(),
                   description: z.string().nullable(),
-                  status: z.enum(ProductStatus),
+                  status: productStatusEnum,
                   thumbnailUrl: z.string().url().nullable(),
                   images: z.array(
                     z.object({

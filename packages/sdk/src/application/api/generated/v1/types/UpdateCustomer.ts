@@ -166,14 +166,6 @@ export const updateCustomerMutationRequestGenderEnum = {
 export type UpdateCustomerMutationRequestGenderEnumKey =
   (typeof updateCustomerMutationRequestGenderEnum)[keyof typeof updateCustomerMutationRequestGenderEnum]
 
-export const addressesTypeEnum3 = {
-  billing: 'billing',
-  shipping: 'shipping',
-} as const
-
-export type AddressesTypeEnum3Key =
-  (typeof addressesTypeEnum3)[keyof typeof addressesTypeEnum3]
-
 export type UpdateCustomerMutationRequest = {
   /**
    * @type string
@@ -186,7 +178,7 @@ export type UpdateCustomerMutationRequest = {
   /**
    * @type string
    */
-  documentType?: UpdateCustomerMutationRequestDocumentTypeEnumKey | null
+  documentType: UpdateCustomerMutationRequestDocumentTypeEnumKey | null
   /**
    * @type string
    */
@@ -206,7 +198,7 @@ export type UpdateCustomerMutationRequest = {
   /**
    * @type string
    */
-  gender?: UpdateCustomerMutationRequestGenderEnumKey | null
+  gender: UpdateCustomerMutationRequestGenderEnumKey | null
   /**
    * @type string, email
    */
@@ -215,55 +207,6 @@ export type UpdateCustomerMutationRequest = {
    * @type string
    */
   phone?: string | null
-  /**
-   * @type array | undefined
-   */
-  addresses?: {
-    /**
-     * @type string | undefined
-     */
-    id?: string
-    /**
-     * @type string
-     */
-    type?: AddressesTypeEnum3Key | null
-    /**
-     * @type string
-     */
-    street?: string | null
-    /**
-     * @type string
-     */
-    number?: string | null
-    /**
-     * @type string
-     */
-    complement?: string | null
-    /**
-     * @type string
-     */
-    neighborhood?: string | null
-    /**
-     * @type string
-     */
-    city?: string | null
-    /**
-     * @type string
-     */
-    state?: string | null
-    /**
-     * @type string
-     */
-    country?: string | null
-    /**
-     * @type string
-     */
-    zipCode?: string | null
-    /**
-     * @type string
-     */
-    reference?: string | null
-  }[]
 }
 
 export type UpdateCustomerMutationResponse = UpdateCustomer204

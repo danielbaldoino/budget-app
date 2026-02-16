@@ -5,6 +5,7 @@
 
 export const listPriceListsQueryParamsFilterByEnum = {
   all: 'all',
+  referenceId: 'referenceId',
   name: 'name',
 } as const
 
@@ -12,6 +13,7 @@ export type ListPriceListsQueryParamsFilterByEnumKey =
   (typeof listPriceListsQueryParamsFilterByEnum)[keyof typeof listPriceListsQueryParamsFilterByEnum]
 
 export const listPriceListsQueryParamsSortByEnum = {
+  referenceId: 'referenceId',
   name: 'name',
   createdAt: 'createdAt',
 } as const
@@ -63,6 +65,7 @@ export type ListPriceListsQueryParams = {
 
 export const metaFilterByEnum8 = {
   all: 'all',
+  referenceId: 'referenceId',
   name: 'name',
 } as const
 
@@ -70,6 +73,7 @@ export type MetaFilterByEnum8Key =
   (typeof metaFilterByEnum8)[keyof typeof metaFilterByEnum8]
 
 export const metaSortByEnum8 = {
+  referenceId: 'referenceId',
   name: 'name',
   createdAt: 'createdAt',
 } as const

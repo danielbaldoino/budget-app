@@ -1,7 +1,7 @@
 import { BadRequestError } from '@/http/errors/bad-request-error'
 import { withDefaultErrorResponses } from '@/http/errors/default-error-responses'
 import type { FastifyTypedInstance } from '@/types/fastify'
-import { AddressType, DocumentType, Gender } from '@workspace/db/tenant/enums'
+import { addressTypeEnum, documentTypeEnum, genderEnum } from '@/utils/schemas'
 import { z } from 'zod'
 
 export async function getCustomer(app: FastifyTypedInstance) {
@@ -22,18 +22,18 @@ export async function getCustomer(app: FastifyTypedInstance) {
                 id: z.string(),
                 referenceId: z.string().nullable(),
                 name: z.string(),
-                documentType: z.enum(DocumentType).nullable(),
+                documentType: documentTypeEnum.nullable(),
                 document: z.string().nullable(),
                 corporateName: z.string().nullable(),
                 stateRegistration: z.string().nullable(),
                 birthDate: z.date().nullable(),
-                gender: z.enum(Gender).nullable(),
+                gender: genderEnum.nullable(),
                 email: z.string().nullable(),
                 phone: z.string().nullable(),
                 addresses: z.array(
                   z.object({
                     id: z.string(),
-                    type: z.enum(AddressType).nullable(),
+                    type: addressTypeEnum.nullable(),
                     street: z.string().nullable(),
                     number: z.string().nullable(),
                     complement: z.string().nullable(),

@@ -1,5 +1,5 @@
 import { eq } from 'drizzle-orm'
-import { tenantDb, tenantSchema } from '../../../tenant'
+import { tenantDb, tenantSchema } from '../../tenant-db'
 
 type GetApiKeyParams = {
   tenant: string

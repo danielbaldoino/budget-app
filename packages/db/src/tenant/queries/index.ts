@@ -83,7 +83,7 @@ import {
 } from './users/get-user'
 import { listUsersWithRelations } from './users/list-users'
 
-export const applicationQueries = {
+export const queries = {
   apiKeys: {
     listApiKeys,
     getApiKey,

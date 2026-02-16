@@ -1,7 +1,7 @@
 import { BadRequestError } from '@/http/errors/bad-request-error'
 import { withDefaultErrorResponses } from '@/http/errors/default-error-responses'
 import type { FastifyTypedInstance } from '@/types/fastify'
-import { CurrencyCode } from '@workspace/db/tenant/enums'
+import { currencyCodeEnum, priceAdjustmentSchema } from '@/utils/schemas'
 import { z } from 'zod'
 
 export async function createCart(app: FastifyTypedInstance) {
@@ -14,15 +14,9 @@ export async function createCart(app: FastifyTypedInstance) {
         operationId: 'createCart',
         body: z.object({
           name: z.string(),
-          currencyCode: z.enum(CurrencyCode),
+          currencyCode: currencyCodeEnum,
           notes: z.string().nullish(),
-          priceAdjustment: z
-            .object({
-              type: z.enum(['discount', 'surcharge']),
-              mode: z.enum(['fixed', 'percentage']),
-              value: z.number(),
-            })
-            .nullish(),
+          priceAdjustment: priceAdjustmentSchema.nullish(),
           customerId: z.string().nullish(),
           priceListId: z.string().nullish(),
         }),

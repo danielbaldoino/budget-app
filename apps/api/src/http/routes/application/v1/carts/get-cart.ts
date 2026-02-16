@@ -1,7 +1,7 @@
 import { BadRequestError } from '@/http/errors/bad-request-error'
 import { withDefaultErrorResponses } from '@/http/errors/default-error-responses'
 import type { FastifyTypedInstance } from '@/types/fastify'
-import { CurrencyCode } from '@workspace/db/tenant/enums'
+import { currencyCodeEnum, priceAdjustmentSchema } from '@/utils/schemas'
 import { z } from 'zod'
 
 export async function getCart(app: FastifyTypedInstance) {
@@ -21,15 +21,9 @@ export async function getCart(app: FastifyTypedInstance) {
               cart: z.object({
                 id: z.string(),
                 name: z.string(),
-                currencyCode: z.enum(CurrencyCode),
+                currencyCode: currencyCodeEnum,
                 notes: z.string().nullable(),
-                priceAdjustment: z
-                  .object({
-                    type: z.enum(['discount', 'surcharge']),
-                    mode: z.enum(['fixed', 'percentage']),
-                    value: z.number(),
-                  })
-                  .nullable(),
+                priceAdjustment: priceAdjustmentSchema.nullable(),
                 seller: z
                   .object({
                     id: z.string(),
@@ -61,37 +55,13 @@ export async function getCart(app: FastifyTypedInstance) {
                     id: z.string(),
                     quantity: z.number(),
                     notes: z.string().nullable(),
-                    priceAdjustment: z
-                      .object({
-                        type: z.enum(['discount', 'surcharge']),
-                        mode: z.enum(['fixed', 'percentage']),
-                        value: z.number(),
-                        applyOn: z.enum(['unit', 'item-total', 'cart-total']),
-                      })
-                      .nullable(),
+                    priceAdjustment: priceAdjustmentSchema.nullable(),
                     productVariant: z.object({
                       id: z.string(),
                       name: z.string(),
                       sku: z.string().nullable(),
                       manageInventory: z.boolean(),
                       thumbnail: z.string().url().nullable(),
-                      priceSets: z.array(
-                        z.object({
-                          id: z.string(),
-                          priceListId: z.string().nullable(),
-                          prices: z.array(
-                            z.object({
-                              id: z.string(),
-                              currencyCode: z.enum(CurrencyCode),
-                              amount: z.number(),
-                              createdAt: z.date(),
-                              updatedAt: z.date(),
-                            }),
-                          ),
-                          createdAt: z.date(),
-                          updatedAt: z.date(),
-                        }),
-                      ),
                       createdAt: z.date(),
                       updatedAt: z.date(),
                     }),

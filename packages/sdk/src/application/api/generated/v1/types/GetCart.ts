@@ -35,23 +35,14 @@ export const priceAdjustmentModeEnum2 = {
 export type PriceAdjustmentModeEnum2Key =
   (typeof priceAdjustmentModeEnum2)[keyof typeof priceAdjustmentModeEnum2]
 
-export const priceAdjustmentApplyOnEnum = {
+export const priceAdjustmentApplyOnEnum2 = {
   unit: 'unit',
   'item-total': 'item-total',
   'cart-total': 'cart-total',
 } as const
 
-export type PriceAdjustmentApplyOnEnumKey =
-  (typeof priceAdjustmentApplyOnEnum)[keyof typeof priceAdjustmentApplyOnEnum]
-
-export const pricesCurrencyCodeEnum7 = {
-  BRL: 'BRL',
-  USD: 'USD',
-  EUR: 'EUR',
-} as const
-
-export type PricesCurrencyCodeEnum7Key =
-  (typeof pricesCurrencyCodeEnum7)[keyof typeof pricesCurrencyCodeEnum7]
+export type PriceAdjustmentApplyOnEnum2Key =
+  (typeof priceAdjustmentApplyOnEnum2)[keyof typeof priceAdjustmentApplyOnEnum2]
 
 /**
  * @description Success
@@ -93,6 +84,11 @@ export type GetCart200 = {
        * @type number
        */
       value: number
+      /**
+       * @default "unit"
+       * @type string | undefined
+       */
+      applyOn?: PriceAdjustmentApplyOnEnum2Key
     } | null
     /**
      * @type object
@@ -198,9 +194,10 @@ export type GetCart200 = {
          */
         value: number
         /**
-         * @type string
+         * @default "unit"
+         * @type string | undefined
          */
-        applyOn: PriceAdjustmentApplyOnEnumKey
+        applyOn?: PriceAdjustmentApplyOnEnum2Key
       } | null
       /**
        * @type object
@@ -226,52 +223,6 @@ export type GetCart200 = {
          * @type string, uri
          */
         thumbnail: string | null
-        /**
-         * @type array
-         */
-        priceSets: {
-          /**
-           * @type string
-           */
-          id: string
-          /**
-           * @type string
-           */
-          priceListId: string | null
-          /**
-           * @type array
-           */
-          prices: {
-            /**
-             * @type string
-             */
-            id: string
-            /**
-             * @type string
-             */
-            currencyCode: PricesCurrencyCodeEnum7Key
-            /**
-             * @type number
-             */
-            amount: number
-            /**
-             * @type string, date-time
-             */
-            createdAt: string
-            /**
-             * @type string, date-time
-             */
-            updatedAt: string
-          }[]
-          /**
-           * @type string, date-time
-           */
-          createdAt: string
-          /**
-           * @type string, date-time
-           */
-          updatedAt: string
-        }[]
         /**
          * @type string, date-time
          */

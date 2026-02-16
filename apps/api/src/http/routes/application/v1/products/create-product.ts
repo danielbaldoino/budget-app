@@ -2,7 +2,6 @@ import { BadRequestError } from '@/http/errors/bad-request-error'
 import { withDefaultErrorResponses } from '@/http/errors/default-error-responses'
 import type { FastifyTypedInstance } from '@/types/fastify'
 import { findDuplicate } from '@/utils/find-duplicate'
-import { CurrencyCode, ProductStatus } from '@workspace/db/tenant/enums'
 import { z } from 'zod'
 
 export async function createProduct(app: FastifyTypedInstance) {
@@ -17,7 +16,7 @@ export async function createProduct(app: FastifyTypedInstance) {
           name: z.string(),
           subtitle: z.string().nullish(),
           description: z.string().nullish(),
-          status: z.enum(ProductStatus),
+          status: z.enum(['active', 'inactive']),
           thumbnailUrl: z.string().url().nullish(),
           images: z
             .array(
@@ -71,7 +70,7 @@ export async function createProduct(app: FastifyTypedInstance) {
                 prices: z
                   .array(
                     z.object({
-                      currencyCode: z.enum(CurrencyCode),
+                      currencyCode: z.enum(['BRL', 'USD', 'EUR']),
                       amount: z.number().nonnegative(),
                     }),
                   )

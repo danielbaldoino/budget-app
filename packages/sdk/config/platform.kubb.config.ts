@@ -13,7 +13,7 @@ const exclude: Exclude[] = [
   },
 ] as const
 
-export const config: UserConfig = {
+const config: UserConfig = {
   name: 'Budget App API - Platform',
   root: '.',
   input: {
@@ -88,4 +88,4 @@ export const config: UserConfig = {
   ],
 }
 
-export default defineConfig(config)
+export default defineConfig(config) as UserConfig

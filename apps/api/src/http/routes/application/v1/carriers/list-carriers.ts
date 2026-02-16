@@ -1,9 +1,9 @@
 import { withDefaultErrorResponses } from '@/http/errors/default-error-responses'
 import type { FastifyTypedInstance } from '@/types/fastify'
-import { queries } from '@workspace/db/queries'
+import { queries } from '@workspace/db/tenant/queries'
 import { z } from 'zod'
 
-const { FILTER_BY, SORT_BY, ORDER } = queries.application.carriers.listCarriers
+const { FILTER_BY, SORT_BY, ORDER } = queries.carriers.listCarriers
 
 export async function listCarriers(app: FastifyTypedInstance) {
   app.get(

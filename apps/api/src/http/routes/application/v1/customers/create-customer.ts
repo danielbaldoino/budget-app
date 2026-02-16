@@ -1,21 +1,8 @@
 import { BadRequestError } from '@/http/errors/bad-request-error'
 import { withDefaultErrorResponses } from '@/http/errors/default-error-responses'
 import type { FastifyTypedInstance } from '@/types/fastify'
-import { AddressType, DocumentType, Gender } from '@workspace/db/tenant/enums'
+import { addressSchema, documentTypeEnum, genderEnum } from '@/utils/schemas'
 import { z } from 'zod'
-
-const AddressSchema = z.object({
-  type: z.enum(AddressType).nullish(),
-  street: z.string().nullish(),
-  number: z.string().nullish(),
-  complement: z.string().nullish(),
-  neighborhood: z.string().nullish(),
-  city: z.string().nullish(),
-  state: z.string().nullish(),
-  country: z.string().nullish(),
-  zipCode: z.string().nullish(),
-  reference: z.string().nullish(),
-})
 
 export async function createCustomer(app: FastifyTypedInstance) {
   app.post(
@@ -28,15 +15,15 @@ export async function createCustomer(app: FastifyTypedInstance) {
         body: z.object({
           referenceId: z.string().nullish(),
           name: z.string(),
-          documentType: z.enum(DocumentType).nullish(),
+          documentType: documentTypeEnum.nullish(),
           document: z.string().nullish(),
           corporateName: z.string().nullish(),
           stateRegistration: z.string().nullish(),
           birthDate: z.coerce.date().nullish(),
-          gender: z.enum(Gender).nullish(),
+          gender: genderEnum.nullish(),
           email: z.string().email().nullish(),
           phone: z.string().nullish(),
-          addresses: z.array(AddressSchema).optional(),
+          addresses: z.array(addressSchema).optional(),
         }),
         response: withDefaultErrorResponses({
           201: z

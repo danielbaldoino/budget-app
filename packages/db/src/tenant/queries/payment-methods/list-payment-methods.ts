@@ -3,7 +3,7 @@ import { db } from '../../../db'
 import { tenantDb, tenantSchema } from '../../../tenant'
 
 const FILTER_BY = ['all', 'code', 'name'] as const
-const SORT_BY = ['name', 'createdAt'] as const
+const SORT_BY = ['code', 'name', 'createdAt'] as const
 const ORDER = ['asc', 'desc'] as const
 
 type ListPaymentMethodsParams = {
@@ -51,6 +51,10 @@ async function getListPaymentMethods(
 
     const ORDER_BY = () => {
       const orderFn = filters.order === 'asc' ? asc : desc
+
+      if (filters.sortBy === 'code') {
+        return orderFn(paymentMethods.code)
+      }
 
       if (filters.sortBy === 'name') {
         return orderFn(paymentMethods.name)

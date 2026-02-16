@@ -13,6 +13,7 @@ export type ListCarriersQueryParamsFilterByEnumKey =
   (typeof listCarriersQueryParamsFilterByEnum)[keyof typeof listCarriersQueryParamsFilterByEnum]
 
 export const listCarriersQueryParamsSortByEnum = {
+  code: 'code',
   name: 'name',
   createdAt: 'createdAt',
 } as const
@@ -71,6 +72,7 @@ export type MetaFilterByEnum12Key =
   (typeof metaFilterByEnum12)[keyof typeof metaFilterByEnum12]
 
 export const metaSortByEnum12 = {
+  code: 'code',
   name: 'name',
   createdAt: 'createdAt',
 } as const

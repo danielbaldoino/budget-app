@@ -2,8 +2,8 @@ import { type SQL, asc, desc, ilike, or } from 'drizzle-orm'
 import { db } from '../../../db'
 import { tenantDb, tenantSchema } from '../../../tenant'
 
-const FILTER_BY = ['all', 'name'] as const
-const SORT_BY = ['name', 'createdAt'] as const
+const FILTER_BY = ['all', 'referenceId', 'name'] as const
+const SORT_BY = ['referenceId', 'name', 'createdAt'] as const
 const ORDER = ['asc', 'desc'] as const
 
 type ListPriceListsParams = {
@@ -27,6 +27,12 @@ async function getListPriceLists(
       const searchCondition: SQL[] = []
 
       if (filters.search) {
+        if (filters.filterBy === 'all' || filters.filterBy === 'referenceId') {
+          searchCondition.push(
+            ilike(priceLists.referenceId, `%${filters.search}%`),
+          )
+        }
+
         if (filters.filterBy === 'all' || filters.filterBy === 'name') {
           searchCondition.push(ilike(priceLists.name, `%${filters.search}%`))
         }
@@ -37,6 +43,10 @@ async function getListPriceLists(
 
     const ORDER_BY = () => {
       const orderFn = filters.order === 'asc' ? asc : desc
+
+      if (filters.sortBy === 'referenceId') {
+        return orderFn(priceLists.referenceId)
+      }
 
       if (filters.sortBy === 'name') {
         return orderFn(priceLists.name)

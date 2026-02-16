@@ -1,11 +1,10 @@
 import { withDefaultErrorResponses } from '@/http/errors/default-error-responses'
 import type { FastifyTypedInstance } from '@/types/fastify'
-import { queries } from '@workspace/db/queries'
-import { DocumentType, Gender } from '@workspace/db/tenant/enums'
+import { documentTypeEnum, genderEnum } from '@/utils/schemas'
+import { queries } from '@workspace/db/tenant/queries'
 import { z } from 'zod'
 
-const { FILTER_BY, SORT_BY, ORDER } =
-  queries.application.customers.listCustomers
+const { FILTER_BY, SORT_BY, ORDER } = queries.customers.listCustomers
 
 export async function listCustomers(app: FastifyTypedInstance) {
   app.get(
@@ -46,12 +45,12 @@ export async function listCustomers(app: FastifyTypedInstance) {
                   id: z.string(),
                   referenceId: z.string().nullable(),
                   name: z.string(),
-                  documentType: z.enum(DocumentType).nullable(),
+                  documentType: documentTypeEnum.nullable(),
                   document: z.string().nullable(),
                   corporateName: z.string().nullable(),
                   stateRegistration: z.string().nullable(),
                   birthDate: z.date().nullable(),
-                  gender: z.enum(Gender).nullable(),
+                  gender: genderEnum.nullable(),
                   email: z.string().nullable(),
                   phone: z.string().nullable(),
                   createdAt: z.date(),

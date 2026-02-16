@@ -140,31 +140,14 @@ export type UpdateCustomer500Schema = UpdateCustomer500
 export const updateCustomerMutationRequestSchema = z.object({
   referenceId: z.string().nullish(),
   name: z.string(),
-  documentType: z.enum(['cpf', 'cnpj', 'foreign']).nullish(),
+  documentType: z.nullable(z.enum(['cpf', 'cnpj', 'foreign'])),
   document: z.string().nullish(),
   corporateName: z.string().nullish(),
   stateRegistration: z.string().nullish(),
   birthDate: z.string().datetime().nullish(),
-  gender: z.enum(['male', 'female']).nullish(),
+  gender: z.nullable(z.enum(['male', 'female'])),
   email: z.string().email().nullish(),
   phone: z.string().nullish(),
-  addresses: z.optional(
-    z.array(
-      z.object({
-        id: z.optional(z.string()),
-        type: z.enum(['billing', 'shipping']).nullish(),
-        street: z.string().nullish(),
-        number: z.string().nullish(),
-        complement: z.string().nullish(),
-        neighborhood: z.string().nullish(),
-        city: z.string().nullish(),
-        state: z.string().nullish(),
-        country: z.string().nullish(),
-        zipCode: z.string().nullish(),
-        reference: z.string().nullish(),
-      }),
-    ),
-  ),
 }) as unknown as ToZod<UpdateCustomerMutationRequest>
 
 export type UpdateCustomerMutationRequestSchema = UpdateCustomerMutationRequest

@@ -163,13 +163,13 @@ export const priceAdjustmentModeEnum4 = {
 export type PriceAdjustmentModeEnum4Key =
   (typeof priceAdjustmentModeEnum4)[keyof typeof priceAdjustmentModeEnum4]
 
-export const priceAdjustmentApplyOnEnum2 = {
+export const priceAdjustmentApplyOnEnum4 = {
   unit: 'unit',
   'item-total': 'item-total',
 } as const
 
-export type PriceAdjustmentApplyOnEnum2Key =
-  (typeof priceAdjustmentApplyOnEnum2)[keyof typeof priceAdjustmentApplyOnEnum2]
+export type PriceAdjustmentApplyOnEnum4Key =
+  (typeof priceAdjustmentApplyOnEnum4)[keyof typeof priceAdjustmentApplyOnEnum4]
 
 export type UpsertCartItemMutationRequest = {
   /**
@@ -207,7 +207,7 @@ export type UpsertCartItemMutationRequest = {
     /**
      * @type string
      */
-    applyOn: PriceAdjustmentApplyOnEnum2Key
+    applyOn: PriceAdjustmentApplyOnEnum4Key
   } | null
 }
 

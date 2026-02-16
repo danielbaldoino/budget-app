@@ -14,6 +14,7 @@ export type ListCustomersQueryParamsFilterByEnumKey =
   (typeof listCustomersQueryParamsFilterByEnum)[keyof typeof listCustomersQueryParamsFilterByEnum]
 
 export const listCustomersQueryParamsSortByEnum = {
+  referenceId: 'referenceId',
   name: 'name',
   createdAt: 'createdAt',
 } as const
@@ -73,6 +74,7 @@ export type MetaFilterByEnumKey =
   (typeof metaFilterByEnum)[keyof typeof metaFilterByEnum]
 
 export const metaSortByEnum = {
+  referenceId: 'referenceId',
   name: 'name',
   createdAt: 'createdAt',
 } as const

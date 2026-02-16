@@ -29,13 +29,12 @@
   },
   "exports": {
     ".": "./src/index.ts",
-    "./queries": "./src/queries/index.ts",
     "./schema": "./src/schema/index.ts",
     "./tenant": "./src/tenant/index.ts",
+    "./tenant/queries": "./src/tenant/queries/index.ts",
     "./tenant/schema": "./src/tenant/schema/index.ts",
+    "./tenant/types": "./src/tenant/utils/types.ts",
     "./utils": "./src/lib/utils.ts",
-    "./env": "./src/lib/env.ts",
-    "./tenant/enums": "./src/tenant/utils/enums.ts",
-    "./tenant/types": "./src/tenant/utils/types.ts"
+    "./env": "./src/lib/env.ts"
   }
 }

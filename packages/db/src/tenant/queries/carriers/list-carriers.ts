@@ -3,14 +3,14 @@ import { db } from '../../../db'
 import { tenantDb, tenantSchema } from '../../../tenant'
 
 const FILTER_BY = ['all', 'code', 'name'] as const
-const SORT_BY = ['name', 'createdAt'] as const
+const SORT_BY = ['code', 'name', 'createdAt'] as const
 const ORDER = ['asc', 'desc'] as const
 
-type ListPaymentTermsParams = {
+type ListCarriersParams = {
   tenant: string
 }
 
-type ListPaymentTermsFiltersParams = {
+type ListCarriersFiltersParams = {
   search?: string
   filterBy: (typeof FILTER_BY)[number]
   sortBy: (typeof SORT_BY)[number]
@@ -20,26 +20,26 @@ type ListPaymentTermsFiltersParams = {
   pageSize: number
 }
 
-async function getListPaymentTerms(
-  params: ListPaymentTermsParams,
-  filters: ListPaymentTermsFiltersParams,
+async function getListCarriers(
+  params: ListCarriersParams,
+  filters: ListCarriersFiltersParams,
 ) {
-  return tenantSchema(params.tenant, async ({ paymentTerms }) => {
+  return tenantSchema(params.tenant, async ({ carriers }) => {
     const WHERE = () => {
       const searchCondition: SQL[] = []
 
       if (filters.search) {
         if (filters.filterBy === 'all' || filters.filterBy === 'code') {
-          searchCondition.push(ilike(paymentTerms.code, `%${filters.search}%`))
+          searchCondition.push(ilike(carriers.code, `%${filters.search}%`))
         }
 
         if (filters.filterBy === 'all' || filters.filterBy === 'name') {
-          searchCondition.push(ilike(paymentTerms.name, `%${filters.search}%`))
+          searchCondition.push(ilike(carriers.name, `%${filters.search}%`))
         }
       }
 
       if (filters.active !== undefined) {
-        searchCondition.push(eq(paymentTerms.active, filters.active))
+        searchCondition.push(eq(carriers.active, filters.active))
       }
 
       return or(...searchCondition)
@@ -48,17 +48,21 @@ async function getListPaymentTerms(
     const ORDER_BY = () => {
       const orderFn = filters.order === 'asc' ? asc : desc
 
-      if (filters.sortBy === 'name') {
-        return orderFn(paymentTerms.name)
+      if (filters.sortBy === 'code') {
+        return orderFn(carriers.code)
       }
 
-      return orderFn(paymentTerms.createdAt)
+      if (filters.sortBy === 'name') {
+        return orderFn(carriers.name)
+      }
+
+      return orderFn(carriers.createdAt)
     }
 
-    const [count, listPaymentTerms] = await Promise.all([
-      db.$count(paymentTerms, WHERE()),
+    const [count, listCarriers] = await Promise.all([
+      db.$count(carriers, WHERE()),
 
-      tenantDb(params.tenant).query.paymentTerms.findMany({
+      tenantDb(params.tenant).query.carriers.findMany({
         where: WHERE(),
         orderBy: ORDER_BY(),
         offset: (filters.page - 1) * filters.pageSize,
@@ -68,12 +72,12 @@ async function getListPaymentTerms(
 
     return {
       count,
-      paymentTerms: listPaymentTerms,
+      carriers: listCarriers,
     }
   })
 }
 
-export const listPaymentTerms = Object.assign(getListPaymentTerms, {
+export const listCarriers = Object.assign(getListCarriers, {
   FILTER_BY,
   SORT_BY,
   ORDER,

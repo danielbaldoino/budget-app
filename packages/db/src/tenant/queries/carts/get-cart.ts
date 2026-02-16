@@ -28,21 +28,13 @@ export async function getCartWithRelations(params: GetCartWithRelationsParams) {
       with: {
         seller: true,
         customer: true,
+        priceList: true,
         cartItems: {
           with: {
-            productVariant: {
-              with: {
-                priceSets: {
-                  with: {
-                    prices: true,
-                  },
-                },
-              },
-            },
+            productVariant: true,
             priceList: true,
           },
         },
-        priceList: true,
       },
     })
 

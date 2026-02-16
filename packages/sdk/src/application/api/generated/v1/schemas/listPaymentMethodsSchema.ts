@@ -20,7 +20,7 @@ import { ToZod } from '../../.kubb/ToZod'
 export const listPaymentMethodsQueryParamsSchema = z.object({
   search: z.optional(z.string()),
   filterBy: z.enum(['all', 'code', 'name']).default('name'),
-  sortBy: z.enum(['name', 'createdAt']).default('createdAt'),
+  sortBy: z.enum(['code', 'name', 'createdAt']).default('createdAt'),
   order: z.enum(['asc', 'desc']).default('asc'),
   page: z.coerce.number().gt(0).default(1),
   pageSize: z.coerce.number().max(100).gt(10).default(50),
@@ -36,7 +36,7 @@ export const listPaymentMethods200Schema = z
     meta: z.object({
       search: z.optional(z.string()),
       filterBy: z.enum(['all', 'code', 'name']),
-      sortBy: z.enum(['name', 'createdAt']),
+      sortBy: z.enum(['code', 'name', 'createdAt']),
       order: z.enum(['asc', 'desc']),
       count: z.number(),
       page: z.number(),

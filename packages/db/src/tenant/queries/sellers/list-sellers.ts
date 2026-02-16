@@ -2,15 +2,15 @@ import { type SQL, asc, desc, ilike, or } from 'drizzle-orm'
 import { db } from '../../../db'
 import { tenantDb, tenantSchema } from '../../../tenant'
 
-const FILTER_BY = ['all', 'referenceId', 'name', 'document'] as const
-const SORT_BY = ['name', 'createdAt'] as const
+const FILTER_BY = ['all', 'referenceId', 'name'] as const
+const SORT_BY = ['referenceId', 'name', 'createdAt'] as const
 const ORDER = ['asc', 'desc'] as const
 
-type ListCustomersParams = {
+type ListSellersParams = {
   tenant: string
 }
 
-type ListCustomersFiltersParams = {
+type ListSellersFiltersParams = {
   search?: string
   filterBy: (typeof FILTER_BY)[number]
   sortBy: (typeof SORT_BY)[number]
@@ -19,27 +19,23 @@ type ListCustomersFiltersParams = {
   pageSize: number
 }
 
-async function getListCustomers(
-  params: ListCustomersParams,
-  filters: ListCustomersFiltersParams,
+async function getListSellers(
+  params: ListSellersParams,
+  filters: ListSellersFiltersParams,
 ) {
-  return tenantSchema(params.tenant, async ({ customers }) => {
+  return tenantSchema(params.tenant, async ({ sellers }) => {
     const WHERE = () => {
       const searchCondition: SQL[] = []
 
       if (filters.search) {
         if (filters.filterBy === 'all' || filters.filterBy === 'referenceId') {
           searchCondition.push(
-            ilike(customers.referenceId, `%${filters.search}%`),
+            ilike(sellers.referenceId, `%${filters.search}%`),
           )
         }
 
         if (filters.filterBy === 'all' || filters.filterBy === 'name') {
-          searchCondition.push(ilike(customers.name, `%${filters.search}%`))
-        }
-
-        if (filters.filterBy === 'all' || filters.filterBy === 'document') {
-          searchCondition.push(ilike(customers.document, `%${filters.search}%`))
+          searchCondition.push(ilike(sellers.name, `%${filters.search}%`))
         }
       }
 
@@ -49,17 +45,21 @@ async function getListCustomers(
     const ORDER_BY = () => {
       const orderFn = filters.order === 'asc' ? asc : desc
 
-      if (filters.sortBy === 'name') {
-        return orderFn(customers.name)
+      if (filters.sortBy === 'referenceId') {
+        return orderFn(sellers.referenceId)
       }
 
-      return orderFn(customers.createdAt)
+      if (filters.sortBy === 'name') {
+        return orderFn(sellers.name)
+      }
+
+      return orderFn(sellers.createdAt)
     }
 
-    const [count, listCustomers] = await Promise.all([
-      db.$count(customers, WHERE()),
+    const [count, listSellers] = await Promise.all([
+      db.$count(sellers, WHERE()),
 
-      tenantDb(params.tenant).query.customers.findMany({
+      tenantDb(params.tenant).query.sellers.findMany({
         where: WHERE(),
         orderBy: ORDER_BY(),
         offset: (filters.page - 1) * filters.pageSize,
@@ -69,12 +69,12 @@ async function getListCustomers(
 
     return {
       count,
-      customers: listCustomers,
+      sellers: listSellers,
     }
   })
 }
 
-export const listCustomers = Object.assign(getListCustomers, {
+export const listSellers = Object.assign(getListSellers, {
   FILTER_BY,
   SORT_BY,
   ORDER,

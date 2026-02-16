@@ -1,7 +1,7 @@
 import { BadRequestError } from '@/http/errors/bad-request-error'
 import { withDefaultErrorResponses } from '@/http/errors/default-error-responses'
 import type { FastifyTypedInstance } from '@/types/fastify'
-import { ProductStatus } from '@workspace/db/tenant/enums'
+import { productStatusEnum } from '@/utils/schemas'
 import { z } from 'zod'
 
 export async function getProduct(app: FastifyTypedInstance) {
@@ -23,7 +23,7 @@ export async function getProduct(app: FastifyTypedInstance) {
                 name: z.string(),
                 subtitle: z.string().nullable(),
                 description: z.string().nullable(),
-                status: z.enum(ProductStatus),
+                status: productStatusEnum,
                 thumbnailUrl: z.string().url().nullable(),
                 images: z.array(
                   z.object({

@@ -33,7 +33,7 @@ export const getPaymentTerm200Schema = z
       code: z.string(),
       name: z.string(),
       description: z.nullable(z.string()),
-      rule: z
+      rules: z
         .object({
           entry: z.optional(
             z.object({

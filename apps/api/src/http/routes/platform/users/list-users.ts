@@ -1,11 +1,10 @@
 import { withDefaultErrorResponses } from '@/http/errors/default-error-responses'
 import { resolveTenantByWorkspaceOwner } from '@/http/functions/tenant-resolver'
 import type { FastifyTypedInstance } from '@/types/fastify'
-import { queries } from '@workspace/db/queries'
+import { queries } from '@workspace/db/tenant/queries'
 import { z } from 'zod'
 
-const { FILTER_BY, SORT_BY, ORDER } =
-  queries.application.users.listUsersWithRelations
+const { FILTER_BY, SORT_BY, ORDER } = queries.users.listUsersWithRelations
 
 export async function listUsers(app: FastifyTypedInstance) {
   app.get(

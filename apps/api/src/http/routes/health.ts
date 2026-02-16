@@ -10,7 +10,6 @@ export async function health(app: FastifyTypedInstance) {
         tags: ['Default'],
         description: 'Check if the API is working',
         operationId: 'health',
-        security: [],
         response: withDefaultErrorResponses({
           200: z
             .object({

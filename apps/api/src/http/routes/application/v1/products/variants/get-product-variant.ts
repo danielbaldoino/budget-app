@@ -1,7 +1,7 @@
 import { BadRequestError } from '@/http/errors/bad-request-error'
 import { withDefaultErrorResponses } from '@/http/errors/default-error-responses'
 import type { FastifyTypedInstance } from '@/types/fastify'
-import { CurrencyCode } from '@workspace/db/tenant/enums'
+import { currencyCodeEnum } from '@/utils/schemas'
 import { z } from 'zod'
 
 export async function getProductVariant(app: FastifyTypedInstance) {
@@ -55,7 +55,7 @@ export async function getProductVariant(app: FastifyTypedInstance) {
                     prices: z.array(
                       z.object({
                         id: z.string(),
-                        currencyCode: z.enum(CurrencyCode).nullable(),
+                        currencyCode: currencyCodeEnum.nullable(),
                         amount: z.number().nonnegative().nullable(),
                         createdAt: z.date(),
                         updatedAt: z.date(),

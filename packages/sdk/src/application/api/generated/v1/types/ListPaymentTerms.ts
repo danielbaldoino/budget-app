@@ -13,6 +13,7 @@ export type ListPaymentTermsQueryParamsFilterByEnumKey =
   (typeof listPaymentTermsQueryParamsFilterByEnum)[keyof typeof listPaymentTermsQueryParamsFilterByEnum]
 
 export const listPaymentTermsQueryParamsSortByEnum = {
+  code: 'code',
   name: 'name',
   createdAt: 'createdAt',
 } as const
@@ -71,6 +72,7 @@ export type MetaFilterByEnum14Key =
   (typeof metaFilterByEnum14)[keyof typeof metaFilterByEnum14]
 
 export const metaSortByEnum14 = {
+  code: 'code',
   name: 'name',
   createdAt: 'createdAt',
 } as const

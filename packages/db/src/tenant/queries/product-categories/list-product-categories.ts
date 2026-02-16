@@ -2,8 +2,8 @@ import { type SQL, asc, desc, ilike, or } from 'drizzle-orm'
 import { db } from '../../../db'
 import { tenantDb, tenantSchema } from '../../../tenant'
 
-const FILTER_BY = ['all', 'name', 'description'] as const
-const SORT_BY = ['name', 'description', 'createdAt'] as const
+const FILTER_BY = ['all', 'referenceId', 'name'] as const
+const SORT_BY = ['referenceId', 'name', 'createdAt'] as const
 const ORDER = ['asc', 'desc'] as const
 
 type ListProductCategoriesParams = {
@@ -27,15 +27,15 @@ async function getListProductCategories(
       const searchCondition: SQL[] = []
 
       if (filters.search) {
-        if (filters.filterBy === 'all' || filters.filterBy === 'name') {
+        if (filters.filterBy === 'all' || filters.filterBy === 'referenceId') {
           searchCondition.push(
-            ilike(productCategories.name, `%${filters.search}%`),
+            ilike(productCategories.referenceId, `%${filters.search}%`),
           )
         }
 
-        if (filters.filterBy === 'all' || filters.filterBy === 'description') {
+        if (filters.filterBy === 'all' || filters.filterBy === 'name') {
           searchCondition.push(
-            ilike(productCategories.description, `%${filters.search}%`),
+            ilike(productCategories.name, `%${filters.search}%`),
           )
         }
       }
@@ -46,12 +46,12 @@ async function getListProductCategories(
     const ORDER_BY = () => {
       const orderFn = filters.order === 'asc' ? asc : desc
 
-      if (filters.sortBy === 'name') {
-        return orderFn(productCategories.name)
+      if (filters.sortBy === 'referenceId') {
+        return orderFn(productCategories.referenceId)
       }
 
-      if (filters.sortBy === 'description') {
-        return orderFn(productCategories.description)
+      if (filters.sortBy === 'name') {
+        return orderFn(productCategories.name)
       }
 
       return orderFn(productCategories.createdAt)

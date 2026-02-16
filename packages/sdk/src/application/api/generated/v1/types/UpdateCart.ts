@@ -174,6 +174,15 @@ export const priceAdjustmentModeEnum3 = {
 export type PriceAdjustmentModeEnum3Key =
   (typeof priceAdjustmentModeEnum3)[keyof typeof priceAdjustmentModeEnum3]
 
+export const priceAdjustmentApplyOnEnum3 = {
+  unit: 'unit',
+  'item-total': 'item-total',
+  'cart-total': 'cart-total',
+} as const
+
+export type PriceAdjustmentApplyOnEnum3Key =
+  (typeof priceAdjustmentApplyOnEnum3)[keyof typeof priceAdjustmentApplyOnEnum3]
+
 export type UpdateCartMutationRequest = {
   /**
    * @type string | undefined
@@ -203,6 +212,11 @@ export type UpdateCartMutationRequest = {
      * @type number
      */
     value: number
+    /**
+     * @default "unit"
+     * @type string | undefined
+     */
+    applyOn?: PriceAdjustmentApplyOnEnum3Key
   } | null
   /**
    * @type string

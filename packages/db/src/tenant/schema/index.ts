@@ -15,13 +15,15 @@ import {
 
 import { id, timestamps } from '../../utils'
 import { TENANT_MIGRATIONS_SCHEMA } from '../constants'
-import { Gender, OrderStatus, ProductStatus } from '../utils/enums'
 import type {
   AddressType,
   CurrencyCode,
   DocumentType,
+  Gender,
+  OrderStatus,
   PaymentTermRules,
   PriceAdjustment,
+  ProductStatus,
 } from '../utils/types'
 
 export const metadata = {
@@ -30,12 +32,6 @@ export const metadata = {
 
 export function createTenantSchema(schema?: string) {
   const tenantSchema = pgSchema(schema ?? TENANT_MIGRATIONS_SCHEMA)
-
-  const genderEnum = tenantSchema.enum('gender', Gender)
-
-  const productStatusEnum = tenantSchema.enum('product_status', ProductStatus)
-
-  const orderStatusEnum = tenantSchema.enum('order_status', OrderStatus)
 
   const apiKeys = tenantSchema.table('api_keys', {
     ...id,
@@ -90,7 +86,7 @@ export function createTenantSchema(schema?: string) {
     corporateName: text('corporate_name'),
     stateRegistration: text('state_registration'),
     birthDate: timestamp('birth_date', { withTimezone: true }),
-    gender: genderEnum('gender'),
+    gender: text('gender').$type<Gender>(),
     email: text('email'),
     phone: text('phone'),
 
@@ -145,6 +141,8 @@ export function createTenantSchema(schema?: string) {
 
   const productCategories = tenantSchema.table('product_categories', {
     ...id,
+    referenceId: text('reference_id').unique(),
+
     name: text('name').notNull(),
     description: text('description'),
 
@@ -160,10 +158,11 @@ export function createTenantSchema(schema?: string) {
 
   const products = tenantSchema.table('products', {
     ...id,
+
     name: text('name').notNull(),
     subtitle: text('subtitle'),
     description: text('description'),
-    status: productStatusEnum('status').notNull().default('active'),
+    status: text('status').$type<ProductStatus>().notNull().default('active'),
     thumbnailUrl: text('thumbnail_url'),
 
     categoryId: text('category_id').references(() => productCategories.id),
@@ -287,6 +286,8 @@ export function createTenantSchema(schema?: string) {
 
   const priceLists = tenantSchema.table('price_lists', {
     ...id,
+    referenceId: text('reference_id').unique(),
+
     name: text('name').notNull(),
     description: text('description'),
 
@@ -507,7 +508,7 @@ export function createTenantSchema(schema?: string) {
     referenceId: text('reference_id').unique(),
     displayId: bigserial('display_id', { mode: 'number' }).notNull().unique(),
 
-    status: orderStatusEnum('status').notNull().default('active'),
+    status: text('status').$type<OrderStatus>().notNull().default('active'),
     currencyCode: text('currency_code').$type<CurrencyCode>().notNull(),
     notes: text('notes'),
     priceAdjustment: jsonb('price_adjustment').$type<PriceAdjustment>(),
@@ -734,9 +735,6 @@ export function createTenantSchema(schema?: string) {
   // })
 
   return {
-    genderEnum,
-    productStatusEnum,
-    orderStatusEnum,
     apiKeys,
     users,
     usersRelations,
@@ -796,9 +794,6 @@ export function createTenantSchema(schema?: string) {
 }
 
 export const {
-  genderEnum,
-  productStatusEnum,
-  orderStatusEnum,
   apiKeys,
   users,
   usersRelations,

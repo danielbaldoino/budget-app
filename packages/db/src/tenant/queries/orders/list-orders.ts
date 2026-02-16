@@ -43,6 +43,10 @@ async function getListOrdersWithRelations(
     const ORDER_BY = () => {
       const orderFn = filters.order === 'asc' ? asc : desc
 
+      if (filters.sortBy === 'referenceId') {
+        return orderFn(orders.referenceId)
+      }
+
       if (filters.sortBy === 'displayId') {
         return orderFn(orders.displayId)
       }

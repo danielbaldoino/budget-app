@@ -1,5 +1,7 @@
 import { authenticator } from '@/http/middlewares/platform/authenticator'
 import type { FastifyTypedInstance } from '@/types/fastify'
+import { auth, toNodeHandler } from '@workspace/auth'
+
 import { createApiKey } from './api-keys/create-api-key'
 import { deleteApiKey } from './api-keys/delete-api-key'
 import { getApiKey } from './api-keys/get-api-key'
@@ -15,7 +17,7 @@ import { getUser } from './users/get-user'
 import { listUsers } from './users/list-users'
 import { updateUser } from './users/update-user'
 
-export async function platformRoutes(app: FastifyTypedInstance) {
+async function routes(app: FastifyTypedInstance) {
   app.register(authenticator) // Apply authentication middleware
 
   app.register(getProfile)
@@ -35,4 +37,25 @@ export async function platformRoutes(app: FastifyTypedInstance) {
   app.register(getUser)
   app.register(updateUser)
   app.register(deleteUser)
+}
+
+async function authRoutes(app: FastifyTypedInstance) {
+  const authHandler = toNodeHandler(auth.handler)
+
+  app.addContentTypeParser('application/json', (_request, _payload, done) =>
+    done(null, null),
+  )
+
+  app.route({
+    method: ['GET', 'POST'],
+    url: '/*',
+    schema: { hide: true },
+    handler: async (request, reply) =>
+      await authHandler(request.raw, reply.raw),
+  })
+}
+
+export async function platformRoutes(app: FastifyTypedInstance) {
+  app.register(authRoutes, { prefix: '/auth' })
+  app.register(routes)
 }

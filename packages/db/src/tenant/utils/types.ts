@@ -1,21 +1,14 @@
-import type {
-  AddressType as AddressTypeEnum,
-  CurrencyCode as CurrencyCodeEnum,
-  DocumentType as DocumentTypeEnum,
-} from './enums'
+export type AddressType = 'billing' | 'shipping'
 
-export type TechnicalSpecification = {
-  code: string
-  label: string
-  value: string | number | boolean
-}
+export type CurrencyCode = 'BRL' | 'USD' | 'EUR'
 
-export type ProductVariantCustomField = {
-  fieldId: string
-  label: string
-  value: string | number | boolean
-  type: 'string' | 'number' | 'boolean'
-}
+export type DocumentType = 'cpf' | 'cnpj' | 'foreign'
+
+export type Gender = 'male' | 'female'
+
+export type OrderStatus = 'active' | 'cancelled'
+
+export type ProductStatus = 'active' | 'inactive'
 
 export type PriceAdjustment = {
   type: 'discount' | 'surcharge'
@@ -57,8 +50,15 @@ export type PaymentTermRules = {
   ]
 }
 
-export type CurrencyCode = (typeof CurrencyCodeEnum)[number]
+// export type TechnicalSpecification = {
+//   code: string
+//   label: string
+//   value: string | number | boolean
+// }
 
-export type DocumentType = (typeof DocumentTypeEnum)[number]
-
-export type AddressType = (typeof AddressTypeEnum)[number]
+// export type ProductVariantCustomField = {
+//   fieldId: string
+//   label: string
+//   value: string | number | boolean
+//   type: 'string' | 'number' | 'boolean'
+// }

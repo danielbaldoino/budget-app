@@ -883,6 +883,7 @@ export type {
   CreateCartMutationRequestCurrencyCodeEnumKey,
   PriceAdjustmentTypeEnumKey,
   PriceAdjustmentModeEnumKey,
+  PriceAdjustmentApplyOnEnumKey,
   CreateCartMutationRequest,
   CreateCartMutationResponse,
   CreateCartMutation,
@@ -1206,8 +1207,7 @@ export type {
   CartCurrencyCodeEnumKey,
   PriceAdjustmentTypeEnum2Key,
   PriceAdjustmentModeEnum2Key,
-  PriceAdjustmentApplyOnEnumKey,
-  PricesCurrencyCodeEnum7Key,
+  PriceAdjustmentApplyOnEnum2Key,
   GetCart200,
   GetCart400,
   GetCart401,
@@ -1700,6 +1700,7 @@ export type {
   UpdateCartMutationRequestCurrencyCodeEnumKey,
   PriceAdjustmentTypeEnum3Key,
   PriceAdjustmentModeEnum3Key,
+  PriceAdjustmentApplyOnEnum3Key,
   UpdateCartMutationRequest,
   UpdateCartMutationResponse,
   UpdateCartMutation,
@@ -1716,7 +1717,6 @@ export type {
   UpdateCustomer500,
   UpdateCustomerMutationRequestDocumentTypeEnumKey,
   UpdateCustomerMutationRequestGenderEnumKey,
-  AddressesTypeEnum3Key,
   UpdateCustomerMutationRequest,
   UpdateCustomerMutationResponse,
   UpdateCustomerMutation,
@@ -1850,7 +1850,7 @@ export type {
   UpsertCartItem500,
   PriceAdjustmentTypeEnum4Key,
   PriceAdjustmentModeEnum4Key,
-  PriceAdjustmentApplyOnEnum2Key,
+  PriceAdjustmentApplyOnEnum4Key,
   UpsertCartItemMutationRequest,
   UpsertCartItemMutationResponse,
   UpsertCartItemMutation,
@@ -2848,6 +2848,7 @@ export { upsertCartItemMutationResponseSchema } from './v1/schemas/upsertCartIte
 export { createCartMutationRequestCurrencyCodeEnum } from './v1/types/CreateCart'
 export { priceAdjustmentTypeEnum } from './v1/types/CreateCart'
 export { priceAdjustmentModeEnum } from './v1/types/CreateCart'
+export { priceAdjustmentApplyOnEnum } from './v1/types/CreateCart'
 export { createCustomerMutationRequestDocumentTypeEnum } from './v1/types/CreateCustomer'
 export { createCustomerMutationRequestGenderEnum } from './v1/types/CreateCustomer'
 export { addressesTypeEnum } from './v1/types/CreateCustomer'
@@ -2874,8 +2875,7 @@ export { deleteStockLocation204Enum } from './v1/types/DeleteStockLocation'
 export { cartCurrencyCodeEnum } from './v1/types/GetCart'
 export { priceAdjustmentTypeEnum2 } from './v1/types/GetCart'
 export { priceAdjustmentModeEnum2 } from './v1/types/GetCart'
-export { priceAdjustmentApplyOnEnum } from './v1/types/GetCart'
-export { pricesCurrencyCodeEnum7 } from './v1/types/GetCart'
+export { priceAdjustmentApplyOnEnum2 } from './v1/types/GetCart'
 export { customerDocumentTypeEnum } from './v1/types/GetCustomer'
 export { customerGenderEnum } from './v1/types/GetCustomer'
 export { addressesTypeEnum2 } from './v1/types/GetCustomer'
@@ -2987,10 +2987,10 @@ export { updateCart204Enum } from './v1/types/UpdateCart'
 export { updateCartMutationRequestCurrencyCodeEnum } from './v1/types/UpdateCart'
 export { priceAdjustmentTypeEnum3 } from './v1/types/UpdateCart'
 export { priceAdjustmentModeEnum3 } from './v1/types/UpdateCart'
+export { priceAdjustmentApplyOnEnum3 } from './v1/types/UpdateCart'
 export { updateCustomer204Enum } from './v1/types/UpdateCustomer'
 export { updateCustomerMutationRequestDocumentTypeEnum } from './v1/types/UpdateCustomer'
 export { updateCustomerMutationRequestGenderEnum } from './v1/types/UpdateCustomer'
-export { addressesTypeEnum3 } from './v1/types/UpdateCustomer'
 export { updateInventoryLevel204Enum } from './v1/types/UpdateInventoryLevel'
 export { updatePaymentMethod204Enum } from './v1/types/UpdatePaymentMethod'
 export { updatePaymentTerm204Enum } from './v1/types/UpdatePaymentTerm'
@@ -3007,4 +3007,4 @@ export { pricesCurrencyCodeEnum5 } from './v1/types/UpdateProductVariant'
 export { updateStockLocation204Enum } from './v1/types/UpdateStockLocation'
 export { priceAdjustmentTypeEnum4 } from './v1/types/UpsertCartItem'
 export { priceAdjustmentModeEnum4 } from './v1/types/UpsertCartItem'
-export { priceAdjustmentApplyOnEnum2 } from './v1/types/UpsertCartItem'
+export { priceAdjustmentApplyOnEnum4 } from './v1/types/UpsertCartItem'

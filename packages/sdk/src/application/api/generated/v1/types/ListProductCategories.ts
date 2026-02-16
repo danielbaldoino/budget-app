@@ -5,16 +5,16 @@
 
 export const listProductCategoriesQueryParamsFilterByEnum = {
   all: 'all',
+  referenceId: 'referenceId',
   name: 'name',
-  description: 'description',
 } as const
 
 export type ListProductCategoriesQueryParamsFilterByEnumKey =
   (typeof listProductCategoriesQueryParamsFilterByEnum)[keyof typeof listProductCategoriesQueryParamsFilterByEnum]
 
 export const listProductCategoriesQueryParamsSortByEnum = {
+  referenceId: 'referenceId',
   name: 'name',
-  description: 'description',
   createdAt: 'createdAt',
 } as const
 
@@ -65,16 +65,16 @@ export type ListProductCategoriesQueryParams = {
 
 export const metaFilterByEnum2 = {
   all: 'all',
+  referenceId: 'referenceId',
   name: 'name',
-  description: 'description',
 } as const
 
 export type MetaFilterByEnum2Key =
   (typeof metaFilterByEnum2)[keyof typeof metaFilterByEnum2]
 
 export const metaSortByEnum2 = {
+  referenceId: 'referenceId',
   name: 'name',
-  description: 'description',
   createdAt: 'createdAt',
 } as const
 
