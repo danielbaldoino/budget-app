@@ -29,6 +29,13 @@
       "when": 1771000360093,
       "tag": "0003_wise_chameleon",
       "breakpoints": true
+    },
+    {
+      "idx": 4,
+      "version": "7",
+      "when": 1771268027980,
+      "tag": "0004_silky_zuras",
+      "breakpoints": true
     }
   ]
 }

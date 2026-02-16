@@ -10,7 +10,7 @@ const pool = new Pool({
 
 export const tenantDb = (tenantSchema: string) => {
   return drizzle(pool, {
-    logger: env.APP_ENV === 'development',
+    logger: env.LOGGER === 'debug',
     schema: createTenantSchema(tenantSchema),
   })
 }
