@@ -3,11 +3,8 @@
  * Do not edit manually.
  */
 
-import fetch from '../../../../client/fetch'
-import type {
-  RequestConfig,
-  ResponseErrorConfig,
-} from '../../../../client/fetch'
+import fetch from '../../../client/fetch'
+import type { RequestConfig, ResponseErrorConfig } from '../../../client/fetch'
 import type {
   GetProfileQueryResponse,
   GetProfile400,
