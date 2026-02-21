@@ -45,8 +45,6 @@ export function ProductImages() {
 
   const hasValidImage = Boolean(imageUrl) && !hasError
 
-  const handleImageError = () => setHasError(true)
-
   return (
     <View className="h-56 overflow-hidden rounded-lg bg-muted">
       {hasValidImage ? (
@@ -54,7 +52,7 @@ export function ProductImages() {
           source={{ uri: imageUrl }}
           className="size-full object-contain"
           resizeMode="contain"
-          onError={handleImageError}
+          onError={() => setHasError(true)}
         />
       ) : (
         <Icon

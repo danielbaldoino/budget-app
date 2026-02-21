@@ -50,15 +50,15 @@ export type PaymentTermRules = {
   ]
 }
 
-// export type TechnicalSpecification = {
-//   code: string
-//   label: string
-//   value: string | number | boolean
-// }
+export type TechnicalSpecification = {
+  code: string
+  label: string
+  value: string | number | boolean
+}
 
-// export type ProductVariantCustomField = {
-//   fieldId: string
-//   label: string
-//   value: string | number | boolean
-//   type: 'string' | 'number' | 'boolean'
-// }
+export type ProductVariantCustomField = {
+  fieldId: string
+  label: string
+  value: string | number | boolean
+  type: 'string' | 'number' | 'boolean'
+}

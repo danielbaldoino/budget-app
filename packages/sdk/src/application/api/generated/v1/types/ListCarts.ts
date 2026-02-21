@@ -93,6 +93,31 @@ export const cartsCurrencyCodeEnum = {
 export type CartsCurrencyCodeEnumKey =
   (typeof cartsCurrencyCodeEnum)[keyof typeof cartsCurrencyCodeEnum]
 
+export const priceAdjustmentTypeEnum = {
+  discount: 'discount',
+  surcharge: 'surcharge',
+} as const
+
+export type PriceAdjustmentTypeEnumKey =
+  (typeof priceAdjustmentTypeEnum)[keyof typeof priceAdjustmentTypeEnum]
+
+export const priceAdjustmentModeEnum = {
+  fixed: 'fixed',
+  percentage: 'percentage',
+} as const
+
+export type PriceAdjustmentModeEnumKey =
+  (typeof priceAdjustmentModeEnum)[keyof typeof priceAdjustmentModeEnum]
+
+export const priceAdjustmentApplyOnEnum = {
+  unit: 'unit',
+  'item-total': 'item-total',
+  'cart-total': 'cart-total',
+} as const
+
+export type PriceAdjustmentApplyOnEnumKey =
+  (typeof priceAdjustmentApplyOnEnum)[keyof typeof priceAdjustmentApplyOnEnum]
+
 /**
  * @description Success
  */
@@ -163,6 +188,27 @@ export type ListCarts200 = {
      */
     notes: string | null
     /**
+     * @type object
+     */
+    priceAdjustment?: {
+      /**
+       * @type string
+       */
+      type: PriceAdjustmentTypeEnumKey
+      /**
+       * @type string
+       */
+      mode: PriceAdjustmentModeEnumKey
+      /**
+       * @type number
+       */
+      value: number
+      /**
+       * @type string
+       */
+      applyOn: PriceAdjustmentApplyOnEnumKey
+    } | null
+    /**
      * @type array
      */
     cartItems: {
@@ -182,6 +228,27 @@ export type ListCarts200 = {
        * @type string
        */
       notes: string | null
+      /**
+       * @type object
+       */
+      priceAdjustment?: {
+        /**
+         * @type string
+         */
+        type: PriceAdjustmentTypeEnumKey
+        /**
+         * @type string
+         */
+        mode: PriceAdjustmentModeEnumKey
+        /**
+         * @type number
+         */
+        value: number
+        /**
+         * @type string
+         */
+        applyOn: PriceAdjustmentApplyOnEnumKey
+      } | null
       /**
        * @type string, date-time
        */

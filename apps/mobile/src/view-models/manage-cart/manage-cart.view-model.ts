@@ -1,5 +1,6 @@
+import { CURRENCY_CODES } from '@/constants/currency'
 import { VALIDATION } from '@/constants/validation'
-import { useActiveCartId } from '@/hooks/use-active-cart'
+import { useActiveCart } from '@/hooks/use-active-cart'
 import { sdk } from '@/lib/sdk'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { NotificationFeedbackType, notificationAsync } from 'expo-haptics'
@@ -12,30 +13,28 @@ const formSchema = z.object({
   name: z
     .string()
     .min(VALIDATION.MIN_INPUT_LENGTH, 'Name must be at least 1 character'),
-  notes: z.string().optional(),
+  currencyCode: z.enum(CURRENCY_CODES),
+  notes: z
+    .string()
+    .max(VALIDATION.MAX_INPUT_LENGTH, 'Notes must be at most 255 characters')
+    .optional(),
 })
 
 type CartFormData = z.infer<typeof formSchema>
 
 export function useManageCartViewModel() {
-  const { mode, cartId } = useLocalSearchParams<{
+  const { mode } = useLocalSearchParams<{
     mode: 'create' | 'edit'
-    cartId?: string
   }>()
 
   const isEditMode = mode === 'edit'
 
-  const { isLoading, data } = sdk.v1.$reactQuery.useGetCart(
-    { cartId: cartId ?? '' },
-    { query: { enabled: isEditMode && !!cartId } },
-  )
-
-  const cart = data?.cart
+  const { isLoading, cart, refetch, setActiveCartId } = useActiveCart({
+    enabled: isEditMode,
+  })
 
   const { mutateAsync: createCart } = sdk.v1.$reactQuery.useCreateCart()
   const { mutateAsync: updateCart } = sdk.v1.$reactQuery.useUpdateCart()
-
-  const [_, setActiveCartId] = useActiveCartId()
 
   const {
     control,
@@ -46,6 +45,7 @@ export function useManageCartViewModel() {
     resolver: zodResolver(formSchema),
     defaultValues: {
       name: '',
+      // currencyCode: CURRENCY_CODES[0],
       notes: '',
     },
   })
@@ -54,15 +54,16 @@ export function useManageCartViewModel() {
     if (isEditMode && cart) {
       reset({
         name: cart.name ?? '',
+        currencyCode: cart.currencyCode,
         notes: cart.notes ?? '',
       })
     }
   }, [isEditMode, cart, reset])
 
   const handleCreateCart = useCallback(
-    async (formData: CartFormData) => {
+    async (data: CartFormData) => {
       await createCart(
-        { data: { ...formData, currencyCode: 'BRL' } },
+        { data },
         {
           onSuccess: ({ cartId }) => {
             setActiveCartId(cartId)
@@ -79,16 +80,17 @@ export function useManageCartViewModel() {
   )
 
   const handleEditCart = useCallback(
-    async (formData: CartFormData) => {
-      if (!cartId) {
+    async (data: CartFormData) => {
+      if (!cart) {
         return
       }
 
       await updateCart(
-        { cartId, data: formData },
+        { cartId: cart.id, data },
         {
-          onSuccess: () => {
+          onSuccess: async () => {
             notificationAsync(NotificationFeedbackType.Success)
+            await refetch()
             router.back()
           },
           onError: () => {
@@ -97,7 +99,7 @@ export function useManageCartViewModel() {
         },
       )
     },
-    [cartId, updateCart],
+    [cart?.id, updateCart],
   )
 
   const onSubmit = useMemo(

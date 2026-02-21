@@ -149,30 +149,28 @@ export const createCartMutationRequestCurrencyCodeEnum = {
 export type CreateCartMutationRequestCurrencyCodeEnumKey =
   (typeof createCartMutationRequestCurrencyCodeEnum)[keyof typeof createCartMutationRequestCurrencyCodeEnum]
 
-export const priceAdjustmentTypeEnum = {
+export const priceAdjustmentTypeEnum2 = {
   discount: 'discount',
   surcharge: 'surcharge',
 } as const
 
-export type PriceAdjustmentTypeEnumKey =
-  (typeof priceAdjustmentTypeEnum)[keyof typeof priceAdjustmentTypeEnum]
+export type PriceAdjustmentTypeEnum2Key =
+  (typeof priceAdjustmentTypeEnum2)[keyof typeof priceAdjustmentTypeEnum2]
 
-export const priceAdjustmentModeEnum = {
+export const priceAdjustmentModeEnum2 = {
   fixed: 'fixed',
   percentage: 'percentage',
 } as const
 
-export type PriceAdjustmentModeEnumKey =
-  (typeof priceAdjustmentModeEnum)[keyof typeof priceAdjustmentModeEnum]
+export type PriceAdjustmentModeEnum2Key =
+  (typeof priceAdjustmentModeEnum2)[keyof typeof priceAdjustmentModeEnum2]
 
-export const priceAdjustmentApplyOnEnum = {
-  unit: 'unit',
-  'item-total': 'item-total',
+export const priceAdjustmentApplyOnEnum2 = {
   'cart-total': 'cart-total',
 } as const
 
-export type PriceAdjustmentApplyOnEnumKey =
-  (typeof priceAdjustmentApplyOnEnum)[keyof typeof priceAdjustmentApplyOnEnum]
+export type PriceAdjustmentApplyOnEnum2Key =
+  (typeof priceAdjustmentApplyOnEnum2)[keyof typeof priceAdjustmentApplyOnEnum2]
 
 export type CreateCartMutationRequest = {
   /**
@@ -194,20 +192,19 @@ export type CreateCartMutationRequest = {
     /**
      * @type string
      */
-    type: PriceAdjustmentTypeEnumKey
+    type: PriceAdjustmentTypeEnum2Key
     /**
      * @type string
      */
-    mode: PriceAdjustmentModeEnumKey
+    mode: PriceAdjustmentModeEnum2Key
     /**
      * @type number
      */
     value: number
     /**
-     * @default "unit"
-     * @type string | undefined
+     * @type string
      */
-    applyOn?: PriceAdjustmentApplyOnEnumKey
+    applyOn: PriceAdjustmentApplyOnEnum2Key
   } | null
   /**
    * @type string

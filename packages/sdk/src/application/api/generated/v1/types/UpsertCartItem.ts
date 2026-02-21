@@ -147,29 +147,29 @@ export type UpsertCartItem500 = {
   message: string
 }
 
-export const priceAdjustmentTypeEnum4 = {
+export const priceAdjustmentTypeEnum5 = {
   discount: 'discount',
   surcharge: 'surcharge',
 } as const
 
-export type PriceAdjustmentTypeEnum4Key =
-  (typeof priceAdjustmentTypeEnum4)[keyof typeof priceAdjustmentTypeEnum4]
+export type PriceAdjustmentTypeEnum5Key =
+  (typeof priceAdjustmentTypeEnum5)[keyof typeof priceAdjustmentTypeEnum5]
 
-export const priceAdjustmentModeEnum4 = {
+export const priceAdjustmentModeEnum5 = {
   fixed: 'fixed',
   percentage: 'percentage',
 } as const
 
-export type PriceAdjustmentModeEnum4Key =
-  (typeof priceAdjustmentModeEnum4)[keyof typeof priceAdjustmentModeEnum4]
+export type PriceAdjustmentModeEnum5Key =
+  (typeof priceAdjustmentModeEnum5)[keyof typeof priceAdjustmentModeEnum5]
 
-export const priceAdjustmentApplyOnEnum4 = {
+export const priceAdjustmentApplyOnEnum5 = {
   unit: 'unit',
   'item-total': 'item-total',
 } as const
 
-export type PriceAdjustmentApplyOnEnum4Key =
-  (typeof priceAdjustmentApplyOnEnum4)[keyof typeof priceAdjustmentApplyOnEnum4]
+export type PriceAdjustmentApplyOnEnum5Key =
+  (typeof priceAdjustmentApplyOnEnum5)[keyof typeof priceAdjustmentApplyOnEnum5]
 
 export type UpsertCartItemMutationRequest = {
   /**
@@ -195,19 +195,20 @@ export type UpsertCartItemMutationRequest = {
     /**
      * @type string
      */
-    type: PriceAdjustmentTypeEnum4Key
+    type: PriceAdjustmentTypeEnum5Key
     /**
      * @type string
      */
-    mode: PriceAdjustmentModeEnum4Key
+    mode: PriceAdjustmentModeEnum5Key
     /**
      * @type number
      */
     value: number
     /**
-     * @type string
+     * @default "unit"
+     * @type string | undefined
      */
-    applyOn: PriceAdjustmentApplyOnEnum4Key
+    applyOn?: PriceAdjustmentApplyOnEnum5Key
   } | null
 }
 

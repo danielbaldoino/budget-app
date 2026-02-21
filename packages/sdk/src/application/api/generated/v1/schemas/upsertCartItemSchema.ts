@@ -148,7 +148,7 @@ export const upsertCartItemMutationRequestSchema = z.object({
       type: z.enum(['discount', 'surcharge']),
       mode: z.enum(['fixed', 'percentage']),
       value: z.number(),
-      applyOn: z.enum(['unit', 'item-total']),
+      applyOn: z.optional(z.enum(['unit', 'item-total']).default('unit')),
     })
     .nullish(),
 }) as unknown as ToZod<UpsertCartItemMutationRequest>

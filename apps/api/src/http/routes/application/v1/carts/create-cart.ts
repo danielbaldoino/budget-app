@@ -1,7 +1,7 @@
 import { BadRequestError } from '@/http/errors/bad-request-error'
 import { withDefaultErrorResponses } from '@/http/errors/default-error-responses'
 import type { FastifyTypedInstance } from '@/types/fastify'
-import { currencyCodeEnum, priceAdjustmentSchema } from '@/utils/schemas'
+import { cartPriceAdjustmentSchema, currencyCodeEnum } from '@/utils/schemas'
 import { z } from 'zod'
 
 export async function createCart(app: FastifyTypedInstance) {
@@ -16,7 +16,7 @@ export async function createCart(app: FastifyTypedInstance) {
           name: z.string(),
           currencyCode: currencyCodeEnum,
           notes: z.string().nullish(),
-          priceAdjustment: priceAdjustmentSchema.nullish(),
+          priceAdjustment: cartPriceAdjustmentSchema.nullish(),
           customerId: z.string().nullish(),
           priceListId: z.string().nullish(),
         }),
@@ -36,7 +36,7 @@ export async function createCart(app: FastifyTypedInstance) {
         name,
         currencyCode,
         notes,
-        priceAdjustment,
+        // priceAdjustment,
         customerId,
         priceListId,
       } = request.body
@@ -79,14 +79,14 @@ export async function createCart(app: FastifyTypedInstance) {
             name,
             currencyCode,
             notes,
-            priceAdjustment: priceAdjustment
-              ? {
-                  type: priceAdjustment.type,
-                  mode: priceAdjustment.mode,
-                  value: priceAdjustment.value,
-                  applyOn: 'cart-total' as const,
-                }
-              : priceAdjustment,
+            // priceAdjustment: priceAdjustment
+            //   ? {
+            //       type: priceAdjustment.type,
+            //       mode: priceAdjustment.mode,
+            //       value: priceAdjustment.value,
+            //       applyOn: 'cart-total' as const,
+            //     }
+            //   : priceAdjustment,
           })
           .returning(),
       )

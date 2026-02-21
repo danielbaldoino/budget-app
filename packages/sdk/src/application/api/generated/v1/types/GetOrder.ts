@@ -19,6 +19,31 @@ export const orderCurrencyCodeEnum = {
 export type OrderCurrencyCodeEnumKey =
   (typeof orderCurrencyCodeEnum)[keyof typeof orderCurrencyCodeEnum]
 
+export const priceAdjustmentTypeEnum7 = {
+  discount: 'discount',
+  surcharge: 'surcharge',
+} as const
+
+export type PriceAdjustmentTypeEnum7Key =
+  (typeof priceAdjustmentTypeEnum7)[keyof typeof priceAdjustmentTypeEnum7]
+
+export const priceAdjustmentModeEnum7 = {
+  fixed: 'fixed',
+  percentage: 'percentage',
+} as const
+
+export type PriceAdjustmentModeEnum7Key =
+  (typeof priceAdjustmentModeEnum7)[keyof typeof priceAdjustmentModeEnum7]
+
+export const priceAdjustmentApplyOnEnum7 = {
+  unit: 'unit',
+  'item-total': 'item-total',
+  'cart-total': 'cart-total',
+} as const
+
+export type PriceAdjustmentApplyOnEnum7Key =
+  (typeof priceAdjustmentApplyOnEnum7)[keyof typeof priceAdjustmentApplyOnEnum7]
+
 /**
  * @description Success
  */
@@ -189,6 +214,27 @@ export type GetOrder200 = {
      */
     notes: string | null
     /**
+     * @type object
+     */
+    priceAdjustment?: {
+      /**
+       * @type string
+       */
+      type: PriceAdjustmentTypeEnum7Key
+      /**
+       * @type string
+       */
+      mode: PriceAdjustmentModeEnum7Key
+      /**
+       * @type number
+       */
+      value: number
+      /**
+       * @type string
+       */
+      applyOn: PriceAdjustmentApplyOnEnum7Key
+    } | null
+    /**
      * @type array
      */
     orderItems: {
@@ -216,6 +262,27 @@ export type GetOrder200 = {
        * @type string
        */
       notes: string | null
+      /**
+       * @type object
+       */
+      priceAdjustment?: {
+        /**
+         * @type string
+         */
+        type: PriceAdjustmentTypeEnum7Key
+        /**
+         * @type string
+         */
+        mode: PriceAdjustmentModeEnum7Key
+        /**
+         * @type number
+         */
+        value: number
+        /**
+         * @type string
+         */
+        applyOn: PriceAdjustmentApplyOnEnum7Key
+      } | null
       /**
        * @type object
        */

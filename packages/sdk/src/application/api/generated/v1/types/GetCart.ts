@@ -19,30 +19,39 @@ export const cartCurrencyCodeEnum = {
 export type CartCurrencyCodeEnumKey =
   (typeof cartCurrencyCodeEnum)[keyof typeof cartCurrencyCodeEnum]
 
-export const priceAdjustmentTypeEnum2 = {
+export const priceAdjustmentTypeEnum3 = {
   discount: 'discount',
   surcharge: 'surcharge',
 } as const
 
-export type PriceAdjustmentTypeEnum2Key =
-  (typeof priceAdjustmentTypeEnum2)[keyof typeof priceAdjustmentTypeEnum2]
+export type PriceAdjustmentTypeEnum3Key =
+  (typeof priceAdjustmentTypeEnum3)[keyof typeof priceAdjustmentTypeEnum3]
 
-export const priceAdjustmentModeEnum2 = {
+export const priceAdjustmentModeEnum3 = {
   fixed: 'fixed',
   percentage: 'percentage',
 } as const
 
-export type PriceAdjustmentModeEnum2Key =
-  (typeof priceAdjustmentModeEnum2)[keyof typeof priceAdjustmentModeEnum2]
+export type PriceAdjustmentModeEnum3Key =
+  (typeof priceAdjustmentModeEnum3)[keyof typeof priceAdjustmentModeEnum3]
 
-export const priceAdjustmentApplyOnEnum2 = {
+export const priceAdjustmentApplyOnEnum3 = {
   unit: 'unit',
   'item-total': 'item-total',
   'cart-total': 'cart-total',
 } as const
 
-export type PriceAdjustmentApplyOnEnum2Key =
-  (typeof priceAdjustmentApplyOnEnum2)[keyof typeof priceAdjustmentApplyOnEnum2]
+export type PriceAdjustmentApplyOnEnum3Key =
+  (typeof priceAdjustmentApplyOnEnum3)[keyof typeof priceAdjustmentApplyOnEnum3]
+
+export const pricesCurrencyCodeEnum7 = {
+  BRL: 'BRL',
+  USD: 'USD',
+  EUR: 'EUR',
+} as const
+
+export type PricesCurrencyCodeEnum7Key =
+  (typeof pricesCurrencyCodeEnum7)[keyof typeof pricesCurrencyCodeEnum7]
 
 /**
  * @description Success
@@ -71,24 +80,23 @@ export type GetCart200 = {
     /**
      * @type object
      */
-    priceAdjustment: {
+    priceAdjustment?: {
       /**
        * @type string
        */
-      type: PriceAdjustmentTypeEnum2Key
+      type: PriceAdjustmentTypeEnum3Key
       /**
        * @type string
        */
-      mode: PriceAdjustmentModeEnum2Key
+      mode: PriceAdjustmentModeEnum3Key
       /**
        * @type number
        */
       value: number
       /**
-       * @default "unit"
-       * @type string | undefined
+       * @type string
        */
-      applyOn?: PriceAdjustmentApplyOnEnum2Key
+      applyOn: PriceAdjustmentApplyOnEnum3Key
     } | null
     /**
      * @type object
@@ -180,24 +188,23 @@ export type GetCart200 = {
       /**
        * @type object
        */
-      priceAdjustment: {
+      priceAdjustment?: {
         /**
          * @type string
          */
-        type: PriceAdjustmentTypeEnum2Key
+        type: PriceAdjustmentTypeEnum3Key
         /**
          * @type string
          */
-        mode: PriceAdjustmentModeEnum2Key
+        mode: PriceAdjustmentModeEnum3Key
         /**
          * @type number
          */
         value: number
         /**
-         * @default "unit"
-         * @type string | undefined
+         * @type string
          */
-        applyOn?: PriceAdjustmentApplyOnEnum2Key
+        applyOn: PriceAdjustmentApplyOnEnum3Key
       } | null
       /**
        * @type object
@@ -207,6 +214,10 @@ export type GetCart200 = {
          * @type string
          */
         id: string
+        /**
+         * @type string
+         */
+        productId: string
         /**
          * @type string
          */
@@ -223,6 +234,53 @@ export type GetCart200 = {
          * @type string, uri
          */
         thumbnail: string | null
+        /**
+         * @type array
+         */
+        priceSets: {
+          /**
+           * @type string
+           */
+          id: string
+          /**
+           * @type string
+           */
+          priceListId: string | null
+          /**
+           * @type array
+           */
+          prices: {
+            /**
+             * @type string
+             */
+            id: string
+            /**
+             * @type string
+             */
+            currencyCode: PricesCurrencyCodeEnum7Key | null
+            /**
+             * @minLength 0
+             * @type number
+             */
+            amount: number | null
+            /**
+             * @type string, date-time
+             */
+            createdAt: string
+            /**
+             * @type string, date-time
+             */
+            updatedAt: string
+          }[]
+          /**
+           * @type string, date-time
+           */
+          createdAt: string
+          /**
+           * @type string, date-time
+           */
+          updatedAt: string
+        }[]
         /**
          * @type string, date-time
          */

@@ -13,7 +13,7 @@ export function ProductDescription() {
         </Text>
       )}
 
-      <Text variant="p" className="text-muted-foreground">
+      <Text variant="p" className="font-light text-muted-foreground">
         {product?.description || 'Sem descrição'}
       </Text>
     </View>

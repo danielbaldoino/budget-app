@@ -57,6 +57,14 @@ export const listOrders200Schema = z
         status: z.string(),
         currencyCode: z.enum(['BRL', 'USD', 'EUR']),
         notes: z.nullable(z.string()),
+        priceAdjustment: z
+          .object({
+            type: z.enum(['discount', 'surcharge']),
+            mode: z.enum(['fixed', 'percentage']),
+            value: z.number(),
+            applyOn: z.enum(['unit', 'item-total', 'cart-total']),
+          })
+          .nullish(),
         orderItems: z.array(
           z.object({
             id: z.string(),
@@ -66,6 +74,14 @@ export const listOrders200Schema = z
             unitPrice: z.number(),
             compareAtUnitPrice: z.nullable(z.number()),
             notes: z.nullable(z.string()),
+            priceAdjustment: z
+              .object({
+                type: z.enum(['discount', 'surcharge']),
+                mode: z.enum(['fixed', 'percentage']),
+                value: z.number(),
+                applyOn: z.enum(['unit', 'item-total', 'cart-total']),
+              })
+              .nullish(),
             createdAt: z.string().datetime(),
             updatedAt: z.string().datetime(),
           }),

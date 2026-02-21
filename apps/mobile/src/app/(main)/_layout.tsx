@@ -13,10 +13,7 @@ export default function PrivateLayout() {
       <Stack.Screen name="products/[productId]/index" />
       <Stack.Screen
         name="products/[productId]/select-variant"
-        options={{
-          presentation: Platform.select({ ios: 'formSheet', default: 'modal' }),
-          sheetAllowedDetents: [0.8, 1],
-        }}
+        options={{ presentation: 'modal' }}
       />
       <Stack.Screen
         name="products/[productId]/variants/[variantId]/pricing"

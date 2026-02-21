@@ -29,7 +29,7 @@ export function ProductNotes() {
               nativeID={`form-product-${name}`}
               htmlFor={`form-product-${name}`}
               className={cn(
-                !variant && 'cursor-not-allowed text-muted-foreground/50',
+                !variant && 'cursor-not-allowed text-muted-foreground',
                 invalid && 'border-destructive',
               )}
             >
@@ -44,12 +44,12 @@ export function ProductNotes() {
             onBlur={onBlur}
             value={value}
             className={cn(
-              'min-h-24 placeholder:text-muted-foreground/50',
+              'min-h-32 placeholder:font-light placeholder:text-muted-foreground',
               invalid && 'border-destructive',
             )}
             placeholder="Ex.: As maçanetas do produto devem ter acabamento dourado."
             autoCapitalize="sentences"
-            readOnly={!variant || isSubmitting}
+            readOnly={isSubmitting || !variant}
           />
 
           {invalid && (

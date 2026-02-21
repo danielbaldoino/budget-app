@@ -1,12 +1,15 @@
 import { VALIDATION } from '@/constants/validation'
 import { useActiveCart } from '@/hooks/use-active-cart'
 import { useCurrencyCode } from '@/hooks/use-currency-code'
+import { i18n } from '@/lib/languages'
 import { sdk } from '@/lib/sdk'
 import { zodResolver } from '@hookform/resolvers/zod'
+import { setStringAsync } from 'expo-clipboard'
 import { NotificationFeedbackType, notificationAsync } from 'expo-haptics'
 import { router, useLocalSearchParams } from 'expo-router'
 import { useEffect, useMemo, useState } from 'react'
 import { useForm } from 'react-hook-form'
+import { Alert } from 'react-native'
 import { z } from 'zod'
 import type { ProductVariantPrice } from './_lib/types'
 
@@ -14,6 +17,7 @@ type ProductRouteParams = {
   productId: string
   variantId?: string
   priceListId?: string
+  mode?: 'cart'
 }
 
 const productFormSchema = z.object({
@@ -26,25 +30,48 @@ const productFormSchema = z.object({
 type ProductFormValues = z.infer<typeof productFormSchema>
 
 export function useProductViewModel() {
-  const { productId, variantId, priceListId } =
+  const { productId, variantId, priceListId, mode } =
     useLocalSearchParams<ProductRouteParams>()
 
   if (!productId) {
     throw new Error('productId is required')
   }
 
-  const { cart, isLoading: isCartLoading } = useActiveCart()
+  const isCartMode = mode === 'cart'
+
+  const {
+    cart,
+    isLoading: isCartLoading,
+    refetch: refetchCart,
+  } = useActiveCart()
 
   const [quantity, setQuantity] = useState<number>(VALIDATION.DEFAULT_QUANTITY)
 
   const productQuery = sdk.v1.$reactQuery.useGetProduct({ productId })
+
+  const product = productQuery.data?.product
+
+  useEffect(() => {
+    if (!product?.variants?.length) {
+      return
+    }
+
+    if (variantId) {
+      return
+    }
+
+    if (product.variants.length === 1) {
+      router.setParams({
+        variantId: product.variants[0].id,
+      })
+    }
+  }, [product, variantId])
 
   const variantQuery = sdk.v1.$reactQuery.useGetProductVariant(
     { productId, productVariantId: variantId ?? '' },
     { query: { enabled: Boolean(variantId) } },
   )
 
-  const product = productQuery.data?.product
   const variant = variantQuery.data?.productVariant
 
   const isLoading =
@@ -130,8 +157,6 @@ export function useProductViewModel() {
 
   const hasStock = !variant?.manageInventory || (stockQuantity ?? 0) > 0
 
-  const canAddToCart = Boolean(cart && variant && selectedPrice && hasStock)
-
   const form = useForm<ProductFormValues>({
     resolver: zodResolver(productFormSchema),
     defaultValues: {
@@ -147,14 +172,68 @@ export function useProductViewModel() {
 
   const { mutateAsync: upsertCartItem } = sdk.v1.$reactQuery.useUpsertCartItem()
 
-  const resetState = () => {
-    setQuantity(VALIDATION.DEFAULT_QUANTITY)
-    router.setParams({ priceListId: undefined })
-    form.reset()
+  const handleSelectVariantPress = () =>
+    router.push({
+      pathname: 'products/[productId]/select-variant',
+      params: { productId: product?.id },
+    })
+
+  const handlePriceCardPress = () =>
+    router.push({
+      pathname: 'products/[productId]/variants/[variantId]/pricing',
+      params: { productId: product?.id, variantId: variant?.id },
+    })
+
+  const handleInventoryCardPress = () =>
+    router.push({
+      pathname: 'products/[productId]/variants/[variantId]/inventory',
+      params: { productId: product?.id, variantId: variant?.id },
+    })
+
+  const handlePriceSettingsPress = () =>
+    router.push({
+      pathname: 'price-adjustments',
+      params: {
+        productId: product?.id,
+        variantId: variant?.id,
+        basePrice: selectedPrice?.amount,
+      },
+    })
+
+  const handleCopySku = async () => {
+    if (!variant?.sku) {
+      return
+    }
+
+    await setStringAsync(variant.sku)
+    Alert.alert(variant.sku, i18n.t('common.messages.copiedToClipboard'))
   }
 
+  // const resetState = () => {
+  //   setQuantity(VALIDATION.DEFAULT_QUANTITY)
+  //   router.setParams({ priceListId: undefined })
+  //   form.reset()
+  // }
+
+  const canAddToCart =
+    // cart && variant &&
+    selectedPrice && hasStock
+
   const handleAddToCart = async ({ notes }: ProductFormValues) => {
-    if (!canAddToCart || !variant || !cart) {
+    if (!variant) {
+      router.push({
+        pathname: 'products/[productId]/select-variant',
+        params: { productId: product?.id },
+      })
+      return
+    }
+
+    if (!cart) {
+      router.push('/carts')
+      return
+    }
+
+    if (!canAddToCart) {
       return
     }
 
@@ -169,9 +248,14 @@ export function useProductViewModel() {
         },
       },
       {
-        onSuccess: () => {
+        onSuccess: async () => {
           notificationAsync(NotificationFeedbackType.Success)
-          resetState()
+
+          await refetchCart()
+
+          if (existingCartItem) {
+            router.back()
+          }
         },
         onError: () => {
           notificationAsync(NotificationFeedbackType.Error)
@@ -183,6 +267,8 @@ export function useProductViewModel() {
   return {
     isLoading,
     isError,
+    hasCartItem: Boolean(existingCartItem),
+    isCartMode,
     canAddToCart,
     product,
     variant,
@@ -192,6 +278,11 @@ export function useProductViewModel() {
     setQuantity,
     toLongPrice,
     handleAddToCart: form.handleSubmit(handleAddToCart),
+    handleSelectVariantPress,
+    handlePriceCardPress,
+    handleInventoryCardPress,
+    handlePriceSettingsPress,
+    handleCopySku,
     form: {
       control: form.control,
       formState: form.formState,

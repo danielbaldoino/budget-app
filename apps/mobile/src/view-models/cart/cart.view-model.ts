@@ -48,7 +48,7 @@ export function useCartViewModel() {
     handleGoToEditCart: () =>
       router.push({
         pathname: 'carts/manage',
-        params: { mode: 'edit', cartId: cart?.id },
+        params: { mode: 'edit' },
       }),
     handleGoToCheckout: () => router.push('checkout'),
     handleShare,

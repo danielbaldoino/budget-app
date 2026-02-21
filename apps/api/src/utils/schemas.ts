@@ -62,5 +62,17 @@ export const priceAdjustmentSchema = z.object({
   type: z.enum(['discount', 'surcharge']),
   mode: z.enum(['fixed', 'percentage']),
   value: z.number(),
-  applyOn: z.enum(['unit', 'item-total', 'cart-total']).default('unit'),
+  applyOn: z.enum(['unit', 'item-total', 'cart-total']),
+})
+
+const basePriceAdjustmentSchema = priceAdjustmentSchema.omit({
+  applyOn: true,
+})
+
+export const cartItemPriceAdjustmentSchema = basePriceAdjustmentSchema.extend({
+  applyOn: z.enum(['unit', 'item-total']).default('unit'),
+})
+
+export const cartPriceAdjustmentSchema = basePriceAdjustmentSchema.extend({
+  applyOn: z.literal('cart-total'),
 })

@@ -23,7 +23,7 @@ export async function getCart(app: FastifyTypedInstance) {
                 name: z.string(),
                 currencyCode: currencyCodeEnum,
                 notes: z.string().nullable(),
-                priceAdjustment: priceAdjustmentSchema.nullable(),
+                priceAdjustment: priceAdjustmentSchema.nullish(),
                 seller: z
                   .object({
                     id: z.string(),
@@ -55,13 +55,31 @@ export async function getCart(app: FastifyTypedInstance) {
                     id: z.string(),
                     quantity: z.number(),
                     notes: z.string().nullable(),
-                    priceAdjustment: priceAdjustmentSchema.nullable(),
+                    priceAdjustment: priceAdjustmentSchema.nullish(),
                     productVariant: z.object({
                       id: z.string(),
+                      productId: z.string(),
                       name: z.string(),
                       sku: z.string().nullable(),
                       manageInventory: z.boolean(),
                       thumbnail: z.string().url().nullable(),
+                      priceSets: z.array(
+                        z.object({
+                          id: z.string(),
+                          priceListId: z.string().nullable(),
+                          prices: z.array(
+                            z.object({
+                              id: z.string(),
+                              currencyCode: currencyCodeEnum.nullable(),
+                              amount: z.number().nonnegative().nullable(),
+                              createdAt: z.date(),
+                              updatedAt: z.date(),
+                            }),
+                          ),
+                          createdAt: z.date(),
+                          updatedAt: z.date(),
+                        }),
+                      ),
                       createdAt: z.date(),
                       updatedAt: z.date(),
                     }),
@@ -102,7 +120,32 @@ export async function getCart(app: FastifyTypedInstance) {
         })
       }
 
-      return { cart }
+      return {
+        cart: {
+          ...cart,
+          cartItems: cart.cartItems.map((item) => {
+            const priceListId = item.priceListId || cart.priceListId
+
+            const priceSet = item.productVariant.priceSets.find(
+              (priceSet) => priceSet.priceListId === priceListId,
+            )
+
+            const price = priceSet?.prices.find(
+              (price) => price.currencyCode === cart.currencyCode,
+            )
+
+            return {
+              ...item,
+              productVariant: {
+                ...item.productVariant,
+                priceSets: priceSet
+                  ? [{ ...priceSet, prices: price ? [price] : [] }]
+                  : [],
+              },
+            }
+          }),
+        },
+      }
     },
   )
 }

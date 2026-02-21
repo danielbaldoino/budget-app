@@ -24,6 +24,8 @@ import type {
   PaymentTermRules,
   PriceAdjustment,
   ProductStatus,
+  ProductVariantCustomField,
+  TechnicalSpecification,
 } from '../utils/types'
 
 export const metadata = {
@@ -100,6 +102,7 @@ export function createTenantSchema(schema?: string) {
 
   const addresses = tenantSchema.table('addresses', {
     ...id,
+
     type: text('type').$type<AddressType>(),
     street: text('street'),
     number: text('number'),
@@ -183,6 +186,7 @@ export function createTenantSchema(schema?: string) {
 
   const productImages = tenantSchema.table('product_images', {
     ...id,
+
     url: text('url').notNull(),
     rank: integer('rank').notNull().default(0),
 
@@ -209,6 +213,7 @@ export function createTenantSchema(schema?: string) {
 
   const productOptions = tenantSchema.table('product_options', {
     ...id,
+
     name: text('name').notNull(),
 
     productId: text('product_id')
@@ -231,6 +236,7 @@ export function createTenantSchema(schema?: string) {
 
   const productOptionValues = tenantSchema.table('product_option_values', {
     ...id,
+
     name: text('name').notNull(),
 
     optionId: text('option_id')
@@ -253,14 +259,15 @@ export function createTenantSchema(schema?: string) {
 
   const productVariants = tenantSchema.table('product_variants', {
     ...id,
+
     name: text('name').notNull(),
     sku: text('sku'),
     manageInventory: boolean('manage_inventory').notNull().default(false),
     thumbnail: text('thumbnail'),
-    // technicalSpecification: jsonb('technical_specification').$type<
-    //   TechnicalSpecification[]
-    // >(),
-    // customFields: jsonb('custom_fields').$type<ProductVariantCustomField[]>(),
+    technicalSpecification: jsonb('technical_specification').$type<
+      TechnicalSpecification[]
+    >(),
+    customFields: jsonb('custom_fields').$type<ProductVariantCustomField[]>(),
 
     productId: text('product_id')
       .notNull()
@@ -332,6 +339,7 @@ export function createTenantSchema(schema?: string) {
 
   const prices = tenantSchema.table('prices', {
     ...id,
+
     currencyCode: text('currency_code').$type<CurrencyCode>().notNull(),
     amount: bigint('amount', { mode: 'number' }).notNull(),
 
@@ -373,6 +381,7 @@ export function createTenantSchema(schema?: string) {
 
   const inventoryLevels = tenantSchema.table('inventory_levels', {
     ...id,
+
     stockedQuantity: integer('stocked_quantity').notNull().default(0),
 
     inventoryItemId: text('inventory_item_id')
@@ -398,6 +407,7 @@ export function createTenantSchema(schema?: string) {
 
   const stockLocations = tenantSchema.table('stock_locations', {
     ...id,
+
     name: text('name').notNull(),
 
     ...timestamps,
@@ -413,6 +423,7 @@ export function createTenantSchema(schema?: string) {
 
   const productDetails = tenantSchema.table('product_details', {
     ...id,
+
     brand: text('brand'),
     material: text('material'),
 
@@ -433,6 +444,7 @@ export function createTenantSchema(schema?: string) {
 
   const carts = tenantSchema.table('carts', {
     ...id,
+
     name: text('name').notNull().default('Unnamed'),
     currencyCode: text('currency_code').$type<CurrencyCode>().notNull(),
     notes: text('notes'),
@@ -469,6 +481,7 @@ export function createTenantSchema(schema?: string) {
 
   const cartItems = tenantSchema.table('cart_items', {
     ...id,
+
     quantity: integer('quantity').notNull().default(1),
     notes: text('notes'),
     priceAdjustment: jsonb('price_adjustment').$type<PriceAdjustment>(),
@@ -647,6 +660,7 @@ export function createTenantSchema(schema?: string) {
 
   const paymentMethods = tenantSchema.table('payment_methods', {
     ...id,
+
     code: text('code').notNull().unique(),
     name: text('name').notNull(),
     description: text('description'),
@@ -661,6 +675,7 @@ export function createTenantSchema(schema?: string) {
 
   const paymentTerms = tenantSchema.table('payment_terms', {
     ...id,
+
     code: text('code').notNull().unique(),
     name: text('name').notNull(),
     description: text('description'),
@@ -676,6 +691,7 @@ export function createTenantSchema(schema?: string) {
 
   const carriers = tenantSchema.table('carriers', {
     ...id,
+
     code: text('code').notNull().unique(),
     name: text('name').notNull(),
     description: text('description'),

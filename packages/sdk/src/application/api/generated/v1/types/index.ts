@@ -19,9 +19,9 @@ export type {
   CreateCart429,
   CreateCart500,
   CreateCartMutationRequestCurrencyCodeEnumKey,
-  PriceAdjustmentTypeEnumKey,
-  PriceAdjustmentModeEnumKey,
-  PriceAdjustmentApplyOnEnumKey,
+  PriceAdjustmentTypeEnum2Key,
+  PriceAdjustmentModeEnum2Key,
+  PriceAdjustmentApplyOnEnum2Key,
   CreateCartMutationRequest,
   CreateCartMutationResponse,
   CreateCartMutation,
@@ -343,9 +343,10 @@ export type {
 export type {
   GetCartPathParams,
   CartCurrencyCodeEnumKey,
-  PriceAdjustmentTypeEnum2Key,
-  PriceAdjustmentModeEnum2Key,
-  PriceAdjustmentApplyOnEnum2Key,
+  PriceAdjustmentTypeEnum3Key,
+  PriceAdjustmentModeEnum3Key,
+  PriceAdjustmentApplyOnEnum3Key,
+  PricesCurrencyCodeEnum7Key,
   GetCart200,
   GetCart400,
   GetCart401,
@@ -398,6 +399,9 @@ export type {
 export type {
   GetOrderPathParams,
   OrderCurrencyCodeEnumKey,
+  PriceAdjustmentTypeEnum7Key,
+  PriceAdjustmentModeEnum7Key,
+  PriceAdjustmentApplyOnEnum7Key,
   GetOrder200,
   GetOrder400,
   GetOrder401,
@@ -560,6 +564,9 @@ export type {
   MetaSortByEnum10Key,
   MetaOrderEnum10Key,
   CartsCurrencyCodeEnumKey,
+  PriceAdjustmentTypeEnumKey,
+  PriceAdjustmentModeEnumKey,
+  PriceAdjustmentApplyOnEnumKey,
   ListCarts200,
   ListCarts400,
   ListCarts401,
@@ -637,6 +644,9 @@ export type {
   MetaSortByEnum11Key,
   MetaOrderEnum11Key,
   OrdersCurrencyCodeEnumKey,
+  PriceAdjustmentTypeEnum6Key,
+  PriceAdjustmentModeEnum6Key,
+  PriceAdjustmentApplyOnEnum6Key,
   ListOrders200,
   ListOrders400,
   ListOrders401,
@@ -836,9 +846,9 @@ export type {
   UpdateCart429,
   UpdateCart500,
   UpdateCartMutationRequestCurrencyCodeEnumKey,
-  PriceAdjustmentTypeEnum3Key,
-  PriceAdjustmentModeEnum3Key,
-  PriceAdjustmentApplyOnEnum3Key,
+  PriceAdjustmentTypeEnum4Key,
+  PriceAdjustmentModeEnum4Key,
+  PriceAdjustmentApplyOnEnum4Key,
   UpdateCartMutationRequest,
   UpdateCartMutationResponse,
   UpdateCartMutation,
@@ -986,17 +996,17 @@ export type {
   UpsertCartItem404,
   UpsertCartItem429,
   UpsertCartItem500,
-  PriceAdjustmentTypeEnum4Key,
-  PriceAdjustmentModeEnum4Key,
-  PriceAdjustmentApplyOnEnum4Key,
+  PriceAdjustmentTypeEnum5Key,
+  PriceAdjustmentModeEnum5Key,
+  PriceAdjustmentApplyOnEnum5Key,
   UpsertCartItemMutationRequest,
   UpsertCartItemMutationResponse,
   UpsertCartItemMutation,
 } from './UpsertCartItem'
 export { createCartMutationRequestCurrencyCodeEnum } from './CreateCart'
-export { priceAdjustmentTypeEnum } from './CreateCart'
-export { priceAdjustmentModeEnum } from './CreateCart'
-export { priceAdjustmentApplyOnEnum } from './CreateCart'
+export { priceAdjustmentTypeEnum2 } from './CreateCart'
+export { priceAdjustmentModeEnum2 } from './CreateCart'
+export { priceAdjustmentApplyOnEnum2 } from './CreateCart'
 export { createCustomerMutationRequestDocumentTypeEnum } from './CreateCustomer'
 export { createCustomerMutationRequestGenderEnum } from './CreateCustomer'
 export { addressesTypeEnum } from './CreateCustomer'
@@ -1021,13 +1031,17 @@ export { deleteProductOption204Enum } from './DeleteProductOption'
 export { deleteProductVariant204Enum } from './DeleteProductVariant'
 export { deleteStockLocation204Enum } from './DeleteStockLocation'
 export { cartCurrencyCodeEnum } from './GetCart'
-export { priceAdjustmentTypeEnum2 } from './GetCart'
-export { priceAdjustmentModeEnum2 } from './GetCart'
-export { priceAdjustmentApplyOnEnum2 } from './GetCart'
+export { priceAdjustmentTypeEnum3 } from './GetCart'
+export { priceAdjustmentModeEnum3 } from './GetCart'
+export { priceAdjustmentApplyOnEnum3 } from './GetCart'
+export { pricesCurrencyCodeEnum7 } from './GetCart'
 export { customerDocumentTypeEnum } from './GetCustomer'
 export { customerGenderEnum } from './GetCustomer'
 export { addressesTypeEnum2 } from './GetCustomer'
 export { orderCurrencyCodeEnum } from './GetOrder'
+export { priceAdjustmentTypeEnum7 } from './GetOrder'
+export { priceAdjustmentModeEnum7 } from './GetOrder'
+export { priceAdjustmentApplyOnEnum7 } from './GetOrder'
 export { amountTypeEnum5 } from './GetPaymentTerm'
 export { amountApplyOnEnum3 } from './GetPaymentTerm'
 export { amountTypeEnum6 } from './GetPaymentTerm'
@@ -1048,6 +1062,9 @@ export { metaFilterByEnum10 } from './ListCarts'
 export { metaSortByEnum10 } from './ListCarts'
 export { metaOrderEnum10 } from './ListCarts'
 export { cartsCurrencyCodeEnum } from './ListCarts'
+export { priceAdjustmentTypeEnum } from './ListCarts'
+export { priceAdjustmentModeEnum } from './ListCarts'
+export { priceAdjustmentApplyOnEnum } from './ListCarts'
 export { listCustomersQueryParamsFilterByEnum } from './ListCustomers'
 export { listCustomersQueryParamsSortByEnum } from './ListCustomers'
 export { listCustomersQueryParamsOrderEnum } from './ListCustomers'
@@ -1076,6 +1093,9 @@ export { metaFilterByEnum11 } from './ListOrders'
 export { metaSortByEnum11 } from './ListOrders'
 export { metaOrderEnum11 } from './ListOrders'
 export { ordersCurrencyCodeEnum } from './ListOrders'
+export { priceAdjustmentTypeEnum6 } from './ListOrders'
+export { priceAdjustmentModeEnum6 } from './ListOrders'
+export { priceAdjustmentApplyOnEnum6 } from './ListOrders'
 export { listPaymentMethodsQueryParamsFilterByEnum } from './ListPaymentMethods'
 export { listPaymentMethodsQueryParamsSortByEnum } from './ListPaymentMethods'
 export { listPaymentMethodsQueryParamsOrderEnum } from './ListPaymentMethods'
@@ -1133,9 +1153,9 @@ export { metaOrderEnum9 } from './ListStockLocations'
 export { updateCarrier204Enum } from './UpdateCarrier'
 export { updateCart204Enum } from './UpdateCart'
 export { updateCartMutationRequestCurrencyCodeEnum } from './UpdateCart'
-export { priceAdjustmentTypeEnum3 } from './UpdateCart'
-export { priceAdjustmentModeEnum3 } from './UpdateCart'
-export { priceAdjustmentApplyOnEnum3 } from './UpdateCart'
+export { priceAdjustmentTypeEnum4 } from './UpdateCart'
+export { priceAdjustmentModeEnum4 } from './UpdateCart'
+export { priceAdjustmentApplyOnEnum4 } from './UpdateCart'
 export { updateCustomer204Enum } from './UpdateCustomer'
 export { updateCustomerMutationRequestDocumentTypeEnum } from './UpdateCustomer'
 export { updateCustomerMutationRequestGenderEnum } from './UpdateCustomer'
@@ -1153,6 +1173,6 @@ export { updateProductOption204Enum } from './UpdateProductOption'
 export { updateProductVariant204Enum } from './UpdateProductVariant'
 export { pricesCurrencyCodeEnum5 } from './UpdateProductVariant'
 export { updateStockLocation204Enum } from './UpdateStockLocation'
-export { priceAdjustmentTypeEnum4 } from './UpsertCartItem'
-export { priceAdjustmentModeEnum4 } from './UpsertCartItem'
-export { priceAdjustmentApplyOnEnum4 } from './UpsertCartItem'
+export { priceAdjustmentTypeEnum5 } from './UpsertCartItem'
+export { priceAdjustmentModeEnum5 } from './UpsertCartItem'
+export { priceAdjustmentApplyOnEnum5 } from './UpsertCartItem'

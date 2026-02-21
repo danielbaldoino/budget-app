@@ -33,16 +33,14 @@ export const getCart200Schema = z
       name: z.string(),
       currencyCode: z.enum(['BRL', 'USD', 'EUR']),
       notes: z.nullable(z.string()),
-      priceAdjustment: z.nullable(
-        z.object({
+      priceAdjustment: z
+        .object({
           type: z.enum(['discount', 'surcharge']),
           mode: z.enum(['fixed', 'percentage']),
           value: z.number(),
-          applyOn: z.optional(
-            z.enum(['unit', 'item-total', 'cart-total']).default('unit'),
-          ),
-        }),
-      ),
+          applyOn: z.enum(['unit', 'item-total', 'cart-total']),
+        })
+        .nullish(),
       seller: z.nullable(
         z.object({
           id: z.string(),
@@ -74,22 +72,38 @@ export const getCart200Schema = z
           id: z.string(),
           quantity: z.number(),
           notes: z.nullable(z.string()),
-          priceAdjustment: z.nullable(
-            z.object({
+          priceAdjustment: z
+            .object({
               type: z.enum(['discount', 'surcharge']),
               mode: z.enum(['fixed', 'percentage']),
               value: z.number(),
-              applyOn: z.optional(
-                z.enum(['unit', 'item-total', 'cart-total']).default('unit'),
-              ),
-            }),
-          ),
+              applyOn: z.enum(['unit', 'item-total', 'cart-total']),
+            })
+            .nullish(),
           productVariant: z.object({
             id: z.string(),
+            productId: z.string(),
             name: z.string(),
             sku: z.nullable(z.string()),
             manageInventory: z.boolean(),
             thumbnail: z.nullable(z.string().url()),
+            priceSets: z.array(
+              z.object({
+                id: z.string(),
+                priceListId: z.nullable(z.string()),
+                prices: z.array(
+                  z.object({
+                    id: z.string(),
+                    currencyCode: z.nullable(z.enum(['BRL', 'USD', 'EUR'])),
+                    amount: z.nullable(z.number().min(0)),
+                    createdAt: z.string().datetime(),
+                    updatedAt: z.string().datetime(),
+                  }),
+                ),
+                createdAt: z.string().datetime(),
+                updatedAt: z.string().datetime(),
+              }),
+            ),
             createdAt: z.string().datetime(),
             updatedAt: z.string().datetime(),
           }),

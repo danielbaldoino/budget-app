@@ -146,9 +146,7 @@ export const updateCartMutationRequestSchema = z.object({
       type: z.enum(['discount', 'surcharge']),
       mode: z.enum(['fixed', 'percentage']),
       value: z.number(),
-      applyOn: z.optional(
-        z.enum(['unit', 'item-total', 'cart-total']).default('unit'),
-      ),
+      applyOn: z.enum(['cart-total']),
     })
     .nullish(),
   customerId: z.string().nullish(),

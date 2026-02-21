@@ -97,6 +97,31 @@ export const ordersCurrencyCodeEnum = {
 export type OrdersCurrencyCodeEnumKey =
   (typeof ordersCurrencyCodeEnum)[keyof typeof ordersCurrencyCodeEnum]
 
+export const priceAdjustmentTypeEnum6 = {
+  discount: 'discount',
+  surcharge: 'surcharge',
+} as const
+
+export type PriceAdjustmentTypeEnum6Key =
+  (typeof priceAdjustmentTypeEnum6)[keyof typeof priceAdjustmentTypeEnum6]
+
+export const priceAdjustmentModeEnum6 = {
+  fixed: 'fixed',
+  percentage: 'percentage',
+} as const
+
+export type PriceAdjustmentModeEnum6Key =
+  (typeof priceAdjustmentModeEnum6)[keyof typeof priceAdjustmentModeEnum6]
+
+export const priceAdjustmentApplyOnEnum6 = {
+  unit: 'unit',
+  'item-total': 'item-total',
+  'cart-total': 'cart-total',
+} as const
+
+export type PriceAdjustmentApplyOnEnum6Key =
+  (typeof priceAdjustmentApplyOnEnum6)[keyof typeof priceAdjustmentApplyOnEnum6]
+
 /**
  * @description Success
  */
@@ -183,6 +208,27 @@ export type ListOrders200 = {
      */
     notes: string | null
     /**
+     * @type object
+     */
+    priceAdjustment?: {
+      /**
+       * @type string
+       */
+      type: PriceAdjustmentTypeEnum6Key
+      /**
+       * @type string
+       */
+      mode: PriceAdjustmentModeEnum6Key
+      /**
+       * @type number
+       */
+      value: number
+      /**
+       * @type string
+       */
+      applyOn: PriceAdjustmentApplyOnEnum6Key
+    } | null
+    /**
      * @type array
      */
     orderItems: {
@@ -214,6 +260,27 @@ export type ListOrders200 = {
        * @type string
        */
       notes: string | null
+      /**
+       * @type object
+       */
+      priceAdjustment?: {
+        /**
+         * @type string
+         */
+        type: PriceAdjustmentTypeEnum6Key
+        /**
+         * @type string
+         */
+        mode: PriceAdjustmentModeEnum6Key
+        /**
+         * @type number
+         */
+        value: number
+        /**
+         * @type string
+         */
+        applyOn: PriceAdjustmentApplyOnEnum6Key
+      } | null
       /**
        * @type string, date-time
        */

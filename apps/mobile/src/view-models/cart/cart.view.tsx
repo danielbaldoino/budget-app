@@ -1,5 +1,4 @@
 import { BottomBar } from '@/components/bottom-bar'
-import { Payload } from '@/components/debug/payload'
 import { Screen } from '@/components/layout/screen'
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
@@ -7,16 +6,16 @@ import { Icon } from '@/components/ui/icon'
 import { Separator } from '@/components/ui/separator'
 import { Text } from '@/components/ui/text'
 import { ICON_SIZES } from '@/constants/theme'
-import { useActiveCartId } from '@/hooks/use-active-cart'
+import { useCurrencyCode } from '@/hooks/use-currency-code'
 import { i18n } from '@/lib/languages'
 import { cn } from '@/lib/utils'
 import { isLiquidGlassAvailable } from 'expo-glass-effect'
 import {
   BanknoteIcon,
-  CheckIcon,
+  CheckCircle2Icon,
   ChevronDownIcon,
+  CirclePercentIcon,
   ListIcon,
-  OctagonXIcon,
   PlusIcon,
   SettingsIcon,
   ShareIcon,
@@ -30,6 +29,7 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native'
+import { CartItemCard } from './_componets/cart-item-card'
 import { useCartViewModel } from './cart.view-model'
 
 export function CartView() {
@@ -42,12 +42,11 @@ export function CartView() {
     handleGoToCheckout,
     handleShare,
   } = useCartViewModel()
+  const { toLongPrice } = useCurrencyCode({ currencyCode: cart?.currencyCode })
 
   const hasGlass = isLiquidGlassAvailable()
   const hasActiveCart = Boolean(cart)
-  const hasItems = (cart?.cartItems.length ?? 0) > 0
-
-  const setActiveCartId = useActiveCartId()[1]
+  const canCheckout = hasActiveCart && (cart?.cartItems.length ?? 0) > 0
 
   return (
     <Screen
@@ -127,17 +126,27 @@ export function CartView() {
         )}
         data={cart?.cartItems ?? []}
         keyExtractor={({ id }) => id}
-        renderItem={({ item }) => <Payload payload={{ item }} />}
+        renderItem={({ item }) => {
+          const totalPrice = toLongPrice(
+            (item.productVariant.priceSets[0]?.prices[0]?.amount || 0) *
+              item.quantity,
+          )
+
+          return <CartItemCard cartItem={item} totalPrice={totalPrice} />
+        }}
         ListHeaderComponent={() =>
           cart && (
             <View className="gap-y-4">
-              <View className="gap-y-2 rounded-lg border border-border bg-muted p-4">
+              <View className="gap-y-2 rounded-lg border border-muted-foreground/20 bg-muted p-4">
                 <Text variant="large" className="text-muted-foreground">
-                  Orç. do alvez 123
+                  {cart.name}
                 </Text>
 
                 <ScrollView horizontal contentContainerClassName="gap-x-2">
-                  <Badge variant="outline">
+                  <Badge
+                    variant="outline"
+                    className="border-muted-foreground/20"
+                  >
                     <Icon
                       className="text-foreground"
                       size={ICON_SIZES.smaller}
@@ -147,7 +156,10 @@ export function CartView() {
                   </Badge>
 
                   {cart.priceList && (
-                    <Badge variant="outline">
+                    <Badge
+                      variant="outline"
+                      className="border-muted-foreground/20"
+                    >
                       <Icon
                         className="text-foreground"
                         size={ICON_SIZES.smaller}
@@ -159,7 +171,7 @@ export function CartView() {
                 </ScrollView>
               </View>
 
-              <View className="flex-row items-center gap-x-4 rounded-lg border border-border bg-muted p-4">
+              <View className="flex-row items-center gap-x-4 rounded-lg border border-muted-foreground/20 bg-muted p-4">
                 <Icon className="text-muted-foreground" as={UserCircleIcon} />
 
                 <View className="flex-1">
@@ -198,23 +210,20 @@ export function CartView() {
       >
         <Button
           variant="outline"
-          className="min-h-12 flex-1"
+          className="min-h-14 flex-1"
           disabled={isLoading || !hasActiveCart}
-          onPress={() => {
-            setActiveCartId('')
-          }}
         >
-          <Icon className="text-foreground" as={OctagonXIcon} />
-          <Text>Cancelar</Text>
+          <Icon className="text-foreground" as={CirclePercentIcon} />
+          <Text>Ajustes</Text>
         </Button>
 
         <Button
-          className="min-h-12 flex-1"
+          className="min-h-14 flex-1"
           onPress={handleGoToCheckout}
-          disabled={!hasItems}
+          disabled={!canCheckout}
         >
-          <Icon className="text-primary-foreground" as={CheckIcon} />
-          <Text>{i18n.t('cart.actions.checkout')}</Text>
+          <Icon className="text-primary-foreground" as={CheckCircle2Icon} />
+          <Text>Checkout</Text>
         </Button>
       </BottomBar>
     </Screen>

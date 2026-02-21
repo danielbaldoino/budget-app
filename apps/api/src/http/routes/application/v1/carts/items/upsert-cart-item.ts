@@ -1,6 +1,7 @@
 import { BadRequestError } from '@/http/errors/bad-request-error'
 import { withDefaultErrorResponses } from '@/http/errors/default-error-responses'
 import type { FastifyTypedInstance } from '@/types/fastify'
+import { cartItemPriceAdjustmentSchema } from '@/utils/schemas'
 import { orm } from '@workspace/db'
 import { z } from 'zod'
 
@@ -17,14 +18,7 @@ export async function upsertCartItem(app: FastifyTypedInstance) {
           quantity: z.number().int().positive(),
           notes: z.string().nullish(),
           priceListId: z.string().nullish(),
-          priceAdjustment: z
-            .object({
-              type: z.enum(['discount', 'surcharge']),
-              mode: z.enum(['fixed', 'percentage']),
-              value: z.number(),
-              applyOn: z.enum(['unit', 'item-total']),
-            })
-            .nullish(),
+          priceAdjustment: cartItemPriceAdjustmentSchema.nullish(),
         }),
         params: z.object({
           cartId: z.string(),

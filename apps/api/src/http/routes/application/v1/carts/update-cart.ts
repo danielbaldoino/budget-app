@@ -1,7 +1,7 @@
 import { BadRequestError } from '@/http/errors/bad-request-error'
 import { withDefaultErrorResponses } from '@/http/errors/default-error-responses'
 import type { FastifyTypedInstance } from '@/types/fastify'
-import { currencyCodeEnum, priceAdjustmentSchema } from '@/utils/schemas'
+import { cartPriceAdjustmentSchema, currencyCodeEnum } from '@/utils/schemas'
 import { orm } from '@workspace/db'
 import { z } from 'zod'
 
@@ -17,7 +17,7 @@ export async function updateCart(app: FastifyTypedInstance) {
           name: z.string().optional(),
           currencyCode: currencyCodeEnum.optional(),
           notes: z.string().nullish(),
-          priceAdjustment: priceAdjustmentSchema.nullish(),
+          priceAdjustment: cartPriceAdjustmentSchema.nullish(),
           customerId: z.string().nullish(),
           priceListId: z.string().nullish(),
         }),

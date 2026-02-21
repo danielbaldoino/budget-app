@@ -1,7 +1,7 @@
 import { BadRequestError } from '@/http/errors/bad-request-error'
 import { withDefaultErrorResponses } from '@/http/errors/default-error-responses'
 import type { FastifyTypedInstance } from '@/types/fastify'
-import { currencyCodeEnum } from '@/utils/schemas'
+import { currencyCodeEnum, priceAdjustmentSchema } from '@/utils/schemas'
 import { z } from 'zod'
 
 export async function getOrder(app: FastifyTypedInstance) {
@@ -73,6 +73,7 @@ export async function getOrder(app: FastifyTypedInstance) {
                 status: z.string(),
                 currencyCode: currencyCodeEnum,
                 notes: z.string().nullable(),
+                priceAdjustment: priceAdjustmentSchema.nullish(),
                 orderItems: z.array(
                   z.object({
                     id: z.string(),
@@ -81,6 +82,7 @@ export async function getOrder(app: FastifyTypedInstance) {
                     unitPrice: z.number(),
                     compareAtUnitPrice: z.number().nullable(),
                     notes: z.string().nullable(),
+                    priceAdjustment: priceAdjustmentSchema.nullish(),
                     orderLineItem: z
                       .object({
                         id: z.string(),

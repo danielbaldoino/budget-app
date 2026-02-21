@@ -6,15 +6,20 @@ import { Text } from '@/components/ui/text'
 import { i18n } from '@/lib/languages'
 import { cn } from '@/lib/utils'
 import { isLiquidGlassAvailable } from 'expo-glass-effect'
-import { ShoppingCartIcon } from 'lucide-react-native'
+import { CheckIcon, ShoppingCartIcon } from 'lucide-react-native'
+import { ActivityIndicator } from 'react-native'
 import { useProductContext } from '../product.context'
 
 export function ProductActionsBar() {
   const {
+    hasCartItem,
     canAddToCart,
     variant,
     stockQuantity,
     quantity,
+    form: {
+      formState: { isSubmitting },
+    },
     setQuantity,
     handleAddToCart,
   } = useProductContext()
@@ -33,15 +38,27 @@ export function ProductActionsBar() {
         quantity={quantity}
         onQuantityChange={setQuantity}
         max={variant?.manageInventory ? (stockQuantity ?? 0) : undefined}
+        disabled={isSubmitting || !variant}
       />
 
       <Button
         className="min-h-16 flex-1"
         onPress={handleAddToCart}
-        disabled={!canAddToCart}
+        disabled={isSubmitting || !canAddToCart}
       >
-        <Icon className="text-primary-foreground" as={ShoppingCartIcon} />
-        <Text>{i18n.t('product.actions.addToCart')}</Text>
+        {isSubmitting ? (
+          <ActivityIndicator className="text-primary-foreground" />
+        ) : (
+          <Icon
+            className="text-primary-foreground"
+            as={hasCartItem ? CheckIcon : ShoppingCartIcon}
+          />
+        )}
+        <Text>
+          {hasCartItem
+            ? i18n.t('product.actions.updateCart')
+            : i18n.t('product.actions.addToCart')}
+        </Text>
       </Button>
     </BottomBar>
   )

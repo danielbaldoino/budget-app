@@ -1,31 +1,16 @@
 import { Icon } from '@/components/ui/icon'
 import { Text } from '@/components/ui/text'
-import { cn } from '@/lib/utils'
-import { router } from 'expo-router'
 import { ChevronRightIcon } from 'lucide-react-native'
 import { Pressable, View } from 'react-native'
 import { useProductContext } from '../product.context'
 
 export function ProductPriceSettingsCard() {
-  const { product, variant, price } = useProductContext()
-
-  const handlePress = () =>
-    router.push({
-      pathname: 'price-adjustments',
-      params: {
-        productId: product?.id,
-        variantId: variant?.id,
-        basePrice: price?.amount,
-      },
-    })
+  const { variant, handlePriceSettingsPress } = useProductContext()
 
   return (
     <Pressable
-      className={cn(
-        'flex-row items-center justify-between rounded-lg bg-muted p-4',
-        !variant && 'opacity-25',
-      )}
-      onPress={handlePress}
+      className="flex-row items-center justify-between rounded-lg bg-muted p-4 disabled:opacity-25"
+      onPress={handlePriceSettingsPress}
       disabled={!variant}
     >
       <View className="gap-y-1">

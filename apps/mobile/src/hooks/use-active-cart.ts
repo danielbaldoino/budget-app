@@ -5,18 +5,18 @@ import { useStorage } from './use-storage'
 
 const ACTIVE_CART_ID_STORAGE_KEY = 'active-cart-id'
 
-export function useActiveCartId() {
+function useActiveCartId() {
   return useStorage<string>(ACTIVE_CART_ID_STORAGE_KEY, '')
 }
 
-export function useActiveCart() {
+export function useActiveCart({ enabled = true }: { enabled?: boolean } = {}) {
   const [activeCartId, setActiveCartId] = useActiveCartId()
 
   const hasActiveCart = Boolean(activeCartId)
 
-  const { isLoading, data, error } = sdk.v1.$reactQuery.useGetCart(
+  const { isLoading, data, error, refetch } = sdk.v1.$reactQuery.useGetCart(
     { cartId: activeCartId },
-    { query: { enabled: hasActiveCart } },
+    { query: { enabled: enabled && hasActiveCart } },
   )
 
   const cart = data?.cart
@@ -34,5 +34,7 @@ export function useActiveCart() {
   return {
     isLoading,
     cart,
+    refetch,
+    setActiveCartId,
   }
 }

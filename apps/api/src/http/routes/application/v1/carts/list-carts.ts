@@ -1,6 +1,6 @@
 import { withDefaultErrorResponses } from '@/http/errors/default-error-responses'
 import type { FastifyTypedInstance } from '@/types/fastify'
-import { currencyCodeEnum } from '@/utils/schemas'
+import { currencyCodeEnum, priceAdjustmentSchema } from '@/utils/schemas'
 import { queries } from '@workspace/db/tenant/queries'
 import { z } from 'zod'
 
@@ -49,12 +49,14 @@ export async function listCarts(app: FastifyTypedInstance) {
                   name: z.string(),
                   currencyCode: currencyCodeEnum,
                   notes: z.string().nullable(),
+                  priceAdjustment: priceAdjustmentSchema.nullish(),
                   cartItems: z.array(
                     z.object({
                       id: z.string(),
                       productVariantId: z.string(),
                       quantity: z.number(),
                       notes: z.string().nullable(),
+                      priceAdjustment: priceAdjustmentSchema.nullish(),
                       createdAt: z.date(),
                       updatedAt: z.date(),
                     }),

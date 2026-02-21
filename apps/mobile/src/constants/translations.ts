@@ -124,6 +124,7 @@ export const translations: Dict = {
     product: {
       actions: {
         addToCart: 'Add to cart',
+        updateCart: 'Update cart',
       },
 
       states: {
@@ -302,6 +303,7 @@ export const translations: Dict = {
     product: {
       actions: {
         addToCart: 'Adicionar',
+        updateCart: 'Atualizar',
       },
 
       states: {
