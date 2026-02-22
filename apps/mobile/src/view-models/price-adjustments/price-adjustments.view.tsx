@@ -1,5 +1,6 @@
 import { Screen } from '@/components/layout/screen'
 import { Icon } from '@/components/ui/icon'
+import { i18n } from '@/lib/languages'
 import { router } from 'expo-router'
 import { XIcon } from 'lucide-react-native'
 import { Platform, TouchableOpacity } from 'react-native'
@@ -8,7 +9,7 @@ export function PriceAdjustmentsView() {
   return (
     <Screen
       options={{
-        title: 'Price Adjustments',
+        title: i18n.t('priceAdjustments.title'),
         headerLargeTitleEnabled: false,
         headerLeft: Platform.select({
           ios: ({ canGoBack }) => (

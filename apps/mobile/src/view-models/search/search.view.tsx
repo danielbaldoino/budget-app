@@ -63,7 +63,7 @@ export function SearchView() {
         renderItem={({ item }) => <ProductCard product={item} />}
         ListEmptyComponent={() => (
           <Text className="px-16 py-8 text-center text-muted-foreground">
-            {i18n.t('search.states.noResults')}
+            {i18n.t('common.states.noResults')}
           </Text>
         )}
       />

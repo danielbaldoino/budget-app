@@ -23,7 +23,10 @@ type ProductRouteParams = {
 const productFormSchema = z.object({
   notes: z
     .string()
-    .max(VALIDATION.MAX_INPUT_LENGTH, 'Notes must be at most 255 characters')
+    .max(
+      VALIDATION.MAX_INPUT_LENGTH,
+      i18n.t('common.validation.notesMaxLength'),
+    )
     .optional(),
 })
 

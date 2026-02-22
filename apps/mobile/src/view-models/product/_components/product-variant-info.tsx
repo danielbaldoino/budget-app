@@ -1,4 +1,5 @@
 import { Text } from '@/components/ui/text'
+import { i18n } from '@/lib/languages'
 import { Pressable, View } from 'react-native'
 import { useProductContext } from '../product.context'
 
@@ -17,7 +18,7 @@ export function ProductVariantInfo() {
 
       <Pressable onLongPress={handleCopySku}>
         <Text variant="muted" className="font-medium font-mono">
-          {variant.sku || 'Sem SKU'}
+          {variant.sku || i18n.t('common.fallback.noSku')}
         </Text>
       </Pressable>
     </View>

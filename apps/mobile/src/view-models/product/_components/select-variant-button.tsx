@@ -1,6 +1,7 @@
 import { Button } from '@/components/ui/button'
 import { Icon } from '@/components/ui/icon'
 import { Text } from '@/components/ui/text'
+import { i18n } from '@/lib/languages'
 import {
   BoxSelectIcon,
   ExternalLinkIcon,
@@ -23,9 +24,13 @@ export function SelectVariantButton() {
         as={variant ? TextSelectIcon : BoxSelectIcon}
       />
       {variant ? (
-        <Text className="ml-2">Ver todas as variantes</Text>
+        <Text className="ml-2">
+          {i18n.t('product.variants.actions.viewAll')}
+        </Text>
       ) : (
-        <Text className="ml-2">Selecionar uma variante</Text>
+        <Text className="ml-2">
+          {i18n.t('product.variants.actions.select')}
+        </Text>
       )}
       <Icon className="ml-auto text-muted-foreground" as={ExternalLinkIcon} />
     </Button>

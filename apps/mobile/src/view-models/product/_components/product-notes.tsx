@@ -1,6 +1,7 @@
 import { Label } from '@/components/ui/label'
 import { Text } from '@/components/ui/text'
 import { Textarea } from '@/components/ui/textarea'
+import { i18n } from '@/lib/languages'
 import { cn } from '@/lib/utils'
 import { Controller } from 'react-hook-form'
 import { View } from 'react-native'
@@ -33,7 +34,7 @@ export function ProductNotes() {
                 invalid && 'border-destructive',
               )}
             >
-              Notas
+              {i18n.t('common.labels.notes')}
             </Label>
           </View>
 
@@ -47,7 +48,7 @@ export function ProductNotes() {
               'min-h-32 placeholder:font-light placeholder:text-muted-foreground',
               invalid && 'border-destructive',
             )}
-            placeholder="Ex.: As maçanetas do produto devem ter acabamento dourado."
+            placeholder={i18n.t('product.form.notes.placeholder')}
             autoCapitalize="sentences"
             readOnly={isSubmitting || !variant}
           />

@@ -1,5 +1,6 @@
 import { Icon } from '@/components/ui/icon'
 import { Text } from '@/components/ui/text'
+import { i18n } from '@/lib/languages'
 import { ChevronRightIcon } from 'lucide-react-native'
 import { Pressable, View } from 'react-native'
 import { useProductContext } from '../product.context'
@@ -16,7 +17,8 @@ export function ProductPriceCard() {
     >
       <View className="gap-y-1">
         <Text variant="h3" className="text-right font-bold">
-          {toLongPrice(price?.amount) || 'Sem preço'}
+          {toLongPrice(price?.amount) ||
+            i18n.t('product.price.fallback.noPrice')}
         </Text>
 
         <View className="flex-row items-center justify-end gap-x-1">
@@ -24,7 +26,7 @@ export function ProductPriceCard() {
             variant="small"
             className="text-right font-light text-muted-foreground"
           >
-            Ver todos
+            {i18n.t('common.actions.viewAll')}
           </Text>
 
           <Icon className="text-muted-foreground" as={ChevronRightIcon} />

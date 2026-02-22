@@ -16,6 +16,7 @@ import { Separator } from '@/components/ui/separator'
 import { Text } from '@/components/ui/text'
 import { Textarea } from '@/components/ui/textarea'
 import { CURRENCY_CODES } from '@/constants/currency'
+import { i18n } from '@/lib/languages'
 import { cn } from '@/lib/utils'
 import { router } from 'expo-router'
 import { CheckIcon, SaveIcon, XIcon } from 'lucide-react-native'
@@ -36,7 +37,9 @@ export function ManageCartView() {
   return (
     <Screen
       options={{
-        title: isEditMode ? 'Edit Cart' : 'Create Cart',
+        title: isEditMode
+          ? i18n.t('manageCart.title.edit')
+          : i18n.t('manageCart.title.create'),
         headerLargeTitleEnabled: false,
         headerLeft: Platform.select({
           ios: ({ canGoBack }) => (
@@ -75,7 +78,7 @@ export function ManageCartView() {
                 ) : (
                   <Icon as={SaveIcon} />
                 )}
-                <Text>Salvar</Text>
+                <Text>{i18n.t('common.actions.save')}</Text>
               </Button>
             ),
           }),
@@ -97,7 +100,7 @@ export function ManageCartView() {
                   htmlFor={`form-cart-${name}`}
                   className={cn(invalid && 'text-destructive')}
                 >
-                  Nome
+                  {i18n.t('common.labels.name')}
                 </Label>
                 <Input
                   aria-labelledby={`form-cart-${name}`}
@@ -106,7 +109,7 @@ export function ManageCartView() {
                   onBlur={onBlur}
                   value={value}
                   className={cn('shadow-none', invalid && 'border-destructive')}
-                  placeholder="Ex: Orç. do cliente X"
+                  placeholder={i18n.t('manageCart.fields.name.placeholder')}
                   autoCapitalize="characters"
                   readOnly={isSubmitting || isLoading}
                 />
@@ -131,7 +134,7 @@ export function ManageCartView() {
                   nativeID={`form-cart-${name}`}
                   className={cn(invalid && 'text-destructive')}
                 >
-                  Moeda
+                  {i18n.t('common.labels.currency')}
                 </Label>
                 <Select
                   onValueChange={(e) => onChange(e?.value)}
@@ -143,12 +146,16 @@ export function ManageCartView() {
                   >
                     <SelectValue
                       className="placeholder:text-muted-foreground"
-                      placeholder="Selecione a moeda"
+                      placeholder={i18n.t(
+                        'manageCart.fields.currency.placeholder',
+                      )}
                     />
                   </SelectTrigger>
                   <SelectContent>
                     <SelectGroup>
-                      <SelectLabel>Moeda</SelectLabel>
+                      <SelectLabel>
+                        {i18n.t('common.labels.currency')}
+                      </SelectLabel>
                       {CURRENCY_CODES.map((currency) => (
                         <SelectItem
                           key={currency}
@@ -187,7 +194,7 @@ export function ManageCartView() {
                     htmlFor={`form-cart-${name}`}
                     className={cn(invalid && 'border-destructive')}
                   >
-                    Notas
+                    {i18n.t('common.labels.notes')}
                   </Label>
                 </View>
 
@@ -198,7 +205,7 @@ export function ManageCartView() {
                   onBlur={onBlur}
                   value={value}
                   className={cn('min-h-32 ', invalid && 'border-destructive')}
-                  placeholder="Ex.: O cliente pediu para incluir o prazo de entrega na proposta."
+                  placeholder={i18n.t('manageCart.fields.notes.placeholder')}
                   autoCapitalize="sentences"
                   readOnly={isSubmitting || isLoading}
                 />

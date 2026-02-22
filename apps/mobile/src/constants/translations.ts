@@ -12,16 +12,38 @@ export const translations: Dict = {
         open: 'Open',
         share: 'Share',
         copy: 'Copy',
+        save: 'Save',
+        manage: 'Manage',
+        viewAll: 'View all',
+        select: 'Select',
+        adjustments: 'Adjustments',
+      },
+
+      labels: {
+        name: 'Name',
+        currency: 'Currency',
+        notes: 'Notes',
+        subtotal: 'Subtotal',
+        quantity: 'Quantity',
+        totalPrice: 'Total price',
+        items: 'Items: %{count}',
+        createdAt: 'Created on %{date}',
       },
 
       states: {
         loading: 'Loading...',
         noContent: 'No content available.',
+        noResults: 'No results found.',
       },
 
       errors: {
         generic: 'An error occurred.',
         permissionRequired: 'Permission is required to continue.',
+      },
+
+      validation: {
+        nameRequired: 'Name is required.',
+        notesMaxLength: 'Notes must be at most 255 characters.',
       },
 
       permissions: {
@@ -31,6 +53,10 @@ export const translations: Dict = {
 
       fallback: {
         noName: 'No name',
+        notAvailable: 'N/A',
+        noDescription: 'No description',
+        noCategory: 'No category',
+        noSku: 'No SKU',
       },
     },
 
@@ -108,9 +134,7 @@ export const translations: Dict = {
         qrCode: 'QR Code',
       },
 
-      states: {
-        noResults: 'No results found.',
-      },
+      states: {},
 
       errors: {
         loading: 'Error loading search results. Please try again later.',
@@ -121,7 +145,66 @@ export const translations: Dict = {
       title: 'Scanner',
     },
 
+    pricing: {
+      title: 'Price list',
+
+      fallback: {
+        defaultPriceList: 'Default',
+      },
+
+      states: {
+        noPrices: 'No prices defined.',
+      },
+
+      actions: {
+        selectHint: 'Tap to select',
+      },
+    },
+
+    priceAdjustments: {
+      title: 'Price adjustments',
+    },
+
     product: {
+      labels: {
+        category: 'Category',
+      },
+
+      inventory: {
+        title: 'Inventory',
+        actions: {
+          viewInventory: 'View inventory',
+        },
+        status: {
+          enabled: 'Enabled',
+          disabled: 'Disabled',
+          outOfStock: 'Out of stock',
+        },
+      },
+
+      price: {
+        fallback: {
+          noPrice: 'No price',
+        },
+      },
+
+      priceSettings: {
+        title: 'Price adjustments',
+      },
+
+      variants: {
+        actions: {
+          viewAll: 'View all variants',
+          select: 'Select a variant',
+        },
+      },
+
+      form: {
+        notes: {
+          placeholder: 'E.g.: The product handles should have a golden finish.',
+        },
+      },
+
       actions: {
         addToCart: 'Add to cart',
         updateCart: 'Update cart',
@@ -140,7 +223,6 @@ export const translations: Dict = {
       title: 'Cart',
 
       actions: {
-        viewAllCarts: 'View all',
         newCart: 'New cart',
         shareCart: 'Share cart',
         checkout: 'Checkout',
@@ -149,6 +231,10 @@ export const translations: Dict = {
       states: {
         noCartFound: 'No cart selected.',
         noItems: 'No items in the cart.',
+      },
+
+      fallback: {
+        noContact: 'No contact',
       },
     },
 
@@ -164,9 +250,59 @@ export const translations: Dict = {
       title: 'Orders',
     },
 
+    inventory: {
+      title: 'Inventory',
+
+      labels: {
+        stock: 'Stock: %{count}',
+      },
+
+      fallback: {
+        noLocation: 'Location not informed',
+      },
+    },
+
+    manageCart: {
+      title: {
+        create: 'Create cart',
+        edit: 'Edit cart',
+      },
+
+      fields: {
+        name: {
+          placeholder: 'E.g.: Customer X quote',
+        },
+        currency: {
+          placeholder: 'Select currency',
+        },
+        notes: {
+          placeholder:
+            'E.g.: Customer asked to include delivery time in the proposal.',
+        },
+      },
+    },
+
+    selectCustomer: {
+      title: 'Select customer',
+      search: {
+        placeholder: 'Search customers',
+      },
+    },
+
+    selectVariant: {
+      title: 'Select variant',
+      search: {
+        placeholder: 'Search variants',
+      },
+    },
+
     profile: {
       title: 'Profile',
       description: 'Manage your account settings and preferences.',
+
+      sections: {
+        appearance: 'Appearance',
+      },
 
       actions: {
         signOut: 'Sign out',
@@ -190,16 +326,38 @@ export const translations: Dict = {
         open: 'Abrir',
         share: 'Compartilhar',
         copy: 'Copiar',
+        save: 'Salvar',
+        manage: 'Gerenciar',
+        viewAll: 'Ver todos',
+        select: 'Selecionar',
+        adjustments: 'Ajustes',
+      },
+
+      labels: {
+        name: 'Nome',
+        currency: 'Moeda',
+        notes: 'Notas',
+        subtotal: 'Subtotal',
+        quantity: 'Quantidade',
+        totalPrice: 'Preço total',
+        items: 'Itens: %{count}',
+        createdAt: 'Criado em %{date}',
       },
 
       states: {
         loading: 'Carregando...',
         noContent: 'Nenhum conteúdo disponível.',
+        noResults: 'Nenhum resultado encontrado.',
       },
 
       errors: {
         generic: 'Ocorreu um erro.',
         permissionRequired: 'Permissão é necessária para continuar.',
+      },
+
+      validation: {
+        nameRequired: 'Nome é obrigatório.',
+        notesMaxLength: 'Notas devem ter no máximo 255 caracteres.',
       },
 
       permissions: {
@@ -209,6 +367,10 @@ export const translations: Dict = {
 
       fallback: {
         noName: 'Sem nome',
+        notAvailable: 'N/A',
+        noDescription: 'Sem descrição',
+        noCategory: 'Sem categoria',
+        noSku: 'Sem SKU',
       },
     },
 
@@ -286,9 +448,7 @@ export const translations: Dict = {
         qrCode: 'Código QR',
       },
 
-      states: {
-        noResults: 'Nenhum resultado encontrado.',
-      },
+      states: {},
 
       errors: {
         loading:
@@ -300,7 +460,67 @@ export const translations: Dict = {
       title: 'Scanner',
     },
 
+    pricing: {
+      title: 'Lista de preços',
+
+      fallback: {
+        defaultPriceList: 'Padrão',
+      },
+
+      states: {
+        noPrices: 'Sem preços definidos.',
+      },
+
+      actions: {
+        selectHint: 'Clique para selecionar',
+      },
+    },
+
+    priceAdjustments: {
+      title: 'Ajustes de preço',
+    },
+
     product: {
+      labels: {
+        category: 'Categoria',
+      },
+
+      inventory: {
+        title: 'Estoque',
+        actions: {
+          viewInventory: 'Ver inventário',
+        },
+        status: {
+          enabled: 'Habilitado',
+          disabled: 'Desabilitado',
+          outOfStock: 'Sem estoque',
+        },
+      },
+
+      price: {
+        fallback: {
+          noPrice: 'Sem preço',
+        },
+      },
+
+      priceSettings: {
+        title: 'Ajustes de preço',
+      },
+
+      variants: {
+        actions: {
+          viewAll: 'Ver todas as variantes',
+          select: 'Selecionar uma variante',
+        },
+      },
+
+      form: {
+        notes: {
+          placeholder:
+            'Ex.: As maçanetas do produto devem ter acabamento dourado.',
+        },
+      },
+
       actions: {
         addToCart: 'Adicionar',
         updateCart: 'Atualizar',
@@ -320,7 +540,6 @@ export const translations: Dict = {
       title: 'Carrinho',
 
       actions: {
-        viewAllCarts: 'Ver todos',
         newCart: 'Novo carrinho',
         shareCart: 'Compartilhar carrinho',
         checkout: 'Finalizar compra',
@@ -329,6 +548,10 @@ export const translations: Dict = {
       states: {
         noCartFound: 'Nenhum carrinho selecionado.',
         noItems: 'Nenhum item no carrinho.',
+      },
+
+      fallback: {
+        noContact: 'Sem contato',
       },
     },
 
@@ -344,9 +567,59 @@ export const translations: Dict = {
       title: 'Pedidos',
     },
 
+    inventory: {
+      title: 'Inventário',
+
+      labels: {
+        stock: 'Estoque: %{count}',
+      },
+
+      fallback: {
+        noLocation: 'Localização não informada',
+      },
+    },
+
+    manageCart: {
+      title: {
+        create: 'Criar carrinho',
+        edit: 'Editar carrinho',
+      },
+
+      fields: {
+        name: {
+          placeholder: 'Ex: Orç. do cliente X',
+        },
+        currency: {
+          placeholder: 'Selecione a moeda',
+        },
+        notes: {
+          placeholder:
+            'Ex.: O cliente pediu para incluir o prazo de entrega na proposta.',
+        },
+      },
+    },
+
+    selectCustomer: {
+      title: 'Selecionar cliente',
+      search: {
+        placeholder: 'Pesquisar clientes',
+      },
+    },
+
+    selectVariant: {
+      title: 'Selecionar variante',
+      search: {
+        placeholder: 'Pesquisar variantes',
+      },
+    },
+
     profile: {
       title: 'Perfil',
       description: 'Gerencie as configurações e preferências da sua conta.',
+
+      sections: {
+        appearance: 'Aparência',
+      },
 
       actions: {
         signOut: 'Sair',

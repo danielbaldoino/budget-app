@@ -57,7 +57,7 @@ export function CartItemCard({
               size={ICON_SIZES.smaller}
             />
             <Text variant="small" className="font-light text-muted-foreground">
-              Quantity:
+              {i18n.t('common.labels.quantity')}:
             </Text>
             <Text variant="small" className="font-light">
               {cartItem.quantity}
@@ -71,7 +71,7 @@ export function CartItemCard({
               size={ICON_SIZES.smaller}
             />
             <Text variant="small" className="font-light text-muted-foreground">
-              Total Price:
+              {i18n.t('common.labels.totalPrice')}:
             </Text>
             <Text variant="small" className="font-light">
               {totalPrice}

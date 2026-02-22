@@ -23,7 +23,7 @@ export function SelectVariantView() {
   return (
     <Screen
       options={{
-        title: 'Selecionar Variante',
+        title: i18n.t('selectVariant.title'),
         headerLargeTitleEnabled: false,
         headerLeft: Platform.select({
           ios: ({ canGoBack }) => (
@@ -42,7 +42,7 @@ export function SelectVariantView() {
             onChangeText: ({
               nativeEvent: { text },
             }: NativeSyntheticEvent<{ text: string }>) => onSearchChange(text),
-            placeholder: 'Pesquisar variantes',
+            placeholder: i18n.t('selectVariant.search.placeholder'),
             textColor: colors.text,
             tintColor: colors.primary, // iOS only
             // Android only
@@ -68,7 +68,7 @@ export function SelectVariantView() {
         )}
         ListEmptyComponent={() => (
           <Text className="px-16 py-8 text-center text-muted-foreground">
-            {i18n.t('search.states.noResults')}
+            {i18n.t('common.states.noResults')}
           </Text>
         )}
       />

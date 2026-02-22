@@ -61,7 +61,7 @@ export function ProfileView() {
         </Card>
 
         <Text variant="h4" className="text-muted-foreground">
-          Appearance
+          {i18n.t('profile.sections.appearance')}
         </Text>
 
         <Button

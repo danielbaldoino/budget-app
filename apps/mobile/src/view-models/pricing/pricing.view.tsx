@@ -23,7 +23,7 @@ export function PricingView() {
   return (
     <Screen
       options={{
-        title: 'Lista de Preços',
+        title: i18n.t('pricing.title'),
         headerLargeTitleEnabled: false,
         headerLeft: Platform.select({
           ios: ({ canGoBack }) => (
@@ -54,7 +54,8 @@ export function PricingView() {
             <Card className="rounded-lg">
               <CardHeader>
                 <CardTitle variant="large">
-                  {item.priceListId || 'Padrão'}
+                  {item.priceListId ||
+                    i18n.t('pricing.fallback.defaultPriceList')}
                 </CardTitle>
               </CardHeader>
 
@@ -71,7 +72,7 @@ export function PricingView() {
                   ))
                 ) : (
                   <Text variant="small" className="text-muted-foreground">
-                    Sem preços definidos
+                    {i18n.t('pricing.states.noPrices')}
                   </Text>
                 )}
               </CardContent>
@@ -81,7 +82,7 @@ export function PricingView() {
                   variant="small"
                   className="font-light text-muted-foreground"
                 >
-                  Clique para selecionar
+                  {i18n.t('pricing.actions.selectHint')}
                 </Text>
                 <Icon
                   className="ml-auto text-muted-foreground"
@@ -93,7 +94,7 @@ export function PricingView() {
         )}
         ListEmptyComponent={() => (
           <Text className="px-16 py-8 text-center text-muted-foreground">
-            {i18n.t('search.states.noResults')}
+            {i18n.t('common.states.noResults')}
           </Text>
         )}
       />

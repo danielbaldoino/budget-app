@@ -9,6 +9,7 @@ import {
 import { Icon } from '@/components/ui/icon'
 import { Text } from '@/components/ui/text'
 import { ICON_SIZES } from '@/constants/theme'
+import { i18n } from '@/lib/languages'
 import { BanknoteIcon, BoxIcon } from 'lucide-react-native'
 import { View } from 'react-native'
 import type { Cart } from '../_lib/types'
@@ -16,6 +17,11 @@ import type { Cart } from '../_lib/types'
 export function CartCard({
   cart: { name, currencyCode, cartItems, createdAt },
 }: { cart: Cart }) {
+  const itemCount = cartItems.reduce((acc, item) => acc + item.quantity, 0)
+  const createdAtLabel = i18n.t('common.labels.createdAt', {
+    date: new Date(createdAt).toLocaleDateString(),
+  })
+
   return (
     <Card className="rounded-lg">
       <CardHeader className="text-muted-foreground">
@@ -40,7 +46,7 @@ export function CartCard({
               as={BoxIcon}
             />
             <Text className="font-light">
-              Items: {cartItems.reduce((acc, item) => acc + item.quantity, 0)}
+              {i18n.t('common.labels.items', { count: itemCount })}
             </Text>
           </Badge>
         </View>
@@ -48,7 +54,7 @@ export function CartCard({
 
       <CardFooter className="justify-end">
         <Text className="text-right font-light text-muted-foreground text-xs">
-          Criado em {new Date(createdAt).toLocaleDateString()}
+          {createdAtLabel}
         </Text>
       </CardFooter>
     </Card>

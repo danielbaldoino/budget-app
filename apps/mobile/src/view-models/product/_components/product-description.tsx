@@ -1,4 +1,5 @@
 import { Text } from '@/components/ui/text'
+import { i18n } from '@/lib/languages'
 import { View } from 'react-native'
 import { useProductContext } from '../product.context'
 
@@ -14,7 +15,7 @@ export function ProductDescription() {
       )}
 
       <Text variant="p" className="font-light text-muted-foreground">
-        {product?.description || 'Sem descrição'}
+        {product?.description || i18n.t('common.fallback.noDescription')}
       </Text>
     </View>
   )

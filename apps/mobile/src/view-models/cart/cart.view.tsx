@@ -62,7 +62,7 @@ export function CartView() {
               onPress={handleGoToCarts}
             >
               <Icon as={ListIcon} />
-              <Text>{i18n.t('cart.actions.viewAllCarts')}</Text>
+              <Text>{i18n.t('common.actions.viewAll')}</Text>
             </TouchableOpacity>
           ),
         }),
@@ -106,7 +106,7 @@ export function CartView() {
             <ScrollView horizontal contentContainerClassName="gap-x-4">
               <Button variant="outline" onPress={handleGoToCarts}>
                 <Icon as={ListIcon} />
-                <Text>{i18n.t('cart.actions.viewAllCarts')}</Text>
+                <Text>{i18n.t('common.actions.viewAll')}</Text>
               </Button>
 
               <Button
@@ -184,7 +184,7 @@ export function CartView() {
                   )}
 
                   <Text variant="p" className="text-muted-foreground text-xs">
-                    {cart.customer ? '123.456.789-07' : 'Sem contato'}
+                    {cart.customer?.id ?? i18n.t('cart.fallback.noContact')}
                   </Text>
                 </View>
 
@@ -210,9 +210,10 @@ export function CartView() {
         className={cn('gap-y-4 p-4', !hasGlass && 'rounded-t-lg bg-primary/5')}
       >
         <View className="w-full flex-row items-center justify-between gap-x-4">
-          <Text className="font-semibold">Subtotal:</Text>
+          <Text className="font-semibold">
+            {i18n.t('common.labels.subtotal')}:
+          </Text>
           <Text className="text-right font-semibold text-primary">
-            R${' '}
             {toLongPrice(
               cart?.cartItems.reduce((acc, item) => {
                 const itemTotal =
@@ -220,7 +221,7 @@ export function CartView() {
                   item.quantity
                 return acc + itemTotal
               }, 0),
-            )}
+            ) ?? i18n.t('common.fallback.notAvailable')}
           </Text>
         </View>
 
@@ -234,7 +235,7 @@ export function CartView() {
             disabled={isLoading || !hasActiveCart}
           >
             <Icon as={CirclePercentIcon} />
-            <Text>Ajustes</Text>
+            <Text>{i18n.t('common.actions.adjustments')}</Text>
           </Button>
 
           <Button
@@ -243,7 +244,7 @@ export function CartView() {
             disabled={!canCheckout}
           >
             <Icon className="text-primary-foreground" as={CheckCircle2Icon} />
-            <Text>Checkout</Text>
+            <Text>{i18n.t('cart.actions.checkout')}</Text>
           </Button>
         </View>
       </BottomBar>

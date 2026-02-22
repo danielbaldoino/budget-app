@@ -1,5 +1,6 @@
 import { Icon } from '@/components/ui/icon'
 import { Text } from '@/components/ui/text'
+import { i18n } from '@/lib/languages'
 import { cn } from '@/lib/utils'
 import { ChevronRightIcon } from 'lucide-react-native'
 import { Pressable, View } from 'react-native'
@@ -19,12 +20,12 @@ export function ProductInventoryCard() {
     >
       <View className="gap-y-1">
         <Text variant="h4" className="font-bold">
-          Estoque
+          {i18n.t('product.inventory.title')}
         </Text>
 
         <View className="flex-row items-center gap-x-1">
           <Text variant="small" className="font-light text-muted-foreground">
-            Ver inventário
+            {i18n.t('product.inventory.actions.viewInventory')}
           </Text>
           <Icon className="text-muted-foreground" as={ChevronRightIcon} />
         </View>
@@ -32,7 +33,9 @@ export function ProductInventoryCard() {
 
       <View className="items-end">
         <Text className="font-bold text-xl">
-          {variant?.manageInventory ? 'Habilitado' : 'Desabilitado'}
+          {variant?.manageInventory
+            ? i18n.t('product.inventory.status.enabled')
+            : i18n.t('product.inventory.status.disabled')}
         </Text>
         <Text
           variant="small"
@@ -43,9 +46,9 @@ export function ProductInventoryCard() {
         >
           {variant?.manageInventory
             ? outOfStock
-              ? 'Sem estoque'
+              ? i18n.t('product.inventory.status.outOfStock')
               : stockQuantity
-            : 'N/A'}
+            : i18n.t('common.fallback.notAvailable')}
         </Text>
       </View>
     </Pressable>

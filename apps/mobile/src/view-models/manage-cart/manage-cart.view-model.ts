@@ -1,6 +1,7 @@
 import { CURRENCY_CODES } from '@/constants/currency'
 import { VALIDATION } from '@/constants/validation'
 import { useActiveCart } from '@/hooks/use-active-cart'
+import { i18n } from '@/lib/languages'
 import { sdk } from '@/lib/sdk'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { NotificationFeedbackType, notificationAsync } from 'expo-haptics'
@@ -12,11 +13,14 @@ import { z } from 'zod'
 const formSchema = z.object({
   name: z
     .string()
-    .min(VALIDATION.MIN_INPUT_LENGTH, 'Name must be at least 1 character'),
+    .min(VALIDATION.MIN_INPUT_LENGTH, i18n.t('common.validation.nameRequired')),
   currencyCode: z.enum(CURRENCY_CODES),
   notes: z
     .string()
-    .max(VALIDATION.MAX_INPUT_LENGTH, 'Notes must be at most 255 characters')
+    .max(
+      VALIDATION.MAX_INPUT_LENGTH,
+      i18n.t('common.validation.notesMaxLength'),
+    )
     .optional(),
 })
 

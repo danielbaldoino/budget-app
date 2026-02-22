@@ -20,7 +20,7 @@ export function InventoryView() {
   return (
     <Screen
       options={{
-        title: 'Inventário',
+        title: i18n.t('inventory.title'),
         headerLargeTitleEnabled: false,
         headerLeft: Platform.select({
           ios: ({ canGoBack }) => (
@@ -48,13 +48,15 @@ export function InventoryView() {
           <Card className="rounded-lg">
             <CardHeader>
               <CardTitle variant="large">
-                {location?.name || 'Sem nome'}
+                {location?.name || i18n.t('common.fallback.noName')}
               </CardTitle>
             </CardHeader>
 
             <CardContent className="gap-y-2">
               <Text variant="small" className="text-muted-foreground">
-                Estoque: {stockedQuantity}
+                {i18n.t('inventory.labels.stock', {
+                  count: stockedQuantity,
+                })}
               </Text>
             </CardContent>
 
@@ -64,14 +66,15 @@ export function InventoryView() {
                 variant="small"
                 className="font-light text-muted-foreground"
               >
-                {location.address?.city || 'Localização não informada'}
+                {location.address?.city ||
+                  i18n.t('inventory.fallback.noLocation')}
               </Text>
             </CardFooter>
           </Card>
         )}
         ListEmptyComponent={() => (
           <Text className="px-16 py-8 text-center text-muted-foreground">
-            {i18n.t('search.states.noResults')}
+            {i18n.t('common.states.noResults')}
           </Text>
         )}
       />
