@@ -28,8 +28,8 @@ export function ScannerView() {
           ios: ({ canGoBack }) => (
             <TouchableOpacity
               className="p-2"
-              disabled={!canGoBack}
               onPress={router.back}
+              disabled={!canGoBack}
             >
               <Icon
                 className={cn(!canGoBack && 'text-muted-foreground/50')}

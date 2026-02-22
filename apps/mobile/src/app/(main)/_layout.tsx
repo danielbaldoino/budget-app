@@ -1,5 +1,4 @@
 import { Stack } from 'expo-router'
-import { Platform } from 'react-native'
 
 export const unstable_settings = {
   initialRouteName: '(tabs)',
@@ -23,19 +22,14 @@ export default function PrivateLayout() {
         name="products/[productId]/variants/[variantId]/inventory"
         options={{ presentation: 'modal' }}
       />
-      <Stack.Screen
-        name="products/[productId]/variants/[variantId]/price-adjustments"
-        options={{ presentation: 'modal' }}
-      />
+
+      <Stack.Screen name="carts/index" options={{ presentation: 'modal' }} />
+      <Stack.Screen name="carts/manage" options={{ presentation: 'modal' }} />
 
       <Stack.Screen
-        name="carts/index"
-        options={{
-          presentation: Platform.select({ ios: 'formSheet', default: 'modal' }),
-          sheetAllowedDetents: [0.8, 1],
-        }}
+        name="price-adjustments"
+        options={{ presentation: 'modal' }}
       />
-      <Stack.Screen name="carts/manage" options={{ presentation: 'modal' }} />
     </Stack>
   )
 }

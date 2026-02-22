@@ -47,7 +47,9 @@ export function HomeView() {
         contentContainerStyle={{ gap: 8, padding: 16 }}
         stickySectionHeadersEnabled={false}
         renderSectionHeader={({ section: { title } }) => (
-          <Text variant="h2">{title}</Text>
+          <Text variant="h4" className="text-muted-foreground">
+            {title}
+          </Text>
         )}
         renderItem={({ item }) => <ProductCard product={item} />}
         ListEmptyComponent={

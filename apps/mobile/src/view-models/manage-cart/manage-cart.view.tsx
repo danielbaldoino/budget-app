@@ -17,6 +17,7 @@ import { Text } from '@/components/ui/text'
 import { Textarea } from '@/components/ui/textarea'
 import { CURRENCY_CODES } from '@/constants/currency'
 import { cn } from '@/lib/utils'
+import { router } from 'expo-router'
 import { CheckIcon, SaveIcon, XIcon } from 'lucide-react-native'
 import { Controller } from 'react-hook-form'
 import {
@@ -29,14 +30,8 @@ import {
 import { useManageCartViewModel } from './manage-cart.view-model'
 
 export function ManageCartView() {
-  const {
-    control,
-    onSubmit,
-    isSubmitting,
-    isLoading,
-    isEditMode,
-    handlerGoBack,
-  } = useManageCartViewModel()
+  const { control, onSubmit, isSubmitting, isLoading, isEditMode } =
+    useManageCartViewModel()
 
   return (
     <Screen
@@ -47,8 +42,8 @@ export function ManageCartView() {
           ios: ({ canGoBack }) => (
             <TouchableOpacity
               className="p-2"
+              onPress={router.back}
               disabled={!canGoBack}
-              onPress={handlerGoBack}
             >
               <Icon as={XIcon} />
             </TouchableOpacity>
@@ -202,7 +197,7 @@ export function ManageCartView() {
                   onChangeText={onChange}
                   onBlur={onBlur}
                   value={value}
-                  className={cn('min-h-24 ', invalid && 'border-destructive')}
+                  className={cn('min-h-32 ', invalid && 'border-destructive')}
                   placeholder="Ex.: O cliente pediu para incluir o prazo de entrega na proposta."
                   autoCapitalize="sentences"
                   readOnly={isSubmitting || isLoading}

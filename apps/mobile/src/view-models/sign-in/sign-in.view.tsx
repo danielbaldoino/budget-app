@@ -18,7 +18,7 @@ import { useSignInViewModel } from './sign-in.view-model'
 
 export function SignInView() {
   return (
-    <Screen className="bg-foreground/5" keyboard>
+    <Screen keyboard>
       <ScrollView contentContainerClassName="flex-1 items-center justify-center p-4">
         <View className="w-full max-w-sm">
           <SignInForm />
@@ -32,7 +32,7 @@ function SignInForm() {
   const { control, onSubmit, isSubmitting } = useSignInViewModel()
 
   return (
-    <Card className="rounded-lg border-border shadow-none">
+    <Card className="rounded-lg">
       <CardHeader>
         <CardTitle variant="h4" className="text-center font-bold">
           {i18n.t('signIn.title')}
@@ -155,10 +155,7 @@ function SignInForm() {
 
         <Button onPress={onSubmit} disabled={isSubmitting}>
           {isSubmitting && (
-            <ActivityIndicator
-              className="text-primary-foreground"
-              size="small"
-            />
+            <ActivityIndicator className="text-primary-foreground" />
           )}
           <Text>{i18n.t('signIn.actions.submit')}</Text>
         </Button>

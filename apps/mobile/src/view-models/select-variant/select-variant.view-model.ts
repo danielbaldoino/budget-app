@@ -20,7 +20,6 @@ export function useSelectVariantViewModel() {
     isError,
     variants: data?.productVariants ?? [],
     onSearchChange: (text: string) => router.setParams({ q: text }),
-    handlerGoBack: router.back,
     handleVariantPress: (variantId: string) =>
       router.dismissTo({
         pathname: 'products/[productId]',

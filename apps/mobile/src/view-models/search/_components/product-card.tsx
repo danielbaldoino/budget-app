@@ -16,7 +16,7 @@ export function ProductCard({ product }: { product: Product }) {
     <LinkWrapper href={{ pathname: 'products/[id]', params: { id } }}>
       <View className="flex-row items-center gap-x-4 bg-card px-4 py-2">
         <View className="size-16 overflow-hidden rounded-sm bg-muted">
-          {Boolean(imageUrl) && !imageError ? (
+          {imageUrl && !imageError ? (
             <Image
               source={{ uri: imageUrl }}
               className="size-full object-contain"

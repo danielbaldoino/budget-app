@@ -9,10 +9,8 @@ export function useScannerViewModel() {
 
   const timeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null)
 
-  const toggleCameraFacing = useCallback(
-    () => setFacing((current) => (current === 'back' ? 'front' : 'back')),
-    [],
-  )
+  const toggleCameraFacing = () =>
+    setFacing((current) => (current === 'back' ? 'front' : 'back'))
 
   const onBarcodeScanned = useCallback(
     ({ data }: { data: string }) => {
@@ -24,7 +22,7 @@ export function useScannerViewModel() {
 
       notificationAsync(NotificationFeedbackType.Success)
 
-      console.log('Barcode:', data)
+      console.log('Scanned data:', data)
 
       timeoutRef.current = setTimeout(() => setScanned(false), 1500)
     },

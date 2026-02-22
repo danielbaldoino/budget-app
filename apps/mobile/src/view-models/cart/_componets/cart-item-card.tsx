@@ -1,8 +1,9 @@
 import { Icon } from '@/components/ui/icon'
 import { Text } from '@/components/ui/text'
+import { ICON_SIZES } from '@/constants/theme'
 import { i18n } from '@/lib/languages'
 import { type Href, Link } from 'expo-router'
-import { Edit2Icon, ImageOffIcon } from 'lucide-react-native'
+import { BoxIcon, Edit2Icon, ImageOffIcon, TagIcon } from 'lucide-react-native'
 import { useState } from 'react'
 import { Image, Platform, Pressable, Share, View } from 'react-native'
 import type { CartItem } from '../_lib/types'
@@ -29,7 +30,7 @@ export function CartItemCard({
         params: { id: productId, variantId, mode: 'cart' },
       }}
     >
-      <View className="flex-row items-center gap-x-4 rounded-lg border border-border/20 bg-card p-2">
+      <View className="flex-row items-center gap-x-4 rounded-lg border border-border/25 bg-card p-2">
         <View className="size-16 overflow-hidden rounded-sm bg-muted">
           {imageUrl && !imageError ? (
             <Image
@@ -45,20 +46,41 @@ export function CartItemCard({
         <View className="flex-1 gap-y-2">
           <Text variant="large">{name}</Text>
 
-          <Text variant="small" className="font-light text-muted-foreground">
+          <Text variant="muted" className="font-medium font-mono">
             {sku}
           </Text>
 
-          <Text variant="small" className="font-light text-muted-foreground">
-            Quantity: {cartItem.quantity}
-          </Text>
-          <Text variant="small" className="font-light text-muted-foreground">
-            Price: {totalPrice}
-          </Text>
+          <View className="flex-row items-center gap-x-1">
+            <Icon
+              className="text-muted-foreground"
+              as={BoxIcon}
+              size={ICON_SIZES.smaller}
+            />
+            <Text variant="small" className="font-light text-muted-foreground">
+              Quantity:
+            </Text>
+            <Text variant="small" className="font-light">
+              {cartItem.quantity}
+            </Text>
+          </View>
+
+          <View className="flex-row items-center gap-x-1.5">
+            <Icon
+              className="text-muted-foreground"
+              as={TagIcon}
+              size={ICON_SIZES.smaller}
+            />
+            <Text variant="small" className="font-light text-muted-foreground">
+              Total Price:
+            </Text>
+            <Text variant="small" className="font-light">
+              {totalPrice}
+            </Text>
+          </View>
         </View>
 
-        <View className="rounded-full bg-muted p-2">
-          <Icon className="text-muted-foreground" as={Edit2Icon} />
+        <View className="rounded-md bg-muted p-2">
+          <Icon className="text-primary" as={Edit2Icon} />
         </View>
       </View>
     </LinkWrapper>

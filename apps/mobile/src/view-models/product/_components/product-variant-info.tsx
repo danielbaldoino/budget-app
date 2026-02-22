@@ -16,7 +16,7 @@ export function ProductVariantInfo() {
       </Text>
 
       <Pressable onLongPress={handleCopySku}>
-        <Text variant="muted" className="font-light">
+        <Text variant="muted" className="font-medium font-mono">
           {variant.sku || 'Sem SKU'}
         </Text>
       </Pressable>

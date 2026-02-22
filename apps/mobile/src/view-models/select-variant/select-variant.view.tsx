@@ -3,6 +3,7 @@ import { Icon } from '@/components/ui/icon'
 import { Text } from '@/components/ui/text'
 import { useAppearance } from '@/hooks/use-appearance'
 import { i18n } from '@/lib/languages'
+import { router } from 'expo-router'
 import { XIcon } from 'lucide-react-native'
 import {
   FlatList,
@@ -15,27 +16,21 @@ import { VariantCard } from './_components/variant-card'
 import { useSelectVariantViewModel } from './select-variant.view-model'
 
 export function SelectVariantView() {
-  const {
-    isLoading,
-    isError,
-    variants,
-    onSearchChange,
-    handlerGoBack,
-    handleVariantPress,
-  } = useSelectVariantViewModel()
+  const { isLoading, isError, variants, onSearchChange, handleVariantPress } =
+    useSelectVariantViewModel()
   const { colors } = useAppearance()
 
   return (
     <Screen
       options={{
-        title: 'Select Variant',
+        title: 'Selecionar Variante',
         headerLargeTitleEnabled: false,
         headerLeft: Platform.select({
           ios: ({ canGoBack }) => (
             <TouchableOpacity
               className="p-2"
+              onPress={router.back}
               disabled={!canGoBack}
-              onPress={handlerGoBack}
             >
               <Icon as={XIcon} />
             </TouchableOpacity>
@@ -67,10 +62,9 @@ export function SelectVariantView() {
         data={variants}
         keyExtractor={({ id }) => id}
         renderItem={({ item }) => (
-          <VariantCard
-            variant={item}
-            onPress={() => handleVariantPress(item.id)}
-          />
+          <TouchableOpacity onPress={() => handleVariantPress(item.id)}>
+            <VariantCard variant={item} />
+          </TouchableOpacity>
         )}
         ListEmptyComponent={() => (
           <Text className="px-16 py-8 text-center text-muted-foreground">

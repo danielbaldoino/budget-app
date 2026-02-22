@@ -1,5 +1,5 @@
 import { sdk } from '@/lib/sdk'
-import { router, useLocalSearchParams } from 'expo-router'
+import { useLocalSearchParams } from 'expo-router'
 
 export function useInventoryViewModel() {
   const { productId, variantId } = useLocalSearchParams<{
@@ -16,6 +16,5 @@ export function useInventoryViewModel() {
     isLoading,
     isError,
     inventoryLevels: data?.productVariant.inventoryItem?.inventoryLevels || [],
-    handlerGoBack: router.back,
   }
 }

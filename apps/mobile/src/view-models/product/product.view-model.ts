@@ -196,7 +196,8 @@ export function useProductViewModel() {
       params: {
         productId: product?.id,
         variantId: variant?.id,
-        basePrice: selectedPrice?.amount,
+        p: selectedPrice?.amount || 0,
+        q: quantity,
       },
     })
 

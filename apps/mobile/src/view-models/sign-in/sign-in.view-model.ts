@@ -5,7 +5,7 @@ import { sdk } from '@/lib/sdk'
 import { useWorkspaceStore } from '@/store/workspace-store'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { NotificationFeedbackType, notificationAsync } from 'expo-haptics'
-import { useCallback, useState } from 'react'
+import { useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { z } from 'zod'
 
@@ -63,29 +63,26 @@ export function useSignInViewModel() {
     defaultValues: getDefaultValues(workspaceId),
   })
 
-  const handleSignIn = useCallback(
-    async (values: SignInFormData) => {
-      const { workspaceId: formWorkspaceId, ...credentials } = values
+  const handleSignIn = async (values: SignInFormData) => {
+    const { workspaceId: formWorkspaceId, ...credentials } = values
 
-      setWorkspaceId(formWorkspaceId)
-      setSignInError(undefined)
+    setWorkspaceId(formWorkspaceId)
+    setSignInError(undefined)
 
-      await mutateAsync(
-        { data: credentials },
-        {
-          onSuccess: ({ token }) => {
-            notificationAsync(NotificationFeedbackType.Success)
-            signIn(token)
-          },
-          onError: ({ message }) => {
-            notificationAsync(NotificationFeedbackType.Error)
-            setSignInError(message)
-          },
+    await mutateAsync(
+      { data: credentials },
+      {
+        onSuccess: ({ token }) => {
+          notificationAsync(NotificationFeedbackType.Success)
+          signIn(token)
         },
-      )
-    },
-    [mutateAsync, setWorkspaceId, signIn],
-  )
+        onError: ({ message }) => {
+          notificationAsync(NotificationFeedbackType.Error)
+          setSignInError(message)
+        },
+      },
+    )
+  }
 
   return {
     control,

@@ -1,14 +1,21 @@
 import { Screen } from '@/components/layout/screen'
+import {
+  Card,
+  CardContent,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from '@/components/ui/card'
 import { Icon } from '@/components/ui/icon'
 import { Text } from '@/components/ui/text'
 import { i18n } from '@/lib/languages'
-import { XIcon } from 'lucide-react-native'
-import { FlatList, Platform, TouchableOpacity, View } from 'react-native'
+import { router } from 'expo-router'
+import { MapPinIcon, XIcon } from 'lucide-react-native'
+import { FlatList, Platform, TouchableOpacity } from 'react-native'
 import { useInventoryViewModel } from './inventory.view-model'
 
 export function InventoryView() {
-  const { isLoading, isError, inventoryLevels, handlerGoBack } =
-    useInventoryViewModel()
+  const { isLoading, isError, inventoryLevels } = useInventoryViewModel()
 
   return (
     <Screen
@@ -19,8 +26,8 @@ export function InventoryView() {
           ios: ({ canGoBack }) => (
             <TouchableOpacity
               className="p-2"
+              onPress={router.back}
               disabled={!canGoBack}
-              onPress={handlerGoBack}
             >
               <Icon as={XIcon} />
             </TouchableOpacity>
@@ -33,16 +40,34 @@ export function InventoryView() {
       error={isError}
     >
       <FlatList
+        contentContainerClassName="p-4 gap-y-4"
         contentInsetAdjustmentBehavior="always"
         data={inventoryLevels}
         keyExtractor={({ id }) => id}
-        renderItem={({ item }) => (
-          <View className="gap-y-4 bg-card px-4 py-2">
-            <Text variant="large">{item.location.name || 'Sem nome'}</Text>
-            <Text variant="small" className="text-muted-foreground">
-              {item.stockedQuantity}
-            </Text>
-          </View>
+        renderItem={({ item: { location, stockedQuantity } }) => (
+          <Card className="rounded-lg">
+            <CardHeader>
+              <CardTitle variant="large">
+                {location?.name || 'Sem nome'}
+              </CardTitle>
+            </CardHeader>
+
+            <CardContent className="gap-y-2">
+              <Text variant="small" className="text-muted-foreground">
+                Estoque: {stockedQuantity}
+              </Text>
+            </CardContent>
+
+            <CardFooter className="gap-x-2">
+              <Icon className="text-muted-foreground" as={MapPinIcon} />
+              <Text
+                variant="small"
+                className="font-light text-muted-foreground"
+              >
+                {location.address?.city || 'Localização não informada'}
+              </Text>
+            </CardFooter>
+          </Card>
         )}
         ListEmptyComponent={() => (
           <Text className="px-16 py-8 text-center text-muted-foreground">

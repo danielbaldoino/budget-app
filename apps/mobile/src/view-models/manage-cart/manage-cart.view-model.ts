@@ -113,6 +113,5 @@ export function useManageCartViewModel() {
     isSubmitting,
     isLoading,
     isEditMode,
-    handlerGoBack: router.back,
   }
 }

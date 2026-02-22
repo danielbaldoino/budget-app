@@ -3,6 +3,7 @@ import { Icon } from '@/components/ui/icon'
 import { Text } from '@/components/ui/text'
 import { useAppearance } from '@/hooks/use-appearance'
 import { i18n } from '@/lib/languages'
+import { router } from 'expo-router'
 import { XIcon } from 'lucide-react-native'
 import {
   FlatList,
@@ -11,31 +12,25 @@ import {
   TouchableOpacity,
 } from 'react-native'
 import type { SearchBarProps } from 'react-native-screens'
-import { VariantCard } from './_components/customer-card'
-import { useSelectVariantViewModel } from './select-customer.view-model'
+import { CustomerCard } from './_components/customer-card'
+import { useSelectCustomerViewModel } from './select-customer.view-model'
 
-export function SelectVariantView() {
-  const {
-    isLoading,
-    isError,
-    variants,
-    onSearchChange,
-    handlerGoBack,
-    handleVariantPress,
-  } = useSelectVariantViewModel()
+export function SelectCustomerView() {
+  const { isLoading, isError, customers, onSearchChange, handleCustomerPress } =
+    useSelectCustomerViewModel()
   const { colors } = useAppearance()
 
   return (
     <Screen
       options={{
-        title: 'Select Variant',
+        title: 'Select Customer',
         headerLargeTitleEnabled: false,
         headerLeft: Platform.select({
           ios: ({ canGoBack }) => (
             <TouchableOpacity
               className="p-2"
+              onPress={router.back}
               disabled={!canGoBack}
-              onPress={handlerGoBack}
             >
               <Icon as={XIcon} />
             </TouchableOpacity>
@@ -47,7 +42,7 @@ export function SelectVariantView() {
             onChangeText: ({
               nativeEvent: { text },
             }: NativeSyntheticEvent<{ text: string }>) => onSearchChange(text),
-            placeholder: 'Pesquisar variantes',
+            placeholder: 'Pesquisar clientes',
             textColor: colors.text,
             tintColor: colors.primary, // iOS only
             // Android only
@@ -64,13 +59,12 @@ export function SelectVariantView() {
     >
       <FlatList
         contentInsetAdjustmentBehavior="always"
-        data={variants}
+        data={customers}
         keyExtractor={({ id }) => id}
         renderItem={({ item }) => (
-          <VariantCard
-            variant={item}
-            onPress={() => handleVariantPress(item.id)}
-          />
+          <TouchableOpacity onPress={() => handleCustomerPress(item.id)}>
+            <CustomerCard customer={item} />
+          </TouchableOpacity>
         )}
         ListEmptyComponent={() => (
           <Text className="px-16 py-8 text-center text-muted-foreground">

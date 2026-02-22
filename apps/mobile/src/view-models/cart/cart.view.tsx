@@ -2,6 +2,7 @@ import { BottomBar } from '@/components/bottom-bar'
 import { Screen } from '@/components/layout/screen'
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Icon } from '@/components/ui/icon'
 import { Separator } from '@/components/ui/separator'
 import { Text } from '@/components/ui/text'
@@ -10,6 +11,7 @@ import { useCurrencyCode } from '@/hooks/use-currency-code'
 import { i18n } from '@/lib/languages'
 import { cn } from '@/lib/utils'
 import { isLiquidGlassAvailable } from 'expo-glass-effect'
+import { router } from 'expo-router'
 import {
   BanknoteIcon,
   CheckCircle2Icon,
@@ -40,6 +42,7 @@ export function CartView() {
     handleGoToCreateCart,
     handleGoToEditCart,
     handleGoToCheckout,
+    handleGoToSelectCustomer,
     handleShare,
   } = useCartViewModel()
   const { toLongPrice } = useCurrencyCode({ currencyCode: cart?.currencyCode })
@@ -137,41 +140,42 @@ export function CartView() {
         ListHeaderComponent={() =>
           cart && (
             <View className="gap-y-4">
-              <View className="gap-y-2 rounded-lg border border-muted-foreground/20 bg-muted p-4">
-                <Text variant="large" className="text-muted-foreground">
-                  {cart.name}
-                </Text>
+              <Card className="rounded-lg">
+                <CardHeader className="text-muted-foreground">
+                  <CardTitle variant="large">{cart.name}</CardTitle>
+                </CardHeader>
 
-                <ScrollView horizontal contentContainerClassName="gap-x-2">
-                  <Badge
-                    variant="outline"
-                    className="border-muted-foreground/20"
-                  >
-                    <Icon
-                      className="text-foreground"
-                      size={ICON_SIZES.smaller}
-                      as={BanknoteIcon}
-                    />
-                    <Text>{cart.currencyCode}</Text>
-                  </Badge>
-
-                  {cart.priceList && (
-                    <Badge
-                      variant="outline"
-                      className="border-muted-foreground/20"
-                    >
+                <CardContent>
+                  <ScrollView horizontal contentContainerClassName="gap-x-2">
+                    <Badge variant="outline" className="border-border">
                       <Icon
                         className="text-foreground"
                         size={ICON_SIZES.smaller}
-                        as={TagIcon}
+                        as={BanknoteIcon}
                       />
-                      <Text>{cart.priceList.name}</Text>
+                      <Text className="font-light">{cart.currencyCode}</Text>
                     </Badge>
-                  )}
-                </ScrollView>
-              </View>
 
-              <View className="flex-row items-center gap-x-4 rounded-lg border border-muted-foreground/20 bg-muted p-4">
+                    {cart.priceList && (
+                      <Badge variant="outline" className="border-border">
+                        <Icon
+                          className="text-foreground"
+                          size={ICON_SIZES.smaller}
+                          as={TagIcon}
+                        />
+                        <Text className="font-light">
+                          {cart.priceList.name}
+                        </Text>
+                      </Badge>
+                    )}
+                  </ScrollView>
+                </CardContent>
+              </Card>
+
+              <TouchableOpacity
+                className="flex-row items-center gap-x-4 rounded-lg border border-border bg-muted p-4"
+                onPress={handleGoToSelectCustomer}
+              >
                 <Icon className="text-muted-foreground" as={UserCircleIcon} />
 
                 <View className="flex-1">
@@ -185,7 +189,7 @@ export function CartView() {
                 </View>
 
                 <Icon className="text-muted-foreground" as={ChevronDownIcon} />
-              </View>
+              </TouchableOpacity>
 
               <Separator />
             </View>
@@ -203,28 +207,45 @@ export function CartView() {
           hasGlass && 'absolute bottom-0 mx-4 mb-safe-offset-16',
           !hasActiveCart && 'hidden',
         )}
-        className={cn(
-          'flex-row items-center justify-between gap-x-4 p-4',
-          !hasGlass && 'rounded-t-lg bg-primary/5',
-        )}
+        className={cn('gap-y-4 p-4', !hasGlass && 'rounded-t-lg bg-primary/5')}
       >
-        <Button
-          variant="outline"
-          className="min-h-14 flex-1"
-          disabled={isLoading || !hasActiveCart}
-        >
-          <Icon className="text-foreground" as={CirclePercentIcon} />
-          <Text>Ajustes</Text>
-        </Button>
+        <View className="w-full flex-row items-center justify-between gap-x-4">
+          <Text className="font-semibold">Subtotal:</Text>
+          <Text className="text-right font-semibold text-primary">
+            R${' '}
+            {toLongPrice(
+              cart?.cartItems.reduce((acc, item) => {
+                const itemTotal =
+                  (item.productVariant.priceSets[0]?.prices[0]?.amount || 0) *
+                  item.quantity
+                return acc + itemTotal
+              }, 0),
+            )}
+          </Text>
+        </View>
 
-        <Button
-          className="min-h-14 flex-1"
-          onPress={handleGoToCheckout}
-          disabled={!canCheckout}
-        >
-          <Icon className="text-primary-foreground" as={CheckCircle2Icon} />
-          <Text>Checkout</Text>
-        </Button>
+        <Separator className="bg-muted" />
+
+        <View className="flex-row items-center justify-between gap-x-4">
+          <Button
+            variant="outline"
+            className="min-h-14 flex-1"
+            onPress={() => router.push('price-adjustments')}
+            disabled={isLoading || !hasActiveCart}
+          >
+            <Icon as={CirclePercentIcon} />
+            <Text>Ajustes</Text>
+          </Button>
+
+          <Button
+            className="min-h-14 flex-1"
+            onPress={handleGoToCheckout}
+            disabled={!canCheckout}
+          >
+            <Icon className="text-primary-foreground" as={CheckCircle2Icon} />
+            <Text>Checkout</Text>
+          </Button>
+        </View>
       </BottomBar>
     </Screen>
   )

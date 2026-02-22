@@ -1,11 +1,18 @@
 import { Screen } from '@/components/layout/screen'
+import {
+  Card,
+  CardContent,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from '@/components/ui/card'
 import { Icon } from '@/components/ui/icon'
 import { Text } from '@/components/ui/text'
 import { useCurrencyCode } from '@/hooks/use-currency-code'
 import { i18n } from '@/lib/languages'
 import { router } from 'expo-router'
 import { ChevronRightIcon, XIcon } from 'lucide-react-native'
-import { FlatList, Platform, TouchableOpacity, View } from 'react-native'
+import { FlatList, Platform, TouchableOpacity } from 'react-native'
 import { usePricingViewModel } from './pricing.view-model'
 
 export function PricingView() {
@@ -16,14 +23,14 @@ export function PricingView() {
   return (
     <Screen
       options={{
-        title: 'Preços',
+        title: 'Lista de Preços',
         headerLargeTitleEnabled: false,
         headerLeft: Platform.select({
           ios: ({ canGoBack }) => (
             <TouchableOpacity
               className="p-2"
-              disabled={!canGoBack}
               onPress={router.back}
+              disabled={!canGoBack}
             >
               <Icon as={XIcon} />
             </TouchableOpacity>
@@ -36,6 +43,7 @@ export function PricingView() {
       error={isError}
     >
       <FlatList
+        contentContainerClassName="p-4 gap-y-4"
         contentInsetAdjustmentBehavior="always"
         data={priceSets}
         keyExtractor={({ id }) => id}
@@ -43,11 +51,15 @@ export function PricingView() {
           <TouchableOpacity
             onPress={() => handlePriceSetPress(item.priceListId)}
           >
-            <View className="flex-row items-center gap-x-4 bg-card px-4 py-2">
-              <View className="flex-1 gap-y-4">
-                <Text variant="large">{item.priceListId || 'default'}</Text>
+            <Card className="rounded-lg">
+              <CardHeader>
+                <CardTitle variant="large">
+                  {item.priceListId || 'Padrão'}
+                </CardTitle>
+              </CardHeader>
 
-                {item.prices.length > 0 ? (
+              <CardContent className="gap-y-2">
+                {item.prices.length ? (
                   item.prices.map(({ id, amount, currencyCode }) => (
                     <Text
                       key={id}
@@ -62,9 +74,21 @@ export function PricingView() {
                     Sem preços definidos
                   </Text>
                 )}
-              </View>
-              <Icon className="text-muted-foreground" as={ChevronRightIcon} />
-            </View>
+              </CardContent>
+
+              <CardFooter>
+                <Text
+                  variant="small"
+                  className="font-light text-muted-foreground"
+                >
+                  Clique para selecionar
+                </Text>
+                <Icon
+                  className="ml-auto text-muted-foreground"
+                  as={ChevronRightIcon}
+                />
+              </CardFooter>
+            </Card>
           </TouchableOpacity>
         )}
         ListEmptyComponent={() => (
