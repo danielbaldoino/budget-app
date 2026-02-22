@@ -3,18 +3,27 @@ import { Text } from '@/components/ui/text'
 import { ICON_SIZES } from '@/constants/theme'
 import { i18n } from '@/lib/languages'
 import { type Href, Link } from 'expo-router'
-import { BoxIcon, Edit2Icon, ImageOffIcon, TagIcon } from 'lucide-react-native'
+import {
+  BoxIcon,
+  Edit2Icon,
+  ImageOffIcon,
+  TagIcon,
+  TrashIcon,
+} from 'lucide-react-native'
 import { useState } from 'react'
-import { Image, Platform, Pressable, Share, View } from 'react-native'
+import { Image, Platform, Pressable, View } from 'react-native'
 import type { CartItem } from '../_lib/types'
+import { useCartContext } from '../cart.context'
 
 export function CartItemCard({
   cartItem,
   totalPrice,
 }: { cartItem: CartItem; totalPrice?: string }) {
+  const { handleDeleteCartItem } = useCartContext()
+
   const [imageError, setImageError] = useState(false)
 
-  const { productVariant } = cartItem
+  const { id, productVariant } = cartItem
   const {
     id: variantId,
     productId,
@@ -23,12 +32,15 @@ export function CartItemCard({
     thumbnail: imageUrl,
   } = productVariant
 
+  const handleDeleteItem = () => handleDeleteCartItem(id)
+
   return (
     <LinkWrapper
       href={{
         pathname: 'products/[id]',
         params: { id: productId, variantId, mode: 'cart' },
       }}
+      onDeleteCartItem={handleDeleteItem}
     >
       <View className="flex-row items-center gap-x-4 rounded-lg border border-border/25 bg-card p-2">
         <View className="size-16 overflow-hidden rounded-sm bg-muted">
@@ -79,8 +91,21 @@ export function CartItemCard({
           </View>
         </View>
 
-        <View className="rounded-md bg-muted p-2">
-          <Icon className="text-primary" as={Edit2Icon} />
+        <View className="gap-y-2">
+          <View className="rounded-md bg-muted p-2">
+            <Icon className="text-primary" as={Edit2Icon} />
+          </View>
+
+          {Platform.select({
+            native: (
+              <Pressable
+                onPress={handleDeleteItem}
+                className="rounded-md bg-muted p-2"
+              >
+                <Icon className="text-destructive" as={TrashIcon} />
+              </Pressable>
+            ),
+          })}
         </View>
       </View>
     </LinkWrapper>
@@ -90,13 +115,12 @@ export function CartItemCard({
 function LinkWrapper({
   children,
   href,
+  onDeleteCartItem,
 }: {
   children: React.ReactNode
   href: Href
+  onDeleteCartItem: () => void
 }) {
-  const handleShare = () =>
-    Share.share({ title: i18n.t('common.actions.share'), message: '' })
-
   return (
     <View>
       {Platform.select({
@@ -106,16 +130,17 @@ function LinkWrapper({
             <Link.Preview />
             <Link.Menu>
               <Link.MenuAction
-                title={i18n.t('common.actions.share')}
-                icon="square.and.arrow.up"
-                onPress={handleShare}
+                title={i18n.t('common.actions.remove')}
+                icon="trash"
+                onPress={onDeleteCartItem}
+                destructive={true}
               />
             </Link.Menu>
           </Link>
         ),
         default: (
           <Link href={href} asChild>
-            <Pressable onLongPress={handleShare}>{children}</Pressable>
+            <Pressable onLongPress={onDeleteCartItem}>{children}</Pressable>
           </Link>
         ),
       })}

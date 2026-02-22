@@ -17,6 +17,8 @@ export const translations: Dict = {
         viewAll: 'View all',
         select: 'Select',
         adjustments: 'Adjustments',
+        remove: 'Remove',
+        cancel: 'Cancel',
       },
 
       labels: {
@@ -226,6 +228,12 @@ export const translations: Dict = {
         newCart: 'New cart',
         shareCart: 'Share cart',
         checkout: 'Checkout',
+        removeItem: 'Remove Item',
+      },
+
+      messages: {
+        confirmRemoveItem:
+          'Are you sure you want to remove this item from the cart?',
       },
 
       states: {
@@ -331,6 +339,8 @@ export const translations: Dict = {
         viewAll: 'Ver todos',
         select: 'Selecionar',
         adjustments: 'Ajustes',
+        remove: 'Remover',
+        cancel: 'Cancelar',
       },
 
       labels: {
@@ -543,6 +553,12 @@ export const translations: Dict = {
         newCart: 'Novo carrinho',
         shareCart: 'Compartilhar carrinho',
         checkout: 'Finalizar compra',
+        removeItem: 'Remover Item',
+      },
+
+      messages: {
+        confirmRemoveItem:
+          'Tem certeza que deseja remover este item do carrinho?',
       },
 
       states: {

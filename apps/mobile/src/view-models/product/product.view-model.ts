@@ -5,7 +5,6 @@ import { i18n } from '@/lib/languages'
 import { sdk } from '@/lib/sdk'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { setStringAsync } from 'expo-clipboard'
-import { NotificationFeedbackType, notificationAsync } from 'expo-haptics'
 import { router, useLocalSearchParams } from 'expo-router'
 import { useEffect, useMemo, useState } from 'react'
 import { useForm } from 'react-hook-form'
@@ -42,11 +41,7 @@ export function useProductViewModel() {
 
   const isCartMode = mode === 'cart'
 
-  const {
-    cart,
-    isLoading: isCartLoading,
-    refetch: refetchCart,
-  } = useActiveCart()
+  const { cart, isLoading: isCartLoading, upsertCartItem } = useActiveCart()
 
   const [quantity, setQuantity] = useState<number>(VALIDATION.DEFAULT_QUANTITY)
 
@@ -173,8 +168,6 @@ export function useProductViewModel() {
     })
   }, [existingCartItem, form])
 
-  const { mutateAsync: upsertCartItem } = sdk.v1.$reactQuery.useUpsertCartItem()
-
   const handleSelectVariantPress = () =>
     router.push({
       pathname: 'products/[productId]/select-variant',
@@ -241,31 +234,16 @@ export function useProductViewModel() {
       return
     }
 
-    await upsertCartItem(
-      {
-        cartId: cart.id,
-        data: {
-          productVariantId: variant.id,
-          priceListId,
-          quantity,
-          notes,
-        },
-      },
-      {
-        onSuccess: async () => {
-          notificationAsync(NotificationFeedbackType.Success)
+    await upsertCartItem({
+      productVariantId: variant.id,
+      priceListId,
+      quantity,
+      notes,
+    })
 
-          await refetchCart()
-
-          if (existingCartItem) {
-            router.back()
-          }
-        },
-        onError: () => {
-          notificationAsync(NotificationFeedbackType.Error)
-        },
-      },
-    )
+    if (existingCartItem) {
+      router.back()
+    }
   }
 
   return {
