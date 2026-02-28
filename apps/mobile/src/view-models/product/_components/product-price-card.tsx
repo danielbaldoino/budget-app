@@ -1,5 +1,6 @@
 import { Icon } from '@/components/ui/icon'
 import { Text } from '@/components/ui/text'
+import { ICON_SIZES } from '@/constants/theme'
 import { i18n } from '@/lib/languages'
 import { ChevronRightIcon } from 'lucide-react-native'
 import { Pressable, View } from 'react-native'
@@ -29,7 +30,11 @@ export function ProductPriceCard() {
             {i18n.t('common.actions.viewAll')}
           </Text>
 
-          <Icon className="text-muted-foreground" as={ChevronRightIcon} />
+          <Icon
+            className="text-muted-foreground"
+            size={ICON_SIZES.smaller}
+            as={ChevronRightIcon}
+          />
         </View>
       </View>
     </Pressable>

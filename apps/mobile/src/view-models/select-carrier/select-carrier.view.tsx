@@ -4,26 +4,26 @@ import { Text } from '@/components/ui/text'
 import { useAppearance } from '@/hooks/use-appearance'
 import { i18n } from '@/lib/languages'
 import { router } from 'expo-router'
-import { XIcon } from 'lucide-react-native'
+import { BoxIcon, ChevronRightIcon, XIcon } from 'lucide-react-native'
 import {
   FlatList,
   type NativeSyntheticEvent,
   Platform,
   TouchableOpacity,
+  View,
 } from 'react-native'
 import type { SearchBarProps } from 'react-native-screens'
-import { CustomerCard } from './_components/customer-card'
-import { useSelectCustomerViewModel } from './select-customer.view-model'
+import { useSelectCarrierViewModel } from './select-carrier.view-model'
 
-export function SelectCustomerView() {
-  const { isLoading, isError, customers, onSearchChange, handleCustomerPress } =
-    useSelectCustomerViewModel()
+export function SelectCarrierView() {
+  const { isLoading, isError, carriers, onSearchChange, handleCarrierPress } =
+    useSelectCarrierViewModel()
   const { colors } = useAppearance()
 
   return (
     <Screen
       options={{
-        title: i18n.t('selectCustomer.title'),
+        title: 'Transportadoras',
         headerLargeTitleEnabled: false,
         headerLeft: Platform.select({
           ios: ({ canGoBack }) => (
@@ -42,7 +42,7 @@ export function SelectCustomerView() {
             onChangeText: ({
               nativeEvent: { text },
             }: NativeSyntheticEvent<{ text: string }>) => onSearchChange(text),
-            placeholder: i18n.t('selectCustomer.search.placeholder'),
+            placeholder: 'Pesquisar',
             textColor: colors.text,
             tintColor: colors.primary, // iOS only
             // Android only
@@ -58,13 +58,23 @@ export function SelectCustomerView() {
       error={isError}
     >
       <FlatList
-        contentContainerClassName="p-4 gap-y-4"
         contentInsetAdjustmentBehavior="always"
-        data={customers}
+        data={carriers}
         keyExtractor={({ id }) => id}
         renderItem={({ item }) => (
-          <TouchableOpacity onPress={() => handleCustomerPress(item.id)}>
-            <CustomerCard customer={item} />
+          <TouchableOpacity onPress={() => handleCarrierPress(item.id)}>
+            <View className="flex-row items-center gap-x-4 bg-card px-4 py-2">
+              <View className="size-16 overflow-hidden rounded-sm bg-muted">
+                <Icon className="m-auto text-muted-foreground" as={BoxIcon} />
+              </View>
+              <View className="flex-1">
+                <Text variant="large">{item.name}</Text>
+                <Text variant="p" className="text-muted-foreground">
+                  {item.code}
+                </Text>
+              </View>
+              <Icon className="text-muted-foreground" as={ChevronRightIcon} />
+            </View>
           </TouchableOpacity>
         )}
         ListEmptyComponent={() => (

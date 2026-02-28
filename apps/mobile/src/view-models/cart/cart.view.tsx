@@ -21,7 +21,6 @@ import {
   View,
 } from 'react-native'
 import { CartBottomBar } from './_components/cart-bottom-bar'
-import { CartCustomerSelector } from './_components/cart-customer-selector'
 import { CartItemCard } from './_components/cart-item-card'
 import { CartSummaryCard } from './_components/cart-summary-card'
 import { CartProvider, useCartContext } from './cart.context'
@@ -137,8 +136,7 @@ function CartContent() {
           cart && (
             <View className="gap-y-4">
               <CartSummaryCard />
-              <CartCustomerSelector />
-              <Separator />
+              <Separator className="w-11/12 self-center" />
             </View>
           )
         }

@@ -14,10 +14,11 @@ import { BanknoteIcon, BoxIcon } from 'lucide-react-native'
 import { View } from 'react-native'
 import type { Cart } from '../_lib/types'
 
-export function CartCard({
-  cart: { name, currencyCode, cartItems, createdAt },
-}: { cart: Cart }) {
+export function CartCard({ cart }: { cart: Cart }) {
+  const { name, currencyCode, createdAt, cartItems } = cart
+
   const itemCount = cartItems.reduce((acc, item) => acc + item.quantity, 0)
+
   const createdAtLabel = i18n.t('common.labels.createdAt', {
     date: new Date(createdAt).toLocaleDateString(),
   })

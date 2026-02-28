@@ -7,12 +7,14 @@ import {
   CardTitle,
 } from '@/components/ui/card'
 import { Icon } from '@/components/ui/icon'
+import { Separator } from '@/components/ui/separator'
 import { Text } from '@/components/ui/text'
+import { ICON_SIZES } from '@/constants/theme'
 import { useCurrencyCode } from '@/hooks/use-currency-code'
 import { i18n } from '@/lib/languages'
 import { router } from 'expo-router'
 import { ChevronRightIcon, XIcon } from 'lucide-react-native'
-import { FlatList, Platform, TouchableOpacity } from 'react-native'
+import { FlatList, Platform, TouchableOpacity, View } from 'react-native'
 import { usePricingViewModel } from './pricing.view-model'
 
 export function PricingView() {
@@ -53,7 +55,7 @@ export function PricingView() {
           >
             <Card className="rounded-lg">
               <CardHeader>
-                <CardTitle variant="large">
+                <CardTitle>
                   {item.priceListId ||
                     i18n.t('pricing.fallback.defaultPriceList')}
                 </CardTitle>
@@ -62,13 +64,17 @@ export function PricingView() {
               <CardContent className="gap-y-2">
                 {item.prices.length ? (
                   item.prices.map(({ id, amount, currencyCode }) => (
-                    <Text
+                    <View
                       key={id}
-                      variant="small"
-                      className="text-muted-foreground"
+                      className="flex-row items-center justify-between gap-x-4"
                     >
-                      {toLongPrice(amount, currencyCode)}
-                    </Text>
+                      <Text className="text-muted-foreground">
+                        {currencyCode}
+                      </Text>
+                      <Text className="text-right">
+                        {toLongPrice(amount, currencyCode)}
+                      </Text>
+                    </View>
                   ))
                 ) : (
                   <Text variant="small" className="text-muted-foreground">
@@ -76,6 +82,8 @@ export function PricingView() {
                   </Text>
                 )}
               </CardContent>
+
+              <Separator />
 
               <CardFooter>
                 <Text
@@ -86,6 +94,7 @@ export function PricingView() {
                 </Text>
                 <Icon
                   className="ml-auto text-muted-foreground"
+                  size={ICON_SIZES.smaller}
                   as={ChevronRightIcon}
                 />
               </CardFooter>

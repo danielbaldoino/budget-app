@@ -1,5 +1,6 @@
 import { Icon } from '@/components/ui/icon'
 import { Text } from '@/components/ui/text'
+import { ICON_SIZES } from '@/constants/theme'
 import { i18n } from '@/lib/languages'
 import { cn } from '@/lib/utils'
 import { ChevronRightIcon } from 'lucide-react-native'
@@ -27,7 +28,11 @@ export function ProductInventoryCard() {
           <Text variant="small" className="font-light text-muted-foreground">
             {i18n.t('product.inventory.actions.viewInventory')}
           </Text>
-          <Icon className="text-muted-foreground" as={ChevronRightIcon} />
+          <Icon
+            className="text-muted-foreground"
+            size={ICON_SIZES.smaller}
+            as={ChevronRightIcon}
+          />
         </View>
       </View>
 

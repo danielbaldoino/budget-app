@@ -204,7 +204,10 @@ export function ManageCartView() {
                   onChangeText={onChange}
                   onBlur={onBlur}
                   value={value}
-                  className={cn('min-h-32 ', invalid && 'border-destructive')}
+                  className={cn(
+                    'min-h-32 placeholder:font-light placeholder:text-muted-foreground',
+                    invalid && 'border-destructive',
+                  )}
                   placeholder={i18n.t('manageCart.fields.notes.placeholder')}
                   autoCapitalize="sentences"
                   readOnly={isSubmitting || isLoading}

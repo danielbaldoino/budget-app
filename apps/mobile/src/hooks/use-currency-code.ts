@@ -21,7 +21,7 @@ export function useCurrencyCode({
         minimumFractionDigits: 2,
         maximumFractionDigits: 2,
         currency: effectiveCurrency,
-        currencyDisplay: 'symbol',
+        currencyDisplay: 'code',
         style: 'currency',
       })
       return formatter.format(price)

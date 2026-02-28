@@ -3,7 +3,7 @@ import { Icon } from '@/components/ui/icon'
 import { Text } from '@/components/ui/text'
 import { useAppearance } from '@/hooks/use-appearance'
 import { i18n } from '@/lib/languages'
-import { QrCodeIcon } from 'lucide-react-native'
+import { ScanBarcodeIcon } from 'lucide-react-native'
 import {
   FlatList,
   type NativeSyntheticEvent,
@@ -29,7 +29,7 @@ export function SearchView() {
               className="flex-row gap-x-2 p-2"
               onPress={handleQrCodePress}
             >
-              <Icon as={QrCodeIcon} />
+              <Icon as={ScanBarcodeIcon} />
               {Platform.select({
                 ios: <Text>{i18n.t('search.actions.qrCode')}</Text>,
               })}

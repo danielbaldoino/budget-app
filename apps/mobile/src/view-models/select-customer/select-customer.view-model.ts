@@ -6,7 +6,7 @@ import { router, useLocalSearchParams } from 'expo-router'
 export function useSelectCustomerViewModel() {
   const { q: search, mode } = useLocalSearchParams<{
     q?: string
-    mode?: 'cart'
+    mode?: 'cart' | 'checkout'
   }>()
 
   const isCartMode = mode === 'cart'
@@ -39,6 +39,8 @@ export function useSelectCustomerViewModel() {
             },
           },
         )
+      } else {
+        router.dismissTo({ pathname: 'cart/checkout', params: { customerId } })
       }
     },
   }

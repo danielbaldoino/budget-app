@@ -6,9 +6,7 @@ export function useCartsViewModel() {
   const { setActiveCartId } = useActiveCart()
 
   const { isLoading, isError, data } = sdk.v1.$reactQuery.useListCarts({
-    params: {
-      order: 'desc',
-    },
+    params: { order: 'desc' },
   })
 
   return {

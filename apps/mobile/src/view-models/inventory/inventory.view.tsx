@@ -7,11 +7,13 @@ import {
   CardTitle,
 } from '@/components/ui/card'
 import { Icon } from '@/components/ui/icon'
+import { Separator } from '@/components/ui/separator'
 import { Text } from '@/components/ui/text'
+import { ICON_SIZES } from '@/constants/theme'
 import { i18n } from '@/lib/languages'
 import { router } from 'expo-router'
 import { MapPinIcon, XIcon } from 'lucide-react-native'
-import { FlatList, Platform, TouchableOpacity } from 'react-native'
+import { FlatList, Platform, TouchableOpacity, View } from 'react-native'
 import { useInventoryViewModel } from './inventory.view-model'
 
 export function InventoryView() {
@@ -47,21 +49,28 @@ export function InventoryView() {
         renderItem={({ item: { location, stockedQuantity } }) => (
           <Card className="rounded-lg">
             <CardHeader>
-              <CardTitle variant="large">
+              <CardTitle>
                 {location?.name || i18n.t('common.fallback.noName')}
               </CardTitle>
             </CardHeader>
 
             <CardContent className="gap-y-2">
-              <Text variant="small" className="text-muted-foreground">
-                {i18n.t('inventory.labels.stock', {
-                  count: stockedQuantity,
-                })}
-              </Text>
+              <View className="flex-row items-center justify-between gap-x-4">
+                <Text className="text-muted-foreground">
+                  Estoque disponível:
+                </Text>
+                <Text className="text-right">{stockedQuantity}</Text>
+              </View>
             </CardContent>
 
+            <Separator />
+
             <CardFooter className="gap-x-2">
-              <Icon className="text-muted-foreground" as={MapPinIcon} />
+              <Icon
+                className="text-muted-foreground"
+                size={ICON_SIZES.smaller}
+                as={MapPinIcon}
+              />
               <Text
                 variant="small"
                 className="font-light text-muted-foreground"

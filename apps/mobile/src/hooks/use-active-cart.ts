@@ -35,7 +35,7 @@ export function useActiveCart({ enabled = true }: { enabled?: boolean } = {}) {
   const { mutateAsync: deleteCartItemAsync } =
     sdk.v1.$reactQuery.useDeleteCartItem()
 
-  const upsertCartItem = async (data: UpsertCartItem) => {
+  const upsertCartItem = async (data: UpsertCartItemRequest) => {
     if (!activeCartId) {
       throw new Error('No active cart')
     }
@@ -76,6 +76,7 @@ export function useActiveCart({ enabled = true }: { enabled?: boolean } = {}) {
   }
 
   return {
+    hasActiveCart,
     isLoading,
     cart: data?.cart,
     refetch,
@@ -85,4 +86,4 @@ export function useActiveCart({ enabled = true }: { enabled?: boolean } = {}) {
   }
 }
 
-type UpsertCartItem = Parameters<typeof sdk.v1.upsertCartItem>[0]['data']
+type UpsertCartItemRequest = Parameters<typeof sdk.v1.upsertCartItem>[0]['data']

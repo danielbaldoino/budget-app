@@ -7,7 +7,7 @@ import {
   BoxIcon,
   Edit2Icon,
   ImageOffIcon,
-  TagIcon,
+  ShoppingBagIcon,
   TrashIcon,
 } from 'lucide-react-native'
 import { useState } from 'react'
@@ -15,10 +15,12 @@ import { Image, Platform, Pressable, View } from 'react-native'
 import type { CartItem } from '../_lib/types'
 import { useCartContext } from '../cart.context'
 
-export function CartItemCard({
-  cartItem,
-  totalPrice,
-}: { cartItem: CartItem; totalPrice?: string }) {
+type Props = {
+  cartItem: CartItem
+  totalPrice?: string
+}
+
+export function CartItemCard({ cartItem, totalPrice }: Props) {
   const { handleDeleteCartItem } = useCartContext()
 
   const [imageError, setImageError] = useState(false)
@@ -66,7 +68,7 @@ export function CartItemCard({
             <Icon
               className="text-muted-foreground"
               as={BoxIcon}
-              size={ICON_SIZES.smaller}
+              size={ICON_SIZES.smallest}
             />
             <Text variant="small" className="font-light text-muted-foreground">
               {i18n.t('common.labels.quantity')}:
@@ -79,8 +81,8 @@ export function CartItemCard({
           <View className="flex-row items-center gap-x-1.5">
             <Icon
               className="text-muted-foreground"
-              as={TagIcon}
-              size={ICON_SIZES.smaller}
+              as={ShoppingBagIcon}
+              size={ICON_SIZES.smallest}
             />
             <Text variant="small" className="font-light text-muted-foreground">
               {i18n.t('common.labels.totalPrice')}:

@@ -1,6 +1,7 @@
 import { Button } from '@/components/ui/button'
 import { Icon } from '@/components/ui/icon'
 import { Text } from '@/components/ui/text'
+import { ICON_SIZES } from '@/constants/theme'
 import { i18n } from '@/lib/languages'
 import {
   BoxSelectIcon,
@@ -32,7 +33,11 @@ export function SelectVariantButton() {
           {i18n.t('product.variants.actions.select')}
         </Text>
       )}
-      <Icon className="ml-auto text-muted-foreground" as={ExternalLinkIcon} />
+      <Icon
+        className="ml-auto text-muted-foreground"
+        size={ICON_SIZES.smaller}
+        as={ExternalLinkIcon}
+      />
     </Button>
   )
 }
